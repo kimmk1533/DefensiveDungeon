@@ -1,0 +1,2041 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1012836cbd54734f8ef8520f5869c21, type: 3}
+  m_Name: SkillStat_TableLoader
+  m_EditorClassIdentifier: 
+  filepath: Assets\00_Data\Txt\SkillStat_Table.txt
+  DataList:
+  - No: 1
+    Name_KR: "\uC77C\uBC18 \uADFC 01"
+    Name_EN: SkillStat001
+    Code: 310001
+    Max_Charge: 1
+    CoolTime: 0
+    Dmg: 1
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 1
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 0
+    LoadCode: 0
+  - No: 2
+    Name_KR: "\uC77C\uBC18 \uC6D0 01"
+    Name_EN: SkillStat002
+    Code: 310002
+    Max_Charge: 1
+    CoolTime: 0
+    Dmg: 1
+    Dmg_plus: 0
+    Range: 5
+    Speed: 10
+    Target_num: 1
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 0
+    LoadCode: 0
+  - No: 3
+    Name_KR: "\uB354\uBE14 \uADFC 01"
+    Name_EN: SkillStat003
+    Code: 310003
+    Max_Charge: 1
+    CoolTime: 0
+    Dmg: 0.5
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 1
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 0
+    LoadCode: 300020
+  - No: 4
+    Name_KR: "\uB354\uBE14 \uADFC 02"
+    Name_EN: SkillStat004
+    Code: 310004
+    Max_Charge: 1
+    CoolTime: 0
+    Dmg: 0.5
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 1
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 0
+    LoadCode: 300022
+  - No: 5
+    Name_KR: "\uB354\uBE14 \uADFC 03"
+    Name_EN: SkillStat005
+    Code: 310005
+    Max_Charge: 1
+    CoolTime: 0
+    Dmg: 0.5
+    Dmg_plus: 0
+    Range: 5
+    Speed: 10
+    Target_num: 1
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 0
+    LoadCode: 0
+  - No: 6
+    Name_KR: "\uAD11\uC5ED \uC6D0 01"
+    Name_EN: SkillStat006
+    Code: 310006
+    Max_Charge: 1
+    CoolTime: 0
+    Dmg: 0
+    Dmg_plus: 0
+    Range: 5
+    Speed: 10
+    Target_num: 1
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 0
+    LoadCode: 300024
+  - No: 7
+    Name_KR: "\uAD11\uC5ED \uC6D0 02"
+    Name_EN: SkillStat007
+    Code: 310007
+    Max_Charge: 1
+    CoolTime: 0
+    Dmg: 1
+    Dmg_plus: 0
+    Range: 5
+    Speed: 10
+    Target_num: 100
+    Size: 1
+    Life_Time: 1
+    Buff_CC: 0
+    LoadCode: 0
+  - No: 8
+    Name_KR: "\uC2A4\uD0AC \uC99D\uC624\uC758\uC5EC\uC65501.0"
+    Name_EN: SkillStat008
+    Code: 310008
+    Max_Charge: 2
+    CoolTime: 15
+    Dmg: 0
+    Dmg_plus: 0
+    Range: 100
+    Speed: 0
+    Target_num: 100
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 320026
+    LoadCode: 0
+  - No: 9
+    Name_KR: "\uC2A4\uD0AC \uC99D\uC624\uC758\uC5EC\uC65502.0"
+    Name_EN: SkillStat009
+    Code: 310009
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 0
+    Dmg_plus: 0
+    Range: 100
+    Speed: 0
+    Target_num: 100
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 320027
+    LoadCode: 0
+  - No: 10
+    Name_KR: "\uC2A4\uD0AC \uC9C0\uC625\uC758\uAD70\uC8FC01.0"
+    Name_EN: SkillStat010
+    Code: 310010
+    Max_Charge: 3
+    CoolTime: 10
+    Dmg: 2
+    Dmg_plus: 0
+    Range: 100
+    Speed: 0
+    Target_num: 100
+    Size: 5
+    Life_Time: 1
+    Buff_CC: 0
+    LoadCode: 300028
+  - No: 11
+    Name_KR: "\uC2A4\uD0AC \uD504\uB85C\uC2A4\uD2B8\uB9AC\uCE5801.0"
+    Name_EN: SkillStat011
+    Code: 310011
+    Max_Charge: 2
+    CoolTime: 15
+    Dmg: 0.4
+    Dmg_plus: 0
+    Range: 100
+    Speed: 0
+    Target_num: 100
+    Size: 6
+    Life_Time: 10
+    Buff_CC: 320028
+    LoadCode: 300031
+  - No: 12
+    Name_KR: "\uC2A4\uD0AC \uD504\uB85C\uC2A4\uD2B8\uB9AC\uCE5802.0"
+    Name_EN: SkillStat012
+    Code: 310012
+    Max_Charge: 1
+    CoolTime: 45
+    Dmg: 0.3
+    Dmg_plus: 0
+    Range: 100
+    Speed: 0
+    Target_num: 100
+    Size: 3
+    Life_Time: 10
+    Buff_CC: 320029
+    LoadCode: 300033
+  - No: 13
+    Name_KR: "\uC2A4\uD0AC \uC624\uD06C\uAC70\uB10801.1 1\uC131"
+    Name_EN: SkillStat013
+    Code: 310013
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 0
+    Dmg_plus: 0
+    Range: 5
+    Speed: 10
+    Target_num: 1
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 0
+    LoadCode: 300035
+  - No: 14
+    Name_KR: "\uC2A4\uD0AC \uC624\uD06C\uAC70\uB10801.2 1\uC131"
+    Name_EN: SkillStat014
+    Code: 310014
+    Max_Charge: 1
+    CoolTime: 0
+    Dmg: 1
+    Dmg_plus: 0
+    Range: 5
+    Speed: 10
+    Target_num: 100
+    Size: 1
+    Life_Time: 1
+    Buff_CC: 0
+    LoadCode: 0
+  - No: 15
+    Name_KR: "\uC2A4\uD0AC \uC624\uD06C\uAC70\uB10801.1 2\uC131"
+    Name_EN: SkillStat015
+    Code: 310015
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 0
+    Dmg_plus: 0
+    Range: 5
+    Speed: 10
+    Target_num: 1
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 0
+    LoadCode: 300037
+  - No: 16
+    Name_KR: "\uC2A4\uD0AC \uC624\uD06C\uAC70\uB10801.2 2\uC131"
+    Name_EN: SkillStat016
+    Code: 310016
+    Max_Charge: 1
+    CoolTime: 0
+    Dmg: 1
+    Dmg_plus: 0
+    Range: 5
+    Speed: 10
+    Target_num: 100
+    Size: 1
+    Life_Time: 1
+    Buff_CC: 0
+    LoadCode: 0
+  - No: 17
+    Name_KR: "\uC2A4\uD0AC \uC624\uD06C\uAC70\uB10801.1 3\uC131"
+    Name_EN: SkillStat017
+    Code: 310017
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 0
+    Dmg_plus: 0
+    Range: 5
+    Speed: 10
+    Target_num: 1
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 0
+    LoadCode: 300039
+  - No: 18
+    Name_KR: "\uC2A4\uD0AC \uC624\uD06C\uAC70\uB10801.2 3\uC131"
+    Name_EN: SkillStat018
+    Code: 310018
+    Max_Charge: 1
+    CoolTime: 0
+    Dmg: 1
+    Dmg_plus: 0
+    Range: 5
+    Speed: 10
+    Target_num: 100
+    Size: 1
+    Life_Time: 1
+    Buff_CC: 0
+    LoadCode: 0
+  - No: 19
+    Name_KR: "\uC2A4\uD0AC \uC624\uD06C\uC804\uC0AC 1\uC131"
+    Name_EN: SkillStat019
+    Code: 310019
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 0
+    Dmg_plus: 0
+    Range: 100
+    Speed: 10
+    Target_num: 100
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 320030
+    LoadCode: 0
+  - No: 20
+    Name_KR: "\uC2A4\uD0AC \uC624\uD06C\uC804\uC0AC 2\uC131"
+    Name_EN: SkillStat020
+    Code: 310020
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 0
+    Dmg_plus: 0
+    Range: 100
+    Speed: 10
+    Target_num: 100
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 320047
+    LoadCode: 0
+  - No: 21
+    Name_KR: "\uC2A4\uD0AC \uC624\uD06C\uC804\uC0AC 3\uC131"
+    Name_EN: SkillStat021
+    Code: 310021
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 0
+    Dmg_plus: 0
+    Range: 100
+    Speed: 10
+    Target_num: 100
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 320064
+    LoadCode: 0
+  - No: 22
+    Name_KR: "\uC2A4\uD0AC \uC0AC\uC774\uD074\uB86D\uC2A4 1\uC131"
+    Name_EN: SkillStat022
+    Code: 310022
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 1
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 100
+    Size: 5
+    Life_Time: 1
+    Buff_CC: 0
+    LoadCode: 0
+  - No: 23
+    Name_KR: "\uC2A4\uD0AC \uC0AC\uC774\uD074\uB86D\uC2A4 2\uC131"
+    Name_EN: SkillStat023
+    Code: 310023
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 1
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 100
+    Size: 5
+    Life_Time: 1
+    Buff_CC: 0
+    LoadCode: 0
+  - No: 24
+    Name_KR: "\uC2A4\uD0AC \uC0AC\uC774\uD074\uB86D\uC2A4 3\uC131"
+    Name_EN: SkillStat024
+    Code: 310024
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 1
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 100
+    Size: 5
+    Life_Time: 1
+    Buff_CC: 0
+    LoadCode: 0
+  - No: 25
+    Name_KR: "\uC2A4\uD0AC \uACE0\uBE14\uB9B0 1\uC131"
+    Name_EN: SkillStat025
+    Code: 310025
+    Max_Charge: 1
+    CoolTime: 10
+    Dmg: 2
+    Dmg_plus: 0
+    Range: 5
+    Speed: 10
+    Target_num: 1
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 0
+    LoadCode: 0
+  - No: 26
+    Name_KR: "\uC2A4\uD0AC \uACE0\uBE14\uB9B0 2\uC131"
+    Name_EN: SkillStat026
+    Code: 310026
+    Max_Charge: 1
+    CoolTime: 10
+    Dmg: 2
+    Dmg_plus: 0
+    Range: 5
+    Speed: 10
+    Target_num: 1
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 0
+    LoadCode: 0
+  - No: 27
+    Name_KR: "\uC2A4\uD0AC \uACE0\uBE14\uB9B0 3\uC131"
+    Name_EN: SkillStat027
+    Code: 310027
+    Max_Charge: 1
+    CoolTime: 10
+    Dmg: 2
+    Dmg_plus: 0
+    Range: 5
+    Speed: 10
+    Target_num: 1
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 0
+    LoadCode: 0
+  - No: 28
+    Name_KR: "\uC2A4\uD0AC \uB180\uC804\uC0AC 1\uC131"
+    Name_EN: SkillStat028
+    Code: 310028
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 1
+    Dmg_plus: 0
+    Range: 0
+    Speed: 10
+    Target_num: 100
+    Size: 5
+    Life_Time: 1
+    Buff_CC: 0
+    LoadCode: 0
+  - No: 29
+    Name_KR: "\uC2A4\uD0AC \uB180\uC804\uC0AC 2\uC131"
+    Name_EN: SkillStat029
+    Code: 310029
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 1
+    Dmg_plus: 0
+    Range: 0
+    Speed: 10
+    Target_num: 100
+    Size: 5
+    Life_Time: 1
+    Buff_CC: 0
+    LoadCode: 0
+  - No: 30
+    Name_KR: "\uC2A4\uD0AC \uB180\uC804\uC0AC 3\uC131"
+    Name_EN: SkillStat030
+    Code: 310030
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 1
+    Dmg_plus: 0
+    Range: 0
+    Speed: 10
+    Target_num: 100
+    Size: 5
+    Life_Time: 1
+    Buff_CC: 0
+    LoadCode: 0
+  - No: 31
+    Name_KR: "\uC2A4\uD0AC \uD2B8\uB864\uC8FC\uC220\uC0AC 1\uC131"
+    Name_EN: SkillStat031
+    Code: 310031
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 0
+    Dmg_plus: 0
+    Range: 100
+    Speed: 10
+    Target_num: 100
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 320031
+    LoadCode: 0
+  - No: 32
+    Name_KR: "\uC2A4\uD0AC \uD2B8\uB864\uC8FC\uC220\uC0AC 2\uC131"
+    Name_EN: SkillStat032
+    Code: 310032
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 0
+    Dmg_plus: 0
+    Range: 100
+    Speed: 10
+    Target_num: 100
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 320048
+    LoadCode: 0
+  - No: 33
+    Name_KR: "\uC2A4\uD0AC \uD2B8\uB864\uC8FC\uC220\uC0AC 3\uC131"
+    Name_EN: SkillStat033
+    Code: 310033
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 0
+    Dmg_plus: 0
+    Range: 100
+    Speed: 10
+    Target_num: 100
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 320065
+    LoadCode: 0
+  - No: 34
+    Name_KR: "\uC2A4\uD0AC \uC2A4\uD30C\uD06C\uBAAC 1\uC131"
+    Name_EN: SkillStat034
+    Code: 310034
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 1
+    Dmg_plus: 0
+    Range: 0
+    Speed: 10
+    Target_num: 100
+    Size: 5
+    Life_Time: 1
+    Buff_CC: 320032
+    LoadCode: 0
+  - No: 35
+    Name_KR: "\uC2A4\uD0AC \uC2A4\uD30C\uD06C\uBAAC 2\uC131"
+    Name_EN: SkillStat035
+    Code: 310035
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 1
+    Dmg_plus: 0
+    Range: 0
+    Speed: 10
+    Target_num: 100
+    Size: 5
+    Life_Time: 1
+    Buff_CC: 320049
+    LoadCode: 0
+  - No: 36
+    Name_KR: "\uC2A4\uD0AC \uC2A4\uD30C\uD06C\uBAAC 3\uC131"
+    Name_EN: SkillStat036
+    Code: 310036
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 1
+    Dmg_plus: 0
+    Range: 0
+    Speed: 10
+    Target_num: 100
+    Size: 5
+    Life_Time: 1
+    Buff_CC: 320066
+    LoadCode: 0
+  - No: 37
+    Name_KR: "\uC2A4\uD0AC \uC0B4\uB77C\uB9E8\uB354 1\uC131"
+    Name_EN: SkillStat037
+    Code: 310037
+    Max_Charge: 1
+    CoolTime: 20
+    Dmg: 1.5
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 1
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 320033
+    LoadCode: 0
+  - No: 38
+    Name_KR: "\uC2A4\uD0AC \uC0B4\uB77C\uB9E8\uB354 2\uC131"
+    Name_EN: SkillStat038
+    Code: 310038
+    Max_Charge: 1
+    CoolTime: 20
+    Dmg: 1.5
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 1
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 320050
+    LoadCode: 0
+  - No: 39
+    Name_KR: "\uC2A4\uD0AC \uC0B4\uB77C\uB9E8\uB354 3\uC131"
+    Name_EN: SkillStat039
+    Code: 310039
+    Max_Charge: 1
+    CoolTime: 20
+    Dmg: 1.5
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 1
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 320067
+    LoadCode: 0
+  - No: 40
+    Name_KR: "\uC2A4\uD0AC \uD30C\uC774\uC5B4\uB370\uBAAC 1\uC131"
+    Name_EN: SkillStat040
+    Code: 310040
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 0.5
+    Dmg_plus: 0
+    Range: 3
+    Speed: 10
+    Target_num: 100
+    Size: 1
+    Life_Time: 1
+    Buff_CC: 320034
+    LoadCode: 0
+  - No: 41
+    Name_KR: "\uC2A4\uD0AC \uD30C\uC774\uC5B4\uB370\uBAAC 2\uC131"
+    Name_EN: SkillStat041
+    Code: 310041
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 0.5
+    Dmg_plus: 0
+    Range: 3
+    Speed: 10
+    Target_num: 100
+    Size: 1
+    Life_Time: 1
+    Buff_CC: 320051
+    LoadCode: 0
+  - No: 42
+    Name_KR: "\uC2A4\uD0AC \uD30C\uC774\uC5B4\uB370\uBAAC 3\uC131"
+    Name_EN: SkillStat042
+    Code: 310042
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 0.5
+    Dmg_plus: 0
+    Range: 3
+    Speed: 10
+    Target_num: 100
+    Size: 1
+    Life_Time: 1
+    Buff_CC: 320068
+    LoadCode: 0
+  - No: 43
+    Name_KR: "\uC2A4\uD0AC \uCF00\uB974\uBCA0\uB85C\uC2A4 1\uC131"
+    Name_EN: SkillStat043
+    Code: 310043
+    Max_Charge: 1
+    CoolTime: 20
+    Dmg: 0
+    Dmg_plus: 0
+    Range: 0
+    Speed: 10
+    Target_num: 100
+    Size: 3
+    Life_Time: 1
+    Buff_CC: 320035
+    LoadCode: 0
+  - No: 44
+    Name_KR: "\uC2A4\uD0AC \uCF00\uB974\uBCA0\uB85C\uC2A4 2\uC131"
+    Name_EN: SkillStat044
+    Code: 310044
+    Max_Charge: 1
+    CoolTime: 20
+    Dmg: 0
+    Dmg_plus: 0
+    Range: 0
+    Speed: 10
+    Target_num: 100
+    Size: 3
+    Life_Time: 1
+    Buff_CC: 320052
+    LoadCode: 0
+  - No: 45
+    Name_KR: "\uC2A4\uD0AC \uCF00\uB974\uBCA0\uB85C\uC2A4 3\uC131"
+    Name_EN: SkillStat045
+    Code: 310045
+    Max_Charge: 1
+    CoolTime: 20
+    Dmg: 0
+    Dmg_plus: 0
+    Range: 0
+    Speed: 10
+    Target_num: 100
+    Size: 3
+    Life_Time: 1
+    Buff_CC: 320069
+    LoadCode: 0
+  - No: 46
+    Name_KR: "\uC2A4\uD0AC \uBC1C\uB85D 1\uC131"
+    Name_EN: SkillStat046
+    Code: 310046
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 0
+    Dmg_plus: 0
+    Range: 100
+    Speed: 10
+    Target_num: 100
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 320036
+    LoadCode: 0
+  - No: 47
+    Name_KR: "\uC2A4\uD0AC \uBC1C\uB85D 2\uC131"
+    Name_EN: SkillStat047
+    Code: 310047
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 0
+    Dmg_plus: 0
+    Range: 100
+    Speed: 10
+    Target_num: 100
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 320053
+    LoadCode: 0
+  - No: 48
+    Name_KR: "\uC2A4\uD0AC \uBC1C\uB85D 3\uC131"
+    Name_EN: SkillStat048
+    Code: 310048
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 0
+    Dmg_plus: 0
+    Range: 100
+    Speed: 10
+    Target_num: 100
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 320070
+    LoadCode: 0
+  - No: 49
+    Name_KR: "\uC2A4\uD0AC \uBBF8\uB178\uD0C0\uC6B0\uB85C\uC2A401.1 1\uC131"
+    Name_EN: SkillStat049
+    Code: 310049
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 1
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 1
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 320037
+    LoadCode: 300071
+  - No: 50
+    Name_KR: "\uC2A4\uD0AC \uBBF8\uB178\uD0C0\uC6B0\uB85C\uC2A401.2 1\uC131"
+    Name_EN: SkillStat050
+    Code: 310050
+    Max_Charge: 1
+    CoolTime: 0
+    Dmg: 1
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 100
+    Size: 5
+    Life_Time: 1
+    Buff_CC: 0
+    LoadCode: 0
+  - No: 51
+    Name_KR: "\uC2A4\uD0AC \uBBF8\uB178\uD0C0\uC6B0\uB85C\uC2A401.1 2\uC131"
+    Name_EN: SkillStat051
+    Code: 310051
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 3
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 1
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 320054
+    LoadCode: 300073
+  - No: 52
+    Name_KR: "\uC2A4\uD0AC \uBBF8\uB178\uD0C0\uC6B0\uB85C\uC2A401.2 2\uC131"
+    Name_EN: SkillStat052
+    Code: 310052
+    Max_Charge: 1
+    CoolTime: 0
+    Dmg: 3
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 100
+    Size: 5
+    Life_Time: 1
+    Buff_CC: 0
+    LoadCode: 0
+  - No: 53
+    Name_KR: "\uC2A4\uD0AC \uBBF8\uB178\uD0C0\uC6B0\uB85C\uC2A401.1 3\uC131"
+    Name_EN: SkillStat053
+    Code: 310053
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 5
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 1
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 320071
+    LoadCode: 300075
+  - No: 54
+    Name_KR: "\uC2A4\uD0AC \uBBF8\uB178\uD0C0\uC6B0\uB85C\uC2A401.2 3\uC131"
+    Name_EN: SkillStat054
+    Code: 310054
+    Max_Charge: 1
+    CoolTime: 0
+    Dmg: 5
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 100
+    Size: 5
+    Life_Time: 1
+    Buff_CC: 0
+    LoadCode: 0
+  - No: 55
+    Name_KR: "\uC2A4\uD0AC \uC0AC\uD2F0\uB85C\uC2A4 1\uC131"
+    Name_EN: SkillStat055
+    Code: 310055
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 1
+    Dmg_plus: 0
+    Range: 5
+    Speed: 10
+    Target_num: 100
+    Size: 5
+    Life_Time: 1
+    Buff_CC: 320038
+    LoadCode: 300079
+  - No: 56
+    Name_KR: "\uC2A4\uD0AC \uC0AC\uD2F0\uB85C\uC2A4 2\uC131"
+    Name_EN: SkillStat056
+    Code: 310056
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 1
+    Dmg_plus: 0
+    Range: 5
+    Speed: 10
+    Target_num: 100
+    Size: 5
+    Life_Time: 1
+    Buff_CC: 320055
+    LoadCode: 300079
+  - No: 57
+    Name_KR: "\uC2A4\uD0AC \uC0AC\uD2F0\uB85C\uC2A4 3\uC131"
+    Name_EN: SkillStat057
+    Code: 310057
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 1
+    Dmg_plus: 0
+    Range: 5
+    Speed: 10
+    Target_num: 100
+    Size: 5
+    Life_Time: 1
+    Buff_CC: 320072
+    LoadCode: 300079
+  - No: 58
+    Name_KR: "\uC2A4\uD0AC \uADF8\uB9BC\uB9AC\uD37C 1\uC131"
+    Name_EN: SkillStat058
+    Code: 310058
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 1
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 100
+    Size: 4
+    Life_Time: 1
+    Buff_CC: 0
+    LoadCode: 0
+  - No: 59
+    Name_KR: "\uC2A4\uD0AC \uADF8\uB9BC\uB9AC\uD37C 2\uC131"
+    Name_EN: SkillStat059
+    Code: 310059
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 1
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 100
+    Size: 4
+    Life_Time: 1
+    Buff_CC: 0
+    LoadCode: 0
+  - No: 60
+    Name_KR: "\uC2A4\uD0AC \uADF8\uB9BC\uB9AC\uD37C 3\uC131"
+    Name_EN: SkillStat060
+    Code: 310060
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 1
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 100
+    Size: 4
+    Life_Time: 1
+    Buff_CC: 0
+    LoadCode: 0
+  - No: 61
+    Name_KR: "\uC2A4\uD0AC \uB370\uC2A4\uB098\uC774\uD2B801.1 1\uC131"
+    Name_EN: SkillStat061
+    Code: 310061
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 2
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 1
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 0
+    LoadCode: 300084
+  - No: 62
+    Name_KR: "\uC2A4\uD0AC \uB370\uC2A4\uB098\uC774\uD2B801.2 1\uC131"
+    Name_EN: SkillStat062
+    Code: 310062
+    Max_Charge: 1
+    CoolTime: 0
+    Dmg: 2
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 1
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 0
+    LoadCode: 300085
+  - No: 63
+    Name_KR: "\uC2A4\uD0AC \uB370\uC2A4\uB098\uC774\uD2B801.3 1\uC131"
+    Name_EN: SkillStat063
+    Code: 310063
+    Max_Charge: 1
+    CoolTime: 0
+    Dmg: 2
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 1
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 0
+    LoadCode: 300086
+  - No: 64
+    Name_KR: "\uC2A4\uD0AC \uB370\uC2A4\uB098\uC774\uD2B801.4 1\uC131"
+    Name_EN: SkillStat064
+    Code: 310064
+    Max_Charge: 1
+    CoolTime: 0
+    Dmg: 2
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 1
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 0
+    LoadCode: 0
+  - No: 65
+    Name_KR: "\uC2A4\uD0AC \uB370\uC2A4\uB098\uC774\uD2B801.1 2\uC131"
+    Name_EN: SkillStat065
+    Code: 310065
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 2
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 1
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 0
+    LoadCode: 300088
+  - No: 66
+    Name_KR: "\uC2A4\uD0AC \uB370\uC2A4\uB098\uC774\uD2B801.2 2\uC131"
+    Name_EN: SkillStat066
+    Code: 310066
+    Max_Charge: 1
+    CoolTime: 0
+    Dmg: 2
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 1
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 0
+    LoadCode: 300089
+  - No: 67
+    Name_KR: "\uC2A4\uD0AC \uB370\uC2A4\uB098\uC774\uD2B801.3 2\uC131"
+    Name_EN: SkillStat067
+    Code: 310067
+    Max_Charge: 1
+    CoolTime: 0
+    Dmg: 2
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 1
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 0
+    LoadCode: 300090
+  - No: 68
+    Name_KR: "\uC2A4\uD0AC \uB370\uC2A4\uB098\uC774\uD2B801.4 2\uC131"
+    Name_EN: SkillStat068
+    Code: 310068
+    Max_Charge: 1
+    CoolTime: 0
+    Dmg: 2
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 1
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 0
+    LoadCode: 0
+  - No: 69
+    Name_KR: "\uC2A4\uD0AC \uB370\uC2A4\uB098\uC774\uD2B801.1 3\uC131"
+    Name_EN: SkillStat069
+    Code: 310069
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 2
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 1
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 0
+    LoadCode: 300092
+  - No: 70
+    Name_KR: "\uC2A4\uD0AC \uB370\uC2A4\uB098\uC774\uD2B801.2 3\uC131"
+    Name_EN: SkillStat070
+    Code: 310070
+    Max_Charge: 1
+    CoolTime: 0
+    Dmg: 2
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 1
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 0
+    LoadCode: 300093
+  - No: 71
+    Name_KR: "\uC2A4\uD0AC \uB370\uC2A4\uB098\uC774\uD2B801.3 3\uC131"
+    Name_EN: SkillStat071
+    Code: 310071
+    Max_Charge: 1
+    CoolTime: 0
+    Dmg: 2
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 1
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 0
+    LoadCode: 300094
+  - No: 72
+    Name_KR: "\uC2A4\uD0AC \uB370\uC2A4\uB098\uC774\uD2B801.4 3\uC131"
+    Name_EN: SkillStat072
+    Code: 310072
+    Max_Charge: 1
+    CoolTime: 0
+    Dmg: 2
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 1
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 0
+    LoadCode: 0
+  - No: 73
+    Name_KR: "\uC2A4\uD0AC \uB2E4\uD06C\uC18C\uC6B8 1\uC131"
+    Name_EN: SkillStat073
+    Code: 310073
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 1
+    Dmg_plus: 0
+    Range: 7
+    Speed: 10
+    Target_num: 100
+    Size: 1
+    Life_Time: 1
+    Buff_CC: 0
+    LoadCode: 0
+  - No: 74
+    Name_KR: "\uC2A4\uD0AC \uB2E4\uD06C\uC18C\uC6B8 2\uC131"
+    Name_EN: SkillStat074
+    Code: 310074
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 1
+    Dmg_plus: 0
+    Range: 7
+    Speed: 10
+    Target_num: 100
+    Size: 1
+    Life_Time: 1
+    Buff_CC: 0
+    LoadCode: 0
+  - No: 75
+    Name_KR: "\uC2A4\uD0AC \uB2E4\uD06C\uC18C\uC6B8 3\uC131"
+    Name_EN: SkillStat075
+    Code: 310075
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 1
+    Dmg_plus: 0
+    Range: 7
+    Speed: 10
+    Target_num: 100
+    Size: 1
+    Life_Time: 1
+    Buff_CC: 0
+    LoadCode: 0
+  - No: 76
+    Name_KR: "\uC2A4\uD0AC \uC2A4\uD1A4\uACE8\uB818 1\uC131"
+    Name_EN: SkillStat076
+    Code: 310076
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 1
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 100
+    Size: 5
+    Life_Time: 1
+    Buff_CC: 320039
+    LoadCode: 0
+  - No: 77
+    Name_KR: "\uC2A4\uD0AC \uC2A4\uD1A4\uACE8\uB818 2\uC131"
+    Name_EN: SkillStat077
+    Code: 310077
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 1
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 100
+    Size: 5
+    Life_Time: 1
+    Buff_CC: 320056
+    LoadCode: 0
+  - No: 78
+    Name_KR: "\uC2A4\uD0AC \uC2A4\uD1A4\uACE8\uB818 3\uC131"
+    Name_EN: SkillStat078
+    Code: 310078
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 1
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 100
+    Size: 5
+    Life_Time: 1
+    Buff_CC: 320073
+    LoadCode: 0
+  - No: 79
+    Name_KR: "\uC2A4\uD0AC \uB77C\uBC14\uACE8\uB818 1\uC131"
+    Name_EN: SkillStat079
+    Code: 310079
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 0
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 100
+    Size: 5
+    Life_Time: 3
+    Buff_CC: 320040
+    LoadCode: 0
+  - No: 80
+    Name_KR: "\uC2A4\uD0AC \uB77C\uBC14\uACE8\uB818 2\uC131"
+    Name_EN: SkillStat080
+    Code: 310080
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 0
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 100
+    Size: 5
+    Life_Time: 3
+    Buff_CC: 320057
+    LoadCode: 0
+  - No: 81
+    Name_KR: "\uC2A4\uD0AC \uB77C\uBC14\uACE8\uB818 3\uC131"
+    Name_EN: SkillStat081
+    Code: 310081
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 0
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 100
+    Size: 5
+    Life_Time: 3
+    Buff_CC: 320074
+    LoadCode: 0
+  - No: 82
+    Name_KR: "\uC2A4\uD0AC \uBC15\uC950 1\uC131"
+    Name_EN: SkillStat082
+    Code: 310082
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 0
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 100
+    Size: 5
+    Life_Time: 1
+    Buff_CC: 320041
+    LoadCode: 0
+  - No: 83
+    Name_KR: "\uC2A4\uD0AC \uBC15\uC950 2\uC131"
+    Name_EN: SkillStat083
+    Code: 310083
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 0
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 100
+    Size: 5
+    Life_Time: 1
+    Buff_CC: 320058
+    LoadCode: 0
+  - No: 84
+    Name_KR: "\uC2A4\uD0AC \uBC15\uC950 3\uC131"
+    Name_EN: SkillStat084
+    Code: 310084
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 0
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 100
+    Size: 5
+    Life_Time: 1
+    Buff_CC: 320075
+    LoadCode: 0
+  - No: 85
+    Name_KR: "\uC2A4\uD0AC \uB291\uB300 1\uC131"
+    Name_EN: SkillStat085
+    Code: 310085
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 1.5
+    Dmg_plus: 0
+    Range: 3
+    Speed: 10
+    Target_num: 100
+    Size: 1
+    Life_Time: 2
+    Buff_CC: 320042
+    LoadCode: 0
+  - No: 86
+    Name_KR: "\uC2A4\uD0AC \uB291\uB300 2\uC131"
+    Name_EN: SkillStat086
+    Code: 310086
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 1.5
+    Dmg_plus: 0
+    Range: 3
+    Speed: 10
+    Target_num: 100
+    Size: 1
+    Life_Time: 2
+    Buff_CC: 320059
+    LoadCode: 0
+  - No: 87
+    Name_KR: "\uC2A4\uD0AC \uB291\uB300 3\uC131"
+    Name_EN: SkillStat087
+    Code: 310087
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 1.5
+    Dmg_plus: 0
+    Range: 3
+    Speed: 10
+    Target_num: 100
+    Size: 1
+    Life_Time: 2
+    Buff_CC: 320076
+    LoadCode: 0
+  - No: 88
+    Name_KR: "\uC2A4\uD0AC \uD30C\uC774\uD2B8\uBCA0\uC5B4 1\uC131"
+    Name_EN: SkillStat088
+    Code: 310088
+    Max_Charge: 1
+    CoolTime: 5
+    Dmg: 1.5
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 1
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 0
+    LoadCode: 0
+  - No: 89
+    Name_KR: "\uC2A4\uD0AC \uD30C\uC774\uD2B8\uBCA0\uC5B4 2\uC131"
+    Name_EN: SkillStat089
+    Code: 310089
+    Max_Charge: 1
+    CoolTime: 5
+    Dmg: 1.5
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 1
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 0
+    LoadCode: 0
+  - No: 90
+    Name_KR: "\uC2A4\uD0AC \uD30C\uC774\uD2B8\uBCA0\uC5B4 3\uC131"
+    Name_EN: SkillStat090
+    Code: 310090
+    Max_Charge: 1
+    CoolTime: 5
+    Dmg: 1.5
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 1
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 0
+    LoadCode: 0
+  - No: 91
+    Name_KR: "\uC2A4\uD0AC \uAD11\uB300 1\uC131"
+    Name_EN: SkillStat091
+    Code: 310091
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 1
+    Dmg_plus: 0
+    Range: 5
+    Speed: 10
+    Target_num: 5
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 0
+    LoadCode: 0
+  - No: 92
+    Name_KR: "\uC2A4\uD0AC \uAD11\uB300 2\uC131"
+    Name_EN: SkillStat092
+    Code: 310092
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 1
+    Dmg_plus: 0
+    Range: 5
+    Speed: 10
+    Target_num: 5
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 0
+    LoadCode: 0
+  - No: 93
+    Name_KR: "\uC2A4\uD0AC \uAD11\uB300 3\uC131"
+    Name_EN: SkillStat093
+    Code: 310093
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 1
+    Dmg_plus: 0
+    Range: 5
+    Speed: 10
+    Target_num: 5
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 0
+    LoadCode: 0
+  - No: 94
+    Name_KR: "\uC2A4\uD0AC \uC774\uD504\uB9AC\uC2A4 1\uC131"
+    Name_EN: SkillStat094
+    Code: 310094
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 1
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 100
+    Size: 5
+    Life_Time: 1
+    Buff_CC: 320043
+    LoadCode: 0
+  - No: 95
+    Name_KR: "\uC2A4\uD0AC \uC774\uD504\uB9AC\uC2A4 2\uC131"
+    Name_EN: SkillStat095
+    Code: 310095
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 1
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 100
+    Size: 5
+    Life_Time: 1
+    Buff_CC: 320060
+    LoadCode: 0
+  - No: 96
+    Name_KR: "\uC2A4\uD0AC \uC774\uD504\uB9AC\uC2A4 3\uC131"
+    Name_EN: SkillStat096
+    Code: 310096
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 1
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 100
+    Size: 5
+    Life_Time: 1
+    Buff_CC: 320077
+    LoadCode: 0
+  - No: 97
+    Name_KR: "\uC2A4\uD0AC \uB4DC\uB798\uACE4 1\uC131"
+    Name_EN: SkillStat097
+    Code: 310097
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 1
+    Dmg_plus: 0
+    Range: 5
+    Speed: 10
+    Target_num: 100
+    Size: 1
+    Life_Time: 2
+    Buff_CC: 320044
+    LoadCode: 0
+  - No: 98
+    Name_KR: "\uC2A4\uD0AC \uB4DC\uB798\uACE4 2\uC131"
+    Name_EN: SkillStat098
+    Code: 310098
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 1
+    Dmg_plus: 0
+    Range: 5
+    Speed: 10
+    Target_num: 100
+    Size: 1
+    Life_Time: 2
+    Buff_CC: 320061
+    LoadCode: 0
+  - No: 99
+    Name_KR: "\uC2A4\uD0AC \uB4DC\uB798\uACE4 3\uC131"
+    Name_EN: SkillStat099
+    Code: 310099
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 1
+    Dmg_plus: 0
+    Range: 5
+    Speed: 10
+    Target_num: 100
+    Size: 1
+    Life_Time: 2
+    Buff_CC: 320078
+    LoadCode: 0
+  - No: 100
+    Name_KR: "\uC2A4\uD0AC \uB9C8\uB140 1\uC131"
+    Name_EN: SkillStat100
+    Code: 310100
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 0
+    Dmg_plus: 0
+    Range: 100
+    Speed: 10
+    Target_num: 100
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 320045
+    LoadCode: 0
+  - No: 101
+    Name_KR: "\uC2A4\uD0AC \uB9C8\uB140 2\uC131"
+    Name_EN: SkillStat101
+    Code: 310101
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 0
+    Dmg_plus: 0
+    Range: 100
+    Speed: 10
+    Target_num: 100
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 320062
+    LoadCode: 0
+  - No: 102
+    Name_KR: "\uC2A4\uD0AC \uB9C8\uB140 3\uC131"
+    Name_EN: SkillStat102
+    Code: 310102
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 0
+    Dmg_plus: 0
+    Range: 100
+    Speed: 10
+    Target_num: 100
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 320079
+    LoadCode: 0
+  - No: 103
+    Name_KR: "\uC2A4\uD0AC \uB2E4\uD06C\uC5D8\uD50401.1 1\uC131"
+    Name_EN: SkillStat103
+    Code: 310103
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 0.2
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 100
+    Size: 5
+    Life_Time: 1
+    Buff_CC: 320046
+    LoadCode: 300126
+  - No: 104
+    Name_KR: "\uC2A4\uD0AC \uB2E4\uD06C\uC5D8\uD50401.2 1\uC131"
+    Name_EN: SkillStat104
+    Code: 310104
+    Max_Charge: 1
+    CoolTime: 0
+    Dmg: 0.2
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 100
+    Size: 5
+    Life_Time: 1
+    Buff_CC: 320046
+    LoadCode: 300127
+  - No: 105
+    Name_KR: "\uC2A4\uD0AC \uB2E4\uD06C\uC5D8\uD50401.3 1\uC131"
+    Name_EN: SkillStat105
+    Code: 310105
+    Max_Charge: 1
+    CoolTime: 0
+    Dmg: 0.2
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 100
+    Size: 5
+    Life_Time: 1
+    Buff_CC: 320046
+    LoadCode: 300128
+  - No: 106
+    Name_KR: "\uC2A4\uD0AC \uB2E4\uD06C\uC5D8\uD50401.4 1\uC131"
+    Name_EN: SkillStat106
+    Code: 310106
+    Max_Charge: 1
+    CoolTime: 0
+    Dmg: 0.2
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 100
+    Size: 5
+    Life_Time: 1
+    Buff_CC: 320046
+    LoadCode: 300129
+  - No: 107
+    Name_KR: "\uC2A4\uD0AC \uB2E4\uD06C\uC5D8\uD50401.5 1\uC131"
+    Name_EN: SkillStat107
+    Code: 310107
+    Max_Charge: 1
+    CoolTime: 0
+    Dmg: 0.2
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 100
+    Size: 5
+    Life_Time: 1
+    Buff_CC: 320046
+    LoadCode: 0
+  - No: 108
+    Name_KR: "\uC2A4\uD0AC \uB2E4\uD06C\uC5D8\uD50401.1 2\uC131"
+    Name_EN: SkillStat108
+    Code: 310108
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 0.2
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 100
+    Size: 5
+    Life_Time: 1
+    Buff_CC: 320063
+    LoadCode: 300131
+  - No: 109
+    Name_KR: "\uC2A4\uD0AC \uB2E4\uD06C\uC5D8\uD50401.2 2\uC131"
+    Name_EN: SkillStat109
+    Code: 310109
+    Max_Charge: 1
+    CoolTime: 0
+    Dmg: 0.2
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 100
+    Size: 5
+    Life_Time: 1
+    Buff_CC: 320063
+    LoadCode: 300132
+  - No: 110
+    Name_KR: "\uC2A4\uD0AC \uB2E4\uD06C\uC5D8\uD50401.3 2\uC131"
+    Name_EN: SkillStat110
+    Code: 310110
+    Max_Charge: 1
+    CoolTime: 0
+    Dmg: 0.2
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 100
+    Size: 5
+    Life_Time: 1
+    Buff_CC: 320063
+    LoadCode: 300133
+  - No: 111
+    Name_KR: "\uC2A4\uD0AC \uB2E4\uD06C\uC5D8\uD50401.4 2\uC131"
+    Name_EN: SkillStat111
+    Code: 310111
+    Max_Charge: 1
+    CoolTime: 0
+    Dmg: 0.2
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 100
+    Size: 5
+    Life_Time: 1
+    Buff_CC: 320063
+    LoadCode: 300134
+  - No: 112
+    Name_KR: "\uC2A4\uD0AC \uB2E4\uD06C\uC5D8\uD50401.5 2\uC131"
+    Name_EN: SkillStat112
+    Code: 310112
+    Max_Charge: 1
+    CoolTime: 0
+    Dmg: 0.2
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 100
+    Size: 5
+    Life_Time: 1
+    Buff_CC: 320063
+    LoadCode: 0
+  - No: 113
+    Name_KR: "\uC2A4\uD0AC \uB2E4\uD06C\uC5D8\uD50401.1 3\uC131"
+    Name_EN: SkillStat113
+    Code: 310113
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 0.2
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 100
+    Size: 5
+    Life_Time: 1
+    Buff_CC: 320080
+    LoadCode: 300136
+  - No: 114
+    Name_KR: "\uC2A4\uD0AC \uB2E4\uD06C\uC5D8\uD50401.2 3\uC131"
+    Name_EN: SkillStat114
+    Code: 310114
+    Max_Charge: 1
+    CoolTime: 0
+    Dmg: 0.2
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 100
+    Size: 5
+    Life_Time: 1
+    Buff_CC: 320080
+    LoadCode: 300137
+  - No: 115
+    Name_KR: "\uC2A4\uD0AC \uB2E4\uD06C\uC5D8\uD50401.3 3\uC131"
+    Name_EN: SkillStat115
+    Code: 310115
+    Max_Charge: 1
+    CoolTime: 0
+    Dmg: 0.2
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 100
+    Size: 5
+    Life_Time: 1
+    Buff_CC: 320080
+    LoadCode: 300138
+  - No: 116
+    Name_KR: "\uC2A4\uD0AC \uB2E4\uD06C\uC5D8\uD50401.4 3\uC131"
+    Name_EN: SkillStat116
+    Code: 310116
+    Max_Charge: 1
+    CoolTime: 0
+    Dmg: 0.2
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 100
+    Size: 5
+    Life_Time: 1
+    Buff_CC: 320080
+    LoadCode: 300139
+  - No: 117
+    Name_KR: "\uC2A4\uD0AC \uB2E4\uD06C\uC5D8\uD50401.5 3\uC131"
+    Name_EN: SkillStat117
+    Code: 310117
+    Max_Charge: 1
+    CoolTime: 0
+    Dmg: 0.2
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 100
+    Size: 5
+    Life_Time: 1
+    Buff_CC: 320080
+    LoadCode: 0
+  - No: 118
+    Name_KR: "\uC2A4\uD0AC \uD0C0\uB77D\uCC9C\uC0AC01.1 1\uC131"
+    Name_EN: SkillStat118
+    Code: 310118
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 0.4
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 100
+    Size: 6
+    Life_Time: 3
+    Buff_CC: 0
+    LoadCode: 300141
+  - No: 119
+    Name_KR: "\uC2A4\uD0AC \uD0C0\uB77D\uCC9C\uC0AC01.2 1\uC131"
+    Name_EN: SkillStat119
+    Code: 310119
+    Max_Charge: 1
+    CoolTime: 0
+    Dmg: 0.4
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 100
+    Size: 6
+    Life_Time: 3
+    Buff_CC: 0
+    LoadCode: 300142
+  - No: 120
+    Name_KR: "\uC2A4\uD0AC \uD0C0\uB77D\uCC9C\uC0AC01.3 1\uC131"
+    Name_EN: SkillStat120
+    Code: 310120
+    Max_Charge: 1
+    CoolTime: 0
+    Dmg: 0.4
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 100
+    Size: 6
+    Life_Time: 3
+    Buff_CC: 0
+    LoadCode: 0
+  - No: 121
+    Name_KR: "\uC2A4\uD0AC \uD0C0\uB77D\uCC9C\uC0AC01.1 2\uC131"
+    Name_EN: SkillStat121
+    Code: 310121
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 0.4
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 100
+    Size: 6
+    Life_Time: 3
+    Buff_CC: 0
+    LoadCode: 300144
+  - No: 122
+    Name_KR: "\uC2A4\uD0AC \uD0C0\uB77D\uCC9C\uC0AC01.2 2\uC131"
+    Name_EN: SkillStat122
+    Code: 310122
+    Max_Charge: 1
+    CoolTime: 0
+    Dmg: 0.4
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 100
+    Size: 6
+    Life_Time: 3
+    Buff_CC: 0
+    LoadCode: 300145
+  - No: 123
+    Name_KR: "\uC2A4\uD0AC \uD0C0\uB77D\uCC9C\uC0AC01.3 2\uC131"
+    Name_EN: SkillStat123
+    Code: 310123
+    Max_Charge: 1
+    CoolTime: 0
+    Dmg: 0.4
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 100
+    Size: 6
+    Life_Time: 3
+    Buff_CC: 0
+    LoadCode: 0
+  - No: 124
+    Name_KR: "\uC2A4\uD0AC \uD0C0\uB77D\uCC9C\uC0AC01.1 3\uC131"
+    Name_EN: SkillStat124
+    Code: 310124
+    Max_Charge: 1
+    CoolTime: 30
+    Dmg: 0.4
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 100
+    Size: 6
+    Life_Time: 3
+    Buff_CC: 0
+    LoadCode: 300147
+  - No: 125
+    Name_KR: "\uC2A4\uD0AC \uD0C0\uB77D\uCC9C\uC0AC01.2 3\uC131"
+    Name_EN: SkillStat125
+    Code: 310125
+    Max_Charge: 1
+    CoolTime: 0
+    Dmg: 0.4
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 100
+    Size: 6
+    Life_Time: 3
+    Buff_CC: 0
+    LoadCode: 300148
+  - No: 126
+    Name_KR: "\uC2A4\uD0AC \uD0C0\uB77D\uCC9C\uC0AC01.3 3\uC131"
+    Name_EN: SkillStat126
+    Code: 310126
+    Max_Charge: 1
+    CoolTime: 0
+    Dmg: 0.4
+    Dmg_plus: 0
+    Range: 2
+    Speed: 10
+    Target_num: 100
+    Size: 6
+    Life_Time: 3
+    Buff_CC: 0
+    LoadCode: 0
+  - No: 127
+    Name_KR: "\uB514\uD39C\uB354 \uC2A4\uD0AC"
+    Name_EN: SkillStat127
+    Code: 310127
+    Max_Charge: 1
+    CoolTime: 15
+    Dmg: 0
+    Dmg_plus: 0
+    Range: 3
+    Speed: 10
+    Target_num: 10
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 320081
+    LoadCode: 0
+  - No: 128
+    Name_KR: "\uB4DC\uC6CC\uD504\uC804\uC0AC \uC2A4\uD0AC"
+    Name_EN: SkillStat128
+    Code: 310128
+    Max_Charge: 1
+    CoolTime: 15
+    Dmg: 0
+    Dmg_plus: 0
+    Range: 3
+    Speed: 10
+    Target_num: 10
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 320082
+    LoadCode: 0
+  - No: 129
+    Name_KR: "\uADF8\uB9AC\uD540(\uD558\uB298) \uC2A4\uD0AC"
+    Name_EN: SkillStat129
+    Code: 310129
+    Max_Charge: 1
+    CoolTime: 0
+    Dmg: 99999
+    Dmg_plus: 0
+    Range: 0.5
+    Speed: 10
+    Target_num: 1
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 0
+    LoadCode: 0
+  - No: 130
+    Name_KR: "\uC790\uD3ED\uC2A4\uD0AC1(\uC790\uAE30\uD53C\uD574)"
+    Name_EN: SkillStat130
+    Code: 310130
+    Max_Charge: 1
+    CoolTime: 0
+    Dmg: 99999
+    Dmg_plus: 0
+    Range: 0.5
+    Speed: 10
+    Target_num: 1
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 0
+    LoadCode: 300153
+  - No: 131
+    Name_KR: "\uC790\uD3ED\uC2A4\uD0AC2(\uC8FC\uBCC0\uD53C\uD574)"
+    Name_EN: SkillStat131
+    Code: 310131
+    Max_Charge: 1
+    CoolTime: 0
+    Dmg: 150
+    Dmg_plus: 0
+    Range: 1
+    Speed: 10
+    Target_num: 1
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 0
+    LoadCode: 0
+  - No: 132
+    Name_KR: "\uC18C\uD658"
+    Name_EN: SkillStat132
+    Code: 310132
+    Max_Charge: 1
+    CoolTime: 0
+    Dmg: 0
+    Dmg_plus: 0
+    Range: 0
+    Speed: 10
+    Target_num: 1
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 320084
+    LoadCode: 0
+  - No: 133
+    Name_KR: "\uCCB4\uB825\uBE44\uB840\uB2A5\uB825(\uC774\uB3D9\uC18D\uB3C4)"
+    Name_EN: SkillStat133
+    Code: 310133
+    Max_Charge: 1
+    CoolTime: 0
+    Dmg: 0
+    Dmg_plus: 0
+    Range: 1
+    Speed: 10
+    Target_num: 1
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 320085
+    LoadCode: 0
+  - No: 134
+    Name_KR: "\uCCB4\uB825\uBE44\uB840\uB2A5\uB825(\uBC29\uC5B4\uB825)"
+    Name_EN: SkillStat134
+    Code: 310134
+    Max_Charge: 1
+    CoolTime: 0
+    Dmg: 0
+    Dmg_plus: 0
+    Range: 1
+    Speed: 5
+    Target_num: 1
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 320086
+    LoadCode: 0
+  - No: 135
+    Name_KR: "\uCCB4\uB825\uBE44\uB840\uB2A5\uB825(\uCCB4\uB825\uD68C\uBCF5)"
+    Name_EN: SkillStat135
+    Code: 310135
+    Max_Charge: 1
+    CoolTime: 0
+    Dmg: 0
+    Dmg_plus: 0
+    Range: 1
+    Speed: 5
+    Target_num: 1
+    Size: 0
+    Life_Time: 1
+    Buff_CC: 320087
+    LoadCode: 0

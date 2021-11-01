@@ -1,0 +1,196 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4e146cb9751e304db1c1dcca2d9f6be, type: 3}
+  m_Name: Shop_TableLoader
+  m_EditorClassIdentifier: 
+  filepath: Assets\00_Data\Txt\Shop_Table.txt
+  DataList:
+  - No: 1
+    User_Level: 1
+    Tower_Rank1: 1
+    Tower_Rand1: 1
+    Tower_Rank2: 2
+    Tower_Rand2: 0
+    Tower_Rank3: 3
+    Tower_Rand3: 0
+    Tower_Rank4: 4
+    Tower_Rand4: 0
+    Tower_Rank5: 5
+    Tower_Rand5: 0
+    Tower_Gold1: 1
+    Tower_Gold2: 3
+    Tower_Gold3: 5
+    Tower_Gold4: 7
+    Tower_Gold5: 10
+    Reset_Gold: 2
+  - No: 2
+    User_Level: 2
+    Tower_Rank1: 1
+    Tower_Rand1: 0.85
+    Tower_Rank2: 2
+    Tower_Rand2: 0.15
+    Tower_Rank3: 3
+    Tower_Rand3: 0
+    Tower_Rank4: 4
+    Tower_Rand4: 0
+    Tower_Rank5: 5
+    Tower_Rand5: 0
+    Tower_Gold1: 1
+    Tower_Gold2: 3
+    Tower_Gold3: 5
+    Tower_Gold4: 7
+    Tower_Gold5: 10
+    Reset_Gold: 2
+  - No: 3
+    User_Level: 3
+    Tower_Rank1: 1
+    Tower_Rand1: 0.7
+    Tower_Rank2: 2
+    Tower_Rand2: 0.25
+    Tower_Rank3: 3
+    Tower_Rand3: 0.05
+    Tower_Rank4: 4
+    Tower_Rand4: 0
+    Tower_Rank5: 5
+    Tower_Rand5: 0
+    Tower_Gold1: 1
+    Tower_Gold2: 3
+    Tower_Gold3: 5
+    Tower_Gold4: 7
+    Tower_Gold5: 10
+    Reset_Gold: 2
+  - No: 4
+    User_Level: 4
+    Tower_Rank1: 1
+    Tower_Rand1: 0.55
+    Tower_Rank2: 2
+    Tower_Rand2: 0.35
+    Tower_Rank3: 3
+    Tower_Rand3: 0.1
+    Tower_Rank4: 4
+    Tower_Rand4: 0
+    Tower_Rank5: 5
+    Tower_Rand5: 0
+    Tower_Gold1: 1
+    Tower_Gold2: 3
+    Tower_Gold3: 5
+    Tower_Gold4: 7
+    Tower_Gold5: 10
+    Reset_Gold: 2
+  - No: 5
+    User_Level: 5
+    Tower_Rank1: 1
+    Tower_Rand1: 0.4
+    Tower_Rank2: 2
+    Tower_Rand2: 0.44
+    Tower_Rank3: 3
+    Tower_Rand3: 0.15
+    Tower_Rank4: 4
+    Tower_Rand4: 0.01
+    Tower_Rank5: 5
+    Tower_Rand5: 0
+    Tower_Gold1: 1
+    Tower_Gold2: 3
+    Tower_Gold3: 5
+    Tower_Gold4: 7
+    Tower_Gold5: 10
+    Reset_Gold: 2
+  - No: 6
+    User_Level: 6
+    Tower_Rank1: 1
+    Tower_Rand1: 0.25
+    Tower_Rank2: 2
+    Tower_Rand2: 0.45
+    Tower_Rank3: 3
+    Tower_Rand3: 0.25
+    Tower_Rank4: 4
+    Tower_Rand4: 0.05
+    Tower_Rank5: 5
+    Tower_Rand5: 0
+    Tower_Gold1: 1
+    Tower_Gold2: 3
+    Tower_Gold3: 5
+    Tower_Gold4: 7
+    Tower_Gold5: 10
+    Reset_Gold: 2
+  - No: 7
+    User_Level: 7
+    Tower_Rank1: 1
+    Tower_Rand1: 0.2
+    Tower_Rank2: 2
+    Tower_Rand2: 0.3
+    Tower_Rank3: 3
+    Tower_Rand3: 0.35
+    Tower_Rank4: 4
+    Tower_Rand4: 0.15
+    Tower_Rank5: 5
+    Tower_Rand5: 0
+    Tower_Gold1: 1
+    Tower_Gold2: 3
+    Tower_Gold3: 5
+    Tower_Gold4: 7
+    Tower_Gold5: 10
+    Reset_Gold: 2
+  - No: 8
+    User_Level: 8
+    Tower_Rank1: 1
+    Tower_Rand1: 0.15
+    Tower_Rank2: 2
+    Tower_Rand2: 0.24
+    Tower_Rank3: 3
+    Tower_Rand3: 0.4
+    Tower_Rank4: 4
+    Tower_Rand4: 0.2
+    Tower_Rank5: 5
+    Tower_Rand5: 0.01
+    Tower_Gold1: 1
+    Tower_Gold2: 3
+    Tower_Gold3: 5
+    Tower_Gold4: 7
+    Tower_Gold5: 10
+    Reset_Gold: 2
+  - No: 9
+    User_Level: 9
+    Tower_Rank1: 1
+    Tower_Rand1: 0.1
+    Tower_Rank2: 2
+    Tower_Rand2: 0.2
+    Tower_Rank3: 3
+    Tower_Rand3: 0.35
+    Tower_Rank4: 4
+    Tower_Rand4: 0.3
+    Tower_Rank5: 5
+    Tower_Rand5: 0.05
+    Tower_Gold1: 1
+    Tower_Gold2: 3
+    Tower_Gold3: 5
+    Tower_Gold4: 7
+    Tower_Gold5: 10
+    Reset_Gold: 2
+  - No: 10
+    User_Level: 10
+    Tower_Rank1: 1
+    Tower_Rand1: 0.05
+    Tower_Rank2: 2
+    Tower_Rand2: 0.15
+    Tower_Rank3: 3
+    Tower_Rand3: 0.35
+    Tower_Rank4: 4
+    Tower_Rand4: 0.35
+    Tower_Rank5: 5
+    Tower_Rand5: 0.1
+    Tower_Gold1: 1
+    Tower_Gold2: 3
+    Tower_Gold3: 5
+    Tower_Gold4: 7
+    Tower_Gold5: 10
+    Reset_Gold: 2

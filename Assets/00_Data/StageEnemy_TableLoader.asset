@@ -1,0 +1,295 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ff5ad2606ca2d04aaad00189c534308, type: 3}
+  m_Name: StageEnemy_TableLoader
+  m_EditorClassIdentifier: 
+  filepath: Assets\00_Data\Txt\StageEnemy_Table.txt
+  DataList:
+  - No: 1
+    Name_KR: "1-\uC2A4\uD14C\uC774\uC9C0 \uC804\uD22C011"
+    Name_EN: 1-StageBattle011
+    Code: 410001
+    SponPosition: 3
+    Create_num: 25
+    Emeny_Code: 200011
+    AppearSpeed: 2
+    CreateSpeed: 0.5
+  - No: 2
+    Name_KR: "1-\uC2A4\uD14C\uC774\uC9C0 \uC804\uD22C021"
+    Name_EN: 1-StageBattle021
+    Code: 410002
+    SponPosition: 3
+    Create_num: 15
+    Emeny_Code: 200011
+    AppearSpeed: 2
+    CreateSpeed: 0.5
+  - No: 3
+    Name_KR: "1-\uC2A4\uD14C\uC774\uC9C0 \uC804\uD22C022"
+    Name_EN: 1-StageBattle022
+    Code: 410002
+    SponPosition: 4
+    Create_num: 15
+    Emeny_Code: 200012
+    AppearSpeed: 10
+    CreateSpeed: 0.5
+  - No: 4
+    Name_KR: "1-\uC2A4\uD14C\uC774\uC9C0 \uC804\uD22C031"
+    Name_EN: 1-StageBattle031
+    Code: 410003
+    SponPosition: 4
+    Create_num: 15
+    Emeny_Code: 200014
+    AppearSpeed: 2
+    CreateSpeed: 0.5
+  - No: 5
+    Name_KR: "1-\uC2A4\uD14C\uC774\uC9C0 \uC804\uD22C032"
+    Name_EN: 1-StageBattle032
+    Code: 410003
+    SponPosition: 1
+    Create_num: 20
+    Emeny_Code: 200012
+    AppearSpeed: 11
+    CreateSpeed: 0.5
+  - No: 6
+    Name_KR: "1-\uC2A4\uD14C\uC774\uC9C0 \uC804\uD22C041"
+    Name_EN: 1-StageBattle041
+    Code: 410004
+    SponPosition: 3
+    Create_num: 20
+    Emeny_Code: 200013
+    AppearSpeed: 2
+    CreateSpeed: 0.5
+  - No: 7
+    Name_KR: "1-\uC2A4\uD14C\uC774\uC9C0 \uC804\uD22C042"
+    Name_EN: 1-StageBattle042
+    Code: 410004
+    SponPosition: 4
+    Create_num: 20
+    Emeny_Code: 200015
+    AppearSpeed: 11
+    CreateSpeed: 0.5
+  - No: 8
+    Name_KR: "1-\uC2A4\uD14C\uC774\uC9C0 \uC804\uD22C051"
+    Name_EN: 1-StageBattle051
+    Code: 410005
+    SponPosition: 4
+    Create_num: 10
+    Emeny_Code: 200011
+    AppearSpeed: 2
+    CreateSpeed: 0.5
+  - No: 9
+    Name_KR: "1-\uC2A4\uD14C\uC774\uC9C0 \uC804\uD22C052"
+    Name_EN: 1-StageBattle052
+    Code: 410005
+    SponPosition: 4
+    Create_num: 15
+    Emeny_Code: 200015
+    AppearSpeed: 10
+    CreateSpeed: 0.5
+  - No: 10
+    Name_KR: "1-\uC2A4\uD14C\uC774\uC9C0 \uC804\uD22C053"
+    Name_EN: 1-StageBattle053
+    Code: 410005
+    SponPosition: 3
+    Create_num: 20
+    Emeny_Code: 200016
+    AppearSpeed: 12
+    CreateSpeed: 0.5
+  - No: 11
+    Name_KR: "1-\uC2A4\uD14C\uC774\uC9C0 \uC804\uD22C061"
+    Name_EN: 1-StageBattle061
+    Code: 410006
+    SponPosition: 3
+    Create_num: 15
+    Emeny_Code: 200011
+    AppearSpeed: 2
+    CreateSpeed: 0.5
+  - No: 12
+    Name_KR: "1-\uC2A4\uD14C\uC774\uC9C0 \uC804\uD22C062"
+    Name_EN: 1-StageBattle062
+    Code: 410006
+    SponPosition: 2
+    Create_num: 15
+    Emeny_Code: 200014
+    AppearSpeed: 6
+    CreateSpeed: 0.5
+  - No: 13
+    Name_KR: "1-\uC2A4\uD14C\uC774\uC9C0 \uC804\uD22C063"
+    Name_EN: 1-StageBattle063
+    Code: 410006
+    SponPosition: 4
+    Create_num: 15
+    Emeny_Code: 200016
+    AppearSpeed: 10
+    CreateSpeed: 0.5
+  - No: 14
+    Name_KR: "1-\uC2A4\uD14C\uC774\uC9C0 \uC804\uD22C071"
+    Name_EN: 1-StageBattle071
+    Code: 410007
+    SponPosition: 4
+    Create_num: 20
+    Emeny_Code: 200015
+    AppearSpeed: 2
+    CreateSpeed: 0.5
+  - No: 15
+    Name_KR: "1-\uC2A4\uD14C\uC774\uC9C0 \uC804\uD22C072"
+    Name_EN: 1-StageBattle072
+    Code: 410007
+    SponPosition: 1
+    Create_num: 20
+    Emeny_Code: 200012
+    AppearSpeed: 6
+    CreateSpeed: 0.5
+  - No: 16
+    Name_KR: "1-\uC2A4\uD14C\uC774\uC9C0 \uC804\uD22C073"
+    Name_EN: 1-StageBattle073
+    Code: 410007
+    SponPosition: 3
+    Create_num: 10
+    Emeny_Code: 200016
+    AppearSpeed: 10
+    CreateSpeed: 0.5
+  - No: 17
+    Name_KR: "1-\uC2A4\uD14C\uC774\uC9C0 \uC804\uD22C074"
+    Name_EN: 1-StageBattle074
+    Code: 410007
+    SponPosition: 3
+    Create_num: 10
+    Emeny_Code: 200013
+    AppearSpeed: 14
+    CreateSpeed: 0.5
+  - No: 18
+    Name_KR: "1-\uC2A4\uD14C\uC774\uC9C0 \uC804\uD22C081"
+    Name_EN: 1-StageBattle081
+    Code: 410008
+    SponPosition: 2
+    Create_num: 20
+    Emeny_Code: 200016
+    AppearSpeed: 2
+    CreateSpeed: 0.5
+  - No: 19
+    Name_KR: "1-\uC2A4\uD14C\uC774\uC9C0 \uC804\uD22C082"
+    Name_EN: 1-StageBattle082
+    Code: 410008
+    SponPosition: 1
+    Create_num: 20
+    Emeny_Code: 200012
+    AppearSpeed: 4
+    CreateSpeed: 0.5
+  - No: 20
+    Name_KR: "1-\uC2A4\uD14C\uC774\uC9C0 \uC804\uD22C083"
+    Name_EN: 1-StageBattle083
+    Code: 410008
+    SponPosition: 3
+    Create_num: 20
+    Emeny_Code: 200013
+    AppearSpeed: 8
+    CreateSpeed: 0.5
+  - No: 21
+    Name_KR: "1-\uC2A4\uD14C\uC774\uC9C0 \uC804\uD22C091"
+    Name_EN: 1-StageBattle091
+    Code: 410009
+    SponPosition: 2
+    Create_num: 20
+    Emeny_Code: 200012
+    AppearSpeed: 2
+    CreateSpeed: 0.5
+  - No: 22
+    Name_KR: "1-\uC2A4\uD14C\uC774\uC9C0 \uC804\uD22C092"
+    Name_EN: 1-StageBattle092
+    Code: 410009
+    SponPosition: 2
+    Create_num: 3
+    Emeny_Code: 200001
+    AppearSpeed: 8
+    CreateSpeed: 0.5
+  - No: 23
+    Name_KR: "1-\uC2A4\uD14C\uC774\uC9C0 \uC804\uD22C093"
+    Name_EN: 1-StageBattle093
+    Code: 410009
+    SponPosition: 3
+    Create_num: 5
+    Emeny_Code: 200005
+    AppearSpeed: 6
+    CreateSpeed: 0.5
+  - No: 24
+    Name_KR: "1-\uC2A4\uD14C\uC774\uC9C0 \uC804\uD22C094"
+    Name_EN: 1-StageBattle094
+    Code: 410009
+    SponPosition: 3
+    Create_num: 20
+    Emeny_Code: 200013
+    AppearSpeed: 9
+    CreateSpeed: 0.5
+  - No: 25
+    Name_KR: "1-\uC2A4\uD14C\uC774\uC9C0 \uC804\uD22C095"
+    Name_EN: 1-StageBattle095
+    Code: 410009
+    SponPosition: 1
+    Create_num: 10
+    Emeny_Code: 200015
+    AppearSpeed: 12
+    CreateSpeed: 0.5
+  - No: 26
+    Name_KR: "1-\uC2A4\uD14C\uC774\uC9C0 \uC804\uD22C101"
+    Name_EN: 1-StageBattle101
+    Code: 410010
+    SponPosition: 3
+    Create_num: 10
+    Emeny_Code: 200017
+    AppearSpeed: 2
+    CreateSpeed: 0.5
+  - No: 27
+    Name_KR: "1-\uC2A4\uD14C\uC774\uC9C0 \uC804\uD22C102"
+    Name_EN: 1-StageBattle102
+    Code: 410010
+    SponPosition: 3
+    Create_num: 15
+    Emeny_Code: 200019
+    AppearSpeed: 8
+    CreateSpeed: 0.5
+  - No: 28
+    Name_KR: "1-\uC2A4\uD14C\uC774\uC9C0 \uC804\uD22C111"
+    Name_EN: 1-StageBattle111
+    Code: 410011
+    SponPosition: 1
+    Create_num: 15
+    Emeny_Code: 200008
+    AppearSpeed: 2
+    CreateSpeed: 0.5
+  - No: 29
+    Name_KR: "1-\uC2A4\uD14C\uC774\uC9C0 \uC804\uD22C112"
+    Name_EN: 1-StageBattle112
+    Code: 410011
+    SponPosition: 2
+    Create_num: 15
+    Emeny_Code: 200008
+    AppearSpeed: 2
+    CreateSpeed: 0.5
+  - No: 30
+    Name_KR: "1-\uC2A4\uD14C\uC774\uC9C0 \uC804\uD22C113"
+    Name_EN: 1-StageBattle113
+    Code: 410011
+    SponPosition: 3
+    Create_num: 15
+    Emeny_Code: 200008
+    AppearSpeed: 2
+    CreateSpeed: 0.5
+  - No: 31
+    Name_KR: "1-\uBCF4\uC2A4 \uC2A4\uD14C\uC774\uC9C0"
+    Name_EN: Boss_Stage1
+    Code: 410101
+    SponPosition: 3
+    Create_num: 10
+    Emeny_Code: 200001
+    AppearSpeed: 2
+    CreateSpeed: 0.5
