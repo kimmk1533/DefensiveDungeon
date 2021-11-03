@@ -8,8 +8,10 @@ public abstract class Devil : MonoBehaviour
 	public Enemy m_Target;
 
 	// 마왕 정보(엑셀)
+	[SerializeField]
 	protected Tower_TableExcel m_DevilInfo_Excel;
 	// 마왕 정보
+	[SerializeField]
 	protected S_DevilData m_DevilInfo;
 
 	protected delegate void DevilSkillHandler(DevilSkillArg arg);
