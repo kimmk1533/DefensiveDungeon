@@ -29,10 +29,10 @@ namespace forexcel2
             };
             // 1. 경로\파일이름 설정 (파일 우클릭 - 속성 - 일반 탭 - 위치)
             // 예시 @"D:\TD\(ALL) DataTable_12.2.xlsx"
-            string filepath = @"C:\Users\kimmk\source\repos\ExcelReader\Data\";
+            string filepath = @"C:\Users\PC-02\Desktop\github\DefensiveDungeon\ExcelReader\Data\";
             string filename = "(ALL) DataTable_13.8.xlsx";
             // 2. 뽑고자 하는 테이블의 시트 이름 설정
-            string sheet = "Tower_Table";
+            string sheet = "Prefab_Table";
             // 3. Ctrl + f5 실행
 
             ExcelReader excel = new ExcelReader();
