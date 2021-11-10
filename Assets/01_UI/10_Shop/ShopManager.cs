@@ -46,7 +46,7 @@ public class ShopManager : Singleton<ShopManager>
 
         // link callback
         UserInfoManager.Instance.OnLevelChanged += OnLevelChanged;
-        StageInfoManager.Instance.OnStageChangedEvent += OnStageChanged;
+        StageInfoManager.Instance.OnRestStageChangedEvent += OnStageChanged;
     }
 
     public void __Initialize()
