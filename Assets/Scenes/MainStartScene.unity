@@ -293,7 +293,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -123.2}
+  m_AnchoredPosition: {x: 0, y: -123.19998}
   m_SizeDelta: {x: 0, y: 640.76}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &72166183
@@ -926,7 +926,7 @@ GameObject:
   - component: {fileID: 187642884}
   - component: {fileID: 187642883}
   m_Layer: 5
-  m_Name: GameOffButton
+  m_Name: GameQuitButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2589,7 +2589,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -28.533394}
+  m_AnchoredPosition: {x: 0, y: -28.533386}
   m_SizeDelta: {x: -40, y: -117.06679}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &589874353
@@ -3036,7 +3036,7 @@ GameObject:
   - component: {fileID: 869034061}
   - component: {fileID: 869034060}
   m_Layer: 5
-  m_Name: GameOffButtonText (TMP)
+  m_Name: GameQuitButtonText (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3081,9 +3081,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Game Off
-
-'
+  m_text: Game Quit
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 41b2df8877401fa4db7523b9a129dd05, type: 2}
   m_sharedMaterial: {fileID: -6440278141908128399, guid: 41b2df8877401fa4db7523b9a129dd05, type: 2}
@@ -4421,7 +4419,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -28.533394}
+  m_AnchoredPosition: {x: 0, y: -28.533386}
   m_SizeDelta: {x: -40, y: -117.06679}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1305910429
@@ -4793,8 +4791,8 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 0
-  m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
+  m_Camera: {fileID: 1384964908}
+  m_PlaneDistance: 10
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -5073,7 +5071,7 @@ Camera:
   m_GameObject: {fileID: 1384964906}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
+  m_ClearFlags: 2
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -5090,7 +5088,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 0
+  orthographic: 1
   orthographic size: 5
   m_Depth: -1
   m_CullingMask:
@@ -5706,13 +5704,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1657605428}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.392}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -6555,7 +6553,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -28.533394}
+  m_AnchoredPosition: {x: 0, y: -28.533386}
   m_SizeDelta: {x: -40, y: -117.06679}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1969375762
