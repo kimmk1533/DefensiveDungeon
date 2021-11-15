@@ -110,6 +110,7 @@ public class Enemy : MonoBehaviour
     private SkillCondition_TableExcelLoader skillcondition_table => M_DataTable.GetDataTable<SkillCondition_TableExcelLoader>();
     private SkillStat_TableExcelLoader skillstat_table => M_DataTable.GetDataTable<SkillStat_TableExcelLoader>();
     private BuffCC_TableExcelLoader buffcc_table => M_DataTable.GetDataTable<BuffCC_TableExcelLoader>();
+    private FloatingTextManager M_DamageText => FloatingTextManager.Instance;
 
     #region 시너지 관련
     // 버프
@@ -387,6 +388,9 @@ public class Enemy : MonoBehaviour
     //데미지
     public void On_DaMage(float damage)
     {
+        if (!gameObject.activeSelf)
+            return;
+
         // 버프 적용 확률
         List<float> BuffRand = new List<float>();
         // 버프 적용 여부
@@ -658,19 +662,24 @@ public class Enemy : MonoBehaviour
 
         #endregion
 
-        if (damage <= Get_EnemyDef)
-        {
-            m_EnemyInfo.HP -= 1;
-        }
+        // 방어력 계산
+        damage -= Get_EnemyDef;
 
-        else
-        {
-            damage -= Get_EnemyDef;
-            m_EnemyInfo.HP -= damage;
-        }
+        // 최소 대미지 적용
+        if (damage <= 0f)
+            damage = 1f;
 
+        // 대미지 적용
+        m_EnemyInfo.HP -= damage;
+
+        // 대미지 텍스트
+        Vector3 text_position = transform.position + Vector3.forward * 2.5f;
+        M_DamageText.SpawnDamageText(damage.ToString(), text_position);
+
+        // 체력바 UI
         m_HPBar.fillAmount = m_EnemyInfo.HP / MaxHp;
 
+        // 사망 확인
         if (m_EnemyInfo.HP <= 0)
         {
             On_Death();
