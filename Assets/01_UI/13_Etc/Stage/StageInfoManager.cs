@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public struct StageChangedEventArgs
 {
 	public string stageName;    // stage name 
@@ -31,7 +30,7 @@ public class StageInfoManager : Singleton<StageInfoManager>
 	{
 		get
 		{
-			return (1.0f - (m_current_stageInfo.StageTime - m_timer) / m_current_stageInfo.StageTime);
+			return (m_current_stageInfo.StageTime - m_timer) / m_current_stageInfo.StageTime;
 		}
 	}
 
@@ -56,7 +55,7 @@ public class StageInfoManager : Singleton<StageInfoManager>
 			float remain_time = m_current_stageInfo.StageTime - m_timer;
 			OnTimeChangedEvent?.Invoke(remain_time, Progress);
 
-			if (Progress >= 1.0f)
+			if (Progress <= 0.0f)
 			{
 				m_timer = 0.0f;
 				GoNextStage();
@@ -78,14 +77,17 @@ public class StageInfoManager : Singleton<StageInfoManager>
 			UserInfoManager.Instance.AddGold(m_current_stageInfo.Gold + bonus_gold);
 			UserInfoManager.Instance.AddExp(m_current_stageInfo.Exp);
 
-			OnRestStageChangedEvent?.Invoke(
-				new StageChangedEventArgs
-				{
-					stageName = m_current_stageInfo.Name_EN,
-					stage_num = m_current_stageInfo.Stage_Num,
-					stage_type = m_current_stageInfo.StageType,
-					stage_time = m_current_stageInfo.StageTime,
-				});
+			if (1 < current_stage)
+			{
+				OnRestStageChangedEvent?.Invoke(
+					new StageChangedEventArgs
+					{
+						stageName = m_current_stageInfo.Name_EN,
+						stage_num = m_current_stageInfo.Stage_Num,
+						stage_type = m_current_stageInfo.StageType,
+						stage_time = m_current_stageInfo.StageTime,
+					});
+			}
 		}
 
 		// else
