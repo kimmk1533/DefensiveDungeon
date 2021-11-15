@@ -17,6 +17,7 @@ public class StageInfoManager : Singleton<StageInfoManager>
 	public event StageChangeHandler OnRestStageChangedEvent;
 	public delegate void TimerUpdateHandler(float remainTime, float progress);
 	public event TimerUpdateHandler OnTimeChangedEvent;
+	public event GameOverHandler OnGameEndEvent;
 
 	[SerializeField] Stage_TableExcel m_current_stageInfo;
 	[SerializeField] int current_stage;
@@ -90,14 +91,22 @@ public class StageInfoManager : Singleton<StageInfoManager>
 			}
 		}
 
-		// else
 		OnStageChangedEvent?.Invoke(
-				new StageChangedEventArgs
-				{
-					stageName = m_current_stageInfo.Name_EN,
-					stage_num = m_current_stageInfo.Stage_Num,
-					stage_type = m_current_stageInfo.StageType,
-					stage_time = m_current_stageInfo.StageTime,
-				});
+			new StageChangedEventArgs
+			{
+				stageName = m_current_stageInfo.Name_EN,
+				stage_num = m_current_stageInfo.Stage_Num,
+				stage_type = m_current_stageInfo.StageType,
+				stage_time = m_current_stageInfo.StageTime,
+			});
+
+		// 게임 승리 (모든 스테이지 클리어)
+		if (m_current_stageInfo.Stage_Num >= m_excel_loader.DataList.Count)
+		{
+			OnGameEndEvent?.Invoke(new GameEndData
+			{
+				IsWin = true
+			});
+		}
 	}
 }

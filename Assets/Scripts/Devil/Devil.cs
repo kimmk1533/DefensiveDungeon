@@ -21,8 +21,7 @@ public abstract class Devil : MonoBehaviour
 	public delegate void DevilUpdateHPHandler(float max, float current);
 	public event DevilUpdateHPHandler UpdateHPEvent;
 
-	public delegate void DevilDeathHandler(GameEndData data);
-	public event DevilDeathHandler DeathEvent;
+	public event GameOverHandler OnGameEndEvent;
 
 	#region 내부 컴포넌트
 	[SerializeField, ReadOnly]
@@ -351,7 +350,7 @@ public abstract class Devil : MonoBehaviour
 	}
 	public void CallDie()
 	{
-		DeathEvent?.Invoke(new GameEndData()
+		OnGameEndEvent?.Invoke(new GameEndData()
 		{
 			IsWin = false
 		});
