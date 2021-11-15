@@ -5,173 +5,169 @@ using UnityEngine;
 [DefaultExecutionOrder(-97)]
 public abstract class ObjectPool<Pool, Origin> : Singleton<Pool> where Pool : MonoBehaviour where Origin : MonoBehaviour
 {
-    [ReadOnly(true)]
-    public int m_PoolSize = 100;
+	[SerializeField, ReadOnly(true)]
+	private int m_PoolSize = 100;
 
-    public Dictionary<string, Origin> m_Origins = null;
-    protected Dictionary<string, MemoryPool<Origin>> m_Pools = null;
+	private Dictionary<string, Origin> m_Origins = null;
+	private Dictionary<string, MemoryPool<Origin>> m_Pools = null;
 
-    protected ResourcesManager M_Resources => ResourcesManager.Instance;
+	#region 내부 프로퍼티
+	protected ResourcesManager M_Resources => ResourcesManager.Instance;
+	#endregion
 
-    protected virtual void Awake()
-    {
-        __Initialize();
-    }
-    protected virtual void OnApplicationQuit()
-    {
-        __Finalize();
-    }
+	#region 내부 함수
+	protected bool AddPool(string key, Origin origin, Transform parent)
+	{
+		if (m_Origins.ContainsKey(key))
+			return false;
 
-    public virtual void __Initialize()
-    {
-        m_Origins = new Dictionary<string, Origin>();
-        m_Pools = new Dictionary<string, MemoryPool<Origin>>();
+		m_Origins.Add(key, origin);
 
-        //for (int i = 0; i < m_Origins.Count; ++i)
-        //{
-        //    GameObject parent = new GameObject();
-        //    parent.transform.SetParent(this.transform);
-        //    parent.name = m_Origins[i].name + "_parent";
+		GameObject Parent = new GameObject();
+		Parent.name = origin.name;
+		Parent.transform.SetParent(parent);
+		origin.transform.SetParent(Parent.transform);
 
-        //    m_Pools.Add(m_Origins[i].name, new MemoryPool(m_Origins[i], m_PoolSize, parent.transform));
-        //}
-    }
-    public virtual void __Finalize()
-    {
-        if (m_Pools == null)
-            return;
+		m_Pools.Add(key, new MemoryPool<Origin>(origin, m_PoolSize, Parent.transform));
 
-        foreach (var item in m_Pools)
-        {
-            item.Value?.Dispose();
-        }
+		origin.name += "_Origin";
 
-        m_Pools.Clear();
-        m_Pools = null;
-    }
+		return true;
+	}
+	#endregion
+	#region 외부 함수
+	public virtual void __Initialize()
+	{
+		m_Origins = new Dictionary<string, Origin>();
+		m_Pools = new Dictionary<string, MemoryPool<Origin>>();
 
-    protected bool AddPool(string key, Origin origin, Transform parent)
-    {
-        if (m_Origins.ContainsKey(key))
-            return false;
+		//for (int i = 0; i < m_Origins.Count; ++i)
+		//{
+		//    GameObject parent = new GameObject();
+		//    parent.transform.SetParent(this.transform);
+		//    parent.name = m_Origins[i].name + "_parent";
 
-        m_Origins.Add(key, origin);
+		//    m_Pools.Add(m_Origins[i].name, new MemoryPool(m_Origins[i], m_PoolSize, parent.transform));
+		//}
+	}
+	public virtual void __Finalize()
+	{
+		if (m_Pools == null)
+			return;
 
-        GameObject Parent = new GameObject();
-        Parent.name = origin.name;
-        Parent.transform.SetParent(parent);
-        origin.transform.SetParent(Parent.transform);
+		foreach (var item in m_Pools)
+		{
+			item.Value?.Dispose();
+		}
 
-        m_Pools.Add(key, new MemoryPool<Origin>(origin, m_PoolSize, Parent.transform));
+		m_Pools.Clear();
+		m_Pools = null;
+	}
 
-        origin.name += "_Origin";
+	public virtual MemoryPool<Origin> GetPool(string key)
+	{
+		if (key == null)
+			return null;
 
-        return true;
-    }
-    public virtual MemoryPool<Origin> GetPool(string key)
-    {
-        if (key == null)
-            return null;
+		if (m_Pools.ContainsKey(key))
+			return m_Pools[key];
 
-        if (m_Pools.ContainsKey(key))
-            return m_Pools[key];
-
-        return null;
-    }
-
-    //public abstract GameObject Spawn();
-    //public abstract void Despawn(GameObject obj);
+		return null;
+	}
+	#endregion
+	#region 유니티 콜백 함수
+	protected virtual void Awake()
+	{
+		__Initialize();
+	}
+	protected virtual void OnApplicationQuit()
+	{
+		__Finalize();
+	}
+	#endregion
 }
 
 [DefaultExecutionOrder(-97)]
 public abstract class ObjectPool<Pool> : Singleton<Pool> where Pool : MonoBehaviour
 {
-    [ReadOnly(true)]
-    public int m_PoolSize = 100;
+	[SerializeField, ReadOnly(true)]
+	private int m_PoolSize = 100;
 
-    public Dictionary<string, GameObject> m_Origins = null;
-    protected Dictionary<string, MemoryPool> m_Pools = null;
+	private Dictionary<string, GameObject> m_Origins = null;
+	private Dictionary<string, MemoryPool> m_Pools = null;
 
-//#if UNITY_EDITOR
-//    [ReadOnly]
-//    public DebugDictionary<string, GameObject> m_DebugOrigin = null;
-//#endif
+	#region 내부 프로퍼티
+	protected ResourcesManager M_Resources => ResourcesManager.Instance;
+	#endregion
 
-    protected ResourcesManager M_Resources => ResourcesManager.Instance;
+	#region 내부 함수
+	protected bool AddPool(string key, GameObject origin, Transform parent)
+	{
+		if (m_Origins.ContainsKey(key))
+			return false;
 
-    protected virtual void Awake()
-    {
-        __Initialize();
-    }
-    protected virtual void OnApplicationQuit()
-    {
-        __Finalize();
-    }
+		m_Origins.Add(key, origin);
 
-    public virtual void __Initialize()
-    {
-        m_Origins = new Dictionary<string, GameObject>();
-        m_Pools = new Dictionary<string, MemoryPool>();
+		GameObject Parent = new GameObject();
+		Parent.name = origin.name;
+		Parent.transform.SetParent(parent);
+		origin.transform.SetParent(Parent.transform);
 
-//#if UNITY_EDITOR
-//        m_DebugOrigin = new DebugDictionary<string, GameObject>();
-//#endif
+		m_Pools.Add(key, new MemoryPool(origin, m_PoolSize, Parent.transform));
 
-        //for (int i = 0; i < m_Origins.Count; ++i)
-        //{
-        //    GameObject parent = new GameObject();
-        //    parent.transform.SetParent(this.transform);
-        //    parent.name = m_Origins[i].name + "_parent";
+		origin.name += "_Origin";
 
-        //    m_Pools.Add(m_Origins[i].name, new MemoryPool(m_Origins[i], m_PoolSize, parent.transform));
-        //}
-    }
-    public virtual void __Finalize()
-    {
-        if (m_Pools == null)
-            return;
+		return true;
+	}
+	#endregion
+	#region 외부 함수
+	public virtual void __Initialize()
+	{
+		m_Origins = new Dictionary<string, GameObject>();
+		m_Pools = new Dictionary<string, MemoryPool>();
 
-        foreach (var item in m_Pools)
-        {
-            item.Value?.Dispose();
-        }
+		//for (int i = 0; i < m_Origins.Count; ++i)
+		//{
+		//    GameObject parent = new GameObject();
+		//    parent.transform.SetParent(this.transform);
+		//    parent.name = m_Origins[i].name + "_parent";
 
-        m_Pools.Clear();
-        m_Pools = null;
-    }
+		//    m_Pools.Add(m_Origins[i].name, new MemoryPool(m_Origins[i], m_PoolSize, parent.transform));
+		//}
+	}
+	public virtual void __Finalize()
+	{
+		if (m_Pools == null)
+			return;
 
-    protected bool AddPool(string key, GameObject origin, Transform parent)
-    {
-        if (m_Origins.ContainsKey(key))
-            return false;
+		foreach (var item in m_Pools)
+		{
+			item.Value?.Dispose();
+		}
 
-        m_Origins.Add(key, origin);
+		m_Pools.Clear();
+		m_Pools = null;
+	}
 
-        GameObject Parent = new GameObject();
-        Parent.name = origin.name;
-        Parent.transform.SetParent(parent);
-        origin.transform.SetParent(Parent.transform);
+	public virtual MemoryPool GetPool(string key)
+	{
+		if (key == null)
+			return null;
 
-        m_Pools.Add(key, new MemoryPool(origin, m_PoolSize, Parent.transform));
+		if (m_Pools.ContainsKey(key))
+			return m_Pools[key];
 
-        origin.name += "_Origin";
-
-//#if UNITY_EDITOR
-//        m_DebugOrigin.Add(key, origin);
-//#endif
-        return true;
-    }
-    public virtual MemoryPool GetPool(string key)
-    {
-        if (key == null)
-            return null;
-
-        if (m_Pools.ContainsKey(key))
-            return m_Pools[key];
-
-        return null;
-    }
-
-    //public abstract GameObject Spawn();
-    //public abstract void Despawn(GameObject obj);
+		return null;
+	}
+	#endregion
+	#region 유니티 콜백 함수
+	protected virtual void Awake()
+	{
+		__Initialize();
+	}
+	protected virtual void OnApplicationQuit()
+	{
+		__Finalize();
+	}
+	#endregion
 }

@@ -1,427 +1,429 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Skill : MonoBehaviour
 {
-    // ½ºÅ³ Á¤º¸ (¿¢¼¿)
-    public SkillCondition_TableExcel m_ConditionInfo_Excel;
-    public SkillStat_TableExcel m_StatInfo_Excel;
-    // ½ºÅ³ Á¤º¸
-    public S_SkillData m_SkillInfo;
+	// ìŠ¤í‚¬ ì •ë³´ (ì—‘ì…€)
+	public SkillCondition_TableExcel m_ConditionInfo_Excel;
+	public SkillStat_TableExcel m_StatInfo_Excel;
+	// ìŠ¤í‚¬ ì •ë³´
+	public S_SkillData m_SkillInfo;
 
-    // Å¸°Ù
-    public Enemy m_Target;
+	// íƒ€ê²Ÿ
+	public Enemy m_Target;
 
-    #region ³»ºÎ ÇÁ·ÎÆÛÆ¼
-    // ½ºÅ³ ¸Å´ÏÁ®
-    protected SkillManager M_Skill => SkillManager.Instance;
-    // ¹öÇÁ ¸Å´ÏÁ®
-    protected BuffManager M_Buff => BuffManager.Instance;
-    // ÀÌÆåÆ® ¸Å´ÏÁ®
-    protected EffectManager M_Effect => EffectManager.Instance;
+	#region ë‚´ë¶€ í”„ë¡œí¼í‹°
+	// ìŠ¤í‚¬ ë§¤ë‹ˆì ¸
+	protected SkillManager M_Skill => SkillManager.Instance;
+	// ë²„í”„ ë§¤ë‹ˆì ¸
+	protected BuffManager M_Buff => BuffManager.Instance;
+	// ì´í™íŠ¸ ë§¤ë‹ˆì ¸
+	protected EffectManager M_Effect => EffectManager.Instance;
 
-    // Å¸°Ù À§Ä¡
-    protected Vector3 TargetPos => (m_Target == null ? Vector3.zero : m_Target.transform.position);
-    // ½ºÅ³ ÀÌµ¿ ¼Óµµ
-    protected float MoveSpeed => m_StatInfo_Excel.Speed * Time.deltaTime;
-    // Å¸°Ù±îÁöÀÇ ¹æÇâ
-    protected Vector3 TargetDir => TargetPos - transform.position;
-    // Å¸°Ù±îÁöÀÇ °Å¸®
-    protected float DistanceToTarget => Vector3.Distance(transform.position, TargetPos);
-    // Å¸°Ù ÀÒ¾î¹ö¸²
-    protected bool LostTarget => m_Target == null || m_Target.IsDie;
-    // Å¸°Ù¿¡°Ô µµÂø ¿©ºÎ
-    protected bool ArrivedToTarget => DistanceToTarget <= m_SkillInfo.AttackRange.Range;
-    // »ıÁ¸ ½Ã°£ ¼ÒÁø
-    protected bool DepletedLifeTime => m_SkillInfo.LifeTime <= 0f;
-    // Æ¨±è Ä«¿îÆ® ¼ÒÁø
-    protected bool DepletedBounceCount => m_SkillInfo.BounceCount <= 0;
-    #endregion
+	// íƒ€ê²Ÿ ìœ„ì¹˜
+	protected Vector3 TargetPos => (m_Target == null ? Vector3.zero : m_Target.transform.position);
+	// ìŠ¤í‚¬ ì´ë™ ì†ë„
+	protected float MoveSpeed => m_StatInfo_Excel.Speed * Time.deltaTime;
+	// íƒ€ê²Ÿê¹Œì§€ì˜ ë°©í–¥
+	protected Vector3 TargetDir => TargetPos - transform.position;
+	// íƒ€ê²Ÿê¹Œì§€ì˜ ê±°ë¦¬
+	protected float DistanceToTarget => Vector3.Distance(transform.position, TargetPos);
+	// íƒ€ê²Ÿ ìƒì–´ë²„ë¦¼
+	protected bool LostTarget => m_Target == null || m_Target.IsDie;
+	// íƒ€ê²Ÿì—ê²Œ ë„ì°© ì—¬ë¶€
+	protected bool ArrivedToTarget => DistanceToTarget <= m_SkillInfo.AttackRange.Range;
+	// ìƒì¡´ ì‹œê°„ ì†Œì§„
+	protected bool DepletedLifeTime => m_SkillInfo.LifeTime <= 0f;
+	// íŠ•ê¹€ ì¹´ìš´íŠ¸ ì†Œì§„
+	protected bool DepletedBounceCount => m_SkillInfo.BounceCount <= 0;
+	#endregion
 
-    private void Update()
-    {
-        if (CheckToDespawn())
-        {
-            Despawn();
-            return;
-        }
+	private void Update()
+	{
+		if (CheckToDespawn())
+		{
+			Despawn();
+			return;
+		}
 
-        UpdateInfo();
+		UpdateInfo();
 
-        RotateSkill();
-        MoveSkill();
+		RotateSkill();
+		MoveSkill();
 
-        if (CheckToAttack())
-        {
-            Attack();
-        }
+		if (CheckToAttack())
+		{
+			Attack();
+		}
 
-        if (CheckToUpdateTarget())
-        {
-            UpdateTarget();
-        }
-    }
+		if (CheckToUpdateTarget())
+		{
+			UpdateTarget();
+		}
+	}
 
-    #region ³»ºÎ ÇÔ¼ö
-    protected bool CheckToDespawn()
-    {
-        switch ((E_AttackType)m_ConditionInfo_Excel.Atk_type)
-        {
-            case E_AttackType.NormalFire:
-                return LostTarget || ArrivedToTarget;
-            case E_AttackType.FixedFire:
-            case E_AttackType.PenetrateFire:
-                return DepletedLifeTime;
-            case E_AttackType.BounceFire:
-                return LostTarget || DepletedBounceCount;
-        }
+	#region ë‚´ë¶€ í•¨ìˆ˜
+	protected bool CheckToDespawn()
+	{
+		switch ((E_AttackType)m_ConditionInfo_Excel.Atk_type)
+		{
+			case E_AttackType.NormalFire:
+				return LostTarget || ArrivedToTarget;
+			case E_AttackType.FixedFire:
+			case E_AttackType.PenetrateFire:
+				return DepletedLifeTime;
+			case E_AttackType.BounceFire:
+				return LostTarget || DepletedBounceCount;
+		}
 
-        return LostTarget || ArrivedToTarget;
-    }
-    protected void Despawn()
-    {
-        Skill skill = M_Skill.SpawnProjectileSkill(m_StatInfo_Excel.LoadCode);
-        SkillCondition_TableExcel condition = M_Skill.GetConditionData(m_StatInfo_Excel.LoadCode);
-        SkillStat_TableExcel stat = M_Skill.GetStatData(condition.PassiveCode);
-        skill?.InitializeSkill(m_Target, condition, stat);
+		return LostTarget || ArrivedToTarget;
+	}
+	protected void Despawn()
+	{
+		SkillCondition_TableExcel condition = M_Skill.GetConditionData(m_StatInfo_Excel.LoadCode);
+		SkillStat_TableExcel stat = M_Skill.GetStatData(condition.PassiveCode);
+		Skill skill = M_Skill.SpawnProjectileSkill(condition.projectile_prefab);
+		skill.enabled = true;
+		skill.gameObject.SetActive(true);
+		skill?.InitializeSkill(m_Target, condition, stat);
 
-        m_Target = null;
+		m_Target = null;
 
-        switch ((E_AttackType)m_ConditionInfo_Excel.Atk_type)
-        {
-            case E_AttackType.FixedFire:
-                m_SkillInfo.FixedTargetList.Clear();
-                break;
-            case E_AttackType.PenetrateFire:
-                m_SkillInfo.FixedTargetList.Clear();
-                m_SkillInfo.PenetrateTargetList.Clear();
-                break;
-            case E_AttackType.BounceFire:
-                m_SkillInfo.BounceTargetList.Clear();
-                break;
-        }
+		switch ((E_AttackType)m_ConditionInfo_Excel.Atk_type)
+		{
+			case E_AttackType.FixedFire:
+				m_SkillInfo.FixedTargetList.Clear();
+				break;
+			case E_AttackType.PenetrateFire:
+				m_SkillInfo.FixedTargetList.Clear();
+				m_SkillInfo.PenetrateTargetList.Clear();
+				break;
+			case E_AttackType.BounceFire:
+				m_SkillInfo.BounceTargetList.Clear();
+				break;
+		}
 
-        m_SkillInfo.AttackRange.Clear();
+		m_SkillInfo.AttackRange.Clear();
 
-        M_Skill.DespawnProjectileSkill(this);
-    }
-    protected bool CheckToUpdateTarget()
-    {
-        switch ((E_AttackType)m_ConditionInfo_Excel.Atk_type)
-        {
-            case E_AttackType.BounceFire:
-                return ArrivedToTarget;
-        }
+		M_Skill.DespawnProjectileSkill(this);
+	}
+	protected bool CheckToUpdateTarget()
+	{
+		switch ((E_AttackType)m_ConditionInfo_Excel.Atk_type)
+		{
+			case E_AttackType.BounceFire:
+				return ArrivedToTarget;
+		}
 
-        return false;
-    }
-    protected void UpdateTarget()
-    {
-        switch ((E_AttackType)m_ConditionInfo_Excel.Atk_type)
-        {
-            case E_AttackType.BounceFire:
-                m_SkillInfo.InitPos = m_Target.transform.position;
+		return false;
+	}
+	protected void UpdateTarget()
+	{
+		switch ((E_AttackType)m_ConditionInfo_Excel.Atk_type)
+		{
+			case E_AttackType.BounceFire:
+				m_SkillInfo.InitPos = m_Target.transform.position;
 
-                if (m_SkillInfo.CanOverlapBounce)
-                {
-                    switch ((E_TargetType)m_ConditionInfo_Excel.Target_type)
-                    {
-                        case E_TargetType.CloseTarget:
-                            m_Target = m_SkillInfo.AttackRange.GetNearTarget(true);
-                            break;
-                        case E_TargetType.RandTarget:
-                            m_Target = m_SkillInfo.AttackRange.GetRandomTarget();
-                            break;
-                        case E_TargetType.FixTarget:
-                            m_Target = m_SkillInfo.AttackRange.GetNearTarget(true);
-                            break;
-                        case E_TargetType.TileTarget:
-                            m_Target = m_SkillInfo.AttackRange.GetNearTarget(true);
-                            break;
-                    }
-                }
-                else
-                {
-                    do
-                    {
-                        m_SkillInfo.AttackRange.RemoveTarget(m_Target);
+				if (m_SkillInfo.CanOverlapBounce)
+				{
+					switch ((E_TargetType)m_ConditionInfo_Excel.Target_type)
+					{
+						case E_TargetType.CloseTarget:
+							m_Target = m_SkillInfo.AttackRange.GetNearTarget(true);
+							break;
+						case E_TargetType.RandTarget:
+							m_Target = m_SkillInfo.AttackRange.GetRandomTarget();
+							break;
+						case E_TargetType.FixTarget:
+							m_Target = m_SkillInfo.AttackRange.GetNearTarget(true);
+							break;
+						case E_TargetType.TileTarget:
+							m_Target = m_SkillInfo.AttackRange.GetNearTarget(true);
+							break;
+					}
+				}
+				else
+				{
+					do
+					{
+						m_SkillInfo.AttackRange.RemoveTarget(m_Target);
 
-                        switch ((E_TargetType)m_ConditionInfo_Excel.Target_type)
-                        {
-                            case E_TargetType.CloseTarget:
-                                m_Target = m_SkillInfo.AttackRange.GetNearTarget();
-                                break;
-                            case E_TargetType.RandTarget:
-                                m_Target = m_SkillInfo.AttackRange.GetRandomTarget();
-                                break;
-                            case E_TargetType.FixTarget:
-                                m_Target = m_SkillInfo.AttackRange.GetNearTarget();
-                                break;
-                            case E_TargetType.TileTarget:
-                                m_Target = m_SkillInfo.AttackRange.GetNearTarget();
-                                break;
-                        }
+						switch ((E_TargetType)m_ConditionInfo_Excel.Target_type)
+						{
+							case E_TargetType.CloseTarget:
+								m_Target = m_SkillInfo.AttackRange.GetNearTarget();
+								break;
+							case E_TargetType.RandTarget:
+								m_Target = m_SkillInfo.AttackRange.GetRandomTarget();
+								break;
+							case E_TargetType.FixTarget:
+								m_Target = m_SkillInfo.AttackRange.GetNearTarget();
+								break;
+							case E_TargetType.TileTarget:
+								m_Target = m_SkillInfo.AttackRange.GetNearTarget();
+								break;
+						}
 
-                    } while (m_SkillInfo.BounceTargetList.Contains(m_Target));
+					} while (m_SkillInfo.BounceTargetList.Contains(m_Target));
 
-                    if (null != m_Target)
-                    {
-                        m_SkillInfo.BounceTargetList.Add(m_Target);
-                    }
-                }
-                break;
-        }
-    }
-    protected void RotateSkill()
-    {
-        switch ((E_MoveType)m_ConditionInfo_Excel.Move_type)
-        {
-            case E_MoveType.Straight:
-                transform.LookAt(transform.position + TargetDir);
-                break;
-            case E_MoveType.Curve:
-                transform.LookAt(transform.position + GetCurveDir());
-                break;
-        }
-    }
-    protected void MoveSkill()
-    {
-        switch ((E_MoveType)m_ConditionInfo_Excel.Move_type)
-        {
-            case E_MoveType.Straight:
-                StraightMove();
-                break;
-            case E_MoveType.Curve:
-                CurveMove();
-                break;
-        }
-    }
-    protected void StraightMove()
-    {
-        transform.position += TargetDir.normalized * MoveSpeed;
-    }
-    private Vector3 GetCurveDir()
-    {
-        // Æ÷¹°¼± ÀÌµ¿ Á¦ÀÛ
-        // ÃâÃ³: https://robatokim.tistory.com/entry/%EA%B2%8C%EC%9E%84%EC%88%98%ED%95%99-%EC%97%AD%ED%83%84%EB%8F%84%EA%B3%84%EC%82%B0%EC%9D%84-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EB%91%90%EC%A0%90-%EC%82%AC%EC%9D%98-%ED%8F%AC%EB%AC%BC%EC%84%A0-%EA%B5%AC%ED%95%98%EA%B8%B0
-        Vector3 StartPos = m_SkillInfo.InitPos;
-        Vector3 EndPos = m_Target.transform.position;
-        Vector3 Pos = transform.position;
+					if (null != m_Target)
+					{
+						m_SkillInfo.BounceTargetList.Add(m_Target);
+					}
+				}
+				break;
+		}
+	}
+	protected void RotateSkill()
+	{
+		switch ((E_MoveType)m_ConditionInfo_Excel.Move_type)
+		{
+			case E_MoveType.Straight:
+				transform.LookAt(transform.position + TargetDir);
+				break;
+			case E_MoveType.Curve:
+				transform.LookAt(transform.position + GetCurveDir());
+				break;
+		}
+	}
+	protected void MoveSkill()
+	{
+		switch ((E_MoveType)m_ConditionInfo_Excel.Move_type)
+		{
+			case E_MoveType.Straight:
+				StraightMove();
+				break;
+			case E_MoveType.Curve:
+				CurveMove();
+				break;
+		}
+	}
+	protected void StraightMove()
+	{
+		transform.position += TargetDir.normalized * MoveSpeed;
+	}
+	private Vector3 GetCurveDir()
+	{
+		// í¬ë¬¼ì„  ì´ë™ ì œì‘
+		// ì¶œì²˜: https://robatokim.tistory.com/entry/%EA%B2%8C%EC%9E%84%EC%88%98%ED%95%99-%EC%97%AD%ED%83%84%EB%8F%84%EA%B3%84%EC%82%B0%EC%9D%84-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EB%91%90%EC%A0%90-%EC%82%AC%EC%9D%98-%ED%8F%AC%EB%AC%BC%EC%84%A0-%EA%B5%AC%ED%95%98%EA%B8%B0
+		Vector3 StartPos = m_SkillInfo.InitPos;
+		Vector3 EndPos = m_Target.transform.position;
+		Vector3 Pos = transform.position;
 
-        // ÃÖ´ë ³ôÀÌ
-        float MaxHeight = Mathf.Max(StartPos.y, EndPos.y) + 2.5f;
-        // ÃÖ´ë ³ôÀÌ±îÁö °¡´Â ½Ã°£
-        float MaxTime = (MaxHeight - StartPos.y) / m_StatInfo_Excel.Speed;
+		// ìµœëŒ€ ë†’ì´
+		float MaxHeight = Mathf.Max(StartPos.y, EndPos.y) + 2.5f;
+		// ìµœëŒ€ ë†’ì´ê¹Œì§€ ê°€ëŠ” ì‹œê°„
+		float MaxTime = (MaxHeight - StartPos.y) / m_StatInfo_Excel.Speed;
 
-        float EndHeight = EndPos.y - StartPos.y;
-        float Height = MaxHeight - StartPos.y;
+		float EndHeight = EndPos.y - StartPos.y;
+		float Height = MaxHeight - StartPos.y;
 
-        float g = 2 * Height / Mathf.Pow(MaxTime, 2f);
+		float g = 2 * Height / Mathf.Pow(MaxTime, 2f);
 
-        float V_Y = Mathf.Sqrt(2 * g * Height);
+		float V_Y = Mathf.Sqrt(2 * g * Height);
 
-        float a = g;
-        float b = -2 * V_Y;
-        float c = 2 * EndHeight;
+		float a = g;
+		float b = -2 * V_Y;
+		float c = 2 * EndHeight;
 
-        float EndTime = (-b + Mathf.Sqrt(b * b - 4 * a * c)) / (2 * a);
+		float EndTime = (-b + Mathf.Sqrt(b * b - 4 * a * c)) / (2 * a);
 
-        float V_X = -(StartPos.x - EndPos.x) / EndTime;
-        float V_Z = -(StartPos.z - EndPos.z) / EndTime;
+		float V_X = -(StartPos.x - EndPos.x) / EndTime;
+		float V_Z = -(StartPos.z - EndPos.z) / EndTime;
 
-        Vector3 InitPos = StartPos;
-        InitPos.y = 0f;
-        EndPos.y = 0f;
-        float Max = Vector3.Distance(InitPos, EndPos);
+		Vector3 InitPos = StartPos;
+		InitPos.y = 0f;
+		EndPos.y = 0f;
+		float Max = Vector3.Distance(InitPos, EndPos);
 
-        Pos.y = 0f;
-        float time = (1f + Time.deltaTime - Vector3.Distance(Pos, EndPos) / Max) * EndTime;
+		Pos.y = 0f;
+		float time = (1f + Time.deltaTime - Vector3.Distance(Pos, EndPos) / Max) * EndTime;
 
-        Pos.x = StartPos.x + V_X * time;
-        Pos.y = StartPos.y + (V_Y * time) - (g * time * time * 0.5f);
-        Pos.z = StartPos.z + V_Z * time;
+		Pos.x = StartPos.x + V_X * time;
+		Pos.y = StartPos.y + (V_Y * time) - (g * time * time * 0.5f);
+		Pos.z = StartPos.z + V_Z * time;
 
-        Vector3 dir = Pos - transform.position;
+		Vector3 dir = Pos - transform.position;
 
-        return dir;
-    }
-    protected void CurveMove()
-    {
-        transform.position += GetCurveDir().normalized * MoveSpeed;
-    }
-    protected void UpdateInfo()
-    {
-        switch ((E_AttackType)m_ConditionInfo_Excel.Atk_type)
-        {
-            case E_AttackType.NormalFire:
-                break;
-            case E_AttackType.FixedFire:
-                if (m_SkillInfo.DotTimer <= 0f)
-                {
-                    m_SkillInfo.DotTimer += 1f;
-                }
-                m_SkillInfo.DotTimer -= Time.deltaTime;
-                m_SkillInfo.LifeTime -= Time.deltaTime;
-                break;
-            case E_AttackType.PenetrateFire:
-                m_SkillInfo.LifeTime -= Time.deltaTime;
-                break;
-            case E_AttackType.BounceFire:
-                break;
-        }
-    }
-    protected bool CheckToAttack()
-    {
-        if (LostTarget)
-            return false;
+		return dir;
+	}
+	protected void CurveMove()
+	{
+		transform.position += GetCurveDir().normalized * MoveSpeed;
+	}
+	protected void UpdateInfo()
+	{
+		switch ((E_AttackType)m_ConditionInfo_Excel.Atk_type)
+		{
+			case E_AttackType.NormalFire:
+				break;
+			case E_AttackType.FixedFire:
+				if (m_SkillInfo.DotTimer <= 0f)
+				{
+					m_SkillInfo.DotTimer += 1f;
+				}
+				m_SkillInfo.DotTimer -= Time.deltaTime;
+				m_SkillInfo.LifeTime -= Time.deltaTime;
+				break;
+			case E_AttackType.PenetrateFire:
+				m_SkillInfo.LifeTime -= Time.deltaTime;
+				break;
+			case E_AttackType.BounceFire:
+				break;
+		}
+	}
+	protected bool CheckToAttack()
+	{
+		if (LostTarget)
+			return false;
 
-        switch ((E_AttackType)m_ConditionInfo_Excel.Atk_type)
-        {
-            case E_AttackType.NormalFire:
-                return ArrivedToTarget;
-            case E_AttackType.FixedFire:
-                return m_SkillInfo.DotTimer <= 0f;
-            case E_AttackType.PenetrateFire:
-                return m_SkillInfo.PenetrateTargetList.Count > 0;
-            case E_AttackType.BounceFire:
-                return ArrivedToTarget;
-        }
+		switch ((E_AttackType)m_ConditionInfo_Excel.Atk_type)
+		{
+			case E_AttackType.NormalFire:
+				return ArrivedToTarget;
+			case E_AttackType.FixedFire:
+				return m_SkillInfo.DotTimer <= 0f;
+			case E_AttackType.PenetrateFire:
+				return m_SkillInfo.PenetrateTargetList.Count > 0;
+			case E_AttackType.BounceFire:
+				return ArrivedToTarget;
+		}
 
-        return ArrivedToTarget;
-    }
-    protected void Attack()
-    {
-        // ÇÇ°İ ÀÌÆåÆ® »ı¼º
-        Effect hitEffect = M_Effect.SpawnEffect(m_ConditionInfo_Excel.damage_prefab);
-        if (null != hitEffect)
-        {
-            hitEffect.transform.position = m_Target.HitPivot.transform.position;
-            hitEffect.gameObject.SetActive(true);
-        }
+		return ArrivedToTarget;
+	}
+	protected void Attack()
+	{
+		// í”¼ê²© ì´í™íŠ¸ ìƒì„±
+		Effect hitEffect = M_Effect.SpawnEffect(m_ConditionInfo_Excel.damage_prefab);
+		if (null != hitEffect)
+		{
+			hitEffect.transform.position = m_Target.HitPivot.transform.position;
+			hitEffect.gameObject.SetActive(true);
+		}
 
-        float damage = m_StatInfo_Excel.Dmg;
-        BuffCC_TableExcel buffData = M_Buff.GetData(m_StatInfo_Excel.Buff_CC);
+		float damage = m_StatInfo_Excel.Dmg;
+		BuffCC_TableExcel buffData = M_Buff.GetData(m_StatInfo_Excel.Buff_CC);
 
-        switch ((E_AttackType)m_ConditionInfo_Excel.Atk_type)
-        {
-            case E_AttackType.NormalFire:
-                if (buffData.Code != 0)
-                {
-                    m_Target.BuffList.Add(buffData);
-                }
+		switch ((E_AttackType)m_ConditionInfo_Excel.Atk_type)
+		{
+			case E_AttackType.NormalFire:
+				if (buffData.Code != 0)
+				{
+					m_Target.BuffList.Add(buffData);
+				}
 
-                m_Target.On_DaMage(damage);
-                break;
-            case E_AttackType.FixedFire:
-                for (int i = 0; i < m_SkillInfo.FixedTargetList.Count; ++i)
-                {
-                    if (buffData.Code != 0)
-                    {
-                        m_SkillInfo.FixedTargetList[i].BuffList.Add(buffData);
-                    }
+				m_Target.On_DaMage(damage);
+				break;
+			case E_AttackType.FixedFire:
+				for (int i = 0; i < m_SkillInfo.FixedTargetList.Count; ++i)
+				{
+					if (buffData.Code != 0)
+					{
+						m_SkillInfo.FixedTargetList[i].BuffList.Add(buffData);
+					}
 
-                    m_SkillInfo.FixedTargetList[i].On_DaMage(damage);
-                }
-                break;
-            case E_AttackType.PenetrateFire:
-                for (int i = 0; i < m_SkillInfo.FixedTargetList.Count; ++i)
-                {
-                    Enemy target = m_SkillInfo.FixedTargetList[i];
+					m_SkillInfo.FixedTargetList[i].On_DaMage(damage);
+				}
+				break;
+			case E_AttackType.PenetrateFire:
+				for (int i = 0; i < m_SkillInfo.FixedTargetList.Count; ++i)
+				{
+					Enemy target = m_SkillInfo.FixedTargetList[i];
 
-                    if (!m_SkillInfo.PenetrateTargetList.Contains(target))
-                    {
-                        if (buffData.Code != 0)
-                        {
-                            target.BuffList.Add(buffData);
-                        }
+					if (!m_SkillInfo.PenetrateTargetList.Contains(target))
+					{
+						if (buffData.Code != 0)
+						{
+							target.BuffList.Add(buffData);
+						}
 
-                        target.On_DaMage(damage);
-                        m_SkillInfo.PenetrateTargetList.Add(target);
-                    }
-                }
-                break;
-            case E_AttackType.BounceFire:
-                if (buffData.Code != 0)
-                {
-                    m_Target.BuffList.Add(buffData);
-                }
+						target.On_DaMage(damage);
+						m_SkillInfo.PenetrateTargetList.Add(target);
+					}
+				}
+				break;
+			case E_AttackType.BounceFire:
+				if (buffData.Code != 0)
+				{
+					m_Target.BuffList.Add(buffData);
+				}
 
-                m_Target.On_DaMage(damage);
-                --m_SkillInfo.BounceCount;
-                break;
-        }
-    }
-    #endregion
+				m_Target.On_DaMage(damage);
+				--m_SkillInfo.BounceCount;
+				break;
+		}
+	}
+	#endregion
 
-    #region ¿ÜºÎ ÇÔ¼ö
-    public void InitializeSkill(Enemy target, SkillCondition_TableExcel conditionData, SkillStat_TableExcel statData)
-    {
-        m_Target = target;
+	#region ì™¸ë¶€ í•¨ìˆ˜
+	public void InitializeSkill(Enemy target, SkillCondition_TableExcel conditionData, SkillStat_TableExcel statData)
+	{
+		m_Target = target;
 
-        m_ConditionInfo_Excel = conditionData;
-        m_StatInfo_Excel = statData;
+		m_ConditionInfo_Excel = conditionData;
+		m_StatInfo_Excel = statData;
 
-        switch ((E_AttackType)m_ConditionInfo_Excel.Atk_type)
-        {
-            case E_AttackType.NormalFire:
-                break;
-            case E_AttackType.FixedFire:
-                m_SkillInfo.FixedTargetList = m_SkillInfo.AttackRange.TargetList;
-                m_SkillInfo.AttackRange.Range = m_StatInfo_Excel.Range;
-                break;
-            case E_AttackType.PenetrateFire:
-                m_SkillInfo.FixedTargetList = m_SkillInfo.AttackRange.TargetList;
-                m_SkillInfo.AttackRange.Range = m_StatInfo_Excel.Range;
-                break;
-            case E_AttackType.BounceFire:
-                // ´ÙÀ½ Å¸°Ù Ã£´Â »ç°Å¸® = Å¸¿ö »ç°Å¸®ÀÇ 1 / 4
-                m_SkillInfo.AttackRange.Range = m_StatInfo_Excel.Range * 0.25f;
-                break;
-        }
+		switch ((E_AttackType)m_ConditionInfo_Excel.Atk_type)
+		{
+			case E_AttackType.NormalFire:
+				break;
+			case E_AttackType.FixedFire:
+				m_SkillInfo.AttackRange.Range = m_StatInfo_Excel.Range;
+				m_SkillInfo.FixedTargetList = m_SkillInfo.AttackRange.TargetList;
+				break;
+			case E_AttackType.PenetrateFire:
+				m_SkillInfo.AttackRange.Range = m_StatInfo_Excel.Range;
+				m_SkillInfo.FixedTargetList = m_SkillInfo.AttackRange.TargetList;
+				break;
+			case E_AttackType.BounceFire:
+				// ë‹¤ìŒ íƒ€ê²Ÿ ì°¾ëŠ” ì‚¬ê±°ë¦¬ = íƒ€ì›Œ ì‚¬ê±°ë¦¬ì˜ 1 / 4
+				m_SkillInfo.AttackRange.Range = m_StatInfo_Excel.Range * 0.25f;
+				break;
+		}
 
-        m_SkillInfo.BounceCount = m_StatInfo_Excel.Target_num;
-        m_SkillInfo.LifeTime = m_StatInfo_Excel.Life_Time;
-        m_SkillInfo.InitPos = transform.position;
-        // ?? : ¿ŞÂÊºÎÅÍ ÇÇ¿¬»êÀÚ°¡ nullÀÌ ¾Æ´Ñ °æ¿ì¿¡ ÇÇ¿¬»êÀÚ ¸®ÅÏ (¿ŞÂÊ ÇÇ¿¬»êÀÚ°¡ nullÀÌ ¾Æ´Ñ °æ¿ì ¿À¸¥ÂÊ ÇÇ¿¬»êÀÚ´Â ¹«½Ã)
-        // ??= : ¿ŞÂÊ ÇÇ¿¬»êÀÚ°¡ nullÀÎ °æ¿ì¿¡¸¸ ¿À¸¥ÂÊ ÇÇ¿¬»êÀÚ¸¦ ´ëÀÔ
-        // null º´ÇÕ ¿¬»êÀÚ ¾ÈµÇ´Â ÀÌÀ¯
-        // https://overworks.github.io/unity/2019/07/22/null-of-unity-object-part-2.html
-        //m_SkillInfo.FixedTargetList ??= new List<Enemy>();
-        if (m_SkillInfo.FixedTargetList == null)
-            m_SkillInfo.FixedTargetList = new List<Enemy>();
-        else if (m_SkillInfo.FixedTargetList.Count > 0)
-            m_SkillInfo.FixedTargetList.Clear();
-        //m_SkillInfo.PenetrateTargetList ??= new List<Enemy>();
-        if (m_SkillInfo.PenetrateTargetList == null)
-            m_SkillInfo.PenetrateTargetList = new List<Enemy>();
-        else if (m_SkillInfo.PenetrateTargetList.Count > 0)
-            m_SkillInfo.PenetrateTargetList.Clear();
-        //m_SkillInfo.BounceTargetList ??= new List<Enemy>();
-        if (m_SkillInfo.BounceTargetList == null)
-            m_SkillInfo.BounceTargetList = new List<Enemy>();
-        else if (m_SkillInfo.BounceTargetList.Count > 0)
-            m_SkillInfo.BounceTargetList.Clear();
+		m_SkillInfo.BounceCount = m_StatInfo_Excel.Target_num;
+		m_SkillInfo.LifeTime = m_StatInfo_Excel.Life_Time;
+		m_SkillInfo.InitPos = transform.position;
+		// ?? : ì™¼ìª½ë¶€í„° í”¼ì—°ì‚°ìê°€ nullì´ ì•„ë‹Œ ê²½ìš°ì— í”¼ì—°ì‚°ì ë¦¬í„´ (ì™¼ìª½ í”¼ì—°ì‚°ìê°€ nullì´ ì•„ë‹Œ ê²½ìš° ì˜¤ë¥¸ìª½ í”¼ì—°ì‚°ìëŠ” ë¬´ì‹œ)
+		// ??= : ì™¼ìª½ í”¼ì—°ì‚°ìê°€ nullì¸ ê²½ìš°ì—ë§Œ ì˜¤ë¥¸ìª½ í”¼ì—°ì‚°ìë¥¼ ëŒ€ì…
+		// null ë³‘í•© ì—°ì‚°ì ì•ˆë˜ëŠ” ì´ìœ 
+		// https://overworks.github.io/unity/2019/07/22/null-of-unity-object-part-2.html
+		//m_SkillInfo.FixedTargetList ??= new List<Enemy>();
+		if (m_SkillInfo.FixedTargetList == null)
+			m_SkillInfo.FixedTargetList = new List<Enemy>();
+		else if (m_SkillInfo.FixedTargetList.Count > 0)
+			m_SkillInfo.FixedTargetList.Clear();
+		//m_SkillInfo.PenetrateTargetList ??= new List<Enemy>();
+		if (m_SkillInfo.PenetrateTargetList == null)
+			m_SkillInfo.PenetrateTargetList = new List<Enemy>();
+		else if (m_SkillInfo.PenetrateTargetList.Count > 0)
+			m_SkillInfo.PenetrateTargetList.Clear();
+		//m_SkillInfo.BounceTargetList ??= new List<Enemy>();
+		if (m_SkillInfo.BounceTargetList == null)
+			m_SkillInfo.BounceTargetList = new List<Enemy>();
+		else if (m_SkillInfo.BounceTargetList.Count > 0)
+			m_SkillInfo.BounceTargetList.Clear();
 
-        if (!m_SkillInfo.CanOverlapBounce &&
-            null != m_Target)
-        {
-            m_SkillInfo.BounceTargetList.Add(m_Target);
-        }
-    }
-    #endregion
+		if (!m_SkillInfo.CanOverlapBounce &&
+			null != m_Target)
+		{
+			m_SkillInfo.BounceTargetList.Add(m_Target);
+		}
+	}
+	#endregion
 
-    [System.Serializable]
-    public struct S_SkillData
-    {
-        public bool CanOverlapBounce;
-        public int BounceCount;
-        public List<Enemy> FixedTargetList;
-        public List<Enemy> PenetrateTargetList;
-        public List<Enemy> BounceTargetList;
-        public float LifeTime;
-        public float DotTimer;
-        public AttackRange AttackRange;
-        public Vector3 InitPos;
-    }
+	[System.Serializable]
+	public struct S_SkillData
+	{
+		public bool CanOverlapBounce;
+		public int BounceCount;
+		public List<Enemy> FixedTargetList;
+		public List<Enemy> PenetrateTargetList;
+		public List<Enemy> BounceTargetList;
+		public float LifeTime;
+		public float DotTimer;
+		public AttackRange AttackRange;
+		public Vector3 InitPos;
+	}
 }

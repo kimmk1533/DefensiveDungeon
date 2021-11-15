@@ -150,8 +150,23 @@ public abstract class Devil : MonoBehaviour
 			lookingDir = m_Target.transform.position - transform.position;
 		}
 
-		// 회전
-		transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(lookingDir), RotateSpeed);
+		if (lookingDir != Vector3.zero)
+		{
+			Quaternion quaternion = Quaternion.LookRotation(lookingDir);
+
+			// 회전
+			if (Quaternion.Angle(transform.rotation, quaternion) > 0.01f)
+				transform.rotation = Quaternion.Lerp(transform.rotation, quaternion, RotateSpeed);
+			else
+				transform.rotation = quaternion;
+		}
+		else
+		{
+			if (Vector3.Distance(transform.eulerAngles, Vector3.zero) > 0.01f)
+				transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, Vector3.zero, RotateSpeed);
+			else
+				transform.eulerAngles = Vector3.zero;
+		}
 	}
 	// 타겟 업데이트
 	protected void UpdateTarget()

@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,7 +6,7 @@ using UnityEngine.UI;
 // ----------slots----------------
 // hide / 1 / 2 / 3 / 4 / 5 / hide
 // make hide slot because of moving animation
-public class StagePrivewController : MonoBehaviour
+public class StagePreviewController : MonoBehaviour
 {
 	StageChangedEventArgs m_current_stageInfo;
 
@@ -39,7 +39,7 @@ public class StagePrivewController : MonoBehaviour
 	private void __Initailize()
 	{
 		StageInfoManager.Instance.OnStageChangedEvent += __OnStageChanged;
-		// stage manager ·Î ºÎÅÍ Á¤º¸¸¦ °¡Á®¿À±â
+		// stage manager ë¡œ ë¶€í„° ì •ë³´ë¥¼ ê°€ì ¸ì˜¤ê¸°
 
 		// origin
 		m_origin_slot.gameObject.SetActive(false);

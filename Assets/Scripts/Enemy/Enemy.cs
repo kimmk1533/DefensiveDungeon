@@ -1,4 +1,4 @@
-using System;
+Ôªøusing System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,1051 +8,1051 @@ using Random = UnityEngine.Random;
 
 public class Enemy : MonoBehaviour
 {
-    [Serializable]
-    public struct Enemy_Data
-    {
-        public string Name_EN;
-        public int Move_Type;
-        public float Atk;
-        public float HP;
-        public float Def;
-        public int Shild;
-        public float Move_spd;
-        public int CC_Rgs1;
-        public int CC_Rgs2;
-        public int CC_Rgs3;
-        public int Atk_Code;
-        public int Skill1Code;
-        public int Skill2Code;
-        public float HPSkillCast;
-        public int Prefeb;
-    }
+	[Serializable]
+	public struct Enemy_Data
+	{
+		public string Name_EN;
+		public int Move_Type;
+		public float Atk;
+		public float HP;
+		public float Def;
+		public int Shild;
+		public float Move_spd;
+		public int CC_Rgs1;
+		public int CC_Rgs2;
+		public int CC_Rgs3;
+		public int Atk_Code;
+		public int Skill1Code;
+		public int Skill2Code;
+		public float HPSkillCast;
+		public int Prefeb;
+	}
 
-    [Serializable]
-    public struct SkillStat_Data
-    {
-        public float CoolTime;
-        public float Dmg;
-        public float Dmg_plus;
-        public float Range;
-        public float Speed;
-        public float Target_num;
-        public float Size;
-    }
+	[Serializable]
+	public struct SkillStat_Data
+	{
+		public float CoolTime;
+		public float Dmg;
+		public float Dmg_plus;
+		public float Range;
+		public float Speed;
+		public float Target_num;
+		public float Size;
+	}
 
-    #region Get«¡∑Œ∆€∆º
+	#region GetÌîÑÎ°úÌçºÌã∞
 
-    public string Get_EnemyName_EN => m_EnemyInfo.Name_EN;
+	public string Get_EnemyName_EN => m_EnemyInfo.Name_EN;
 
-    public int Get_EnemyMove_Type => m_EnemyInfo.Move_Type;
+	public int Get_EnemyMove_Type => m_EnemyInfo.Move_Type;
 
-    public float Get_EnemyAtk => m_EnemyInfo.Atk;
+	public float Get_EnemyAtk => m_EnemyInfo.Atk;
 
-    public float Get_EnemyHP => m_EnemyInfo.HP;
+	public float Get_EnemyHP => m_EnemyInfo.HP;
 
-    public float Get_EnemyDef => m_EnemyInfo.Def;
+	public float Get_EnemyDef => m_EnemyInfo.Def;
 
-    public int Get_EnemyShild => m_EnemyInfo.Shild;
+	public int Get_EnemyShild => m_EnemyInfo.Shild;
 
-    public float Get_EnemyMove_spd => m_EnemyInfo.Move_spd;
+	public float Get_EnemyMove_spd => m_EnemyInfo.Move_spd;
 
-    public int Get_EnemyCC_Rgs1 => m_EnemyInfo.CC_Rgs1;
+	public int Get_EnemyCC_Rgs1 => m_EnemyInfo.CC_Rgs1;
 
-    public int Get_EnemyCC_Rgs2 => m_EnemyInfo.CC_Rgs2;
+	public int Get_EnemyCC_Rgs2 => m_EnemyInfo.CC_Rgs2;
 
-    public int Get_EnemyCC_Rgs3 => m_EnemyInfo.CC_Rgs3;
+	public int Get_EnemyCC_Rgs3 => m_EnemyInfo.CC_Rgs3;
 
-    public int Get_EnemyAtk_Code => m_EnemyInfo.Atk_Code;
+	public int Get_EnemyAtk_Code => m_EnemyInfo.Atk_Code;
 
-    public int Get_EnemySkill1Code => m_EnemyInfo.Skill1Code;
+	public int Get_EnemySkill1Code => m_EnemyInfo.Skill1Code;
 
-    public int Get_EnemySkill2Code => m_EnemyInfo.Skill2Code;
+	public int Get_EnemySkill2Code => m_EnemyInfo.Skill2Code;
 
-    //√º∑¬∫Ò∑ »ø∞˙
-    public float Get_EnemyHPSkillCast => m_EnemyInfo.HPSkillCast;
+	//Ï≤¥Î†•ÎπÑÎ°ÄÌö®Í≥º
+	public float Get_EnemyHPSkillCast => m_EnemyInfo.HPSkillCast;
 
-    public int Get_EnemyPrefeb => m_EnemyInfo.Prefeb;
+	public int Get_EnemyPrefeb => m_EnemyInfo.Prefeb;
 
-    public int Get_WayPointIndex => waypointIndex;
+	public int Get_WayPointIndex => waypointIndex;
 
-    public E_Direction Get_Direction => direc;
+	public E_Direction Get_Direction => direc;
 
-    #endregion
+	#endregion
 
-    private Dictionary<int, IEnumerator> debuff;
+	private Dictionary<int, IEnumerator> debuff;
 
-    private Dictionary<int, IEnumerator> m_buff;
+	private Dictionary<int, IEnumerator> m_buff;
 
-    //«ˆ¿Á πŸ∂Û∫∏∞Ì ¿÷¥¬ waypoint
-    [SerializeField] Transform target;
+	//ÌòÑÏû¨ Î∞îÎùºÎ≥¥Í≥† ÏûàÎäî waypoint
+	[SerializeField] Transform target;
 
-    [SerializeField] int waypointIndex = 0;
+	[SerializeField] int waypointIndex = 0;
 
-    [SerializeField] E_Direction direc;
+	[SerializeField] E_Direction direc;
 
-    private Animator animator;
+	private Animator animator;
 
-    private bool isStun = false;
+	private bool isStun = false;
 
-    [SerializeField] Enemy_Data m_EnemyInfo;
+	[SerializeField] Enemy_Data m_EnemyInfo;
 
-    [SerializeField]
-    private float MaxHp;
+	[SerializeField]
+	private float MaxHp;
 
-    //√º∑¬πŸ
-    public EnemyHPBar m_HPBar;
+	//Ï≤¥Î†•Î∞î
+	public EnemyHPBar m_HPBar;
 
-    [SerializeField]
-    private Enemy_TableExcel m_Enemyinfo_Excel;
-    private EnemyManager M_Enemy => EnemyManager.Instance;
+	[SerializeField]
+	private Enemy_TableExcel m_Enemyinfo_Excel;
+	private EnemyManager M_Enemy => EnemyManager.Instance;
 
-    private DataTableManager M_DataTable => DataTableManager.Instance;
-    private SkillCondition_TableExcelLoader skillcondition_table => M_DataTable.GetDataTable<SkillCondition_TableExcelLoader>();
-    private SkillStat_TableExcelLoader skillstat_table => M_DataTable.GetDataTable<SkillStat_TableExcelLoader>();
-    private BuffCC_TableExcelLoader buffcc_table => M_DataTable.GetDataTable<BuffCC_TableExcelLoader>();
-    private FloatingTextManager M_DamageText => FloatingTextManager.Instance;
+	private DataTableManager M_DataTable => DataTableManager.Instance;
+	private SkillCondition_TableExcelLoader skillcondition_table => M_DataTable.GetDataTable<SkillCondition_TableExcelLoader>();
+	private SkillStat_TableExcelLoader skillstat_table => M_DataTable.GetDataTable<SkillStat_TableExcelLoader>();
+	private BuffCC_TableExcelLoader buffcc_table => M_DataTable.GetDataTable<BuffCC_TableExcelLoader>();
+	private FloatingTextManager M_DamageText => FloatingTextManager.Instance;
 
-    #region Ω√≥ ¡ˆ ∞¸∑√
-    // πˆ«¡
-    public List<BuffCC_TableExcel> BuffList;
-    #endregion
+	#region ÏãúÎÑàÏßÄ Í¥ÄÎ†®
+	// Î≤ÑÌîÑ
+	public List<BuffCC_TableExcel> BuffList;
+	#endregion
 
-    private float Half_HP;
-    private float Origin_HP;
+	private float Half_HP;
+	private float Origin_HP;
 
-    public bool isDivide = false;
-    private bool isDefBuff = false;
-    [SerializeField]
-    private bool isDie = false;
+	public bool isDivide = false;
+	private bool isDefBuff = false;
+	[SerializeField]
+	private bool isDie = false;
 
-    public bool IsDie => isDie;
+	public bool IsDie => isDie;
 
-    //π¸¿ß
-    protected SphereCollider m_RangeCollider;
+	//Î≤îÏúÑ
+	protected SphereCollider m_RangeCollider;
 
-    //Ω∫≈≥ æµ∂ß ¡÷∫Ø Enemy ¿˙¿Â
-    private List<Enemy> Enemy_obj;
+	//Ïä§ÌÇ¨ Ïì∏Îïå Ï£ºÎ≥Ä Enemy Ï†ÄÏû•
+	private List<Enemy> Enemy_obj;
 
-    private float Atk_Timer;
+	private float Atk_Timer;
 
-    // Kim
-    protected EnemyHPBarManager M_EnemyHPBar => EnemyHPBarManager.Instance;
-    private EnemySkillManager enemyskillmanager;
+	// Kim
+	protected EnemyHPBarManager M_EnemyHPBar => EnemyHPBarManager.Instance;
+	private EnemySkillManager enemyskillmanager;
 
-    private SkillCondition_TableExcel atkconditiondata;
-    private SkillStat_TableExcel atkstatdata;
+	private SkillCondition_TableExcel atkconditiondata;
+	private SkillStat_TableExcel atkstatdata;
 
-    private SkillCondition_TableExcel skillconditiondata;
-    [SerializeField] SkillStat_TableExcel skillstatdata;
+	private SkillCondition_TableExcel skillconditiondata;
+	[SerializeField] SkillStat_TableExcel skillstatdata;
 
-    public Transform AttackPivot;
-    public Transform HitPivot;
+	public Transform AttackPivot;
+	public Transform HitPivot;
 
-    private void OnTriggerEnter(Collider other)
-    {
-        Enemy_obj.Add(this);
+	private void OnTriggerEnter(Collider other)
+	{
+		Enemy_obj.Add(this);
 
-        for (int i = 0; i < skillstatdata.Target_num - 1; i++)
-        {
-            Enemy_obj.Add(other.gameObject.GetComponent<Enemy>());
-        }
-    }
+		for (int i = 0; i < skillstatdata.Target_num - 1; i++)
+		{
+			Enemy_obj.Add(other.gameObject.GetComponent<Enemy>());
+		}
+	}
 
-    private void Start()
-    {
-        Init();
+	private void Start()
+	{
+		Init();
 
-        debuff = new Dictionary<int, IEnumerator>();
-        m_buff = new Dictionary<int, IEnumerator>();
+		debuff = new Dictionary<int, IEnumerator>();
+		m_buff = new Dictionary<int, IEnumerator>();
 
-        gameObject.layer = LayerMask.NameToLayer("Enemy");
+		gameObject.layer = LayerMask.NameToLayer("Enemy");
 
-        enemyskillmanager = EnemySkillManager.Instance;
+		enemyskillmanager = EnemySkillManager.Instance;
 
-        transform.Find("EnemySkillRange").gameObject.layer = LayerMask.NameToLayer("EnemySkillRange");
-        m_RangeCollider = transform.Find("EnemySkillRange").GetComponent<SphereCollider>();
-        m_RangeCollider.isTrigger = true;
+		transform.Find("EnemySkillRange").gameObject.layer = LayerMask.NameToLayer("EnemySkillRange");
+		m_RangeCollider = transform.Find("EnemySkillRange").GetComponent<SphereCollider>();
+		m_RangeCollider.isTrigger = true;
 
-        BuffList = new List<BuffCC_TableExcel>();
+		BuffList = new List<BuffCC_TableExcel>();
 
-        animator = transform.Find("Mesh").GetComponent<Animator>();
+		animator = transform.Find("Mesh").GetComponent<Animator>();
 
-        AttackPivot = transform.GetChild("AttackPivot");
-        HitPivot = transform.GetChild("HitPivot");
+		AttackPivot = transform.GetChild("AttackPivot");
+		HitPivot = transform.GetChild("HitPivot");
 
-        Enemy_obj = new List<Enemy>();
+		Enemy_obj = new List<Enemy>();
 
-        //Ω∫≈≥ µ•¿Ã≈Õ
-        atkconditiondata = enemyskillmanager.GetConditionData(m_EnemyInfo.Atk_Code);
+		//Ïä§ÌÇ¨ Îç∞Ïù¥ÌÑ∞
+		atkconditiondata = enemyskillmanager.GetConditionData(m_EnemyInfo.Atk_Code);
 
-        atkstatdata = enemyskillmanager.GetStatData(atkconditiondata.PassiveCode);
+		atkstatdata = enemyskillmanager.GetStatData(atkconditiondata.PassiveCode);
 
-        Atk_Timer = atkstatdata.CoolTime;
+		Atk_Timer = atkstatdata.CoolTime;
 
-        if (m_EnemyInfo.Name_EN == "Grffin02")
-        {
-            Half_HP = (float)(m_EnemyInfo.HP * 0.5);
-            Origin_HP = m_EnemyInfo.HP;
-        }
+		if (m_EnemyInfo.Name_EN == "Grffin02")
+		{
+			Half_HP = (float)(m_EnemyInfo.HP * 0.5);
+			Origin_HP = m_EnemyInfo.HP;
+		}
 
-        //∞¢ πÊ«‚¿∏∑Œ ≈∏∞Ÿ √ ±‚»≠
-        switch (direc)
-        {
-            case E_Direction.East:
-                target = EastWayPoints.points[0];
-                break;
-
-            case E_Direction.West:
-                target = WestWayPoints.points[0];
-                break;
-
-            case E_Direction.South:
-                target = SouthWayPoints.points[0];
-                break;
-
-            case E_Direction.North:
-                target = NorthWayPoints.points[0];
-                break;
-        }
-
-        //Ω∫≈≥ æ≤¥¬ ∏ÛΩ∫≈Õ∏∏
-        if (m_EnemyInfo.Skill1Code > 0)
-        {
-            skillconditiondata = enemyskillmanager.GetConditionData(m_EnemyInfo.Skill1Code);
-
-            skillstatdata = enemyskillmanager.GetStatData(skillconditiondata.PassiveCode);
-
-            m_RangeCollider.radius = skillstatdata.Range;
+		//Í∞Å Î∞©Ìñ•ÏúºÎ°ú ÌÉÄÍ≤ü Ï¥àÍ∏∞Ìôî
+		switch (direc)
+		{
+			case E_Direction.East:
+				target = EastWayPoints.points[0];
+				break;
+
+			case E_Direction.West:
+				target = WestWayPoints.points[0];
+				break;
+
+			case E_Direction.South:
+				target = SouthWayPoints.points[0];
+				break;
+
+			case E_Direction.North:
+				target = NorthWayPoints.points[0];
+				break;
+		}
+
+		//Ïä§ÌÇ¨ Ïì∞Îäî Î™¨Ïä§ÌÑ∞Îßå
+		if (m_EnemyInfo.Skill1Code > 0)
+		{
+			skillconditiondata = enemyskillmanager.GetConditionData(m_EnemyInfo.Skill1Code);
+
+			skillstatdata = enemyskillmanager.GetStatData(skillconditiondata.PassiveCode);
+
+			m_RangeCollider.radius = skillstatdata.Range;
 
-            Invoke("StartSkill", skillstatdata.CoolTime);
-        }
-    }
-
-    public void Init()
-    {
-        isDie = false;
-        isDefBuff = false;
-        MaxHp = m_EnemyInfo.HP;
-    }
-
-    private void Update()
-    {
-        if (!isDie)
-        {
-            //∏∂ø’∏∏ ≈∏∞Ÿ¿∏∑Œ ¿‚±‚
-            //∫Æ¿Ã≥™ ¡ﬂ∞£ø° ¿Âæ÷π∞¿Ã ¿÷¥Ÿ∏È πŸ≤„æﬂ«‘
-            if (waypointIndex >= 3)
-            {
-                float Distance = Vector3.Distance(transform.position, new Vector3(0f, 0f, 0f));
-
-                //∞≈∏Æ æ»ø° ¿÷¥Ÿ∏È
-                if (Distance <= atkstatdata.Range)
-                {
-                    // »∏¿¸«“ πÊ«‚
-                    Vector3 lookingDir = target.position - transform.position;
-
-                    // y »∏¿¸ πÊ¡ˆ
-                    lookingDir.y = 0f;
-
-                    // »∏¿¸
-                    transform.rotation = Quaternion.LookRotation(lookingDir);
-
-                    if (Atk_Timer >= atkstatdata.CoolTime)
-                    {
-                        animator.SetTrigger("Attack");
-                        Atk_Timer = 0f;
-                    }
-
-                    else
-                    {
-                        Atk_Timer += Time.deltaTime;
-                    }
-                }
-            }
-
-            if (!isStun)
-            {
-                //Vector3 dir = target.position - transform.position;
-                //transform.Translate(dir.normalized * m_EnemyInfo.Move_spd * Time.deltaTime, Space.World);
-
-                //if (Vector3.Distance(transform.position, target.position) <= 0.2f)
-                //{
-                //    GetNextWayPoint();
-                //}
-
-                Vector3 dir = target.position - transform.position;
-                transform.Translate(dir.normalized * 2f * Time.deltaTime, Space.World);
-                m_HPBar.transform.position = M_EnemyHPBar.m_HPBarCanvas.worldCamera.WorldToScreenPoint(transform.position) + M_EnemyHPBar.Distance;
-
-                if (Vector3.Distance(transform.position, target.position) <= 0.2f)
-                {
-                    GetNextWayPoint();
-                }
-            }
-
-            #region ±◊∏Æ«…(«œ¥√)∑Œ √º¿Œ¡ˆ
-
-            if (m_EnemyInfo.Name_EN == "Grffin02" && !isDivide)
-            {
-                //HP∞° π›æ∆∑°∞° µ«æ˙¿ª∂ß
-                if (m_EnemyInfo.HP <= Half_HP)
-                {
-                    ChangeMode();
-                }
-            }
-
-            #endregion
-
-            if (m_EnemyInfo.HP <= 0)
-            {
-                On_Death();
-                isDie = true;
-            }
-        }
-    }
-
-    #region ø‹∫Œ «‘ºˆ
-
-    // Enemy √ ±‚»≠
-    public void InitializeEnemy(int code)
-    {
-        #region ø¢ºø µ•¿Ã≈Õ ¡§∏Æ
-
-        m_Enemyinfo_Excel = M_Enemy.GetData(code);
-        #endregion
-
-        #region ≥ª∫Œ µ•¿Ã≈Õ ¡§∏Æ
-
-        m_EnemyInfo.Name_EN = m_Enemyinfo_Excel.Name_EN;
-        m_EnemyInfo.Move_Type = m_Enemyinfo_Excel.Move_Type;
-        m_EnemyInfo.Atk = m_Enemyinfo_Excel.Atk;
-        m_EnemyInfo.HP = m_Enemyinfo_Excel.HP;
-        m_EnemyInfo.Def = m_Enemyinfo_Excel.Def;
-        m_EnemyInfo.Shild = m_Enemyinfo_Excel.Shild;
-        m_EnemyInfo.Move_spd = m_Enemyinfo_Excel.Move_spd;
-        m_EnemyInfo.CC_Rgs1 = m_Enemyinfo_Excel.CC_Rgs1;
-        m_EnemyInfo.CC_Rgs2 = m_Enemyinfo_Excel.CC_Rgs2;
-        m_EnemyInfo.CC_Rgs3 = m_Enemyinfo_Excel.CC_Rgs3;
-        m_EnemyInfo.Atk_Code = m_Enemyinfo_Excel.Atk_Code;
-        m_EnemyInfo.Skill1Code = m_Enemyinfo_Excel.Skill1Code;
-        m_EnemyInfo.Skill2Code = m_Enemyinfo_Excel.Skill2Code;
-        m_EnemyInfo.HPSkillCast = m_Enemyinfo_Excel.HPSkillCast;
-        m_EnemyInfo.Prefeb = m_Enemyinfo_Excel.Prefab;
-
-        MaxHp = m_EnemyInfo.HP;
-
-        #endregion
-    }
-    public void FinializeEnemy()
-    {
-        M_EnemyHPBar.DespawnHPBar(m_HPBar);
-    }
-
-    // Ω∫≈œ
-    public void On_Stun(int code)
-    {
-        StartCoroutine(OnStun(code));
-    }
-
-    //º“»Ø
-    public void On_Summon(string name)
-    {
-        StartCoroutine(OnSummon(name));
-    }
-
-    //µøº≠≥≤∫œ
-    public void InitSetting(E_Direction p_waypoint)
-    {
-        direc = p_waypoint;
-        Init();
-    }
-
-    //∫–ø≠«— ¿˚¿Ã ∞°¡ˆ¥¬ µ•¿Ã≈Õ
-    //µøº≠≥≤∫œ
-    //πŸ∂Û∫∏∞Ì ¿÷¥¯ waypoint
-    //waypointindex∞™
-    public void InitSetting(E_Direction p_waypoint, Transform _target, int _waypointindex)
-    {
-        direc = p_waypoint;
-        target = _target;
-        waypointIndex = _waypointindex;
-        Init();
-    }
-
-    //ªÁ∏¡
-    public void On_Death()
-    {
-        animator.SetBool("Die", true);
-    }
-
-    //µ•πÃ¡ˆ
-    public void On_DaMage(float damage)
-    {
-        if (!gameObject.activeSelf)
-            return;
-
-        // πˆ«¡ ¿˚øÎ »Æ∑¸
-        List<float> BuffRand = new List<float>();
-        // πˆ«¡ ¿˚øÎ ø©∫Œ
-        List<bool> BuffApply = new List<bool>();
-        // πˆ«¡ ¿˚øÎ ∞ËªÍ
-        for (int i = 0; i < BuffList.Count; ++i)
-        {
-            BuffRand.Add(Random.Range(0f, 1f));
-            BuffApply.Add((E_BuffType)BuffList[i].BuffType1 == E_BuffType.None ? false : BuffRand[BuffRand.Count - 1] <= BuffList[i].BuffRand1);
-            BuffRand.Add(Random.Range(0f, 1f));
-            BuffApply.Add((E_BuffType)BuffList[i].BuffType2 == E_BuffType.None ? false : BuffRand[BuffRand.Count - 1] <= BuffList[i].BuffRand2);
-            BuffRand.Add(Random.Range(0f, 1f));
-            BuffApply.Add((E_BuffType)BuffList[i].BuffType3 == E_BuffType.None ? false : BuffRand[BuffRand.Count - 1] <= BuffList[i].BuffRand3);
-        }
-
-        S_Buff buff;
-
-        #region µπˆ«¡ «’ø¨ªÍ
-
-        for (int i = 0; i < BuffList.Count; ++i)
-        {
-            // µπˆ«¡1 √º≈©
-            if (BuffApply[i * 3])
-            {
-                buff = new S_Buff(
-                    BuffList[i].BuffType1,
-                    BuffList[i].AddType1,
-                    BuffList[i].BuffAmount1,
-                    BuffList[i].BuffRand1,
-                    BuffList[i].Summon1
-                    );
-
-                float BuffAmount = buff.BuffAmount;
-                float Buff_Debufftime = BuffList[i].Duration;
-
-                // µπˆ«¡1 «’ø¨ªÍ
-                if (buff.AddType == E_AddType.Fix)
-                {
-                    switch (buff.BuffType)
-                    {
-                        case E_BuffType.Dot_Dmg:
-                            //√— √º∑¬ø° buffamount¿« ∆€ºæ∆Æ ∏∏≈≠ ∞°¡Æø¿±‚
-                            float amount = Get_EnemyHP * BuffAmount;
-
-                            //√— µµ∆Æ µ•πÃ¡ˆ∏¶ √ ¥Á¿∏∑Œ µ•πÃ¡ˆ∑Œ πŸ≤Ÿ±‚
-                            float dot_dmg = amount / Buff_Debufftime;
-
-                            // µπˆ«¡ ƒ⁄µÂ
-                            int code = BuffList[i].Code;
-
-                            // ¿˚øÎµ«∞Ì ¿÷¥¬ µπˆ«¡ ¡ﬂ «ˆ¿Á µπˆ«¡ ƒ⁄µÂ∞° æ¯¿∏∏È
-                            if (!debuff.ContainsKey(code))
-                            {
-                                // √ﬂ∞°
-                                debuff.Add(code, Dot_DmgTime(code, Buff_Debufftime, dot_dmg));
-                            }
-                            // µπˆ«¡ ƒ⁄µÂ∞° ¿÷¿∏∏È
-                            else
-                            {
-                                if (debuff.TryGetValue(code, out IEnumerator coroutine))
-                                {
-                                    StopCoroutine(coroutine);
-                                }
-                                debuff[code] = Dot_DmgTime(code, Buff_Debufftime, dot_dmg);
-                            }
-
-                            StartCoroutine(debuff[code]);
-                            //StartCoroutine(Dot_DmgTime(Buff_Debufftime, dot_dmg));
-                            break;
-
-                        case E_BuffType.Summon:
-                            On_Summon(BuffList[i].Name_EN);
-                            break;
-                    }
-                }
-
-                // µπˆ«¡2 √º≈©
-                if (BuffApply[i * 3 + 1])
-                {
-                    buff = new S_Buff(
-                        BuffList[i].BuffType2,
-                        BuffList[i].AddType2,
-                        BuffList[i].BuffAmount2,
-                        BuffList[i].BuffRand2,
-                        BuffList[i].Summon2
-                        );
-                    BuffAmount = buff.BuffAmount;
-
-                    // πˆ«¡&µπˆ«¡2 «’ø¨ªÍ
-                    if (buff.AddType == E_AddType.Fix)
-                    {
-                        switch (buff.BuffType)
-                        {
-                            case E_BuffType.Dot_Dmg:
-                                //√— √º∑¬ø° buffamount¿« ∆€ºæ∆Æ ∏∏≈≠ ∞°¡Æø¿±‚
-                                float amount = Get_EnemyHP * BuffAmount;
-
-                                //√— µµ∆Æ µ•πÃ¡ˆ∏¶ √ ¥Á¿∏∑Œ µ•πÃ¡ˆ∑Œ πŸ≤Ÿ±‚
-                                float dot_dmg = amount / Buff_Debufftime;
-
-                                // µπˆ«¡ ƒ⁄µÂ
-                                int code = BuffList[i].Code;
-
-                                // ¿˚øÎµ«∞Ì ¿÷¥¬ µπˆ«¡ ¡ﬂ «ˆ¿Á µπˆ«¡ ƒ⁄µÂ∞° æ¯¿∏∏È
-                                if (!debuff.ContainsKey(code))
-                                {
-                                    // √ﬂ∞°
-                                    debuff.Add(code, Dot_DmgTime(code, Buff_Debufftime, dot_dmg));
-                                }
-                                // µπˆ«¡ ƒ⁄µÂ∞° ¿÷¿∏∏È
-                                else
-                                {
-                                    if (debuff.TryGetValue(code, out IEnumerator coroutine))
-                                    {
-                                        StopCoroutine(coroutine);
-                                    }
-                                    debuff[code] = Dot_DmgTime(code, Buff_Debufftime, dot_dmg);
-                                }
-
-                                StartCoroutine(debuff[code]);
-                                break;
-                        }
-                    }
-
-                    // µπˆ«¡3 √º≈©
-                    if (BuffApply[i * 3 + 2])
-                    {
-                        buff = new S_Buff(
-                            BuffList[i].BuffType3,
-                            BuffList[i].AddType3,
-                            BuffList[i].BuffAmount3,
-                            BuffList[i].BuffRand3,
-                            BuffList[i].Summon3
-                            );
-                        BuffAmount = buff.BuffAmount;
-
-                        // µπˆ«¡3 «’ø¨ªÍ
-                        if (buff.AddType == E_AddType.Fix)
-                        {
-                            switch (buff.BuffType)
-                            {
-                                case E_BuffType.Dot_Dmg:
-
-                                    //πŸ≤„æﬂµ  tower ∞¯∞›∑¬¿∏∑Œ
-                                    //√— √º∑¬ø° buffamount¿« ∆€ºæ∆Æ ∏∏≈≠ ∞°¡Æø¿±‚
-                                    float amount = Get_EnemyHP * BuffAmount;
-
-                                    //√— µµ∆Æ µ•πÃ¡ˆ∏¶ √ ¥Á¿∏∑Œ µ•πÃ¡ˆ∑Œ πŸ≤Ÿ±‚
-                                    float dot_dmg = amount / Buff_Debufftime;
-
-                                    // µπˆ«¡ ƒ⁄µÂ
-                                    int code = BuffList[i].Code;
-
-                                    // ¿˚øÎµ«∞Ì ¿÷¥¬ µπˆ«¡ ¡ﬂ «ˆ¿Á µπˆ«¡ ƒ⁄µÂ∞° æ¯¿∏∏È
-                                    if (!debuff.ContainsKey(code))
-                                    {
-                                        // √ﬂ∞°
-                                        debuff.Add(code, Dot_DmgTime(code, Buff_Debufftime, dot_dmg));
-                                    }
-                                    // µπˆ«¡ ƒ⁄µÂ∞° ¿÷¿∏∏È
-                                    else
-                                    {
-                                        if (debuff.TryGetValue(code, out IEnumerator coroutine))
-                                        {
-                                            StopCoroutine(coroutine);
-                                        }
-                                        debuff[code] = Dot_DmgTime(code, Buff_Debufftime, dot_dmg);
-                                    }
-
-                                    StartCoroutine(debuff[code]);
-                                    break;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        #endregion
-
-        #region µπˆ«¡ ∞ˆø¨ªÍ
-
-        for (int i = 0; i < BuffList.Count; ++i)
-        {
-            // µπˆ«¡1 √º≈©
-            if (BuffApply[i * 3])
-            {
-                buff = new S_Buff(
-                    BuffList[i].BuffType1,
-                    BuffList[i].AddType1,
-                    BuffList[i].BuffAmount1,
-                    BuffList[i].BuffRand1,
-                    BuffList[i].Summon1
-                    );
-                float BuffAmount = buff.BuffAmount;
-                float Buff_Debufftime = BuffList[i].Duration;
-
-                // µπˆ«¡1 ∞ˆø¨ªÍ
-                if (buff.AddType == E_AddType.Percent)
-                {
-
-                    switch (buff.BuffType)
-                    {
-                        case E_BuffType.Def:
-                            StartCoroutine(PersentBuff_DeBuffTime(Buff_Debufftime, buff.BuffType, BuffAmount));
-                            break;
-                        case E_BuffType.Stun:
-
-                            int code = BuffList[i].Code;
-
-                            On_Stun(code);
-                            break;
-                        case E_BuffType.Insta_Kill:
-                            On_Death();
-                            break;
-                        case E_BuffType.Move_spd:
-                            StartCoroutine(PersentBuff_DeBuffTime(Buff_Debufftime, buff.BuffType, BuffAmount));
-                            break;
-                    }
-                }
-
-                // µπˆ«¡2 √º≈©
-                if (BuffApply[i * 3 + 1])
-                {
-                    buff = new S_Buff(
-                        BuffList[i].BuffType2,
-                        BuffList[i].AddType2,
-                        BuffList[i].BuffAmount2,
-                        BuffList[i].BuffRand2,
-                        BuffList[i].Summon2
-                        );
-                    BuffAmount = buff.BuffAmount;
-
-                    // µπˆ«¡2 ∞ˆø¨ªÍ
-                    if (buff.AddType == E_AddType.Percent)
-                    {
-                        switch (buff.BuffType)
-                        {
-                            case E_BuffType.Move_spd:
-                                StartCoroutine(PersentBuff_DeBuffTime(Buff_Debufftime, buff.BuffType, BuffAmount));
-                                break;
-                        }
-                    }
-
-                    // µπˆ«¡3 √º≈©
-                    if (BuffApply[i * 3 + 2])
-                    {
-                        buff = new S_Buff(
-                            BuffList[i].BuffType3,
-                            BuffList[i].AddType3,
-                            BuffList[i].BuffAmount3,
-                            BuffList[i].BuffRand3,
-                            BuffList[i].Summon3
-                            );
-                        BuffAmount = buff.BuffAmount;
-
-                        // µπˆ«¡3 ∞ˆø¨ªÍ
-                        if (buff.AddType == E_AddType.Percent)
-                        {
-                            switch (buff.BuffType)
-                            {
-
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        #endregion
-
-        // πÊæÓ∑¬ ∞ËªÍ
-        damage -= Get_EnemyDef;
-
-        // √÷º“ ¥ÎπÃ¡ˆ ¿˚øÎ
-        if (damage <= 0f)
-            damage = 1f;
-
-        // ¥ÎπÃ¡ˆ ¿˚øÎ
-        m_EnemyInfo.HP -= damage;
-
-        // ¥ÎπÃ¡ˆ ≈ÿΩ∫∆Æ
-        Vector3 text_position = transform.position + Vector3.forward * 2.5f;
-        M_DamageText.SpawnDamageText(damage.ToString(), text_position);
-
-        // √º∑¬πŸ UI
-        m_HPBar.fillAmount = m_EnemyInfo.HP / MaxHp;
-
-        // ªÁ∏¡ »Æ¿Œ
-        if (m_EnemyInfo.HP <= 0)
-        {
-            On_Death();
-        }
-
-    }
-
-    public void On_SkillBuff()
-    {
-        // πˆ«¡ ¿˚øÎ »Æ∑¸
-        List<float> BuffRand = new List<float>();
-        // πˆ«¡ ¿˚øÎ ø©∫Œ
-        List<bool> BuffApply = new List<bool>();
-        // πˆ«¡ ¿˚øÎ ∞ËªÍ
-        for (int i = 0; i < BuffList.Count; ++i)
-        {
-            BuffRand.Add(Random.Range(0f, 1f));
-            BuffApply.Add((E_BuffType)BuffList[i].BuffType1 == E_BuffType.None ? false : BuffRand[BuffRand.Count - 1] <= BuffList[i].BuffRand1);
-            BuffRand.Add(Random.Range(0f, 1f));
-            BuffApply.Add((E_BuffType)BuffList[i].BuffType2 == E_BuffType.None ? false : BuffRand[BuffRand.Count - 1] <= BuffList[i].BuffRand2);
-            BuffRand.Add(Random.Range(0f, 1f));
-            BuffApply.Add((E_BuffType)BuffList[i].BuffType3 == E_BuffType.None ? false : BuffRand[BuffRand.Count - 1] <= BuffList[i].BuffRand3);
-        }
-
-        S_Buff buff;
-
-        #region πˆ«¡ «’ø¨ªÍ
-
-        for (int i = 0; i < BuffList.Count; ++i)
-        {
-            // πˆ«¡1 √º≈©
-            if (BuffApply[i * 3])
-            {
-                buff = new S_Buff(
-                    BuffList[i].BuffType1,
-                    BuffList[i].AddType1,
-                    BuffList[i].BuffAmount1,
-                    BuffList[i].BuffRand1,
-                    BuffList[i].Summon1
-                    );
-
-                float BuffAmount = buff.BuffAmount;
-                float Buff_Debufftime = BuffList[i].Duration;
-
-                // πˆ«¡1 «’ø¨ªÍ
-                if (buff.AddType == E_AddType.Percent)
-                {
-                    switch (buff.BuffType)
-                    {
-                        case E_BuffType.Heal:
-                            // πˆ«¡ ƒ⁄µÂ
-                            int code = BuffList[i].Code;
-
-                            float amount = Get_EnemyHP * BuffAmount;
-
-                            //√— µµ∆Æ µ•πÃ¡ˆ∏¶ √ ¥Á¿∏∑Œ µ•πÃ¡ˆ∑Œ πŸ≤Ÿ±‚
-                            float hp_heal = amount / Buff_Debufftime;
-
-                            // ¿˚øÎµ«∞Ì ¿÷¥¬ πˆ«¡ ¡ﬂ «ˆ¿Á πˆ«¡ ƒ⁄µÂ∞° æ¯¿∏∏È
-                            if (!m_buff.ContainsKey(code))
-                            {
-                                // √ﬂ∞°
-                                m_buff.Add(code, HealTime(code, Buff_Debufftime, hp_heal));
-                            }
-                            // πˆ«¡ ƒ⁄µÂ∞° ¿÷¿∏∏È
-                            else
-                            {
-                                if (m_buff.TryGetValue(code, out IEnumerator coroutine))
-                                {
-                                    StopCoroutine(coroutine);
-                                }
-                                m_buff[code] = HealTime(code, Buff_Debufftime, hp_heal);
-                            }
-
-                            StartCoroutine(m_buff[code]);
-                            break;
-
-                        case E_BuffType.Def:
-                            code = BuffList[i].Code;
-
-                            amount = Get_EnemyDef * BuffAmount;
-
-                            // ¿˚øÎµ«∞Ì ¿÷¥¬ πˆ«¡ ¡ﬂ «ˆ¿Á πˆ«¡ ƒ⁄µÂ∞° æ¯¿∏∏È
-                            if (!m_buff.ContainsKey(code))
-                            {
-                                // √ﬂ∞°
-                                m_buff.Add(code, DefBuff(code, Buff_Debufftime, amount));
-                            }
-                            // πˆ«¡ ƒ⁄µÂ∞° ¿÷¿∏∏È
-                            else
-                            {
-                                if (m_buff.TryGetValue(code, out IEnumerator coroutine))
-                                {
-                                    StopCoroutine(coroutine);
-                                }
-                                m_buff[code] = DefBuff(code, Buff_Debufftime, amount);
-                            }
-
-                            StartCoroutine(m_buff[code]);
-                            break;
-                    }
-                }
-
-                // πˆ«¡2 √º≈©
-                if (BuffApply[i * 3 + 1])
-                {
-                    buff = new S_Buff(
-                        BuffList[i].BuffType2,
-                        BuffList[i].AddType2,
-                        BuffList[i].BuffAmount2,
-                        BuffList[i].BuffRand2,
-                        BuffList[i].Summon2
-                        );
-                    BuffAmount = buff.BuffAmount;
-
-                    // πˆ«¡2 «’ø¨ªÍ
-                    if (buff.AddType == E_AddType.Percent)
-                    {
-                        switch (buff.BuffType)
-                        {
-
-                        }
-                    }
-
-                    // πˆ«¡3 √º≈©
-                    if (BuffApply[i * 3 + 2])
-                    {
-                        buff = new S_Buff(
-                            BuffList[i].BuffType3,
-                            BuffList[i].AddType3,
-                            BuffList[i].BuffAmount3,
-                            BuffList[i].BuffRand3,
-                            BuffList[i].Summon3
-                            );
-                        BuffAmount = buff.BuffAmount;
-
-                        // πˆ«¡3 «’ø¨ªÍ
-                        if (buff.AddType == E_AddType.Percent)
-                        {
-                            switch (buff.BuffType)
-                            {
-
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        #endregion
-    }
-
-    #endregion
-
-    #region ≥ª∫Œ «‘ºˆ
-
-    private void StartSkill()
-    {
-        animator.SetTrigger("Skill");
-    }
-
-    private void ChangeMode()
-    {
-        //±◊∏Æ«… «œ¥√ ƒ⁄µÂ∑Œ µ•¿Ã≈Õ º¬∆√
-        InitializeEnemy(200009);
-    }
-
-    //¥Ÿ¿Ω waypoint ¡§∫∏
-    private void GetNextWayPoint()
-    {
-        switch (direc)
-        {
-            case E_Direction.East:
-                if (waypointIndex >= EastWayPoints.points.Length - 1)
-                {
-                    transform.position = EastWayPoints.points[EastWayPoints.points.Length - 1].position;
-                    animator.SetTrigger("Attack");
-                }
-
-                else
-                {
-                    waypointIndex++;
-                    target = EastWayPoints.points[waypointIndex];
-                    transform.LookAt(target);
-                }
-                break;
-
-            case E_Direction.West:
-                if (waypointIndex >= WestWayPoints.points.Length - 1)
-                {
-                    transform.position = WestWayPoints.points[WestWayPoints.points.Length - 1].position;
-                    animator.SetTrigger("Attack");
-                }
-
-                else
-                {
-                    waypointIndex++;
-                    target = WestWayPoints.points[waypointIndex];
-                    transform.LookAt(target);
-                }
-                break;
-
-            case E_Direction.South:
-                if (waypointIndex >= SouthWayPoints.points.Length - 1)
-                {
-                    transform.position = SouthWayPoints.points[SouthWayPoints.points.Length - 1].position;
-                    animator.SetTrigger("Attack");
-                }
-
-                else
-                {
-                    waypointIndex++;
-                    target = SouthWayPoints.points[waypointIndex];
-                    transform.LookAt(target);
-                }
-                break;
-
-            case E_Direction.North:
-                if (waypointIndex >= NorthWayPoints.points.Length - 1)
-                {
-                    transform.position = NorthWayPoints.points[NorthWayPoints.points.Length - 1].position;
-                    animator.SetTrigger("Attack");
-                }
-
-                else
-                {
-                    waypointIndex++;
-                    target = NorthWayPoints.points[waypointIndex];
-                    transform.LookAt(target);
-                }
-                break;
-        }
-    }
-    #endregion
-
-    #region ƒ⁄∑Á∆æ
-
-    //Ω∫≈œ
-    //æ÷¥œ∏ﬁ¿Ãº« √ﬂ∞°
-    IEnumerator OnStun(int code)
-    {
-        isStun = true;
-
-        animator.SetTrigger("Stun");
-
-        yield return new WaitForSeconds(1f);
-
-        isStun = false;
-    }
-
-    //∫–ø≠
-    IEnumerator OnSummon(string name)
-    {
-        SpawnManager.Instance.SpawnEnemy(direc, transform.localPosition, target, waypointIndex, name, animator);
-
-        yield return null;
-    }
-
-    IEnumerator PersentBuff_DeBuffTime(float time, E_BuffType type, float amount)
-    {
-        float origin = 0f;
-
-        switch (type)
-        {
-            case E_BuffType.Def:
-                origin = m_EnemyInfo.Def;
-
-                m_EnemyInfo.Def *= amount;
-                break;
-
-            case E_BuffType.Move_spd:
-                origin = m_EnemyInfo.Move_spd;
-
-                m_EnemyInfo.Move_spd *= amount;
-                break;
-        }
-
-        yield return new WaitForSeconds(time);
-
-        switch (type)
-        {
-            case E_BuffType.Def:
-                m_EnemyInfo.Def = origin;
-                break;
-
-            case E_BuffType.Move_spd:
-                m_EnemyInfo.Move_spd = origin;
-                break;
-        }
-
-        //debuff[code] = null;
-        BuffList.RemoveAt(0);
-    }
-
-    IEnumerator Dot_DmgTime(int code, float time, float dmg)
-    {
-        BuffList.RemoveAt(0);
-        for (int i = 0; i < time; i++)
-        {
-            m_EnemyInfo.HP -= dmg;
-            yield return new WaitForSeconds(1f);
-        }
-
-        debuff[code] = null;
-        BuffList.RemoveAt(0);
-    }
-
-    IEnumerator HealTime(int code, float time, float hp_heal)
-    {
-        for (int i = 0; i < time; i++)
-        {
-            if (m_EnemyInfo.HP <= MaxHp)
-            {
-                m_EnemyInfo.HP += hp_heal;
-
-                if (MaxHp < m_EnemyInfo.HP)
-                {
-                    m_EnemyInfo.HP = MaxHp;
-                }
-            }
-
-            yield return new WaitForSeconds(1f);
-        }
-
-        m_buff[code] = null;
-        BuffList.RemoveAt(0);
-    }
-
-    IEnumerator DefBuff(int code, float time, float amount)
-    {
-        float origin = m_EnemyInfo.Def;
-
-        m_EnemyInfo.Def = amount;
-
-        yield return new WaitForSeconds(time);
-
-        m_EnemyInfo.Def = origin;
-
-        m_buff[code] = null;
-        BuffList.RemoveAt(0);
-    }
-
-    #endregion
-
-    #region Call«‘ºˆ
-
-    public void CallAttack()
-    {
-        m_EnemyInfo.Atk *= atkstatdata.Dmg;
-        enemyskillmanager.SpawnProjectileSkill(atkconditiondata.projectile_prefab, m_EnemyInfo.Atk, atkconditiondata, atkstatdata, AttackPivot);
-    }
-
-    public void CallSkill()
-    {
-        for (int i = 0; i < Enemy_obj.Count; i++)
-        {
-            if (Enemy_obj[i] != null)
-            {
-                BuffCC_TableExcel setbuff;
-
-                setbuff = buffcc_table.DataList.Where(item => item.Code == m_EnemyInfo.Skill1Code).Single();
-
-                Enemy_obj[i].BuffList.Add(setbuff);
-                Enemy_obj[i].On_SkillBuff();
-            }
-        }
-    }
-
-    public void CallDie()
-    {
-        SpawnManager.Instance.Despawn(this);
-        animator.SetBool("Die", false);
-    }
-
-    #endregion
+			Invoke("StartSkill", skillstatdata.CoolTime);
+		}
+	}
+
+	public void Init()
+	{
+		isDie = false;
+		isDefBuff = false;
+		MaxHp = m_EnemyInfo.HP;
+	}
+
+	private void Update()
+	{
+		if (!isDie)
+		{
+			//ÎßàÏôïÎßå ÌÉÄÍ≤üÏúºÎ°ú Ïû°Í∏∞
+			//Î≤ΩÏù¥ÎÇò Ï§ëÍ∞ÑÏóê Ïû•Ïï†Î¨ºÏù¥ ÏûàÎã§Î©¥ Î∞îÍøîÏïºÌï®
+			if (waypointIndex >= 3)
+			{
+				float Distance = Vector3.Distance(transform.position, new Vector3(0f, 0f, 0f));
+
+				//Í±∞Î¶¨ ÏïàÏóê ÏûàÎã§Î©¥
+				if (Distance <= atkstatdata.Range)
+				{
+					// ÌöåÏ†ÑÌï† Î∞©Ìñ•
+					Vector3 lookingDir = target.position - transform.position;
+
+					// y ÌöåÏ†Ñ Î∞©ÏßÄ
+					lookingDir.y = 0f;
+
+					// ÌöåÏ†Ñ
+					transform.rotation = Quaternion.LookRotation(lookingDir);
+
+					if (Atk_Timer >= atkstatdata.CoolTime)
+					{
+						animator.SetTrigger("Attack");
+						Atk_Timer = 0f;
+					}
+
+					else
+					{
+						Atk_Timer += Time.deltaTime;
+					}
+				}
+			}
+
+			if (!isStun)
+			{
+				//Vector3 dir = target.position - transform.position;
+				//transform.Translate(dir.normalized * m_EnemyInfo.Move_spd * Time.deltaTime, Space.World);
+
+				//if (Vector3.Distance(transform.position, target.position) <= 0.2f)
+				//{
+				//    GetNextWayPoint();
+				//}
+
+				Vector3 dir = target.position - transform.position;
+				transform.Translate(dir.normalized * 2f * Time.deltaTime, Space.World);
+				m_HPBar.transform.position = M_EnemyHPBar.m_HPBarCanvas.worldCamera.WorldToScreenPoint(transform.position) + M_EnemyHPBar.Distance;
+
+				if (Vector3.Distance(transform.position, target.position) <= 0.2f)
+				{
+					GetNextWayPoint();
+				}
+			}
+
+			#region Í∑∏Î¶¨ÌïÄ(ÌïòÎäò)Î°ú Ï≤¥Ïù∏ÏßÄ
+
+			if (m_EnemyInfo.Name_EN == "Grffin02" && !isDivide)
+			{
+				//HPÍ∞Ä Î∞òÏïÑÎûòÍ∞Ä ÎêòÏóàÏùÑÎïå
+				if (m_EnemyInfo.HP <= Half_HP)
+				{
+					ChangeMode();
+				}
+			}
+
+			#endregion
+
+			if (m_EnemyInfo.HP <= 0)
+			{
+				On_Death();
+				isDie = true;
+			}
+		}
+	}
+
+	#region Ïô∏Î∂Ä Ìï®Ïàò
+
+	// Enemy Ï¥àÍ∏∞Ìôî
+	public void InitializeEnemy(int code)
+	{
+		#region ÏóëÏÖÄ Îç∞Ïù¥ÌÑ∞ Ï†ïÎ¶¨
+
+		m_Enemyinfo_Excel = M_Enemy.GetData(code);
+		#endregion
+
+		#region ÎÇ¥Î∂Ä Îç∞Ïù¥ÌÑ∞ Ï†ïÎ¶¨
+
+		m_EnemyInfo.Name_EN = m_Enemyinfo_Excel.Name_EN;
+		m_EnemyInfo.Move_Type = m_Enemyinfo_Excel.Move_Type;
+		m_EnemyInfo.Atk = m_Enemyinfo_Excel.Atk;
+		m_EnemyInfo.HP = m_Enemyinfo_Excel.HP;
+		m_EnemyInfo.Def = m_Enemyinfo_Excel.Def;
+		m_EnemyInfo.Shild = m_Enemyinfo_Excel.Shild;
+		m_EnemyInfo.Move_spd = m_Enemyinfo_Excel.Move_spd;
+		m_EnemyInfo.CC_Rgs1 = m_Enemyinfo_Excel.CC_Rgs1;
+		m_EnemyInfo.CC_Rgs2 = m_Enemyinfo_Excel.CC_Rgs2;
+		m_EnemyInfo.CC_Rgs3 = m_Enemyinfo_Excel.CC_Rgs3;
+		m_EnemyInfo.Atk_Code = m_Enemyinfo_Excel.Atk_Code;
+		m_EnemyInfo.Skill1Code = m_Enemyinfo_Excel.Skill1Code;
+		m_EnemyInfo.Skill2Code = m_Enemyinfo_Excel.Skill2Code;
+		m_EnemyInfo.HPSkillCast = m_Enemyinfo_Excel.HPSkillCast;
+		m_EnemyInfo.Prefeb = m_Enemyinfo_Excel.Prefab;
+
+		MaxHp = m_EnemyInfo.HP;
+
+		#endregion
+	}
+	public void FinializeEnemy()
+	{
+		M_EnemyHPBar.DespawnHPBar(m_HPBar);
+	}
+
+	// Ïä§ÌÑ¥
+	public void On_Stun(int code)
+	{
+		StartCoroutine(OnStun(code));
+	}
+
+	//ÏÜåÌôò
+	public void On_Summon(string name)
+	{
+		StartCoroutine(OnSummon(name));
+	}
+
+	//ÎèôÏÑúÎÇ®Î∂Å
+	public void InitSetting(E_Direction p_waypoint)
+	{
+		direc = p_waypoint;
+		Init();
+	}
+
+	//Î∂ÑÏó¥Ìïú Ï†ÅÏù¥ Í∞ÄÏßÄÎäî Îç∞Ïù¥ÌÑ∞
+	//ÎèôÏÑúÎÇ®Î∂Å
+	//Î∞îÎùºÎ≥¥Í≥† ÏûàÎçò waypoint
+	//waypointindexÍ∞í
+	public void InitSetting(E_Direction p_waypoint, Transform _target, int _waypointindex)
+	{
+		direc = p_waypoint;
+		target = _target;
+		waypointIndex = _waypointindex;
+		Init();
+	}
+
+	//ÏÇ¨Îßù
+	public void On_Death()
+	{
+		animator.SetBool("Die", true);
+	}
+
+	//Îç∞ÎØ∏ÏßÄ
+	public void On_DaMage(float damage)
+	{
+		if (!gameObject.activeSelf)
+			return;
+
+		// Î≤ÑÌîÑ Ï†ÅÏö© ÌôïÎ•†
+		List<float> BuffRand = new List<float>();
+		// Î≤ÑÌîÑ Ï†ÅÏö© Ïó¨Î∂Ä
+		List<bool> BuffApply = new List<bool>();
+		// Î≤ÑÌîÑ Ï†ÅÏö© Í≥ÑÏÇ∞
+		for (int i = 0; i < BuffList.Count; ++i)
+		{
+			BuffRand.Add(Random.Range(0f, 1f));
+			BuffApply.Add((E_BuffType)BuffList[i].BuffType1 == E_BuffType.None ? false : BuffRand[BuffRand.Count - 1] <= BuffList[i].BuffRand1);
+			BuffRand.Add(Random.Range(0f, 1f));
+			BuffApply.Add((E_BuffType)BuffList[i].BuffType2 == E_BuffType.None ? false : BuffRand[BuffRand.Count - 1] <= BuffList[i].BuffRand2);
+			BuffRand.Add(Random.Range(0f, 1f));
+			BuffApply.Add((E_BuffType)BuffList[i].BuffType3 == E_BuffType.None ? false : BuffRand[BuffRand.Count - 1] <= BuffList[i].BuffRand3);
+		}
+
+		S_Buff buff;
+
+		#region ÎîîÎ≤ÑÌîÑ Ìï©Ïó∞ÏÇ∞
+
+		for (int i = 0; i < BuffList.Count; ++i)
+		{
+			// ÎîîÎ≤ÑÌîÑ1 Ï≤¥ÌÅ¨
+			if (BuffApply[i * 3])
+			{
+				buff = new S_Buff(
+					BuffList[i].BuffType1,
+					BuffList[i].AddType1,
+					BuffList[i].BuffAmount1,
+					BuffList[i].BuffRand1,
+					BuffList[i].Summon1
+					);
+
+				float BuffAmount = buff.BuffAmount;
+				float Buff_Debufftime = BuffList[i].Duration;
+
+				// ÎîîÎ≤ÑÌîÑ1 Ìï©Ïó∞ÏÇ∞
+				if (buff.AddType == E_AddType.Fix)
+				{
+					switch (buff.BuffType)
+					{
+						case E_BuffType.Dot_Dmg:
+							//Ï¥ù Ï≤¥Î†•Ïóê buffamountÏùò ÌçºÏÑºÌä∏ ÎßåÌÅº Í∞ÄÏ†∏Ïò§Í∏∞
+							float amount = Get_EnemyHP * BuffAmount;
+
+							//Ï¥ù ÎèÑÌä∏ Îç∞ÎØ∏ÏßÄÎ•º Ï¥àÎãπÏúºÎ°ú Îç∞ÎØ∏ÏßÄÎ°ú Î∞îÍæ∏Í∏∞
+							float dot_dmg = amount / Buff_Debufftime;
+
+							// ÎîîÎ≤ÑÌîÑ ÏΩîÎìú
+							int code = BuffList[i].Code;
+
+							// Ï†ÅÏö©ÎêòÍ≥† ÏûàÎäî ÎîîÎ≤ÑÌîÑ Ï§ë ÌòÑÏû¨ ÎîîÎ≤ÑÌîÑ ÏΩîÎìúÍ∞Ä ÏóÜÏúºÎ©¥
+							if (!debuff.ContainsKey(code))
+							{
+								// Ï∂îÍ∞Ä
+								debuff.Add(code, Dot_DmgTime(code, Buff_Debufftime, dot_dmg));
+							}
+							// ÎîîÎ≤ÑÌîÑ ÏΩîÎìúÍ∞Ä ÏûàÏúºÎ©¥
+							else
+							{
+								if (debuff.TryGetValue(code, out IEnumerator coroutine))
+								{
+									StopCoroutine(coroutine);
+								}
+								debuff[code] = Dot_DmgTime(code, Buff_Debufftime, dot_dmg);
+							}
+
+							StartCoroutine(debuff[code]);
+							//StartCoroutine(Dot_DmgTime(Buff_Debufftime, dot_dmg));
+							break;
+
+						case E_BuffType.Summon:
+							On_Summon(BuffList[i].Name_EN);
+							break;
+					}
+				}
+
+				// ÎîîÎ≤ÑÌîÑ2 Ï≤¥ÌÅ¨
+				if (BuffApply[i * 3 + 1])
+				{
+					buff = new S_Buff(
+						BuffList[i].BuffType2,
+						BuffList[i].AddType2,
+						BuffList[i].BuffAmount2,
+						BuffList[i].BuffRand2,
+						BuffList[i].Summon2
+						);
+					BuffAmount = buff.BuffAmount;
+
+					// Î≤ÑÌîÑ&ÎîîÎ≤ÑÌîÑ2 Ìï©Ïó∞ÏÇ∞
+					if (buff.AddType == E_AddType.Fix)
+					{
+						switch (buff.BuffType)
+						{
+							case E_BuffType.Dot_Dmg:
+								//Ï¥ù Ï≤¥Î†•Ïóê buffamountÏùò ÌçºÏÑºÌä∏ ÎßåÌÅº Í∞ÄÏ†∏Ïò§Í∏∞
+								float amount = Get_EnemyHP * BuffAmount;
+
+								//Ï¥ù ÎèÑÌä∏ Îç∞ÎØ∏ÏßÄÎ•º Ï¥àÎãπÏúºÎ°ú Îç∞ÎØ∏ÏßÄÎ°ú Î∞îÍæ∏Í∏∞
+								float dot_dmg = amount / Buff_Debufftime;
+
+								// ÎîîÎ≤ÑÌîÑ ÏΩîÎìú
+								int code = BuffList[i].Code;
+
+								// Ï†ÅÏö©ÎêòÍ≥† ÏûàÎäî ÎîîÎ≤ÑÌîÑ Ï§ë ÌòÑÏû¨ ÎîîÎ≤ÑÌîÑ ÏΩîÎìúÍ∞Ä ÏóÜÏúºÎ©¥
+								if (!debuff.ContainsKey(code))
+								{
+									// Ï∂îÍ∞Ä
+									debuff.Add(code, Dot_DmgTime(code, Buff_Debufftime, dot_dmg));
+								}
+								// ÎîîÎ≤ÑÌîÑ ÏΩîÎìúÍ∞Ä ÏûàÏúºÎ©¥
+								else
+								{
+									if (debuff.TryGetValue(code, out IEnumerator coroutine))
+									{
+										StopCoroutine(coroutine);
+									}
+									debuff[code] = Dot_DmgTime(code, Buff_Debufftime, dot_dmg);
+								}
+
+								StartCoroutine(debuff[code]);
+								break;
+						}
+					}
+
+					// ÎîîÎ≤ÑÌîÑ3 Ï≤¥ÌÅ¨
+					if (BuffApply[i * 3 + 2])
+					{
+						buff = new S_Buff(
+							BuffList[i].BuffType3,
+							BuffList[i].AddType3,
+							BuffList[i].BuffAmount3,
+							BuffList[i].BuffRand3,
+							BuffList[i].Summon3
+							);
+						BuffAmount = buff.BuffAmount;
+
+						// ÎîîÎ≤ÑÌîÑ3 Ìï©Ïó∞ÏÇ∞
+						if (buff.AddType == E_AddType.Fix)
+						{
+							switch (buff.BuffType)
+							{
+								case E_BuffType.Dot_Dmg:
+
+									//Î∞îÍøîÏïºÎê® tower Í≥µÍ≤©Î†•ÏúºÎ°ú
+									//Ï¥ù Ï≤¥Î†•Ïóê buffamountÏùò ÌçºÏÑºÌä∏ ÎßåÌÅº Í∞ÄÏ†∏Ïò§Í∏∞
+									float amount = Get_EnemyHP * BuffAmount;
+
+									//Ï¥ù ÎèÑÌä∏ Îç∞ÎØ∏ÏßÄÎ•º Ï¥àÎãπÏúºÎ°ú Îç∞ÎØ∏ÏßÄÎ°ú Î∞îÍæ∏Í∏∞
+									float dot_dmg = amount / Buff_Debufftime;
+
+									// ÎîîÎ≤ÑÌîÑ ÏΩîÎìú
+									int code = BuffList[i].Code;
+
+									// Ï†ÅÏö©ÎêòÍ≥† ÏûàÎäî ÎîîÎ≤ÑÌîÑ Ï§ë ÌòÑÏû¨ ÎîîÎ≤ÑÌîÑ ÏΩîÎìúÍ∞Ä ÏóÜÏúºÎ©¥
+									if (!debuff.ContainsKey(code))
+									{
+										// Ï∂îÍ∞Ä
+										debuff.Add(code, Dot_DmgTime(code, Buff_Debufftime, dot_dmg));
+									}
+									// ÎîîÎ≤ÑÌîÑ ÏΩîÎìúÍ∞Ä ÏûàÏúºÎ©¥
+									else
+									{
+										if (debuff.TryGetValue(code, out IEnumerator coroutine))
+										{
+											StopCoroutine(coroutine);
+										}
+										debuff[code] = Dot_DmgTime(code, Buff_Debufftime, dot_dmg);
+									}
+
+									StartCoroutine(debuff[code]);
+									break;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		#endregion
+
+		#region ÎîîÎ≤ÑÌîÑ Í≥±Ïó∞ÏÇ∞
+
+		for (int i = 0; i < BuffList.Count; ++i)
+		{
+			// ÎîîÎ≤ÑÌîÑ1 Ï≤¥ÌÅ¨
+			if (BuffApply[i * 3])
+			{
+				buff = new S_Buff(
+					BuffList[i].BuffType1,
+					BuffList[i].AddType1,
+					BuffList[i].BuffAmount1,
+					BuffList[i].BuffRand1,
+					BuffList[i].Summon1
+					);
+				float BuffAmount = buff.BuffAmount;
+				float Buff_Debufftime = BuffList[i].Duration;
+
+				// ÎîîÎ≤ÑÌîÑ1 Í≥±Ïó∞ÏÇ∞
+				if (buff.AddType == E_AddType.Percent)
+				{
+
+					switch (buff.BuffType)
+					{
+						case E_BuffType.Def:
+							StartCoroutine(PersentBuff_DeBuffTime(Buff_Debufftime, buff.BuffType, BuffAmount));
+							break;
+						case E_BuffType.Stun:
+
+							int code = BuffList[i].Code;
+
+							On_Stun(code);
+							break;
+						case E_BuffType.Insta_Kill:
+							On_Death();
+							break;
+						case E_BuffType.Move_spd:
+							StartCoroutine(PersentBuff_DeBuffTime(Buff_Debufftime, buff.BuffType, BuffAmount));
+							break;
+					}
+				}
+
+				// ÎîîÎ≤ÑÌîÑ2 Ï≤¥ÌÅ¨
+				if (BuffApply[i * 3 + 1])
+				{
+					buff = new S_Buff(
+						BuffList[i].BuffType2,
+						BuffList[i].AddType2,
+						BuffList[i].BuffAmount2,
+						BuffList[i].BuffRand2,
+						BuffList[i].Summon2
+						);
+					BuffAmount = buff.BuffAmount;
+
+					// ÎîîÎ≤ÑÌîÑ2 Í≥±Ïó∞ÏÇ∞
+					if (buff.AddType == E_AddType.Percent)
+					{
+						switch (buff.BuffType)
+						{
+							case E_BuffType.Move_spd:
+								StartCoroutine(PersentBuff_DeBuffTime(Buff_Debufftime, buff.BuffType, BuffAmount));
+								break;
+						}
+					}
+
+					// ÎîîÎ≤ÑÌîÑ3 Ï≤¥ÌÅ¨
+					if (BuffApply[i * 3 + 2])
+					{
+						buff = new S_Buff(
+							BuffList[i].BuffType3,
+							BuffList[i].AddType3,
+							BuffList[i].BuffAmount3,
+							BuffList[i].BuffRand3,
+							BuffList[i].Summon3
+							);
+						BuffAmount = buff.BuffAmount;
+
+						// ÎîîÎ≤ÑÌîÑ3 Í≥±Ïó∞ÏÇ∞
+						if (buff.AddType == E_AddType.Percent)
+						{
+							switch (buff.BuffType)
+							{
+
+							}
+						}
+					}
+				}
+			}
+		}
+
+		#endregion
+
+		// Î∞©Ïñ¥Î†• Í≥ÑÏÇ∞
+		damage -= Get_EnemyDef;
+
+		// ÏµúÏÜå ÎåÄÎØ∏ÏßÄ Ï†ÅÏö©
+		if (damage <= 0f)
+			damage = 1f;
+
+		// ÎåÄÎØ∏ÏßÄ Ï†ÅÏö©
+		m_EnemyInfo.HP -= damage;
+
+		// ÎåÄÎØ∏ÏßÄ ÌÖçÏä§Ìä∏
+		Vector3 text_position = transform.position + Vector3.forward * 2.5f;
+		M_DamageText.SpawnDamageText(damage.ToString(), text_position);
+
+		// Ï≤¥Î†•Î∞î UI
+		m_HPBar.fillAmount = m_EnemyInfo.HP / MaxHp;
+
+		// ÏÇ¨Îßù ÌôïÏù∏
+		if (m_EnemyInfo.HP <= 0)
+		{
+			On_Death();
+		}
+
+	}
+
+	public void On_SkillBuff()
+	{
+		// Î≤ÑÌîÑ Ï†ÅÏö© ÌôïÎ•†
+		List<float> BuffRand = new List<float>();
+		// Î≤ÑÌîÑ Ï†ÅÏö© Ïó¨Î∂Ä
+		List<bool> BuffApply = new List<bool>();
+		// Î≤ÑÌîÑ Ï†ÅÏö© Í≥ÑÏÇ∞
+		for (int i = 0; i < BuffList.Count; ++i)
+		{
+			BuffRand.Add(Random.Range(0f, 1f));
+			BuffApply.Add((E_BuffType)BuffList[i].BuffType1 == E_BuffType.None ? false : BuffRand[BuffRand.Count - 1] <= BuffList[i].BuffRand1);
+			BuffRand.Add(Random.Range(0f, 1f));
+			BuffApply.Add((E_BuffType)BuffList[i].BuffType2 == E_BuffType.None ? false : BuffRand[BuffRand.Count - 1] <= BuffList[i].BuffRand2);
+			BuffRand.Add(Random.Range(0f, 1f));
+			BuffApply.Add((E_BuffType)BuffList[i].BuffType3 == E_BuffType.None ? false : BuffRand[BuffRand.Count - 1] <= BuffList[i].BuffRand3);
+		}
+
+		S_Buff buff;
+
+		#region Î≤ÑÌîÑ Ìï©Ïó∞ÏÇ∞
+
+		for (int i = 0; i < BuffList.Count; ++i)
+		{
+			// Î≤ÑÌîÑ1 Ï≤¥ÌÅ¨
+			if (BuffApply[i * 3])
+			{
+				buff = new S_Buff(
+					BuffList[i].BuffType1,
+					BuffList[i].AddType1,
+					BuffList[i].BuffAmount1,
+					BuffList[i].BuffRand1,
+					BuffList[i].Summon1
+					);
+
+				float BuffAmount = buff.BuffAmount;
+				float Buff_Debufftime = BuffList[i].Duration;
+
+				// Î≤ÑÌîÑ1 Ìï©Ïó∞ÏÇ∞
+				if (buff.AddType == E_AddType.Percent)
+				{
+					switch (buff.BuffType)
+					{
+						case E_BuffType.Heal:
+							// Î≤ÑÌîÑ ÏΩîÎìú
+							int code = BuffList[i].Code;
+
+							float amount = Get_EnemyHP * BuffAmount;
+
+							//Ï¥ù ÎèÑÌä∏ Îç∞ÎØ∏ÏßÄÎ•º Ï¥àÎãπÏúºÎ°ú Îç∞ÎØ∏ÏßÄÎ°ú Î∞îÍæ∏Í∏∞
+							float hp_heal = amount / Buff_Debufftime;
+
+							// Ï†ÅÏö©ÎêòÍ≥† ÏûàÎäî Î≤ÑÌîÑ Ï§ë ÌòÑÏû¨ Î≤ÑÌîÑ ÏΩîÎìúÍ∞Ä ÏóÜÏúºÎ©¥
+							if (!m_buff.ContainsKey(code))
+							{
+								// Ï∂îÍ∞Ä
+								m_buff.Add(code, HealTime(code, Buff_Debufftime, hp_heal));
+							}
+							// Î≤ÑÌîÑ ÏΩîÎìúÍ∞Ä ÏûàÏúºÎ©¥
+							else
+							{
+								if (m_buff.TryGetValue(code, out IEnumerator coroutine))
+								{
+									StopCoroutine(coroutine);
+								}
+								m_buff[code] = HealTime(code, Buff_Debufftime, hp_heal);
+							}
+
+							StartCoroutine(m_buff[code]);
+							break;
+
+						case E_BuffType.Def:
+							code = BuffList[i].Code;
+
+							amount = Get_EnemyDef * BuffAmount;
+
+							// Ï†ÅÏö©ÎêòÍ≥† ÏûàÎäî Î≤ÑÌîÑ Ï§ë ÌòÑÏû¨ Î≤ÑÌîÑ ÏΩîÎìúÍ∞Ä ÏóÜÏúºÎ©¥
+							if (!m_buff.ContainsKey(code))
+							{
+								// Ï∂îÍ∞Ä
+								m_buff.Add(code, DefBuff(code, Buff_Debufftime, amount));
+							}
+							// Î≤ÑÌîÑ ÏΩîÎìúÍ∞Ä ÏûàÏúºÎ©¥
+							else
+							{
+								if (m_buff.TryGetValue(code, out IEnumerator coroutine))
+								{
+									StopCoroutine(coroutine);
+								}
+								m_buff[code] = DefBuff(code, Buff_Debufftime, amount);
+							}
+
+							StartCoroutine(m_buff[code]);
+							break;
+					}
+				}
+
+				// Î≤ÑÌîÑ2 Ï≤¥ÌÅ¨
+				if (BuffApply[i * 3 + 1])
+				{
+					buff = new S_Buff(
+						BuffList[i].BuffType2,
+						BuffList[i].AddType2,
+						BuffList[i].BuffAmount2,
+						BuffList[i].BuffRand2,
+						BuffList[i].Summon2
+						);
+					BuffAmount = buff.BuffAmount;
+
+					// Î≤ÑÌîÑ2 Ìï©Ïó∞ÏÇ∞
+					if (buff.AddType == E_AddType.Percent)
+					{
+						switch (buff.BuffType)
+						{
+
+						}
+					}
+
+					// Î≤ÑÌîÑ3 Ï≤¥ÌÅ¨
+					if (BuffApply[i * 3 + 2])
+					{
+						buff = new S_Buff(
+							BuffList[i].BuffType3,
+							BuffList[i].AddType3,
+							BuffList[i].BuffAmount3,
+							BuffList[i].BuffRand3,
+							BuffList[i].Summon3
+							);
+						BuffAmount = buff.BuffAmount;
+
+						// Î≤ÑÌîÑ3 Ìï©Ïó∞ÏÇ∞
+						if (buff.AddType == E_AddType.Percent)
+						{
+							switch (buff.BuffType)
+							{
+
+							}
+						}
+					}
+				}
+			}
+		}
+
+		#endregion
+	}
+
+	#endregion
+
+	#region ÎÇ¥Î∂Ä Ìï®Ïàò
+
+	private void StartSkill()
+	{
+		animator.SetTrigger("Skill");
+	}
+
+	private void ChangeMode()
+	{
+		//Í∑∏Î¶¨ÌïÄ ÌïòÎäò ÏΩîÎìúÎ°ú Îç∞Ïù¥ÌÑ∞ ÏÖãÌåÖ
+		InitializeEnemy(200009);
+	}
+
+	//Îã§Ïùå waypoint Ï†ïÎ≥¥
+	private void GetNextWayPoint()
+	{
+		switch (direc)
+		{
+			case E_Direction.East:
+				if (waypointIndex >= EastWayPoints.points.Length - 1)
+				{
+					transform.position = EastWayPoints.points[EastWayPoints.points.Length - 1].position;
+					animator.SetTrigger("Attack");
+				}
+
+				else
+				{
+					waypointIndex++;
+					target = EastWayPoints.points[waypointIndex];
+					transform.LookAt(target);
+				}
+				break;
+
+			case E_Direction.West:
+				if (waypointIndex >= WestWayPoints.points.Length - 1)
+				{
+					transform.position = WestWayPoints.points[WestWayPoints.points.Length - 1].position;
+					animator.SetTrigger("Attack");
+				}
+
+				else
+				{
+					waypointIndex++;
+					target = WestWayPoints.points[waypointIndex];
+					transform.LookAt(target);
+				}
+				break;
+
+			case E_Direction.South:
+				if (waypointIndex >= SouthWayPoints.points.Length - 1)
+				{
+					transform.position = SouthWayPoints.points[SouthWayPoints.points.Length - 1].position;
+					animator.SetTrigger("Attack");
+				}
+
+				else
+				{
+					waypointIndex++;
+					target = SouthWayPoints.points[waypointIndex];
+					transform.LookAt(target);
+				}
+				break;
+
+			case E_Direction.North:
+				if (waypointIndex >= NorthWayPoints.points.Length - 1)
+				{
+					transform.position = NorthWayPoints.points[NorthWayPoints.points.Length - 1].position;
+					animator.SetTrigger("Attack");
+				}
+
+				else
+				{
+					waypointIndex++;
+					target = NorthWayPoints.points[waypointIndex];
+					transform.LookAt(target);
+				}
+				break;
+		}
+	}
+	#endregion
+
+	#region ÏΩîÎ£®Ìã¥
+
+	//Ïä§ÌÑ¥
+	//Ïï†ÎãàÎ©îÏù¥ÏÖò Ï∂îÍ∞Ä
+	IEnumerator OnStun(int code)
+	{
+		isStun = true;
+
+		animator.SetTrigger("Stun");
+
+		yield return new WaitForSeconds(1f);
+
+		isStun = false;
+	}
+
+	//Î∂ÑÏó¥
+	IEnumerator OnSummon(string name)
+	{
+		SpawnManager.Instance.SpawnEnemy(direc, transform.localPosition, target, waypointIndex, name, animator);
+
+		yield return null;
+	}
+
+	IEnumerator PersentBuff_DeBuffTime(float time, E_BuffType type, float amount)
+	{
+		float origin = 0f;
+
+		switch (type)
+		{
+			case E_BuffType.Def:
+				origin = m_EnemyInfo.Def;
+
+				m_EnemyInfo.Def *= amount;
+				break;
+
+			case E_BuffType.Move_spd:
+				origin = m_EnemyInfo.Move_spd;
+
+				m_EnemyInfo.Move_spd *= amount;
+				break;
+		}
+
+		yield return new WaitForSeconds(time);
+
+		switch (type)
+		{
+			case E_BuffType.Def:
+				m_EnemyInfo.Def = origin;
+				break;
+
+			case E_BuffType.Move_spd:
+				m_EnemyInfo.Move_spd = origin;
+				break;
+		}
+
+		//debuff[code] = null;
+		BuffList.RemoveAt(0);
+	}
+
+	IEnumerator Dot_DmgTime(int code, float time, float dmg)
+	{
+		BuffList.RemoveAt(0);
+		for (int i = 0; i < time; i++)
+		{
+			m_EnemyInfo.HP -= dmg;
+			yield return new WaitForSeconds(1f);
+		}
+
+		debuff[code] = null;
+		BuffList.RemoveAt(0);
+	}
+
+	IEnumerator HealTime(int code, float time, float hp_heal)
+	{
+		for (int i = 0; i < time; i++)
+		{
+			if (m_EnemyInfo.HP <= MaxHp)
+			{
+				m_EnemyInfo.HP += hp_heal;
+
+				if (MaxHp < m_EnemyInfo.HP)
+				{
+					m_EnemyInfo.HP = MaxHp;
+				}
+			}
+
+			yield return new WaitForSeconds(1f);
+		}
+
+		m_buff[code] = null;
+		BuffList.RemoveAt(0);
+	}
+
+	IEnumerator DefBuff(int code, float time, float amount)
+	{
+		float origin = m_EnemyInfo.Def;
+
+		m_EnemyInfo.Def = amount;
+
+		yield return new WaitForSeconds(time);
+
+		m_EnemyInfo.Def = origin;
+
+		m_buff[code] = null;
+		BuffList.RemoveAt(0);
+	}
+
+	#endregion
+
+	#region CallÌï®Ïàò
+
+	public void CallAttack()
+	{
+		m_EnemyInfo.Atk *= atkstatdata.Dmg;
+		enemyskillmanager.SpawnProjectileSkill(atkconditiondata.projectile_prefab, m_EnemyInfo.Atk, atkconditiondata, atkstatdata, AttackPivot);
+	}
+
+	public void CallSkill()
+	{
+		for (int i = 0; i < Enemy_obj.Count; i++)
+		{
+			if (Enemy_obj[i] != null)
+			{
+				BuffCC_TableExcel setbuff;
+
+				setbuff = buffcc_table.DataList.Where(item => item.Code == m_EnemyInfo.Skill1Code).Single();
+
+				Enemy_obj[i].BuffList.Add(setbuff);
+				Enemy_obj[i].On_SkillBuff();
+			}
+		}
+	}
+
+	public void CallDie()
+	{
+		SpawnManager.Instance.Despawn(this);
+		animator.SetBool("Die", false);
+	}
+
+	#endregion
 }

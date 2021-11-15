@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -100,7 +100,7 @@ public class StageInfoManager : Singleton<StageInfoManager>
 				stage_time = m_current_stageInfo.StageTime,
 			});
 
-		// °ÔÀÓ ½Â¸® (¸ðµç ½ºÅ×ÀÌÁö Å¬¸®¾î)
+		// ê²Œìž„ ìŠ¹ë¦¬ (ëª¨ë“  ìŠ¤í…Œì´ì§€ í´ë¦¬ì–´)
 		if (m_current_stageInfo.Stage_Num >= m_excel_loader.DataList.Count)
 		{
 			OnGameEndEvent?.Invoke(new GameEndData
