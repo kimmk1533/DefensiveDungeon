@@ -99,6 +99,9 @@ public class UserInfoManager : Singleton<UserInfoManager>
 
 	public void AddLevel(int val)
 	{
+		if (Level >= 10)
+			return;
+
 		m_info.level += val;
 		OnLevelChanged?.Invoke(m_info.level);
 	}
