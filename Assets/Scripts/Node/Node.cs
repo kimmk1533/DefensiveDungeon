@@ -41,9 +41,9 @@ public class Node : MonoBehaviour
 			m_Tower.m_TowerInfo.Direction = m_Direction;
 			m_Tower.m_TowerInfo.LookingDir = m_Tower.transform.forward;
 
-			m_Tower.gameObject.SetActive(true);
 			m_Tower.m_TowerInfo.IsOnInventory = false;
-			m_Tower.m_TowerInfo.CanAttack = true;
+			m_Tower.m_TowerInfo.CanAttack_Node = true;
+			m_Tower.m_TowerInfo.CanAttack_Skill = true;
 
 			M_Tower.AddTower(tower, m_Tower.m_TowerInfo.Direction);
 			M_Synergy.UpdateSynergy();

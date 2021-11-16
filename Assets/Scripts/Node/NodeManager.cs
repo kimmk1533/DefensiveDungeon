@@ -523,7 +523,7 @@ public class NodeManager : Singleton<NodeManager>
 			{
 				if (null != item.m_Tower)
 				{
-					item.m_Tower.CanAttack = flag;
+					item.m_Tower.CanAttack_Node = flag;
 				}
 			}
 		}

@@ -62,12 +62,16 @@ public class Tower : MonoBehaviour
 	protected bool LostTarget_Default => m_AttackRange_Default.Range < DistanceToTarget_Default;
 	protected bool LostTarget_Skill01 => m_AttackRange_Skill01.Range < DistanceToTarget_Skill01;
 	protected bool LostTarget_Skill02 => m_AttackRange_Skill02.Range < DistanceToTarget_Skill02;
+	// 공격 타이머 확인
+	protected bool CheckAttackTimer_Default => m_TowerInfo.AttackTimer_Default >= m_TowerInfo.AttackSpeed_Default;
+	protected bool CheckAttackTimer_Skill01 => m_TowerInfo.AttackTimer_Skill01 >= m_TowerInfo.AttackSpeed_Skill01;
+	protected bool CheckAttackTimer_Skill02 => m_TowerInfo.AttackTimer_Skill02 >= m_TowerInfo.AttackSpeed_Skill02;
 	#endregion
 	#region 외부 프로퍼티
 	public Tower_TableExcel ExcelData => m_TowerInfo_Excel; // cha
 	public E_Direction Direction { get => m_TowerInfo.Direction; set => m_TowerInfo.Direction = value; }
 	public Node Node { get => m_TowerInfo.node; set => m_TowerInfo.node = value; }
-	public bool CanAttack { get => m_TowerInfo.CanAttack; set => m_TowerInfo.CanAttack = value; }
+	public bool CanAttack_Node { get => m_TowerInfo.CanAttack_Node; set => m_TowerInfo.CanAttack_Node = value; }
 	public string Name => m_TowerInfo_Excel.Name_EN;
 	public int TowerCode => m_TowerInfo_Excel.Code;
 	public int TowerKind => m_TowerInfo_Excel.Tower_Kinds;
@@ -83,11 +87,13 @@ public class Tower : MonoBehaviour
 		{
 			RotateToTarget(m_Target_Default);
 		}
-		else if (!IsTargetDead_Skill01 && !LostTarget_Skill01)
+		else if (!IsTargetDead_Skill01 && !LostTarget_Skill01 &&
+			CheckAttackTimer_Skill01)
 		{
 			RotateToTarget(m_Target_Skill01);
 		}
-		else if (!IsTargetDead_Skill02 && !LostTarget_Skill02)
+		else if (!IsTargetDead_Skill02 && !LostTarget_Skill02 &&
+			CheckAttackTimer_Skill02)
 		{
 			RotateToTarget(m_Target_Skill02);
 		}
@@ -179,13 +185,34 @@ public class Tower : MonoBehaviour
 		#region 스킬01
 		if (IsTargetDead_Skill01 || LostTarget_Skill01)
 		{
-			if (m_TowerInfo.AttackTimer_Skill01 >= m_TowerInfo.AttackSpeed_Skill01 &&
-				m_TowerInfo.CanAttack && null != m_Target_Skill01)
+			// 타겟 변경 기준에 따라
+			switch ((E_TargetType)m_TowerInfo.Condition_Skill01.Target_type)
 			{
-				// 타겟 변경 기준에 따라
-				switch ((E_TargetType)m_TowerInfo.Condition_Skill01.Target_type)
-				{
-					case E_TargetType.CloseTarget:
+				case E_TargetType.CloseTarget:
+					{
+						m_Target_Skill01 = m_AttackRange_Skill01.GetNearTarget();
+
+						if (m_TowerInfo.Berserker)
+						{
+							m_TowerInfo.BerserkerStack = 0;
+						}
+					}
+					break;
+				case E_TargetType.RandTarget:
+					{
+						m_Target_Skill01 = m_AttackRange_Skill01.GetRandomTarget();
+
+						if (m_TowerInfo.Berserker)
+						{
+							m_TowerInfo.BerserkerStack = 0;
+						}
+					}
+					break;
+				// FixTarget (타겟이 사거리를 벗어나거나 죽은 경우 변경)
+				case E_TargetType.FixTarget:
+					{
+						if (null == m_Target_Skill01 || // 예외처리
+							DistanceToTarget_Skill01 > m_TowerInfo.Stat_Skill01.Range) // 타겟이 사거리를 벗어난 경우
 						{
 							m_Target_Skill01 = m_AttackRange_Skill01.GetNearTarget();
 
@@ -194,58 +221,54 @@ public class Tower : MonoBehaviour
 								m_TowerInfo.BerserkerStack = 0;
 							}
 						}
-						break;
-					case E_TargetType.RandTarget:
-						{
-							m_Target_Skill01 = m_AttackRange_Skill01.GetRandomTarget();
+					}
+					break;
+				case E_TargetType.TileTarget:
+					{
+						m_Target_Skill01 = m_AttackRange_Skill01.GetNearTarget();
+					}
+					break;
+			}
 
-							if (m_TowerInfo.Berserker)
-							{
-								m_TowerInfo.BerserkerStack = 0;
-							}
-						}
-						break;
-					// FixTarget (타겟이 사거리를 벗어나거나 죽은 경우 변경)
-					case E_TargetType.FixTarget:
-						{
-							if (null == m_Target_Skill01 || // 예외처리
-								DistanceToTarget_Skill01 > m_TowerInfo.Stat_Skill01.Range) // 타겟이 사거리를 벗어난 경우
-							{
-								m_Target_Skill01 = m_AttackRange_Skill01.GetNearTarget();
-
-								if (m_TowerInfo.Berserker)
-								{
-									m_TowerInfo.BerserkerStack = 0;
-								}
-							}
-						}
-						break;
-					case E_TargetType.TileTarget:
-						{
-							m_Target_Skill01 = m_AttackRange_Skill01.GetNearTarget();
-						}
-						break;
-				}
-
-				if (IsTargetDead_Skill01)
-				{
-					m_AttackRange_Skill01.RemoveTarget(m_Target_Skill01);
-					m_Target_Skill01 = null;
-					OnLostSkill01TargetEvent?.Invoke();
-				}
+			if (IsTargetDead_Skill01)
+			{
+				m_AttackRange_Skill01.RemoveTarget(m_Target_Skill01);
+				m_Target_Skill01 = null;
+				OnLostSkill01TargetEvent?.Invoke();
 			}
 		}
 		#endregion
 		#region 스킬02
 		if (IsTargetDead_Skill02 || LostTarget_Skill02)
 		{
-			if (m_TowerInfo.AttackTimer_Skill02 >= m_TowerInfo.AttackSpeed_Skill02 &&
-				m_TowerInfo.CanAttack && null != m_Target_Skill02)
+			// 타겟 변경 기준에 따라
+			switch ((E_TargetType)m_TowerInfo.Condition_Skill02.Target_type)
 			{
-				// 타겟 변경 기준에 따라
-				switch ((E_TargetType)m_TowerInfo.Condition_Skill02.Target_type)
-				{
-					case E_TargetType.CloseTarget:
+				case E_TargetType.CloseTarget:
+					{
+						m_Target_Skill02 = m_AttackRange_Skill02.GetNearTarget();
+
+						if (m_TowerInfo.Berserker)
+						{
+							m_TowerInfo.BerserkerStack = 0;
+						}
+					}
+					break;
+				case E_TargetType.RandTarget:
+					{
+						m_Target_Skill02 = m_AttackRange_Skill02.GetRandomTarget();
+
+						if (m_TowerInfo.Berserker)
+						{
+							m_TowerInfo.BerserkerStack = 0;
+						}
+					}
+					break;
+				// FixTarget (타겟이 사거리를 벗어나거나 죽은 경우 변경)
+				case E_TargetType.FixTarget:
+					{
+						if (null == m_Target_Skill02 || // 예외처리
+							DistanceToTarget_Skill02 > m_TowerInfo.Stat_Skill02.Range) // 타겟이 사거리를 벗어난 경우
 						{
 							m_Target_Skill02 = m_AttackRange_Skill02.GetNearTarget();
 
@@ -254,98 +277,93 @@ public class Tower : MonoBehaviour
 								m_TowerInfo.BerserkerStack = 0;
 							}
 						}
-						break;
-					case E_TargetType.RandTarget:
-						{
-							m_Target_Skill02 = m_AttackRange_Skill02.GetRandomTarget();
+					}
+					break;
+				case E_TargetType.TileTarget:
+					{
+						m_Target_Skill02 = m_AttackRange_Skill02.GetNearTarget();
+					}
+					break;
+			}
 
-							if (m_TowerInfo.Berserker)
-							{
-								m_TowerInfo.BerserkerStack = 0;
-							}
-						}
-						break;
-					// FixTarget (타겟이 사거리를 벗어나거나 죽은 경우 변경)
-					case E_TargetType.FixTarget:
-						{
-							if (null == m_Target_Skill02 || // 예외처리
-								DistanceToTarget_Skill02 > m_TowerInfo.Stat_Skill02.Range) // 타겟이 사거리를 벗어난 경우
-							{
-								m_Target_Skill02 = m_AttackRange_Skill02.GetNearTarget();
-
-								if (m_TowerInfo.Berserker)
-								{
-									m_TowerInfo.BerserkerStack = 0;
-								}
-							}
-						}
-						break;
-					case E_TargetType.TileTarget:
-						{
-							m_Target_Skill02 = m_AttackRange_Skill02.GetNearTarget();
-						}
-						break;
-				}
-
-				if (IsTargetDead_Skill02)
-				{
-					m_AttackRange_Skill02.RemoveTarget(m_Target_Skill02);
-					m_Target_Skill02 = null;
-					OnLostSkill02TargetEvent?.Invoke();
-				}
+			if (IsTargetDead_Skill02)
+			{
+				m_AttackRange_Skill02.RemoveTarget(m_Target_Skill02);
+				m_Target_Skill02 = null;
+				OnLostSkill02TargetEvent?.Invoke();
 			}
 		}
 		#endregion
 	}
-	// 타워 공격
-	protected void AttackTarget()
+	// 타워 공격 타이머
+	protected void UpdateAttackTimer()
 	{
-		#region 기본 스킬
-		// 기본 스킬 타이머
-		if (m_TowerInfo.AttackTimer_Default < m_TowerInfo.AttackSpeed_Default)
-		{
-			m_TowerInfo.AttackTimer_Default += Time.deltaTime;
-		}
-		// 기본 스킬 공격
-		else if (m_TowerInfo.CanAttack && !IsTargetDead_Default && !LostTarget_Default)
-		{
-			// 내부 데이터 정리
-			m_TowerInfo.AttackTimer_Default -= m_TowerInfo.AttackSpeed_Default;
-
-			// 기본 공격 애니메이션 재생
-			SetAttackTrigger();
-		}
-		#endregion
-		#region 스킬01
 		// 스킬01 타이머
 		if (m_TowerInfo.AttackTimer_Skill01 < m_TowerInfo.AttackSpeed_Skill01)
 		{
 			m_TowerInfo.AttackTimer_Skill01 += Time.deltaTime;
 		}
-		// 스킬01 공격
-		else if (m_TowerInfo.CanAttack && !IsTargetDead_Skill01 && !LostTarget_Skill01)
-		{
-			// 내부 데이터 정리
-			m_TowerInfo.AttackTimer_Skill01 -= m_TowerInfo.AttackSpeed_Skill01;
 
-			// 스킬01 애니메이션 재생
-			SetSkill01Trigger();
-		}
-		#endregion
-		#region 스킬02
 		// 스킬02 타이머
 		if (m_TowerInfo.AttackTimer_Skill02 < m_TowerInfo.AttackSpeed_Skill02)
 		{
 			m_TowerInfo.AttackTimer_Skill02 += Time.deltaTime;
 		}
+
+		// 기본 스킬 타이머
+		if (m_TowerInfo.AttackTimer_Default < m_TowerInfo.AttackSpeed_Default)
+		{
+			m_TowerInfo.AttackTimer_Default += Time.deltaTime;
+		}
+	}
+	// 타워 공격
+	protected void AttackTarget()
+	{
+		#region 스킬01
+		// 스킬01 공격
+		if (CheckAttackTimer_Skill01 &&
+			m_TowerInfo.CanAttack_Node &&
+			!IsTargetDead_Skill01 && !LostTarget_Skill01)
+		{
+			// 내부 데이터 정리
+			m_TowerInfo.AttackTimer_Skill01 -= m_TowerInfo.AttackSpeed_Skill01;
+			m_TowerInfo.CanAttack_Skill = false;
+
+			// 스킬01 애니메이션 재생
+			SetSkill01Trigger();
+			return;
+		}
+		#endregion
+
+		#region 스킬02
 		// 스킬02 공격
-		else if (m_TowerInfo.CanAttack && !IsTargetDead_Skill02 && !LostTarget_Skill02)
+		if (CheckAttackTimer_Skill02 &&
+			m_TowerInfo.CanAttack_Node &&
+			!IsTargetDead_Skill02 && !LostTarget_Skill02)
 		{
 			// 내부 데이터 정리
 			m_TowerInfo.AttackTimer_Skill02 -= m_TowerInfo.AttackSpeed_Skill02;
+			m_TowerInfo.CanAttack_Skill = false;
 
 			// 스킬02 애니메이션 재생
 			SetSkill02Trigger();
+			return;
+		}
+		#endregion
+
+		#region 기본 스킬
+		// 기본 스킬 공격
+		if (CheckAttackTimer_Default &&
+			m_TowerInfo.CanAttack_Node &&
+			!IsTargetDead_Default && !LostTarget_Default)
+		{
+			// 내부 데이터 정리
+			m_TowerInfo.AttackTimer_Default -= m_TowerInfo.AttackSpeed_Default;
+			m_TowerInfo.CanAttack_Skill = false;
+
+			// 기본 공격 애니메이션 재생
+			SetAttackTrigger();
+			return;
 		}
 		#endregion
 	}
@@ -373,7 +391,8 @@ public class Tower : MonoBehaviour
 
 		#region 내부 데이터 정리
 		m_TowerInfo.RotateSpeed = 5f;
-		m_TowerInfo.CanAttack = false;
+		m_TowerInfo.CanAttack_Node = false;
+		m_TowerInfo.CanAttack_Skill = false;
 
 		// null 병합 연산자 안되는 이유
 		// https://overworks.github.io/unity/2019/07/22/null-of-unity-object-part-2.html
@@ -480,12 +499,12 @@ public class Tower : MonoBehaviour
 
 	public void CallAttack()
 	{
-		if (null == m_Target_Default)
-		{
-			return;
-		}
-
+		// 내부 데이터 정리
 		m_TowerInfo.AttackSpeed_Default = m_TowerInfo.Stat_Default.CoolTime;
+		m_TowerInfo.CanAttack_Skill = true;
+
+		if (null == m_Target_Default)
+			return;
 
 		// 기본 스킬 데이터 불러오기
 		SkillCondition_TableExcel conditionData = m_TowerInfo.Condition_Default;
@@ -1194,13 +1213,12 @@ public class Tower : MonoBehaviour
 	}
 	public void CallSkill01()
 	{
-		if (null == m_Target_Skill01)
-		{
-			return;
-		}
-
 		// 내부 데이터 정리
 		m_TowerInfo.AttackSpeed_Skill01 = m_TowerInfo.Stat_Skill01.CoolTime;
+		m_TowerInfo.CanAttack_Skill = true;
+
+		if (null == m_Target_Skill01)
+			return;
 
 		// 스킬01 데이터 불러오기
 		SkillCondition_TableExcel conditionData = m_TowerInfo.Condition_Skill01;
@@ -1863,13 +1881,12 @@ public class Tower : MonoBehaviour
 	}
 	public void CallSkill02()
 	{
-		if (null == m_Target_Skill02)
-		{
-			return;
-		}
-
 		// 내부 데이터 정리
 		m_TowerInfo.AttackSpeed_Skill02 = m_TowerInfo.Stat_Skill02.CoolTime;
+		m_TowerInfo.CanAttack_Skill = true;
+
+		if (null == m_Target_Skill02)
+			return;
 
 		// 스킬02 데이터 불러오기
 		SkillCondition_TableExcel conditionData = m_TowerInfo.Condition_Skill02;
@@ -2532,16 +2549,17 @@ public class Tower : MonoBehaviour
 	}
 	#endregion
 	#region 유니티 콜백 함수
-	private void OnApplicationQuit()
-	{
-		FinializeTower();
-	}
-
 	private void Update()
 	{
 		UpdateTarget();
 		RotateToTarget();
+		UpdateAttackTimer();
 		AttackTarget();
+	}
+
+	private void OnApplicationQuit()
+	{
+		FinializeTower();
 	}
 	#endregion
 
@@ -2564,7 +2582,9 @@ public class Tower : MonoBehaviour
 		// 공격 피벗
 		public Transform AttackPivot;
 		// 공격 가능 여부 (노드 회전)
-		public bool CanAttack;
+		public bool CanAttack_Node;
+		// 공격 가능 여부 (스킬 중복)
+		public bool CanAttack_Skill;
 
 		#region 기본 스킬
 		// 기본 스킬 데이터
