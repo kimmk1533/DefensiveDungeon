@@ -42,10 +42,15 @@ public class TowerAnimator : MonoBehaviour
 		});
 	}
 
+	public void SetFloat(string name, float value)
+	{
+		animator.SetFloat(name, value);
+	}
 	public void SetTrigger(string name)
 	{
 		animator.SetTrigger(name);
 	}
+
 	public void CallAttack()
 	{
 		m_Tower.CallAttack();

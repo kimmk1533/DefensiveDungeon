@@ -435,6 +435,7 @@ public class Tower : MonoBehaviour
 			m_TowerAnimator = GetComponentInChildren<TowerAnimator>(true);
 			m_TowerAnimator.Initialize(this);
 		}
+		m_TowerAnimator.SetFloat("Attack", m_TowerInfo_Excel.Atk_Speed);
 
 		// m_AttackRange_Default ??= transform.Find("AttackRange_Default").AddComponent<AttackRange>();
 		if (null == m_AttackRange_Default)
