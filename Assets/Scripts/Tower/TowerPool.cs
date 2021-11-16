@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class TowerPool : ObjectPool<TowerPool, Tower>
 {
-	protected Dictionary<int, float> m_TowerCode_Size_Dic;
-
 	#region 내부 프로퍼티
 	#region 매니저
 	protected DataTableManager M_DataTable => DataTableManager.Instance;
@@ -21,8 +19,6 @@ public class TowerPool : ObjectPool<TowerPool, Tower>
 	{
 		base.__Initialize();
 
-		m_TowerCode_Size_Dic = new Dictionary<int, float>();
-
 		for (int i = 3; i < M_TowerData.DataList.Count; ++i)
 		{
 			int PrefabCode = M_TowerData.DataList[i].Prefab;
@@ -36,10 +32,9 @@ public class TowerPool : ObjectPool<TowerPool, Tower>
 
 				Tower origin = originClone.AddComponent<Tower>();
 
-				int code = M_TowerData.DataList[i].Code;
 				float size = M_PrefabData.DataList[i].Size;
-				m_TowerCode_Size_Dic.Add(code, size);
 
+				origin.transform.Find("Mesh").localScale = Vector3.one * size;
 				origin.gameObject.layer = LayerMask.NameToLayer("Tower");
 				origin.gameObject.SetActive(false);
 
@@ -58,10 +53,6 @@ public class TowerPool : ObjectPool<TowerPool, Tower>
 		//    tower.m_TempCode = data.Code;
 		//    AddPool(data.Prefeb.ToString(), tower, transform);
 		//}
-	}
-	public float GetTowerSize(int code)
-	{
-		return m_TowerCode_Size_Dic[code];
 	}
 	#endregion
 }

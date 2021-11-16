@@ -56,7 +56,7 @@ public abstract class Devil : MonoBehaviour
 	// 타겟 생존 여부
 	protected bool IsTargetDead_Default => null == m_Target_Default || m_Target_Default.IsDead;
 	// 타겟 놓쳤는 지
-	protected bool LostTarget_Default => m_AttackRange_Default.ScaledRange < DistanceToTarget_Default;
+	protected bool LostTarget_Default => m_AttackRange_Default.Range < DistanceToTarget_Default;
 	#endregion
 	#region 외부 프로퍼티
 	public float MaxHP => m_DevilInfo_Excel.HP;

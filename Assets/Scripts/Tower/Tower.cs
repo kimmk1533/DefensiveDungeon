@@ -59,9 +59,9 @@ public class Tower : MonoBehaviour
 	protected bool IsTargetDead_Skill01 => null == m_Target_Skill01 || m_Target_Skill01.IsDead;
 	protected bool IsTargetDead_Skill02 => null == m_Target_Skill02 || m_Target_Skill02.IsDead;
 	// 타겟 놓쳤는 지
-	protected bool LostTarget_Default => m_AttackRange_Default.ScaledRange < DistanceToTarget_Default;
-	protected bool LostTarget_Skill01 => m_AttackRange_Skill01.ScaledRange < DistanceToTarget_Skill01;
-	protected bool LostTarget_Skill02 => m_AttackRange_Skill02.ScaledRange < DistanceToTarget_Skill02;
+	protected bool LostTarget_Default => m_AttackRange_Default.Range < DistanceToTarget_Default;
+	protected bool LostTarget_Skill01 => m_AttackRange_Skill01.Range < DistanceToTarget_Skill01;
+	protected bool LostTarget_Skill02 => m_AttackRange_Skill02.Range < DistanceToTarget_Skill02;
 	#endregion
 	#region 외부 프로퍼티
 	public Tower_TableExcel ExcelData => m_TowerInfo_Excel; // cha
@@ -365,14 +365,13 @@ public class Tower : MonoBehaviour
 	#endregion
 	#region 외부 함수
 	// 타워 초기화
-	public void InitializeTower(int code, float size = 1.0f)
+	public void InitializeTower(int code)
 	{
 		#region 엑셀 데이터 정리
 		m_TowerInfo_Excel = M_Tower.GetData(code);
 		#endregion
 
 		#region 내부 데이터 정리
-		transform.Find("Mesh").localScale = Vector3.one * size;
 		m_TowerInfo.RotateSpeed = 5f;
 		m_TowerInfo.CanAttack = false;
 

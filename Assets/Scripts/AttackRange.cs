@@ -25,12 +25,10 @@ public class AttackRange : MonoBehaviour
 			return m_RangeCollider;
 		}
 	}
-	protected float size => Mathf.Max(transform.lossyScale.x, transform.lossyScale.y, transform.lossyScale.z);
 	#endregion
 	#region 외부 프로퍼티
 	public List<Enemy> TargetList => m_TargetList;
 	public float Range { get => RangeCollider.radius; set => RangeCollider.radius = value; }
-	public float ScaledRange { get => size * Range; }
 	#endregion
 
 	#region 외부 함수

@@ -49,7 +49,7 @@ public class DevilManager : Singleton<DevilManager>
         devil.transform.SetParent(node.transform);
         devil.transform.position = Vector3.zero;
         devil.transform.eulerAngles = new Vector3(0f, 180f, 0f);
-        devil.transform.localScale = Vector3.one * m_PrefabData.DataList[data.No - 1].Size;
+        devil.transform.Find("Mesh").localScale = Vector3.one * m_PrefabData.DataList[data.No - 1].Size;
 
         switch ((E_Devil)data.No)
         {

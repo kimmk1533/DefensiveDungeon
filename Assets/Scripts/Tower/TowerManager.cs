@@ -52,7 +52,7 @@ public class TowerManager : Singleton<TowerManager>
 		// do not call this function other class
 		string key = GetData(code).Name_EN;
 		Tower spawn = M_TowerPool.GetPool(key).Spawn();
-		spawn.InitializeTower(code, M_TowerPool.GetTowerSize(code));
+		spawn.InitializeTower(code);
 		spawn.m_TowerInfo.IsOnInventory = true;
 		m_TowerList.Add(spawn);
 		return spawn;

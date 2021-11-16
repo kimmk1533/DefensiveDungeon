@@ -32,7 +32,7 @@ public class Skill : MonoBehaviour
 	// 타겟 잃어버림
 	protected bool LostTarget => m_Target == null || m_Target.IsDead;
 	// 타겟에게 도착 여부
-	protected bool ArrivedToTarget => DistanceToTarget <= m_SkillInfo.AttackRange.ScaledRange;
+	protected bool ArrivedToTarget => DistanceToTarget <= m_StatInfo_Excel.Size;
 	// 생존 시간 소진
 	protected bool DepletedLifeTime => m_SkillInfo.LifeTime <= 0f;
 	// 튕김 카운트 소진
@@ -61,20 +61,23 @@ public class Skill : MonoBehaviour
 		SkillStat_TableExcel stat = M_Skill.GetStatData(condition.PassiveCode);
 		Skill skill = M_Skill.SpawnProjectileSkill(condition.projectile_prefab);
 
-		switch ((E_FireType)condition.Atk_pick)
+		if (null != skill)
 		{
-			case E_FireType.Select_self:
-				skill.transform.position = transform.position;
-				break;
-			case E_FireType.Select_enemy:
-				skill.transform.position = m_Target.HitPivot.position;
-				break;
+			switch ((E_FireType)condition.Atk_pick)
+			{
+				case E_FireType.Select_self:
+					skill.transform.position = transform.position;
+					break;
+				case E_FireType.Select_enemy:
+					skill.transform.position = m_Target.HitPivot.position;
+					break;
+			}
+
+			skill.enabled = true;
+			skill.gameObject.SetActive(true);
+
+			skill.InitializeSkill(m_Target, condition, stat);
 		}
-
-		skill.enabled = true;
-		skill.gameObject.SetActive(true);
-
-		skill?.InitializeSkill(m_Target, condition, stat);
 
 		m_Target = null;
 
@@ -414,13 +417,14 @@ public class Skill : MonoBehaviour
 		switch ((E_AttackType)m_ConditionInfo_Excel.Atk_type)
 		{
 			case E_AttackType.NormalFire:
+				m_SkillInfo.AttackRange.Range = m_StatInfo_Excel.Size;
 				break;
 			case E_AttackType.FixedFire:
-				m_SkillInfo.AttackRange.Range = m_StatInfo_Excel.Range;
+				m_SkillInfo.AttackRange.Range = m_StatInfo_Excel.Size;
 				m_SkillInfo.FixedTargetList = m_SkillInfo.AttackRange.TargetList;
 				break;
 			case E_AttackType.PenetrateFire:
-				m_SkillInfo.AttackRange.Range = m_StatInfo_Excel.Range;
+				m_SkillInfo.AttackRange.Range = m_StatInfo_Excel.Size;
 				m_SkillInfo.FixedTargetList = m_SkillInfo.AttackRange.TargetList;
 				break;
 			case E_AttackType.BounceFire:
