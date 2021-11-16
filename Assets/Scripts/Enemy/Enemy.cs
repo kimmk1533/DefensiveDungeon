@@ -123,9 +123,9 @@ public class Enemy : MonoBehaviour
 	public bool isDivide = false;
 	private bool isDefBuff = false;
 	[SerializeField]
-	private bool isDie = false;
+	private bool isDead = false;
 
-	public bool IsDie => isDie;
+	public bool IsDead => isDead;
 
 	//범위
 	protected SphereCollider m_RangeCollider;
@@ -230,14 +230,14 @@ public class Enemy : MonoBehaviour
 
 	public void Init()
 	{
-		isDie = false;
+		isDead = false;
 		isDefBuff = false;
 		MaxHp = m_EnemyInfo.HP;
 	}
 
 	private void Update()
 	{
-		if (!isDie)
+		if (!isDead)
 		{
 			//마왕만 타겟으로 잡기
 			//벽이나 중간에 장애물이 있다면 바꿔야함
@@ -306,7 +306,7 @@ public class Enemy : MonoBehaviour
 			if (m_EnemyInfo.HP <= 0)
 			{
 				On_Death();
-				isDie = true;
+				isDead = true;
 			}
 		}
 	}

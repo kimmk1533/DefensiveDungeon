@@ -30,9 +30,9 @@ public class Skill : MonoBehaviour
 	// 타겟까지의 거리
 	protected float DistanceToTarget => Vector3.Distance(transform.position, TargetPos);
 	// 타겟 잃어버림
-	protected bool LostTarget => m_Target == null || m_Target.IsDie;
+	protected bool LostTarget => m_Target == null || m_Target.IsDead;
 	// 타겟에게 도착 여부
-	protected bool ArrivedToTarget => DistanceToTarget <= m_SkillInfo.AttackRange.Range;
+	protected bool ArrivedToTarget => DistanceToTarget <= m_SkillInfo.AttackRange.ScaledRange;
 	// 생존 시간 소진
 	protected bool DepletedLifeTime => m_SkillInfo.LifeTime <= 0f;
 	// 튕김 카운트 소진
@@ -61,8 +61,6 @@ public class Skill : MonoBehaviour
 		{
 			UpdateTarget();
 		}
-	}
-
 	#region 내부 함수
 	protected bool CheckToDespawn()
 	{
@@ -84,8 +82,11 @@ public class Skill : MonoBehaviour
 		SkillCondition_TableExcel condition = M_Skill.GetConditionData(m_StatInfo_Excel.LoadCode);
 		SkillStat_TableExcel stat = M_Skill.GetStatData(condition.PassiveCode);
 		Skill skill = M_Skill.SpawnProjectileSkill(condition.projectile_prefab);
+		}
+
 		skill.enabled = true;
 		skill.gameObject.SetActive(true);
+
 		skill?.InitializeSkill(m_Target, condition, stat);
 
 		m_Target = null;
@@ -355,7 +356,6 @@ public class Skill : MonoBehaviour
 		}
 	}
 	#endregion
-
 	#region 외부 함수
 	public void InitializeSkill(Enemy target, SkillCondition_TableExcel conditionData, SkillStat_TableExcel statData)
 	{
@@ -410,6 +410,8 @@ public class Skill : MonoBehaviour
 		{
 			m_SkillInfo.BounceTargetList.Add(m_Target);
 		}
+	}
+	#endregion
 	}
 	#endregion
 

@@ -508,8 +508,7 @@ public class NodeManager : Singleton<NodeManager>
 			{
 				if (null != item.m_Tower)
 				{
-					item.m_Tower.m_Target = null;
-					item.m_Tower.m_TowerInfo.ShouldFindTarget = true;
+					item.m_Tower.m_Target_Default = null;
 				}
 			}
 		}

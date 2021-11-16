@@ -1,18 +1,21 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Devil : MonoBehaviour
 {
-	// 타겟
-	public Enemy m_Target;
-
 	// 마왕 정보(엑셀)
 	[SerializeField]
 	protected Tower_TableExcel m_DevilInfo_Excel;
 	// 마왕 정보
 	[SerializeField]
 	protected S_DevilData m_DevilInfo;
+
+	// 타겟
+	public Enemy m_Target_Default;
+
+	public event Action OnLostDefaultTargetEvent;
 
 	protected delegate void DevilSkillHandler(DevilSkillArg arg);
 	protected event DevilSkillHandler Skill01Event;
@@ -30,8 +33,8 @@ public abstract class Devil : MonoBehaviour
 	[SerializeField]
 	protected AttackRange m_AttackRange_Default;
 	#endregion
-
 	#region 내부 프로퍼티
+	#region 매니저
 	// 마왕 매니져
 	protected DevilManager M_Devil => DevilManager.Instance;
 	// 타워 매니져
@@ -44,13 +47,17 @@ public abstract class Devil : MonoBehaviour
 	protected EffectManager M_Effect => EffectManager.Instance;
 	// 버프 매니져
 	protected BuffManager M_Buff => BuffManager.Instance;
-
-	// 타워 회전 속도
-	protected float RotateSpeed => m_DevilInfo.RotateSpeed * Time.deltaTime;
-	// 타겟까지의 거리
-	protected float DistanceToTarget => Vector3.Distance(transform.position, m_Target.transform.position);
 	#endregion
 
+	// 마왕 회전 속도
+	protected float RotateSpeed => m_DevilInfo.RotateSpeed * Time.deltaTime;
+	// 타겟까지의 거리
+	protected float DistanceToTarget_Default => Vector3.Distance(transform.position, m_Target_Default.transform.position);
+	// 타겟 생존 여부
+	protected bool IsTargetDead_Default => null == m_Target_Default || m_Target_Default.IsDead;
+	// 타겟 놓쳤는 지
+	protected bool LostTarget_Default => m_AttackRange_Default.ScaledRange < DistanceToTarget_Default;
+	#endregion
 	#region 외부 프로퍼티
 	public float MaxHP => m_DevilInfo_Excel.HP;
 	public float HP => m_DevilInfo.m_HP;
@@ -58,19 +65,6 @@ public abstract class Devil : MonoBehaviour
 
 	public Tower_TableExcel ExcelData => m_DevilInfo_Excel;
 	public Transform HitPivot => m_DevilInfo.HitPivot;
-	#endregion
-
-	#region 유니티 콜백 함수
-	protected void Update()
-	{
-		if (IsDie)
-			return;
-
-		RotateToTarget();
-		UpdateTarget();
-		AttackTarget();
-		ReduceSkillCooldown();
-	}
 	#endregion
 
 	#region 내부 함수
@@ -83,7 +77,7 @@ public abstract class Devil : MonoBehaviour
 
 		#region 내부 데이터 정리
 		m_DevilInfo.RotateSpeed = 5f;
-		m_DevilInfo.ShouldFindTarget = true;
+		m_DevilInfo.LookingDir = Vector3.back;
 
 		// 공격 피벗
 		// m_DevilInfo.AttackPivot ??= transform.GetChild("AttackPivot");
@@ -100,7 +94,7 @@ public abstract class Devil : MonoBehaviour
 
 		// 기본 스킬 데이터
 		m_DevilInfo.Condition_Default = M_Skill.GetConditionData(m_DevilInfo_Excel.Atk_Code);
-		m_DevilInfo.Stat_Default = M_Skill.GetStatData(m_DevilInfo_Excel.Atk_Code);
+		m_DevilInfo.Stat_Default = M_Skill.GetStatData(m_DevilInfo.Condition_Default.PassiveCode);
 		// 기본 스킬
 		m_DevilInfo.AttackSpeed_Default = m_DevilInfo.Stat_Default.CoolTime;
 		m_DevilInfo.AttackTimer_Default = m_DevilInfo.Stat_Default.CoolTime;
@@ -115,13 +109,14 @@ public abstract class Devil : MonoBehaviour
 		if (null == m_DevilAnimator)
 		{
 			m_DevilAnimator = GetComponentInChildren<DevilAnimator>(true);
-			m_DevilAnimator.SetDevil(this);
+			m_DevilAnimator.Initialize(this);
 		}
 
 		if (null == m_AttackRange_Default)
 		{
 			m_AttackRange_Default = transform.Find("AttackRange_Default").AddComponent<AttackRange>();
 			m_AttackRange_Default.gameObject.layer = LayerMask.NameToLayer("TowerAttackRange");
+			m_AttackRange_Default.Initialize();
 		}
 		m_AttackRange_Default.Range = m_DevilInfo.Stat_Default.Range;
 		#endregion
@@ -134,76 +129,80 @@ public abstract class Devil : MonoBehaviour
 	// 마왕 회전
 	protected void RotateToTarget()
 	{
-		// 회전할 방향
-		Vector3 lookingDir;
-
-		// 타겟이 없으면
-		if (null == m_Target)
+		if (!IsTargetDead_Default && !LostTarget_Default)
 		{
-			// 초기 방향으로 방향 설정
-			lookingDir = m_DevilInfo.LookingDir;
-		}
-		// 타겟이 있으면
-		else
-		{
-			// 타겟 방향으로 방향 설정
-			lookingDir = m_Target.transform.position - transform.position;
-		}
-
-		if (lookingDir != Vector3.zero)
-		{
-			Quaternion quaternion = Quaternion.LookRotation(lookingDir);
-
-			// 회전
-			if (Quaternion.Angle(transform.rotation, quaternion) > 0.01f)
-				transform.rotation = Quaternion.Lerp(transform.rotation, quaternion, RotateSpeed);
-			else
-				transform.rotation = quaternion;
+			RotateToTarget(m_Target_Default);
 		}
 		else
 		{
-			if (Vector3.Distance(transform.eulerAngles, Vector3.zero) > 0.01f)
-				transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, Vector3.zero, RotateSpeed);
-			else
-				transform.eulerAngles = Vector3.zero;
+			RotateToTarget(null);
 		}
+	}
+	protected void RotateToTarget(Enemy enemy)
+	{
+		// 바라볼 방향
+		Vector3 lookingDir = m_DevilInfo.LookingDir;
+
+		// 타겟이 있는 경우
+		if (null != enemy)
+		{
+			// 바라볼 방향 수정
+			lookingDir = enemy.transform.position - transform.position;
+		}
+
+		// 바라볼 방향의 각도
+		Vector3 angle = Quaternion.LookRotation(lookingDir).eulerAngles;
+
+		// y축 회전만 하도록 초기화
+		angle.x = 0f; angle.z = 0f;
+
+		// 회전
+		transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, angle, RotateSpeed);
 	}
 	// 타겟 업데이트
 	protected void UpdateTarget()
 	{
-		// 타겟 변경 기준에 따라
-		switch ((E_TargetType)m_DevilInfo.Condition_Default.Target_type)
+		#region 기본 스킬
+		if (IsTargetDead_Default || LostTarget_Default)
 		{
-			case E_TargetType.CloseTarget:
-				if (m_DevilInfo.ShouldFindTarget)
-				{
-					m_Target = m_AttackRange_Default.GetNearTarget();
-					m_DevilInfo.ShouldFindTarget = false;
-				}
-				break;
-			case E_TargetType.RandTarget:
-				if (m_DevilInfo.ShouldFindTarget)
-				{
-					m_Target = m_AttackRange_Default.GetRandomTarget();
-					m_DevilInfo.ShouldFindTarget = false;
-				}
-				break;
-			// FixTarget (타겟이 사거리를 벗어나거나 죽은 경우 변경)
-			case E_TargetType.FixTarget:
-				if (null == m_Target || // 예외처리
-					DistanceToTarget > m_DevilInfo.Stat_Default.Range) // 타겟이 사거리를 벗어난 경우
-				{
-					m_Target = m_AttackRange_Default.GetNearTarget();
-				}
-				break;
-			case E_TargetType.TileTarget:
-				if (m_DevilInfo.ShouldFindTarget)
-				{
-					m_Target = m_AttackRange_Default.GetNearTarget();
-					m_DevilInfo.ShouldFindTarget = false;
-				}
-				break;
+			// 타겟 변경 기준에 따라
+			switch ((E_TargetType)m_DevilInfo.Condition_Default.Target_type)
+			{
+				case E_TargetType.CloseTarget:
+					{
+						m_Target_Default = m_AttackRange_Default.GetNearTarget();
+					}
+					break;
+				case E_TargetType.RandTarget:
+					{
+						m_Target_Default = m_AttackRange_Default.GetRandomTarget();
+					}
+					break;
+				// FixTarget (타겟이 사거리를 벗어나거나 죽은 경우 변경)
+				case E_TargetType.FixTarget:
+					{
+						if (null == m_Target_Default || // 예외처리
+							DistanceToTarget_Default > m_DevilInfo.Stat_Default.Range) // 타겟이 사거리를 벗어난 경우
+						{
+							m_Target_Default = m_AttackRange_Default.GetNearTarget();
+						}
+					}
+					break;
+				case E_TargetType.TileTarget:
+					{
+						m_Target_Default = m_AttackRange_Default.GetNearTarget();
+					}
+					break;
+			}
+
+			if (IsTargetDead_Default)
+			{
+				m_AttackRange_Default.RemoveTarget(m_Target_Default);
+				m_Target_Default = null;
+				OnLostDefaultTargetEvent?.Invoke();
+			}
 		}
+		#endregion
 	}
 	// 마왕 공격
 	protected void AttackTarget()
@@ -215,12 +214,12 @@ public abstract class Devil : MonoBehaviour
 			m_DevilInfo.AttackTimer_Default += Time.deltaTime;
 		}
 		// 기본 스킬 공격
-		else if (null != m_Target)
+		else if (!IsTargetDead_Default && !LostTarget_Default)
 		{
 			// 내부 데이터 정리
 			m_DevilInfo.AttackTimer_Default -= m_DevilInfo.AttackSpeed_Default;
 
-			Attack();
+			SetAttackTrigger();
 		}
 		#endregion
 	}
@@ -231,19 +230,19 @@ public abstract class Devil : MonoBehaviour
 		ReduceSkill02Cooldown(Time.deltaTime);
 	}
 
-	protected void Attack()
+	protected void SetAttackTrigger()
 	{
 		m_DevilAnimator.SetTrigger("Attack");
 	}
-	protected void Skill01()
+	protected void SetSkill01Trigger()
 	{
 		m_DevilAnimator.SetTrigger("Skill01");
 	}
-	protected void Skill02()
+	protected void SetSkill02Trigger()
 	{
 		m_DevilAnimator.SetTrigger("Skill02");
 	}
-	protected void Die()
+	protected void SetDieTrigger()
 	{
 		m_DevilAnimator.SetTrigger("Die");
 	}
@@ -251,7 +250,6 @@ public abstract class Devil : MonoBehaviour
 	protected abstract void DoSkill01(DevilSkillArg arg);
 	protected abstract void DoSkill02(DevilSkillArg arg);
 	#endregion
-
 	#region 외부 함수
 	// 스킬01 쿨타임 감소
 	public void ReduceSkill01Cooldown(float time)
@@ -317,7 +315,7 @@ public abstract class Devil : MonoBehaviour
 		if (m_DevilInfo.m_HP <= 0f)
 		{
 			m_DevilInfo.isDie = true;
-			Die();
+			SetDieTrigger();
 		}
 	}
 
@@ -325,7 +323,6 @@ public abstract class Devil : MonoBehaviour
 	{
 		// 내부 데이터 정리
 		m_DevilInfo.AttackSpeed_Default = m_DevilInfo.Stat_Default.CoolTime;
-		m_DevilInfo.ShouldFindTarget = true;
 
 		// 기본 스킬 데이터 불러오기
 		SkillCondition_TableExcel conditionData = m_DevilInfo.Condition_Default;
@@ -360,7 +357,7 @@ public abstract class Devil : MonoBehaviour
 			DefaultSkill.gameObject.SetActive(true);
 
 			// 기본 스킬 데이터 설정
-			DefaultSkill.InitializeSkill(m_Target, conditionData, statData);
+			DefaultSkill.InitializeSkill(m_Target_Default, conditionData, statData);
 		}
 	}
 	public void CallDie()
@@ -371,6 +368,18 @@ public abstract class Devil : MonoBehaviour
 		});
 	}
 	#endregion
+	#region 유니티 콜백 함수
+	protected void Update()
+	{
+		if (IsDie)
+			return;
+
+		UpdateTarget();
+		RotateToTarget();
+		AttackTarget();
+		ReduceSkillCooldown();
+	}
+	#endregion
 
 	[System.Serializable]
 	public struct S_DevilData
@@ -379,8 +388,6 @@ public abstract class Devil : MonoBehaviour
 		public float RotateSpeed;
 		// 초기 바라볼 방향
 		public Vector3 LookingDir;
-		// 적 감지 여부
-		public bool ShouldFindTarget;
 		// 공격 피벗
 		public Transform AttackPivot;
 		// 피격 피벗

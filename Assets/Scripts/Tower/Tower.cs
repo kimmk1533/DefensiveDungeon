@@ -1,20 +1,25 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Tower : MonoBehaviour
 {
-	public int m_CodeTemp;
-	public float m_SizeTemp;
-
-	// 타겟
-	public Enemy m_Target;
-
 	// 타워 정보(엑셀)
 	[SerializeField]
 	protected Tower_TableExcel m_TowerInfo_Excel;
 	// 타워 정보
 	public S_TowerData m_TowerInfo;
+
+	// 타겟
+	public Enemy m_Target_Default;
+	public Enemy m_Target_Skill01;
+	public Enemy m_Target_Skill02;
+
+	public event Action OnLostDefaultTargetEvent;
+	public event Action OnLostSkill01TargetEvent;
+	public event Action OnLostSkill02TargetEvent;
 
 	#region 내부 컴포넌트
 	// 타워 애니메이터
@@ -28,8 +33,9 @@ public class Tower : MonoBehaviour
 	[SerializeField]
 	protected AttackRange m_AttackRange_Skill02;
 	#endregion
-
 	#region 내부 프로퍼티
+
+	#region 매니저
 	// 타워 매니져
 	protected TowerManager M_Tower => TowerManager.Instance;
 	// 스킬 매니져
@@ -40,13 +46,23 @@ public class Tower : MonoBehaviour
 	protected DevilManager M_Devil => DevilManager.Instance;
 	// 이펙트 매니져
 	protected EffectManager M_Effect => EffectManager.Instance;
+	#endregion
 
 	// 타워 회전 속도
 	protected float RotateSpeed => m_TowerInfo.RotateSpeed * Time.deltaTime;
 	// 타겟까지의 거리
-	protected float DistanceToTarget => Vector3.Distance(transform.position, m_Target.transform.position);
+	protected float DistanceToTarget_Default => Vector3.Distance(transform.position, m_Target_Default.transform.position);
+	protected float DistanceToTarget_Skill01 => Vector3.Distance(transform.position, m_Target_Skill01.transform.position);
+	protected float DistanceToTarget_Skill02 => Vector3.Distance(transform.position, m_Target_Skill02.transform.position);
+	// 타겟 생존 여부
+	protected bool IsTargetDead_Default => null == m_Target_Default || m_Target_Default.IsDead;
+	protected bool IsTargetDead_Skill01 => null == m_Target_Skill01 || m_Target_Skill01.IsDead;
+	protected bool IsTargetDead_Skill02 => null == m_Target_Skill02 || m_Target_Skill02.IsDead;
+	// 타겟 놓쳤는 지
+	protected bool LostTarget_Default => m_AttackRange_Default.ScaledRange < DistanceToTarget_Default;
+	protected bool LostTarget_Skill01 => m_AttackRange_Skill01.ScaledRange < DistanceToTarget_Skill01;
+	protected bool LostTarget_Skill02 => m_AttackRange_Skill02.ScaledRange < DistanceToTarget_Skill02;
 	#endregion
-
 	#region 외부 프로퍼티
 	public Tower_TableExcel ExcelData => m_TowerInfo_Excel; // cha
 	public E_Direction Direction { get => m_TowerInfo.Direction; set => m_TowerInfo.Direction = value; }
@@ -63,83 +79,223 @@ public class Tower : MonoBehaviour
 	// 타워 회전
 	protected void RotateToTarget()
 	{
-		// 회전할 방향
-		Vector3 lookingDir;
-
-		// 타겟이 없으면
-		if (null == m_Target)
+		if (!IsTargetDead_Default && !LostTarget_Default)
 		{
-			// 초기 방향으로 방향 설정
-			lookingDir = m_TowerInfo.LookingDir * 100f;
+			RotateToTarget(m_Target_Default);
 		}
-		// 타겟이 있으면
+		else if (!IsTargetDead_Skill01 && !LostTarget_Skill01)
+		{
+			RotateToTarget(m_Target_Skill01);
+		}
+		else if (!IsTargetDead_Skill02 && !LostTarget_Skill02)
+		{
+			RotateToTarget(m_Target_Skill02);
+		}
 		else
 		{
-			// 타겟 방향으로 방향 설정
-			lookingDir = m_Target.transform.position - transform.position;
+			RotateToTarget(null);
+		}
+	}
+	protected void RotateToTarget(Enemy target)
+	{
+		// 바라볼 방향
+		Vector3 lookingDir = m_TowerInfo.LookingDir;
+
+		// 타겟이 있는 경우
+		if (null != target && !target.IsDead)
+		{
+			// 바라볼 방향 수정
+			lookingDir = target.transform.position - transform.position;
 		}
 
-		// y 회전 방지
-		lookingDir.y = 0f;
+		// 바라볼 방향의 각도
+		Vector3 angle = Quaternion.LookRotation(lookingDir).eulerAngles;
+
+		// y축 회전만 하도록 초기화
+		angle.x = 0f; angle.z = 0f;
 
 		// 회전
-		//transform.localEulerAngles = Quaternion.Lerp(transform.localRotation, Quaternion.LookRotation(lookingDir), RotateSpeed).eulerAngles;
-		transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(lookingDir), RotateSpeed);
+		transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, angle, RotateSpeed);
 	}
 	// 타겟 업데이트
 	protected void UpdateTarget()
 	{
-		// 타겟 변경 기준에 따라
-		switch ((E_TargetType)m_TowerInfo.Condition_Default.Target_type)
+		#region 기본 스킬
+		if (IsTargetDead_Default || LostTarget_Default)
 		{
-			case E_TargetType.CloseTarget:
-				if (m_TowerInfo.ShouldFindTarget)
-				{
-					m_Target = m_AttackRange_Default.GetNearTarget();
-					m_TowerInfo.ShouldFindTarget = false;
-
-					if (m_TowerInfo.Berserker)
+			// 타겟 변경 기준에 따라
+			switch ((E_TargetType)m_TowerInfo.Condition_Default.Target_type)
+			{
+				case E_TargetType.CloseTarget:
 					{
-						m_TowerInfo.BerserkerStack = 0;
-					}
-				}
-				break;
-			case E_TargetType.RandTarget:
-				if (m_TowerInfo.ShouldFindTarget)
-				{
-					m_Target = m_AttackRange_Default.GetRandomTarget();
-					m_TowerInfo.ShouldFindTarget = false;
+						m_Target_Default = m_AttackRange_Default.GetNearTarget();
 
-					if (m_TowerInfo.Berserker)
-					{
-						m_TowerInfo.BerserkerStack = 0;
+						if (m_TowerInfo.Berserker)
+						{
+							m_TowerInfo.BerserkerStack = 0;
+						}
 					}
-				}
-				break;
-			// FixTarget (타겟이 사거리를 벗어나거나 죽은 경우 변경)
-			case E_TargetType.FixTarget:
-				if (null == m_Target || // 예외처리
-					DistanceToTarget > m_TowerInfo.Stat_Default.Range) // 타겟이 사거리를 벗어난 경우
-				{
-					m_Target = m_AttackRange_Default.GetNearTarget();
-				}
-				break;
-			case E_TargetType.TileTarget:
-				if (m_TowerInfo.ShouldFindTarget)
-				{
-					m_Target = m_AttackRange_Default.GetNearTarget();
-					m_TowerInfo.ShouldFindTarget = false;
-				}
-				break;
+					break;
+				case E_TargetType.RandTarget:
+					{
+						m_Target_Default = m_AttackRange_Default.GetRandomTarget();
+
+						if (m_TowerInfo.Berserker)
+						{
+							m_TowerInfo.BerserkerStack = 0;
+						}
+					}
+					break;
+				// FixTarget (타겟이 사거리를 벗어나거나 죽은 경우 변경)
+				case E_TargetType.FixTarget:
+					{
+						if (null == m_Target_Default || // 예외처리
+							DistanceToTarget_Default > m_TowerInfo.Stat_Default.Range) // 타겟이 사거리를 벗어난 경우
+						{
+							m_Target_Default = m_AttackRange_Default.GetNearTarget();
+
+							if (m_TowerInfo.Berserker)
+							{
+								m_TowerInfo.BerserkerStack = 0;
+							}
+						}
+					}
+					break;
+				case E_TargetType.TileTarget:
+					{
+						m_Target_Default = m_AttackRange_Default.GetNearTarget();
+					}
+					break;
+			}
+
+			if (IsTargetDead_Default)
+			{
+				m_AttackRange_Default.RemoveTarget(m_Target_Default);
+				m_Target_Default = null;
+				OnLostDefaultTargetEvent?.Invoke();
+			}
 		}
-
-		if (null != m_Target && (m_Target.IsDie))
+		#endregion
+		#region 스킬01
+		if (IsTargetDead_Skill01 || LostTarget_Skill01)
 		{
-			m_AttackRange_Default.RemoveTarget(m_Target);
-			m_AttackRange_Skill01.RemoveTarget(m_Target);
-			m_AttackRange_Skill02.RemoveTarget(m_Target);
-			m_Target = null;
+			if (m_TowerInfo.AttackTimer_Skill01 >= m_TowerInfo.AttackSpeed_Skill01 &&
+				m_TowerInfo.CanAttack && null != m_Target_Skill01)
+			{
+				// 타겟 변경 기준에 따라
+				switch ((E_TargetType)m_TowerInfo.Condition_Skill01.Target_type)
+				{
+					case E_TargetType.CloseTarget:
+						{
+							m_Target_Skill01 = m_AttackRange_Skill01.GetNearTarget();
+
+							if (m_TowerInfo.Berserker)
+							{
+								m_TowerInfo.BerserkerStack = 0;
+							}
+						}
+						break;
+					case E_TargetType.RandTarget:
+						{
+							m_Target_Skill01 = m_AttackRange_Skill01.GetRandomTarget();
+
+							if (m_TowerInfo.Berserker)
+							{
+								m_TowerInfo.BerserkerStack = 0;
+							}
+						}
+						break;
+					// FixTarget (타겟이 사거리를 벗어나거나 죽은 경우 변경)
+					case E_TargetType.FixTarget:
+						{
+							if (null == m_Target_Skill01 || // 예외처리
+								DistanceToTarget_Skill01 > m_TowerInfo.Stat_Skill01.Range) // 타겟이 사거리를 벗어난 경우
+							{
+								m_Target_Skill01 = m_AttackRange_Skill01.GetNearTarget();
+
+								if (m_TowerInfo.Berserker)
+								{
+									m_TowerInfo.BerserkerStack = 0;
+								}
+							}
+						}
+						break;
+					case E_TargetType.TileTarget:
+						{
+							m_Target_Skill01 = m_AttackRange_Skill01.GetNearTarget();
+						}
+						break;
+				}
+
+				if (IsTargetDead_Skill01)
+				{
+					m_AttackRange_Skill01.RemoveTarget(m_Target_Skill01);
+					m_Target_Skill01 = null;
+					OnLostSkill01TargetEvent?.Invoke();
+				}
+			}
 		}
+		#endregion
+		#region 스킬02
+		if (IsTargetDead_Skill02 || LostTarget_Skill02)
+		{
+			if (m_TowerInfo.AttackTimer_Skill02 >= m_TowerInfo.AttackSpeed_Skill02 &&
+				m_TowerInfo.CanAttack && null != m_Target_Skill02)
+			{
+				// 타겟 변경 기준에 따라
+				switch ((E_TargetType)m_TowerInfo.Condition_Skill02.Target_type)
+				{
+					case E_TargetType.CloseTarget:
+						{
+							m_Target_Skill02 = m_AttackRange_Skill02.GetNearTarget();
+
+							if (m_TowerInfo.Berserker)
+							{
+								m_TowerInfo.BerserkerStack = 0;
+							}
+						}
+						break;
+					case E_TargetType.RandTarget:
+						{
+							m_Target_Skill02 = m_AttackRange_Skill02.GetRandomTarget();
+
+							if (m_TowerInfo.Berserker)
+							{
+								m_TowerInfo.BerserkerStack = 0;
+							}
+						}
+						break;
+					// FixTarget (타겟이 사거리를 벗어나거나 죽은 경우 변경)
+					case E_TargetType.FixTarget:
+						{
+							if (null == m_Target_Skill02 || // 예외처리
+								DistanceToTarget_Skill02 > m_TowerInfo.Stat_Skill02.Range) // 타겟이 사거리를 벗어난 경우
+							{
+								m_Target_Skill02 = m_AttackRange_Skill02.GetNearTarget();
+
+								if (m_TowerInfo.Berserker)
+								{
+									m_TowerInfo.BerserkerStack = 0;
+								}
+							}
+						}
+						break;
+					case E_TargetType.TileTarget:
+						{
+							m_Target_Skill02 = m_AttackRange_Skill02.GetNearTarget();
+						}
+						break;
+				}
+
+				if (IsTargetDead_Skill02)
+				{
+					m_AttackRange_Skill02.RemoveTarget(m_Target_Skill02);
+					m_Target_Skill02 = null;
+					OnLostSkill02TargetEvent?.Invoke();
+				}
+			}
+		}
+		#endregion
 	}
 	// 타워 공격
 	protected void AttackTarget()
@@ -151,63 +307,64 @@ public class Tower : MonoBehaviour
 			m_TowerInfo.AttackTimer_Default += Time.deltaTime;
 		}
 		// 기본 스킬 공격
-		else if (m_TowerInfo.CanAttack && null != m_Target)
+		else if (m_TowerInfo.CanAttack && !IsTargetDead_Default && !LostTarget_Default)
 		{
 			// 내부 데이터 정리
 			m_TowerInfo.AttackTimer_Default -= m_TowerInfo.AttackSpeed_Default;
 
-			Attack();
+			// 기본 공격 애니메이션 재생
+			SetAttackTrigger();
 		}
 		#endregion
 		#region 스킬01
-		// 스킬01
+		// 스킬01 타이머
 		if (m_TowerInfo.AttackTimer_Skill01 < m_TowerInfo.AttackSpeed_Skill01)
 		{
 			m_TowerInfo.AttackTimer_Skill01 += Time.deltaTime;
 		}
-		else if (m_TowerInfo.CanAttack && null != m_Target)
+		// 스킬01 공격
+		else if (m_TowerInfo.CanAttack && !IsTargetDead_Skill01 && !LostTarget_Skill01)
 		{
+			// 내부 데이터 정리
 			m_TowerInfo.AttackTimer_Skill01 -= m_TowerInfo.AttackSpeed_Skill01;
 
-			Skill01();
+			// 스킬01 애니메이션 재생
+			SetSkill01Trigger();
 		}
 		#endregion
 		#region 스킬02
-		// 스킬02
+		// 스킬02 타이머
 		if (m_TowerInfo.AttackTimer_Skill02 < m_TowerInfo.AttackSpeed_Skill02)
 		{
 			m_TowerInfo.AttackTimer_Skill02 += Time.deltaTime;
 		}
-		else if (m_TowerInfo.CanAttack && null != m_Target)
+		// 스킬02 공격
+		else if (m_TowerInfo.CanAttack && !IsTargetDead_Skill02 && !LostTarget_Skill02)
 		{
+			// 내부 데이터 정리
 			m_TowerInfo.AttackTimer_Skill02 -= m_TowerInfo.AttackSpeed_Skill02;
 
-			Skill02();
+			// 스킬02 애니메이션 재생
+			SetSkill02Trigger();
 		}
 		#endregion
 	}
 
-	protected void Attack()
+	protected void SetAttackTrigger()
 	{
 		m_TowerAnimator.SetTrigger("Attack");
 	}
-	protected void Skill01()
+	protected void SetSkill01Trigger()
 	{
 		m_TowerAnimator.SetTrigger("Skill01");
 	}
-	protected void Skill02()
+	protected void SetSkill02Trigger()
 	{
 		m_TowerAnimator.SetTrigger("Skill02");
 	}
 	#endregion
-
 	#region 외부 함수
 	// 타워 초기화
-	[ContextMenu("Init")]
-	protected void InitializeTower()
-	{
-		InitializeTower(m_CodeTemp, m_SizeTemp);
-	}
 	public void InitializeTower(int code, float size = 1.0f)
 	{
 		#region 엑셀 데이터 정리
@@ -215,8 +372,8 @@ public class Tower : MonoBehaviour
 		#endregion
 
 		#region 내부 데이터 정리
+		transform.Find("Mesh").localScale = Vector3.one * size;
 		m_TowerInfo.RotateSpeed = 5f;
-		m_TowerInfo.ShouldFindTarget = true;
 		m_TowerInfo.CanAttack = false;
 
 		// null 병합 연산자 안되는 이유
@@ -277,7 +434,7 @@ public class Tower : MonoBehaviour
 		if (null == m_TowerAnimator)
 		{
 			m_TowerAnimator = GetComponentInChildren<TowerAnimator>(true);
-			m_TowerAnimator.transform.localScale = Vector3.one * size;
+			m_TowerAnimator.Initialize(this);
 		}
 
 		// m_AttackRange_Default ??= transform.Find("AttackRange_Default").AddComponent<AttackRange>();
@@ -285,6 +442,7 @@ public class Tower : MonoBehaviour
 		{
 			m_AttackRange_Default = transform.Find("AttackRange_Default").AddComponent<AttackRange>();
 			m_AttackRange_Default.gameObject.layer = LayerMask.NameToLayer("TowerAttackRange");
+			m_AttackRange_Default.Initialize();
 		}
 		m_AttackRange_Default.Range = m_TowerInfo.Stat_Default.Range;
 
@@ -293,6 +451,7 @@ public class Tower : MonoBehaviour
 		{
 			m_AttackRange_Skill01 = transform.Find("AttackRange_Skill01").AddComponent<AttackRange>();
 			m_AttackRange_Skill01.gameObject.layer = LayerMask.NameToLayer("TowerAttackRange");
+			m_AttackRange_Skill01.Initialize();
 		}
 		m_AttackRange_Skill01.Range = m_TowerInfo.Stat_Skill01.Range;
 
@@ -301,6 +460,7 @@ public class Tower : MonoBehaviour
 		{
 			m_AttackRange_Skill02 = transform.Find("AttackRange_Skill02").AddComponent<AttackRange>();
 			m_AttackRange_Skill02.gameObject.layer = LayerMask.NameToLayer("TowerAttackRange");
+			m_AttackRange_Skill02.Initialize();
 		}
 		m_AttackRange_Skill02.Range = m_TowerInfo.Stat_Skill02.Range;
 		#endregion
@@ -317,15 +477,15 @@ public class Tower : MonoBehaviour
 		m_AttackRange_Skill01?.Clear();
 		m_AttackRange_Skill02?.Clear();
 	}
+
 	public void CallAttack()
 	{
-		if (null == m_Target)
+		if (null == m_Target_Default)
 		{
 			return;
 		}
 
 		m_TowerInfo.AttackSpeed_Default = m_TowerInfo.Stat_Default.CoolTime;
-		m_TowerInfo.ShouldFindTarget = true;
 
 		// 기본 스킬 데이터 불러오기
 		SkillCondition_TableExcel conditionData = m_TowerInfo.Condition_Default;
@@ -998,7 +1158,7 @@ public class Tower : MonoBehaviour
 						DefaultSkill.transform.position = m_TowerInfo.AttackPivot.position;
 						break;
 					case E_FireType.Select_enemy:
-						DefaultSkill.transform.position = m_Target.HitPivot.position;
+						DefaultSkill.transform.position = EnemyList[i].HitPivot.position;
 						break;
 				}
 
@@ -1021,9 +1181,7 @@ public class Tower : MonoBehaviour
 					DefaultSkill.transform.position = m_TowerInfo.AttackPivot.position;
 					break;
 				case E_FireType.Select_enemy:
-					GameObject pivot = new GameObject();
-					pivot.transform.position = m_Target.HitPivot.position;
-					DefaultSkill.transform.position = pivot.transform.position;
+					DefaultSkill.transform.position = m_Target_Default.HitPivot.position;
 					break;
 			}
 
@@ -1031,19 +1189,18 @@ public class Tower : MonoBehaviour
 			DefaultSkill.gameObject.SetActive(true);
 
 			// 기본 스킬 데이터 설정
-			DefaultSkill.InitializeSkill(m_Target, conditionData, statData);
+			DefaultSkill.InitializeSkill(m_Target_Default, conditionData, statData);
 		}
 	}
 	public void CallSkill01()
 	{
-		if (null == m_Target)
+		if (null == m_Target_Skill01)
 		{
 			return;
 		}
 
 		// 내부 데이터 정리
 		m_TowerInfo.AttackSpeed_Skill01 = m_TowerInfo.Stat_Skill01.CoolTime;
-		m_TowerInfo.ShouldFindTarget = true;
 
 		// 스킬01 데이터 불러오기
 		SkillCondition_TableExcel conditionData = m_TowerInfo.Condition_Skill01;
@@ -1670,9 +1827,7 @@ public class Tower : MonoBehaviour
 						Skill01.transform.position = m_TowerInfo.AttackPivot.position;
 						break;
 					case E_FireType.Select_enemy:
-						GameObject pivot = new GameObject();
-						pivot.transform.position = m_Target.HitPivot.position;
-						Skill01.transform.position = pivot.transform.position;
+						Skill01.transform.position = EnemyList[i].HitPivot.position;
 						break;
 				}
 
@@ -1695,7 +1850,7 @@ public class Tower : MonoBehaviour
 					Skill01.transform.position = m_TowerInfo.AttackPivot.position;
 					break;
 				case E_FireType.Select_enemy:
-					Skill01.transform.position = m_Target.HitPivot.position;
+					Skill01.transform.position = m_Target_Skill01.HitPivot.position;
 					break;
 			}
 
@@ -1703,19 +1858,18 @@ public class Tower : MonoBehaviour
 			Skill01.gameObject.SetActive(true);
 
 			// 스킬01 데이터 설정
-			Skill01.InitializeSkill(m_Target, conditionData, statData);
+			Skill01.InitializeSkill(m_Target_Default, conditionData, statData);
 		}
 	}
 	public void CallSkill02()
 	{
-		if (null == m_Target)
+		if (null == m_Target_Skill02)
 		{
 			return;
 		}
 
 		// 내부 데이터 정리
 		m_TowerInfo.AttackSpeed_Skill02 = m_TowerInfo.Stat_Skill02.CoolTime;
-		m_TowerInfo.ShouldFindTarget = true;
 
 		// 스킬02 데이터 불러오기
 		SkillCondition_TableExcel conditionData = m_TowerInfo.Condition_Skill02;
@@ -2342,7 +2496,7 @@ public class Tower : MonoBehaviour
 						Skill02.transform.position = m_TowerInfo.AttackPivot.position;
 						break;
 					case E_FireType.Select_enemy:
-						Skill02.transform.position = m_Target.HitPivot.position;
+						Skill02.transform.position = EnemyList[i].HitPivot.position;
 						break;
 				}
 
@@ -2365,9 +2519,7 @@ public class Tower : MonoBehaviour
 					Skill02.transform.position = m_TowerInfo.AttackPivot.position;
 					break;
 				case E_FireType.Select_enemy:
-					GameObject pivot = new GameObject();
-					pivot.transform.position = m_Target.HitPivot.position;
-					Skill02.transform.position = pivot.transform.position;
+					Skill02.transform.position = m_Target_Skill02.HitPivot.position;
 					break;
 			}
 
@@ -2375,17 +2527,11 @@ public class Tower : MonoBehaviour
 			Skill02.gameObject.SetActive(true);
 
 			// 스킬02 데이터 설정
-			Skill02.InitializeSkill(m_Target, conditionData, statData);
+			Skill02.InitializeSkill(m_Target_Skill02, conditionData, statData);
 		}
 	}
 	#endregion
-
 	#region 유니티 콜백 함수
-	private void Awake()
-	{
-		//InitializeTower(m_CodeTemp, m_SizeTemp);
-	}
-
 	private void OnApplicationQuit()
 	{
 		FinializeTower();
@@ -2393,8 +2539,8 @@ public class Tower : MonoBehaviour
 
 	private void Update()
 	{
-		RotateToTarget();
 		UpdateTarget();
+		RotateToTarget();
 		AttackTarget();
 	}
 	#endregion
@@ -2415,13 +2561,12 @@ public class Tower : MonoBehaviour
 		public float RotateSpeed;
 		// 초기 바라볼 방향
 		public Vector3 LookingDir;
-		// 적 감지 여부
-		public bool ShouldFindTarget;
 		// 공격 피벗
 		public Transform AttackPivot;
 		// 공격 가능 여부 (노드 회전)
 		public bool CanAttack;
 
+		#region 기본 스킬
 		// 기본 스킬 데이터
 		public SkillCondition_TableExcel Condition_Default;
 		public SkillStat_TableExcel Stat_Default;
@@ -2429,7 +2574,8 @@ public class Tower : MonoBehaviour
 		public float AttackSpeed_Default;
 		// 기본 스킬 타이머
 		public float AttackTimer_Default;
-
+		#endregion
+		#region 스킬01
 		// 스킬01 데이터
 		public SkillCondition_TableExcel Condition_Skill01;
 		public SkillStat_TableExcel Stat_Skill01;
@@ -2437,7 +2583,8 @@ public class Tower : MonoBehaviour
 		public float AttackSpeed_Skill01;
 		// 스킬01 타이머
 		public float AttackTimer_Skill01;
-
+		#endregion
+		#region 스킬02
 		// 스킬02 데이터
 		public SkillCondition_TableExcel Condition_Skill02;
 		public SkillStat_TableExcel Stat_Skill02;
@@ -2445,6 +2592,7 @@ public class Tower : MonoBehaviour
 		public float AttackSpeed_Skill02;
 		// 스킬02 타이머
 		public float AttackTimer_Skill02;
+		#endregion
 
 		#region 시너지
 		// 버프
@@ -2468,48 +2616,4 @@ public class Tower : MonoBehaviour
 		// 마왕 스킬 버프
 		public List<BuffCC_TableExcel> DevilSkillBuffList;
 	}
-	//[System.Serializable]
-	//public struct S_BuffStat
-	//{
-	//    // 적용 확률
-	//    public float BuffRand;
-
-	//    // 공격력
-	//    public float Atk_Fix;
-	//    public float Atk_Percent;
-	//    // 사거리
-	//    public float Range_Fix;
-	//    public float Range_Percent;
-	//    // 공격 속도
-	//    public float Atk_spd_Fix;
-	//    public float Atk_spd_Percent;
-	//    // 치명타 확률
-	//    public float Crit_rate_Fix;
-	//    public float Crit_rate_Percent;
-	//    // 치명타 배율
-	//    public float Crit_Dmg_Fix;
-	//    public float Crit_Dmg_Percent;
-
-	//    public void Initialize()
-	//    {
-	//        // 적용 확률
-	//        BuffRand = 1f;
-
-	//        // 공격력
-	//        Atk_Fix = 0f;
-	//        Atk_Percent = 1f;
-	//        // 사거리
-	//        Range_Fix = 0f;
-	//        Range_Percent = 1f;
-	//        // 공격 속도
-	//        Atk_spd_Fix = 0f;
-	//        Atk_spd_Percent = 1f;
-	//        // 치명타 확률
-	//        Crit_rate_Fix = 0f;
-	//        Crit_rate_Percent = 1f;
-	//        // 치명타 배율
-	//        Crit_Dmg_Fix = 0f;
-	//        Crit_Dmg_Percent = 1f;
-	//    }
-	//}
 }
