@@ -22,7 +22,7 @@ public class Skill : MonoBehaviour
 	protected EffectManager M_Effect => EffectManager.Instance;
 
 	// 타겟 위치
-	protected Vector3 TargetPos => (m_Target == null ? Vector3.zero : m_Target.transform.position);
+	protected Vector3 TargetPos => (m_Target == null ? transform.position : m_Target.transform.position);
 	// 스킬 이동 속도
 	protected float MoveSpeed => m_StatInfo_Excel.Speed * Time.deltaTime;
 	// 타겟까지의 방향
@@ -39,28 +39,6 @@ public class Skill : MonoBehaviour
 	protected bool DepletedBounceCount => m_SkillInfo.BounceCount <= 0;
 	#endregion
 
-	private void Update()
-	{
-		if (CheckToDespawn())
-		{
-			Despawn();
-			return;
-		}
-
-		UpdateInfo();
-
-		RotateSkill();
-		MoveSkill();
-
-		if (CheckToAttack())
-		{
-			Attack();
-		}
-
-		if (CheckToUpdateTarget())
-		{
-			UpdateTarget();
-		}
 	#region 내부 함수
 	protected bool CheckToDespawn()
 	{
@@ -82,6 +60,15 @@ public class Skill : MonoBehaviour
 		SkillCondition_TableExcel condition = M_Skill.GetConditionData(m_StatInfo_Excel.LoadCode);
 		SkillStat_TableExcel stat = M_Skill.GetStatData(condition.PassiveCode);
 		Skill skill = M_Skill.SpawnProjectileSkill(condition.projectile_prefab);
+
+		switch ((E_FireType)condition.Atk_pick)
+		{
+			case E_FireType.Select_self:
+				skill.transform.position = transform.position;
+				break;
+			case E_FireType.Select_enemy:
+				skill.transform.position = m_Target.HitPivot.position;
+				break;
 		}
 
 		skill.enabled = true;
@@ -178,10 +165,21 @@ public class Skill : MonoBehaviour
 	}
 	protected void RotateSkill()
 	{
+		if ((E_AttackType)m_ConditionInfo_Excel.Atk_type == E_AttackType.FixedFire)
+			return;
+
 		switch ((E_MoveType)m_ConditionInfo_Excel.Move_type)
 		{
 			case E_MoveType.Straight:
-				transform.LookAt(transform.position + TargetDir);
+				if ((E_AttackType)m_ConditionInfo_Excel.Atk_type == E_AttackType.PenetrateFire)
+				{
+					Vector3 dir = m_SkillInfo.TargetInitPos - m_SkillInfo.InitPos;
+					transform.LookAt(transform.position + dir);
+				}
+				else
+				{
+					transform.LookAt(transform.position + TargetDir);
+				}
 				break;
 			case E_MoveType.Curve:
 				transform.LookAt(transform.position + GetCurveDir());
@@ -190,6 +188,9 @@ public class Skill : MonoBehaviour
 	}
 	protected void MoveSkill()
 	{
+		if ((E_AttackType)m_ConditionInfo_Excel.Atk_type == E_AttackType.FixedFire)
+			return;
+
 		switch ((E_MoveType)m_ConditionInfo_Excel.Move_type)
 		{
 			case E_MoveType.Straight:
@@ -202,7 +203,15 @@ public class Skill : MonoBehaviour
 	}
 	protected void StraightMove()
 	{
-		transform.position += TargetDir.normalized * MoveSpeed;
+		if ((E_AttackType)m_ConditionInfo_Excel.Atk_type == E_AttackType.PenetrateFire)
+		{
+			Vector3 dir = m_SkillInfo.TargetInitPos - m_SkillInfo.InitPos;
+			transform.position += dir.normalized * MoveSpeed;
+		}
+		else
+		{
+			transform.position += TargetDir.normalized * MoveSpeed;
+		}
 	}
 	private Vector3 GetCurveDir()
 	{
@@ -276,6 +285,9 @@ public class Skill : MonoBehaviour
 	}
 	protected bool CheckToAttack()
 	{
+		if ((E_AttackType)m_ConditionInfo_Excel.Atk_type == E_AttackType.PenetrateFire)
+			return m_SkillInfo.FixedTargetList.Count > 0;
+
 		if (LostTarget)
 			return false;
 
@@ -285,8 +297,6 @@ public class Skill : MonoBehaviour
 				return ArrivedToTarget;
 			case E_AttackType.FixedFire:
 				return m_SkillInfo.DotTimer <= 0f;
-			case E_AttackType.PenetrateFire:
-				return m_SkillInfo.PenetrateTargetList.Count > 0;
 			case E_AttackType.BounceFire:
 				return ArrivedToTarget;
 		}
@@ -295,63 +305,100 @@ public class Skill : MonoBehaviour
 	}
 	protected void Attack()
 	{
-		// 피격 이펙트 생성
-		Effect hitEffect = M_Effect.SpawnEffect(m_ConditionInfo_Excel.damage_prefab);
-		if (null != hitEffect)
-		{
-			hitEffect.transform.position = m_Target.HitPivot.transform.position;
-			hitEffect.gameObject.SetActive(true);
-		}
-
 		float damage = m_StatInfo_Excel.Dmg;
 		BuffCC_TableExcel buffData = M_Buff.GetData(m_StatInfo_Excel.Buff_CC);
 
 		switch ((E_AttackType)m_ConditionInfo_Excel.Atk_type)
 		{
 			case E_AttackType.NormalFire:
-				if (buffData.Code != 0)
 				{
-					m_Target.BuffList.Add(buffData);
-				}
-
-				m_Target.On_DaMage(damage);
-				break;
-			case E_AttackType.FixedFire:
-				for (int i = 0; i < m_SkillInfo.FixedTargetList.Count; ++i)
-				{
-					if (buffData.Code != 0)
+					// 피격 이펙트 생성
+					Effect hitEffect = M_Effect.SpawnEffect(m_ConditionInfo_Excel.damage_prefab);
+					if (null != hitEffect)
 					{
-						m_SkillInfo.FixedTargetList[i].BuffList.Add(buffData);
+						hitEffect.transform.position = m_Target.HitPivot.transform.position;
+						hitEffect.gameObject.SetActive(true);
 					}
 
-					m_SkillInfo.FixedTargetList[i].On_DaMage(damage);
+					if (buffData.Code != 0)
+					{
+						m_Target.BuffList.Add(buffData);
+					}
+
+					m_Target.On_DaMage(damage);
 				}
 				break;
-			case E_AttackType.PenetrateFire:
-				for (int i = 0; i < m_SkillInfo.FixedTargetList.Count; ++i)
+			case E_AttackType.FixedFire:
 				{
-					Enemy target = m_SkillInfo.FixedTargetList[i];
-
-					if (!m_SkillInfo.PenetrateTargetList.Contains(target))
+					for (int i = 0; i < m_SkillInfo.FixedTargetList.Count; ++i)
 					{
+						Enemy target = m_SkillInfo.FixedTargetList[i];
+
+						if (null == target || target.IsDead)
+							continue;
+
+						// 피격 이펙트 생성
+						Effect hitEffect = M_Effect.SpawnEffect(m_ConditionInfo_Excel.damage_prefab);
+						if (null != hitEffect)
+						{
+							hitEffect.transform.position = target.HitPivot.transform.position;
+							hitEffect.gameObject.SetActive(true);
+						}
+
 						if (buffData.Code != 0)
 						{
 							target.BuffList.Add(buffData);
 						}
 
 						target.On_DaMage(damage);
-						m_SkillInfo.PenetrateTargetList.Add(target);
+					}
+				}
+				break;
+			case E_AttackType.PenetrateFire:
+				{
+					for (int i = 0; i < m_SkillInfo.FixedTargetList.Count; ++i)
+					{
+						Enemy target = m_SkillInfo.FixedTargetList[i];
+
+						if (!m_SkillInfo.PenetrateTargetList.Contains(target))
+						{
+							// 피격 이펙트 생성
+							Effect hitEffect = M_Effect.SpawnEffect(m_ConditionInfo_Excel.damage_prefab);
+							if (null != hitEffect)
+							{
+								hitEffect.transform.position = target.HitPivot.transform.position;
+								hitEffect.gameObject.SetActive(true);
+							}
+
+							if (buffData.Code != 0)
+							{
+								target.BuffList.Add(buffData);
+							}
+
+							target.On_DaMage(damage);
+							m_SkillInfo.PenetrateTargetList.Add(target);
+						}
 					}
 				}
 				break;
 			case E_AttackType.BounceFire:
-				if (buffData.Code != 0)
 				{
-					m_Target.BuffList.Add(buffData);
-				}
+					// 피격 이펙트 생성
+					Effect hitEffect = M_Effect.SpawnEffect(m_ConditionInfo_Excel.damage_prefab);
+					if (null != hitEffect)
+					{
+						hitEffect.transform.position = m_Target.HitPivot.transform.position;
+						hitEffect.gameObject.SetActive(true);
+					}
 
-				m_Target.On_DaMage(damage);
-				--m_SkillInfo.BounceCount;
+					if (buffData.Code != 0)
+					{
+						m_Target.BuffList.Add(buffData);
+					}
+
+					m_Target.On_DaMage(damage);
+					--m_SkillInfo.BounceCount;
+				}
 				break;
 		}
 	}
@@ -385,6 +432,7 @@ public class Skill : MonoBehaviour
 		m_SkillInfo.BounceCount = m_StatInfo_Excel.Target_num;
 		m_SkillInfo.LifeTime = m_StatInfo_Excel.Life_Time;
 		m_SkillInfo.InitPos = transform.position;
+		m_SkillInfo.TargetInitPos = m_Target.transform.position;
 		// ?? : 왼쪽부터 피연산자가 null이 아닌 경우에 피연산자 리턴 (왼쪽 피연산자가 null이 아닌 경우 오른쪽 피연산자는 무시)
 		// ??= : 왼쪽 피연산자가 null인 경우에만 오른쪽 피연산자를 대입
 		// null 병합 연산자 안되는 이유
@@ -412,6 +460,29 @@ public class Skill : MonoBehaviour
 		}
 	}
 	#endregion
+	#region 유니티 콜백 함수
+	private void Update()
+	{
+		if (CheckToDespawn())
+		{
+			Despawn();
+			return;
+		}
+
+		UpdateInfo();
+
+		RotateSkill();
+		MoveSkill();
+
+		if (CheckToAttack())
+		{
+			Attack();
+		}
+
+		if (CheckToUpdateTarget())
+		{
+			UpdateTarget();
+		}
 	}
 	#endregion
 
@@ -427,5 +498,6 @@ public class Skill : MonoBehaviour
 		public float DotTimer;
 		public AttackRange AttackRange;
 		public Vector3 InitPos;
+		public Vector3 TargetInitPos;
 	}
 }
