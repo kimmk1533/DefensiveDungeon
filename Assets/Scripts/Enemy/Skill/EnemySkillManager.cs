@@ -5,83 +5,59 @@ using UnityEngine;
 
 public class EnemySkillManager : Singleton<EnemySkillManager>
 {
-    protected SkillCondition_TableExcelLoader m_SkillConditionData;
-    protected SkillStat_TableExcelLoader m_SkillStatData;
-    protected Prefab_TableExcelLoader m_PrefabData;
+	protected SkillCondition_TableExcelLoader m_SkillConditionData;
+	protected SkillStat_TableExcelLoader m_SkillStatData;
+	protected Prefab_TableExcelLoader m_PrefabData;
 
-    #region ³»ºÎ ÄÄÆ÷³ÍÆ®
-    #endregion
+	#region ë‚´ë¶€ í”„ë¡œí¼í‹°
+	// ë°ì´í„° í…Œì´ë¸”
+	protected DataTableManager M_DataTable => DataTableManager.Instance;
+	// ìŠ¤í‚¬ ë©”ëª¨ë¦¬í’€
+	protected EnemySkillPool M_SkillPool => EnemySkillPool.Instance;
+	#endregion
 
-    #region ³»ºÎ ÇÁ·ÎÆÛÆ¼
-    // µ¥ÀÌÅÍ Å×ÀÌºí
-    protected DataTableManager M_DataTable => DataTableManager.Instance;
-    // ½ºÅ³ ¸Þ¸ð¸®Ç®
-    protected EnemySkillPool M_SkillPool => EnemySkillPool.Instance;
-    #endregion
+	#region ì™¸ë¶€ í•¨ìˆ˜
+	public SkillCondition_TableExcel GetConditionData(int code)
+	{
+		SkillCondition_TableExcel skillConditionData = m_SkillConditionData.DataList.Where(item => item.Code == code).SingleOrDefault();
 
-    #region ¿ÜºÎ ÇÁ·ÎÆÛÆ¼
-    #endregion
+		return skillConditionData;
+	}
+	public SkillStat_TableExcel GetStatData(int code)
+	{
+		SkillStat_TableExcel skillStatData = m_SkillStatData.DataList.Where(item => item.Code == code).SingleOrDefault();
 
-    #region ³»ºÎ ÇÔ¼ö
-    #endregion
+		return skillStatData;
+	}
 
-    #region ¿ÜºÎ ÇÔ¼ö
-    public SkillCondition_TableExcel GetConditionData(int code)
-    {
-        SkillCondition_TableExcel skillConditionData = m_SkillConditionData.DataList.Where(item => item.Code == code).SingleOrDefault();
+	public void SpawnProjectileSkill(int prefabCode, float m_damage, SkillCondition_TableExcel condition, SkillStat_TableExcel stat, Transform attackpivot)
+	{
+		string key = m_PrefabData.GetPrefab(prefabCode)?.name;
 
-        return skillConditionData;
-    }
-    public SkillStat_TableExcel GetStatData(int code)
-    {
-        SkillStat_TableExcel skillStatData = m_SkillStatData.DataList.Where(item => item.Code == code).SingleOrDefault();
+		EnemySkill skill = M_SkillPool.GetPool(key)?.Spawn();
 
-        return skillStatData;
-    }
+		if (null != skill)
+		{
+			skill.InitializeSkill(m_damage, condition, stat, attackpivot);
 
-    public void SpawnProjectileSkill(int prefabCode, float m_damage, SkillCondition_TableExcel condition, SkillStat_TableExcel stat, Transform attackpivot)
-    {
-        string key = m_PrefabData.GetPrefab(prefabCode)?.name;
+			skill.gameObject.SetActive(true);
+		}
+	}
+	public void DespawnProjectileSkill(EnemySkill skill)
+	{
+		int projectPrefabCode = GetConditionData(skill.m_ConditionInfo.Code).projectile_prefab;
+		string key = m_PrefabData.GetPrefab(projectPrefabCode).name;
+		M_SkillPool.GetPool(key)?.DeSpawn(skill);
 
-        EnemySkill skill = M_SkillPool.GetPool(key)?.Spawn();
-        skill.InitializeSkill(m_damage, condition, stat, attackpivot);
-
-        skill.gameObject.SetActive(true);
-    }
-
-    public void DespawnProjectileSkill(EnemySkill skill)
-    {
-        int projectPrefabCode = GetConditionData(skill.m_ConditionInfo.Code).projectile_prefab;
-        string key = m_PrefabData.GetPrefab(projectPrefabCode).name;
-        M_SkillPool.GetPool(key)?.DeSpawn(skill);
-
-        skill.gameObject.SetActive(false);
-    }
-
-    public int Condition_NoToCode(int no)
-    {
-        return m_SkillConditionData.DataList.Where(item => item.No == no).SingleOrDefault().Code;
-    }
-    public int Condition_CodeToNo(int code)
-    {
-        return m_SkillConditionData.DataList.Where(item => item.Code == code).SingleOrDefault().No;
-    }
-    public int Stat_NoToCode(int no)
-    {
-        return m_SkillStatData.DataList.Where(item => item.No == no).SingleOrDefault().Code;
-    }
-    public int Stat_CodeToNo(int code)
-    {
-        return m_SkillStatData.DataList.Where(item => item.Code == code).SingleOrDefault().No;
-    }
-    #endregion
-
-    #region À¯´ÏÆ¼ ÄÝ¹é ÇÔ¼ö
-    void Awake()
-    {
-        m_SkillConditionData = M_DataTable.GetDataTable<SkillCondition_TableExcelLoader>();
-        m_SkillStatData = M_DataTable.GetDataTable<SkillStat_TableExcelLoader>();
-        m_PrefabData = M_DataTable.GetDataTable<Prefab_TableExcelLoader>();
-    }
-    #endregion
+		skill.gameObject.SetActive(false);
+	}
+	#endregion
+	#region ìœ ë‹ˆí‹° ì½œë°± í•¨ìˆ˜
+	void Awake()
+	{
+		m_SkillConditionData = M_DataTable.GetDataTable<SkillCondition_TableExcelLoader>();
+		m_SkillStatData = M_DataTable.GetDataTable<SkillStat_TableExcelLoader>();
+		m_PrefabData = M_DataTable.GetDataTable<Prefab_TableExcelLoader>();
+	}
+	#endregion
 }
