@@ -4,7 +4,6 @@ using UnityEngine;
 [System.Serializable]
 public struct Level_TableExcel
 {
-	public int No;
 	public int User_Level;
 	public int LvUP_Exp;
 	public int Exp_Buy;
@@ -23,13 +22,12 @@ public class  Level_TableExcelLoader : ScriptableObject
 
 	private Level_TableExcel Read(string line)
 	{
-		line = line.TrimStart('\n');
+		line = line.Trim();
 
 		Level_TableExcel data = new Level_TableExcel();
 		int idx = 0;
 		string[] strs = line.Split('`');
 
-		data.No = int.Parse(strs[idx++]);
 		data.User_Level = int.Parse(strs[idx++]);
 		data.LvUP_Exp = int.Parse(strs[idx++]);
 		data.Exp_Buy = int.Parse(strs[idx++]);

@@ -7,7 +7,7 @@ public abstract class Devil : MonoBehaviour
 {
 	// 마왕 정보(엑셀)
 	[SerializeField]
-	protected Tower_TableExcel m_DevilInfo_Excel;
+	protected Devil_TableExcel m_DevilInfo_Excel;
 	// 마왕 정보
 	[SerializeField]
 	protected S_DevilData m_DevilInfo;
@@ -63,7 +63,7 @@ public abstract class Devil : MonoBehaviour
 	public float HP => m_DevilInfo.m_HP;
 	public bool IsDie => m_DevilInfo.isDie;
 
-	public Tower_TableExcel ExcelData => m_DevilInfo_Excel;
+	public Devil_TableExcel ExcelData => m_DevilInfo_Excel;
 	public Transform HitPivot => m_DevilInfo.HitPivot;
 	#endregion
 

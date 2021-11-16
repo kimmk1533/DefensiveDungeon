@@ -5,137 +5,137 @@ using UnityEngine.UI;
 
 public class CharacterSelectManager : Singleton<CharacterSelectManager>
 {
-    [SerializeField] Prefab_TableExcelLoader m_prefab_loader;
-    [SerializeField] Tower_TableExcelLoader m_tower_loader;
-    [SerializeField] SkillCondition_TableExcelLoader m_skill_loader;
+	[SerializeField] Prefab_TableExcelLoader m_prefab_loader;
+	[SerializeField] Devil_TableExcelLoader m_devil_loader;
+	[SerializeField] SkillCondition_TableExcelLoader m_skill_loader;
 
-    [Space(10)]
-    [SerializeField] RawImage m_character_image;
-    [SerializeField] Vector3 camera_distance;           // ¿ÀºêÁ§Æ®·ÎºÎÅÍÀÇ °Å¸®
-    [SerializeField] Vector3 camera_rotation;           // Ä«¸Ş¶ó È¸Àü °ª
-    [SerializeField] Vector3 m_obj_position;            // °£¼· ¾ø´Â °÷À¸·Î ¼ÂÆÃÇÒ°Í
-    [SerializeField] List<CKeyValue> m_showObj_list;    // ¾Æ·¡¿¡ µé¾î°¥¼ö ÀÖ´Â ¿ÀºêÁ§Æ® ¸®½ºÆ®
-    GameObject m_showObj;   // ÇöÀç º¸¿©ÁÖ°í ÀÖ´Â ¿ÀºêÁ§Æ®
-    RenderTexture m_renderTexture;
-    Camera m_renderCamera;
+	[Space(10)]
+	[SerializeField] RawImage m_character_image;
+	[SerializeField] Vector3 camera_distance;           // ì˜¤ë¸Œì íŠ¸ë¡œë¶€í„°ì˜ ê±°ë¦¬
+	[SerializeField] Vector3 camera_rotation;           // ì¹´ë©”ë¼ íšŒì „ ê°’
+	[SerializeField] Vector3 m_obj_position;            // ê°„ì„­ ì—†ëŠ” ê³³ìœ¼ë¡œ ì…‹íŒ…í• ê²ƒ
+	[SerializeField] List<CKeyValue> m_showObj_list;    // ì•„ë˜ì— ë“¤ì–´ê°ˆìˆ˜ ìˆëŠ” ì˜¤ë¸Œì íŠ¸ ë¦¬ìŠ¤íŠ¸
+	GameObject m_showObj;   // í˜„ì¬ ë³´ì—¬ì£¼ê³  ìˆëŠ” ì˜¤ë¸Œì íŠ¸
+	RenderTexture m_renderTexture;
+	Camera m_renderCamera;
 
-    [Space(10)]
-    [SerializeField] List<Tower_TableExcel> m_character_dataList;
-    Tower_TableExcel m_current_data;
+	[Space(10)]
+	[SerializeField] List<Devil_TableExcel> m_character_dataList;
+	Devil_TableExcel m_current_data;
 
-    [Space(10)]
-    [SerializeField] SkillInfoSlotController m_skillslot_controll;
-    [SerializeField] CharacterInfoController m_charslot_controll;
+	[Space(10)]
+	[SerializeField] SkillInfoSlotController m_skillslot_controll;
+	[SerializeField] CharacterInfoController m_charslot_controll;
 
-    private void Start()
-    {
-        for (int i = 0; i < 3; i++)
-        {
-            m_character_dataList.Add(m_tower_loader.DataList[i]);
-        }
+	private void Start()
+	{
+		for (E_Devil i = E_Devil.None + 1; i < E_Devil.Max; ++i)
+		{
+			m_character_dataList.Add(m_devil_loader.DataList[(int)(i - 1)]);
+		}
 
-        // Ã¹¹øÂ° ¸¶¿ÕÀ¸·Î ±âº» ¼³Á¤ ÇØµÒ
-        UserInfoManager.Instance.SetDevilCode(m_character_dataList[0].Code);
-        m_current_data = m_character_dataList[0];
+		// ì²«ë²ˆì§¸ ë§ˆì™•ìœ¼ë¡œ ê¸°ë³¸ ì„¤ì • í•´ë‘ 
+		UserInfoManager.Instance.SetDevilCode(m_character_dataList[0].Code);
+		m_current_data = m_character_dataList[0];
 
-        // ·»´õ ÅØ½ºÃÄ °ü·Ã ¸®¼Ò½º ÇÒ´çÇÏ±â
-        InitializeRenderTexture();
-        // Ã¹¹øÂ° ¸¶¿Õ ¿ÀºêÁ§Æ® È°¼ºÈ­ (·»´õ ÅØ½ºÃÄ ¿ë)
-        m_showObj = m_showObj_list[0].obj.gameObject;
-        m_showObj.SetActive(true);
+		// ë Œë” í…ìŠ¤ì³ ê´€ë ¨ ë¦¬ì†ŒìŠ¤ í• ë‹¹í•˜ê¸°
+		InitializeRenderTexture();
+		// ì²«ë²ˆì§¸ ë§ˆì™• ì˜¤ë¸Œì íŠ¸ í™œì„±í™” (ë Œë” í…ìŠ¤ì³ ìš©)
+		m_showObj = m_showObj_list[0].obj.gameObject;
+		m_showObj.SetActive(true);
 
-        OnCharacterChanged();
-    }
+		OnCharacterChanged();
+	}
 
-    public void OnStart()
-    {
-        OnCharacterChanged();
-    }
+	public void OnStart()
+	{
+		OnCharacterChanged();
+	}
 
-    public void OnCharacterChanged()
-    {
-        SetSkillInfo();
-        SetNameInfo();
-    }
+	public void OnCharacterChanged()
+	{
+		SetSkillInfo();
+		SetNameInfo();
+	}
 
-    public void InitializeRenderTexture()
-    {
-        int layer = LayerMask.NameToLayer("MainSceneCharUI");
+	public void InitializeRenderTexture()
+	{
+		int layer = LayerMask.NameToLayer("MainSceneCharUI");
 
-        m_renderTexture = new RenderTexture(256, 256, 16);
-        m_renderTexture.Create();
-        
-
-        Camera cam_origin = Resources.Load<Camera>("MainSceneCamera");
-        m_renderCamera = GameObject.Instantiate<Camera>(cam_origin);        
-        m_renderCamera.cullingMask = 1 << layer;
-        m_renderCamera.clearFlags = CameraClearFlags.SolidColor;
-        m_renderCamera.backgroundColor = new Color(0, 0, 0, 0);
-
-        m_renderCamera.targetTexture = m_renderTexture;
-        m_renderCamera.transform.position = m_obj_position + camera_distance;
-        m_renderCamera.transform.eulerAngles = camera_rotation;
-        
-
-        foreach (var item in m_character_dataList)
-        {
-            GameObject origin_obj = m_prefab_loader.GetPrefab(item.Prefab);
-            GameObject new_obj = GameObject.Instantiate(origin_obj);
-
-            // scaling
-            float obj_scale = m_prefab_loader.DataList.Find((inner)=> { return inner.Code == item.Prefab; }).Size;
-            new_obj.transform.GetChild(0).localScale = new Vector3(obj_scale, obj_scale, obj_scale);
-
-            Transform[] allChildren = new_obj.GetComponentsInChildren<Transform>(true);
-            foreach (var child in allChildren)
-            {
-                child.gameObject.layer = layer;
-            }
-            
-
-            CKeyValue val = new CKeyValue
-            { Code = m_prefab_loader.DataList[0].Code, obj = new_obj };
-            m_showObj_list.Add(val);
-        }
+		m_renderTexture = new RenderTexture(256, 256, 16);
+		m_renderTexture.Create();
 
 
-        foreach (var item in m_showObj_list)
-        {   // ÀüºÎ ²¨³í »óÅÂ·Î °°Àº À§Ä¡¿¡ ³õ±â            
-            item.obj.transform.position = m_obj_position;
-            item.obj.gameObject.SetActive(false);
-        }
+		Camera cam_origin = Resources.Load<Camera>("MainSceneCamera");
+		m_renderCamera = GameObject.Instantiate<Camera>(cam_origin);
+		m_renderCamera.cullingMask = 1 << layer;
+		m_renderCamera.clearFlags = CameraClearFlags.SolidColor;
+		m_renderCamera.backgroundColor = new Color(0, 0, 0, 0);
 
-        m_character_image.texture = m_renderTexture;
-    }
+		m_renderCamera.targetTexture = m_renderTexture;
+		m_renderCamera.transform.position = m_obj_position + camera_distance;
+		m_renderCamera.transform.eulerAngles = camera_rotation;
 
-    public void SetRenderTexture(int index)
-    {
-        m_showObj.SetActive(false);
-        m_showObj = m_showObj_list[index].obj.gameObject;
-        m_showObj.SetActive(true);
-    }
 
-    public void SetSkillInfo()
-    {
-        var skill1_data = m_skill_loader.DataList.Find((item) => { return item.Code == m_current_data.Skill1Code; });
-        var skill2_data = m_skill_loader.DataList.Find((item) => { return item.Code == m_current_data.Skill2Code; });
-        List<SkillCondition_TableExcel> data = new List<SkillCondition_TableExcel>();
-        data.Add(skill1_data);
-        data.Add(skill2_data);
+		foreach (var item in m_character_dataList)
+		{
+			GameObject origin_obj = m_prefab_loader.GetPrefab(item.Prefab);
+			GameObject new_obj = GameObject.Instantiate(origin_obj);
 
-        m_skillslot_controll.SetInfos(data);
-    }
-    public void SetNameInfo()
-    {
-        m_charslot_controll.Set(m_current_data.Name_KR, "Information");
-    }
+			// scaling
+			float obj_scale = m_prefab_loader.DataList.Find((inner) => { return inner.Code == item.Prefab; }).Size;
+			new_obj.transform.GetChild(0).localScale = new Vector3(obj_scale, obj_scale, obj_scale);
 
-    public void __OnSelectButton(int index)
-    {
-        SetRenderTexture(index);
-        m_current_data = m_character_dataList[index];
-        UserInfoManager.Instance.SetDevilCode(m_current_data.Code);
-        OnCharacterChanged();
-    }
+			Transform[] allChildren = new_obj.GetComponentsInChildren<Transform>(true);
+			foreach (var child in allChildren)
+			{
+				child.gameObject.layer = layer;
+			}
+
+
+			CKeyValue val = new CKeyValue
+			{ Code = m_prefab_loader.DataList[0].Code, obj = new_obj };
+			m_showObj_list.Add(val);
+		}
+
+
+		foreach (var item in m_showObj_list)
+		{   // ì „ë¶€ êº¼ë…¼ ìƒíƒœë¡œ ê°™ì€ ìœ„ì¹˜ì— ë†“ê¸°            
+			item.obj.transform.position = m_obj_position;
+			item.obj.gameObject.SetActive(false);
+		}
+
+		m_character_image.texture = m_renderTexture;
+	}
+
+	public void SetRenderTexture(int index)
+	{
+		m_showObj.SetActive(false);
+		m_showObj = m_showObj_list[index].obj.gameObject;
+		m_showObj.SetActive(true);
+	}
+
+	public void SetSkillInfo()
+	{
+		var skill1_data = m_skill_loader.DataList.Find((item) => { return item.Code == m_current_data.Skill1Code; });
+		var skill2_data = m_skill_loader.DataList.Find((item) => { return item.Code == m_current_data.Skill2Code; });
+		List<SkillCondition_TableExcel> data = new List<SkillCondition_TableExcel>();
+		data.Add(skill1_data);
+		data.Add(skill2_data);
+
+		m_skillslot_controll.SetInfos(data);
+	}
+	public void SetNameInfo()
+	{
+		m_charslot_controll.Set(m_current_data.Name_KR, "Information");
+	}
+
+	public void __OnSelectButton(int index)
+	{
+		SetRenderTexture(index);
+		m_current_data = m_character_dataList[index];
+		UserInfoManager.Instance.SetDevilCode(m_current_data.Code);
+		OnCharacterChanged();
+	}
 
 }

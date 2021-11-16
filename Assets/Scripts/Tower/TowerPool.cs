@@ -19,7 +19,7 @@ public class TowerPool : ObjectPool<TowerPool, Tower>
 	{
 		base.__Initialize();
 
-		for (int i = 3; i < M_TowerData.DataList.Count; ++i)
+		for (int i = 0; i < M_TowerData.DataList.Count; ++i)
 		{
 			int PrefabCode = M_TowerData.DataList[i].Prefab;
 

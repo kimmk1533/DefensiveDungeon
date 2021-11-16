@@ -4,7 +4,6 @@ using UnityEngine;
 [System.Serializable]
 public struct Shop_TableExcel
 {
-	public int No;
 	public int User_Level;
 	public int Tower_Rank1;
 	public float Tower_Rand1;
@@ -36,13 +35,12 @@ public class  Shop_TableExcelLoader : ScriptableObject
 
 	private Shop_TableExcel Read(string line)
 	{
-		line = line.TrimStart('\n');
+		line = line.Trim();
 
 		Shop_TableExcel data = new Shop_TableExcel();
 		int idx = 0;
 		string[] strs = line.Split('`');
 
-		data.No = int.Parse(strs[idx++]);
 		data.User_Level = int.Parse(strs[idx++]);
 		data.Tower_Rank1 = int.Parse(strs[idx++]);
 		data.Tower_Rand1 = float.Parse(strs[idx++]);

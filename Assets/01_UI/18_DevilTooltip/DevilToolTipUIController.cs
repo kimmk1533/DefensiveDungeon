@@ -30,7 +30,7 @@ public class DevilToolTipUIController : MonoBehaviour, IPointerEnterHandler, IPo
     [SerializeField] SkillCondition_TableExcelLoader m_skill_loader; // for skill info overall
     [SerializeField] SkillStat_TableExcelLoader m_skillstat_loader; // for atk speed
 
-    public void SetUIInfo(Tower_TableExcel data)
+    public void SetUIInfo(Devil_TableExcel data)
     {
         // name
         m_name_textpro.text = data.Name_KR;

@@ -690,7 +690,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 154c50d728bbf544a9b4294d4d44d9bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_spriteLoader: {fileID: 11400000, guid: 1f1698dce275c0e42a5e0ade29ae89f8, type: 2}
+  m_iconLoader: {fileID: 11400000, guid: 370a315255b124947a371b2d39e6ec99, type: 2}
   m_synergy_image: {fileID: 1275753512}
   m_synergy_name: {fileID: 455692221}
 --- !u!1 &101860454
@@ -5255,7 +5255,7 @@ MonoBehaviour:
   m_synergy1TextPro: {fileID: 715854904}
   m_synergy2TextPro: {fileID: 136888432}
   m_goldTextPro: {fileID: 567400210}
-  m_spriteLoader: {fileID: 11400000, guid: 1f1698dce275c0e42a5e0ade29ae89f8, type: 2}
+  m_iconLoader: {fileID: 11400000, guid: 370a315255b124947a371b2d39e6ec99, type: 2}
   m_synergyLoader: {fileID: 11400000, guid: abfbc49f55ccdee4aa636ccd38fbf854, type: 2}
   m_goldImage: {fileID: 85406013}
   m_synergy1Image: {fileID: 1918407852}
@@ -8427,7 +8427,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 721c4753523131647a6e0e5ab022aea9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_spriteLoader: {fileID: 11400000, guid: 1f1698dce275c0e42a5e0ade29ae89f8, type: 2}
+  m_iconLoader: {fileID: 11400000, guid: 370a315255b124947a371b2d39e6ec99, type: 2}
   m_skill_image: {fileID: 1112538041}
   m_skill_text: {fileID: 872241236}
   m_skillTooltip: {fileID: 1078397249}
@@ -9789,7 +9789,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13aa8a7923de9a941bb5add7ae495e5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_spriteLoader: {fileID: 11400000, guid: 1f1698dce275c0e42a5e0ade29ae89f8, type: 2}
+  m_iconLoader: {fileID: 11400000, guid: 370a315255b124947a371b2d39e6ec99, type: 2}
   m_skillImage: {fileID: 1859986707}
   m_nameTextpro: {fileID: 1750390736}
   m_skillTextpro: {fileID: 1762537873}
@@ -9961,7 +9961,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03f229471e1e5f24b829358028b5b2b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_sprite_loader: {fileID: 11400000, guid: 1f1698dce275c0e42a5e0ade29ae89f8, type: 2}
+  m_icon_loader: {fileID: 11400000, guid: 370a315255b124947a371b2d39e6ec99, type: 2}
   m_image: {fileID: 1954065387}
 --- !u!1 &823389734
 GameObject:
@@ -10802,7 +10802,6 @@ MonoBehaviour:
     index: 0
     isOccupied: 0
     tower_data:
-      No: 0
       Name_KR: 
       Name_EN: 
       Code: 0
@@ -10810,8 +10809,6 @@ MonoBehaviour:
       Star: 0
       Tower_Kinds: 0
       Atk: 1
-      HP: 4
-      Def: 5
       Crit_rate: 2
       Crit_Dmg: 3
       Atk_Code: 300001
@@ -13152,7 +13149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13aa8a7923de9a941bb5add7ae495e5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_spriteLoader: {fileID: 11400000, guid: 1f1698dce275c0e42a5e0ade29ae89f8, type: 2}
+  m_iconLoader: {fileID: 11400000, guid: 370a315255b124947a371b2d39e6ec99, type: 2}
   m_skillImage: {fileID: 2130244006}
   m_nameTextpro: {fileID: 806333782}
   m_skillTextpro: {fileID: 30771991}
@@ -14007,7 +14004,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 154c50d728bbf544a9b4294d4d44d9bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_spriteLoader: {fileID: 11400000, guid: 1f1698dce275c0e42a5e0ade29ae89f8, type: 2}
+  m_iconLoader: {fileID: 11400000, guid: 370a315255b124947a371b2d39e6ec99, type: 2}
   m_synergy_image: {fileID: 1764810274}
   m_synergy_name: {fileID: 1307599346}
 --- !u!1 &1150562848
@@ -20695,7 +20692,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flag: 1
   m_current_stageInfo:
-    No: 0
     Name_KR: 
     Name_EN: 
     Code: 0
@@ -21607,7 +21603,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4111e520443c76348b2ac64550ecd140, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_sprite_loader: {fileID: 11400000, guid: 1f1698dce275c0e42a5e0ade29ae89f8, type: 2}
+  m_icon_loader: {fileID: 11400000, guid: 370a315255b124947a371b2d39e6ec99, type: 2}
   m_name_textpro: {fileID: 1921507187}
   m_explain_textpro: {fileID: 410060407}
   m_ability_textpro: {fileID: 1272301314}
@@ -22293,7 +22289,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 721c4753523131647a6e0e5ab022aea9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_spriteLoader: {fileID: 11400000, guid: 1f1698dce275c0e42a5e0ade29ae89f8, type: 2}
+  m_iconLoader: {fileID: 11400000, guid: 370a315255b124947a371b2d39e6ec99, type: 2}
   m_skill_image: {fileID: 1744184783}
   m_skill_text: {fileID: 677112440}
   m_skillTooltip: {fileID: 1078397249}
@@ -23255,7 +23251,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f33e383f07115540bd71338990c24a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_sprite_loader: {fileID: 11400000, guid: 1f1698dce275c0e42a5e0ade29ae89f8, type: 2}
+  m_icon_loader: {fileID: 11400000, guid: 370a315255b124947a371b2d39e6ec99, type: 2}
   m_info:
     index: 0
     isActivated: 0
@@ -24286,7 +24282,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe66563e2fd3287468b30617761419de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_spriteLoader: {fileID: 11400000, guid: 1f1698dce275c0e42a5e0ade29ae89f8, type: 2}
+  m_iconLoader: {fileID: 11400000, guid: 370a315255b124947a371b2d39e6ec99, type: 2}
   m_skill_image: {fileID: 1515822996}
   m_skill_text: {fileID: 17839010}
   m_skillTooltip: {fileID: 818702440}

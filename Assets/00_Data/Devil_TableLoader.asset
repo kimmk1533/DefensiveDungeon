@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc05113271052af4685b10104281396d, type: 3}
+  m_Name: Devil_TableLoader
+  m_EditorClassIdentifier: 
+  filepath: Assets\00_Data\Txt\Devil_Table.txt
+  DataList:
+  - No: 1
+    Name_KR: "\uC99D\uC624\uC758 \uC5EC\uC655"
+    Name_EN: HateQueen
+    Code: 110001
+    Rank: 10
+    Star: 10
+    Atk: 1
+    HP: 500
+    Def: 10
+    Crit_rate: 0.2
+    Crit_Dmg: 1.5
+    Atk_Code: 300001
+    Skill1Code: 300025
+    Skill2Code: 300026
+    Prefab: 900001
+  - No: 2
+    Name_KR: "\uC9C0\uC625\uC758 \uAD70\uC8FC"
+    Name_EN: HellLord
+    Code: 110002
+    Rank: 10
+    Star: 10
+    Atk: 1000
+    HP: 500
+    Def: 10
+    Crit_rate: 0.2
+    Crit_Dmg: 1.5
+    Atk_Code: 300002
+    Skill1Code: 300027
+    Skill2Code: 300029
+    Prefab: 900002
+  - No: 3
+    Name_KR: "\uD504\uB85C\uC2A4\uD2B8 \uB9AC\uCE58"
+    Name_EN: FrostSkeleton
+    Code: 110003
+    Rank: 10
+    Star: 10
+    Atk: 500
+    HP: 500
+    Def: 10
+    Crit_rate: 0.2
+    Crit_Dmg: 1.5
+    Atk_Code: 300003
+    Skill1Code: 300030
+    Skill2Code: 300032
+    Prefab: 900003

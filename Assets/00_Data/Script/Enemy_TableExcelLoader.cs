@@ -4,7 +4,6 @@ using UnityEngine;
 [System.Serializable]
 public struct Enemy_TableExcel
 {
-	public int No;
 	public string Name_KR;
 	public string Name_EN;
 	public int Code;
@@ -36,13 +35,12 @@ public class  Enemy_TableExcelLoader : ScriptableObject
 
 	private Enemy_TableExcel Read(string line)
 	{
-		line = line.TrimStart('\n');
+		line = line.Trim();
 
 		Enemy_TableExcel data = new Enemy_TableExcel();
 		int idx = 0;
 		string[] strs = line.Split('`');
 
-		data.No = int.Parse(strs[idx++]);
 		data.Name_KR = strs[idx++];
 		data.Name_EN = strs[idx++];
 		data.Code = int.Parse(strs[idx++]);

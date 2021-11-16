@@ -4,7 +4,6 @@ using UnityEngine;
 [System.Serializable]
 public struct BuffCC_TableExcel
 {
-	public int No;
 	public string Name_KR;
 	public string Name_EN;
 	public int Code;
@@ -39,13 +38,12 @@ public class  BuffCC_TableExcelLoader : ScriptableObject
 
 	private BuffCC_TableExcel Read(string line)
 	{
-		line = line.TrimStart('\n');
+		line = line.Trim();
 
 		BuffCC_TableExcel data = new BuffCC_TableExcel();
 		int idx = 0;
 		string[] strs = line.Split('`');
 
-		data.No = int.Parse(strs[idx++]);
 		data.Name_KR = strs[idx++];
 		data.Name_EN = strs[idx++];
 		data.Code = int.Parse(strs[idx++]);

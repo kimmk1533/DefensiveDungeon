@@ -311,12 +311,15 @@ MonoBehaviour:
   - Code: 900099
     Size: 0.5
     Unity_address: Enemy/Prefabs/Creep_Rogue
+  - Code: 900000
+    Size: 1
+    Unity_address: Skill/Default
   - Code: 900100
     Size: 1
     Unity_address: Devil/Effect/Boss_01
   - Code: 900101
     Size: 0.7
-    Unity_address: Devil/Skill/BossPro_01
+    Unity_address: Skill/BossPro_01
   - Code: 900102
     Size: 0.3
     Unity_address: Devil/Effect/BossHit_01
@@ -364,7 +367,7 @@ MonoBehaviour:
     Unity_address: Tower/Effect/Flash_10
   - Code: 900117
     Size: 0.7
-    Unity_address: Tower/Skill/Projectile_7
+    Unity_address: Skill/Projectile_7
   - Code: 900118
     Size: 1
     Unity_address: Tower/Effect/Explosion_01
@@ -373,7 +376,7 @@ MonoBehaviour:
     Unity_address: Tower/Effect/Flash_10
   - Code: 900120
     Size: 1.2
-    Unity_address: Tower/Skill/Projectile_7
+    Unity_address: Skill/Projectile_7
   - Code: 900121
     Size: 1
     Unity_address: Tower/Effect/Explosion_02
@@ -394,7 +397,7 @@ MonoBehaviour:
     Unity_address: Tower/Effect/Flash_10
   - Code: 900127
     Size: 1
-    Unity_address: Tower/Skill/Projectile_1
+    Unity_address: Skill/Projectile_1
   - Code: 900128
     Size: 0.6
     Unity_address: Tower/Effect/Hit_15
@@ -403,7 +406,7 @@ MonoBehaviour:
     Unity_address: Tower/Effect/Flash_10
   - Code: 900130
     Size: 1.5
-    Unity_address: Tower/Skill/Projectile_1
+    Unity_address: Skill/Projectile_1
   - Code: 900131
     Size: 1
     Unity_address: Tower/Effect/Explosion_01
@@ -418,7 +421,7 @@ MonoBehaviour:
     Unity_address: Tower/Effect/Flash_5
   - Code: 900135
     Size: 1
-    Unity_address: Tower/Skill/Projectile_12
+    Unity_address: Skill/Projectile_12
   - Code: 900136
     Size: 0.7
     Unity_address: Tower/Effect/Hit_5
@@ -433,7 +436,7 @@ MonoBehaviour:
     Unity_address: Tower/Effect/Flash_1
   - Code: 900140
     Size: 1
-    Unity_address: Tower/Skill/Projectile_10
+    Unity_address: Skill/Projectile_10
   - Code: 900141
     Size: 0.5
     Unity_address: Tower/Effect/Hit_10
@@ -475,7 +478,7 @@ MonoBehaviour:
     Unity_address: Tower/Effect/Flash_8
   - Code: 900154
     Size: 0.7
-    Unity_address: Tower/Skill/Projectile_2
+    Unity_address: Skill/Projectile_2
   - Code: 900155
     Size: 0.5
     Unity_address: Tower/Effect/Hit_8
@@ -541,7 +544,7 @@ MonoBehaviour:
     Unity_address: Tower/Effect/Flash_8
   - Code: 900176
     Size: 0.7
-    Unity_address: Tower/Skill/Projectile_2
+    Unity_address: Skill/Projectile_2
   - Code: 900177
     Size: 0.5
     Unity_address: Tower/Effect/Hit_8
@@ -550,7 +553,7 @@ MonoBehaviour:
     Unity_address: Tower/Effect/Flash_8
   - Code: 900179
     Size: 1
-    Unity_address: Tower/Skill/Projectile_2
+    Unity_address: Skill/Projectile_2
   - Code: 900180
     Size: 0.5
     Unity_address: Tower/Effect/Hit_8
@@ -571,7 +574,7 @@ MonoBehaviour:
     Unity_address: Tower/Effect/Fire_02
   - Code: 900186
     Size: 1
-    Unity_address: Tower/Skill/Projectile_15
+    Unity_address: Skill/Projectile_15
   - Code: 900187
     Size: 1
     Unity_address: Tower/Effect/Explosion_02
@@ -583,7 +586,7 @@ MonoBehaviour:
     Unity_address: Tower/Effect/Flash_12
   - Code: 900190
     Size: 1
-    Unity_address: Tower/Skill/Projectile_12
+    Unity_address: Skill/Projectile_12
   - Code: 900191
     Size: 0.6
     Unity_address: Tower/Effect/Hit_12
@@ -915,6 +918,8 @@ MonoBehaviour:
     obj: {fileID: 8525777246585927892, guid: 100ab51d4e2aefe44ae8fb405e676bf3, type: 3}
   - Code: 900099
     obj: {fileID: 2604486107980217304, guid: 9114e71e357316c4188f886c40e4e615, type: 3}
+  - Code: 900000
+    obj: {fileID: 3036307503973806913, guid: 5fb497ded92b3454fa171a4e49a922f4, type: 3}
   - Code: 900100
     obj: {fileID: 5472239686391076802, guid: 851a9eb51d383d9409e158e7fc30e687, type: 3}
   - Code: 900101

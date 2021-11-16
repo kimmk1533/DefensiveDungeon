@@ -14,8 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   filepath: Assets\00_Data\Txt\Synergy_Table.txt
   DataList:
-  - No: 1
-    Name_KR: "\uAC70\uC7781"
+  - Name_KR: "\uAC70\uC7781"
     Name_EN: Synergy001
     Code: 330001
     Rank: 1
@@ -35,11 +34,10 @@ MonoBehaviour:
     EffectRand2: 0
     Synergy_icon: 910034
     Prefab: 900218
-    Synergy_text: "\uC544\uAD70\uC758 \uACF5\uACA9\uB825\uC744 \uC99D\uAC00 \uC2DC\uD0B5\uB2C8\uB2E4."
+    Synergy_text: "\uC544\uAD70\uC758 \uACF5\uACA9\uB825\uC744 \uC99D\uAC00\uC2DC\uD0B5\uB2C8\uB2E4."
     Synergy_Avility: "<b>(2) \uC544\uAD70 \uAC70\uC778 \uACF5\uACA9\uB825 30 \uC99D\uAC00</b>\n\n(3)
       \uAC19\uC740 \uAD6C\uC5ED \uC544\uAD70 \uACF5\uACA9\uB825 50 \uC99D\uAC00"
-  - No: 2
-    Name_KR: "\uAC70\uC7782"
+  - Name_KR: "\uAC70\uC7782"
     Name_EN: Synergy002
     Code: 330001
     Rank: 2
@@ -59,11 +57,10 @@ MonoBehaviour:
     EffectRand2: 0
     Synergy_icon: 910034
     Prefab: 900218
-    Synergy_text: "\uC544\uAD70\uC758 \uACF5\uACA9\uB825\uC744 \uC99D\uAC00 \uC2DC\uD0B5\uB2C8\uB2E4."
+    Synergy_text: "\uC544\uAD70\uC758 \uACF5\uACA9\uB825\uC744 \uC99D\uAC00\uC2DC\uD0B5\uB2C8\uB2E4."
     Synergy_Avility: "(2) \uC544\uAD70 \uAC70\uC778 \uACF5\uACA9\uB825 30 \uC99D\uAC00\n\n<b>(3)
       \uAC19\uC740 \uAD6C\uC5ED \uC544\uAD70 \uACF5\uACA9\uB825 50 \uC99D\uAC00</b>"
-  - No: 3
-    Name_KR: "\uB09C\uC7C1\uC7741"
+  - Name_KR: "\uB09C\uC7C1\uC7741"
     Name_EN: Synergy003
     Code: 330002
     Rank: 1
@@ -85,10 +82,9 @@ MonoBehaviour:
     Prefab: 900219
     Synergy_text: "\uC804\uD22C \uB77C\uC6B4\uB4DC\uAC00 \uC885\uB8CC\uB420 \uC2DC
       \uCD94\uAC00\uACE8\uB4DC\uB97C \uD68D\uB4DD\uD569\uB2C8\uB2E4."
-    Synergy_Avility: "<b>'(2) \uCD94\uAC00 \uACE8\uB4DC + 3</b>\n\n(3) \uCD94\uAC00
+    Synergy_Avility: "<b>(2) \uCD94\uAC00 \uACE8\uB4DC + 3</b>\n\n(3) \uCD94\uAC00
       \uACE8\uB4DC +5"
-  - No: 3
-    Name_KR: "\uB09C\uC7C1\uC7742"
+  - Name_KR: "\uB09C\uC7C1\uC7742"
     Name_EN: Synergy004
     Code: 330002
     Rank: 2
@@ -112,8 +108,7 @@ MonoBehaviour:
       \uCD94\uAC00\uACE8\uB4DC\uB97C \uD68D\uB4DD\uD569\uB2C8\uB2E4."
     Synergy_Avility: "(2) \uCD94\uAC00 \uACE8\uB4DC + 3\n\n<b>(3) \uCD94\uAC00 \uACE8\uB4DC
       +5</b>"
-  - No: 3
-    Name_KR: "\uBD88\uC815\uB8391"
+  - Name_KR: "\uBD88\uC815\uB8391"
     Name_EN: Synergy005
     Code: 330003
     Rank: 1
@@ -136,12 +131,11 @@ MonoBehaviour:
     Synergy_text: "\uBD88\uC815\uB839\uC5D0\uAC8C  \uD53C\uD574\uB97C \uC785\uC740
       \uC801\uC5D0\uAC8C \uC77C\uC815 \uD655\uB960\uB85C \uD654\uC0C1 \uD6A8\uACFC\uB97C
       \uBD80\uC5EC\uD569\uB2C8\uB2E4."
-    Synergy_Avility: "<b>'(2) 30% \uD655\uB960\uB85C \uD654\uC0C1\uD6A8\uACFC \uBD80\uC5EC
+    Synergy_Avility: "<b>(2) 30% \uD655\uB960\uB85C \uD654\uC0C1\uD6A8\uACFC \uBD80\uC5EC
       / \uCD08 \uB2F9(\uB370\uBBF8\uC9C0X0.3)\uC758 \uD53C\uD574</b>\n\n(3)  50%
       \uD655\uB960\uB85C \uD654\uC0C1\uD6A8\uACFC \uBD80\uC5EC / \uCD08 \uB2F9(\uB370\uBBF8\uC9C0X0.45)\uC758
       \uD53C\uD574"
-  - No: 6
-    Name_KR: "\uBD88\uC815\uB8392"
+  - Name_KR: "\uBD88\uC815\uB8392"
     Name_EN: Synergy006
     Code: 330003
     Rank: 2
@@ -168,8 +162,7 @@ MonoBehaviour:
       / \uCD08 \uB2F9(\uB370\uBBF8\uC9C0X0.3)\uC758 \uD53C\uD574\n\n<b>(3)  50% \uD655\uB960\uB85C
       \uD654\uC0C1\uD6A8\uACFC \uBD80\uC5EC / \uCD08 \uB2F9(\uB370\uBBF8\uC9C0X0.45)\uC758
       \uD53C\uD574</b>"
-  - No: 7
-    Name_KR: "\uB9C8\uC2181"
+  - Name_KR: "\uB9C8\uC2181"
     Name_EN: Synergy007
     Code: 330004
     Rank: 1
@@ -192,11 +185,10 @@ MonoBehaviour:
     Synergy_text: "\uB9C8\uC218\uB294 \uCCB4\uB825\uC774 \uC77C\uC815 \uC774\uD558\uC778
       \uC801\uC5D0\uAC8C 100%\uC758 \uD655\uB960\uB85C \uCE58\uBA85\uD0C0\uD53C\uD574\uB97C
       \uC785\uD799\uB2C8\uB2E4."
-    Synergy_Avility: "<b>'(2) \uCCB4\uB825\uC774 30%\uC774\uD558\uC778 \uC801\uC5D0\uAC8C
+    Synergy_Avility: "<b>(2) \uCCB4\uB825\uC774 30%\uC774\uD558\uC778 \uC801\uC5D0\uAC8C
       \uCE58\uBA85\uD0C0\uD53C\uD574</b>\n\n(4) \uCCB4\uB825\uC774 50%\uC774\uD558\uC778
       \uC801\uC5D0\uAC8C \uCE58\uBA85\uD0C0\uD53C\uD574"
-  - No: 8
-    Name_KR: "\uB9C8\uC2182"
+  - Name_KR: "\uB9C8\uC2182"
     Name_EN: Synergy008
     Code: 330004
     Rank: 2
@@ -222,8 +214,7 @@ MonoBehaviour:
     Synergy_Avility: "(2) \uCCB4\uB825\uC774 30%\uC774\uD558\uC778 \uC801\uC5D0\uAC8C
       \uCE58\uBA85\uD0C0\uD53C\uD574\n\n<b>(4) \uCCB4\uB825\uC774 50%\uC774\uD558\uC778
       \uC801\uC5D0\uAC8C \uCE58\uBA85\uD0C0\uD53C\uD574</b>"
-  - No: 9
-    Name_KR: "\uC720\uB8391"
+  - Name_KR: "\uC720\uB8391"
     Name_EN: Synergy009
     Code: 330005
     Rank: 1
@@ -245,10 +236,9 @@ MonoBehaviour:
     Prefab: 900222
     Synergy_text: "\uD574\uB2F9 \uAD6C\uC5ED\uC5D0 \uC18D\uD55C \uC801\uC758 \uBC29\uC5B4\uB825\uC744
       \uAC10\uC18C\uC2DC\uD0B5\uB2C8\uB2E4."
-    Synergy_Avility: "<b>'(2) \uBC29\uC5B4\uB825 25% \uAC10\uC18C</b>\n\n(4) \uBC29\uC5B4\uB825
+    Synergy_Avility: "<b>(2) \uBC29\uC5B4\uB825 25% \uAC10\uC18C</b>\n\n(4) \uBC29\uC5B4\uB825
       40% \uAC10\uC18C"
-  - No: 10
-    Name_KR: "\uC720\uB8392"
+  - Name_KR: "\uC720\uB8392"
     Name_EN: Synergy010
     Code: 330005
     Rank: 2
@@ -272,8 +262,7 @@ MonoBehaviour:
       \uAC10\uC18C\uC2DC\uD0B5\uB2C8\uB2E4."
     Synergy_Avility: "(2) \uBC29\uC5B4\uB825 25% \uAC10\uC18C\n\n<b>(4) \uBC29\uC5B4\uB825
       40% \uAC10\uC18C</b>"
-  - No: 11
-    Name_KR: "\uACE8\uB8181"
+  - Name_KR: "\uACE8\uB8181"
     Name_EN: Synergy011
     Code: 330006
     Rank: 1
@@ -295,9 +284,8 @@ MonoBehaviour:
     Prefab: 900223
     Synergy_text: "\uACE8\uB818\uC758 \uAE30\uBCF8 \uACF5\uACA9\uC5D0 \uB9DE\uC740
       \uC801\uC744 \uAE30\uC808\uC2DC\uD0B5\uB2C8\uB2E4."
-    Synergy_Avility: "<b>'(2)  3\uCD08 \uAE30\uC808</b>"
-  - No: 12
-    Name_KR: "\uC57C\uC2181"
+    Synergy_Avility: "<b>(2)  3\uCD08 \uAE30\uC808</b>"
+  - Name_KR: "\uC57C\uC2181"
     Name_EN: Synergy012
     Code: 330007
     Rank: 1
@@ -320,13 +308,12 @@ MonoBehaviour:
     Synergy_text: "\uC57C\uC218\uC758 \uACF5\uACA9\uC18D\uB3C4\uAC00 \uC99D\uAC00\uD558\uBA70
       \uD53C\uD574\uB97C \uC785\uC740 \uC801\uC5D0\uAC8C \uCD9C\uD608 \uD6A8\uACFC\uB97C
       \uBD80\uC5EC\uD569\uB2C8\uB2E4."
-    Synergy_Avility: "<b>'(2) 30%\uC758 \uD655\uB960\uB85C \uACF5\uACA9\uC18D\uB3C4
+    Synergy_Avility: "<b>(2) 30%\uC758 \uD655\uB960\uB85C \uACF5\uACA9\uC18D\uB3C4
       10% \uC99D\uAC00 / \uCD08 \uB2F9(\uB370\uBBF8\uC9C0X0.15)\uC758 \uD53C\uD574
       3\uC911\uCCA9</b>\n\n<b>(3) 60%\uC758 \uD655\uB960\uB85C \uACF5\uACA9\uC18D\uB3C4
       25% \uC99D\uAC00 / \uCD08 \uB2F9(\uB370\uBBF8\uC9C0X0.25)\uC758 \uD53C\uD574
       3\uC911\uCCA9</b>"
-  - No: 13
-    Name_KR: "\uC57C\uC2182"
+  - Name_KR: "\uC57C\uC2182"
     Name_EN: Synergy013
     Code: 330007
     Rank: 2
@@ -353,8 +340,7 @@ MonoBehaviour:
       \uC99D\uAC00 / \uCD08 \uB2F9(\uB370\uBBF8\uC9C0X0.15)\uC758 \uD53C\uD574 3\uC911\uCCA9\n\n(3)
       60%\uC758 \uD655\uB960\uB85C \uACF5\uACA9\uC18D\uB3C4 25% \uC99D\uAC00 / \uCD08
       \uB2F9(\uB370\uBBF8\uC9C0X0.25)\uC758 \uD53C\uD574 3\uC911\uCCA9"
-  - No: 14
-    Name_KR: "\uB9C8\uC7781"
+  - Name_KR: "\uB9C8\uC7781"
     Name_EN: Synergy014
     Code: 330008
     Rank: 1
@@ -375,10 +361,9 @@ MonoBehaviour:
     Synergy_icon: 910041
     Prefab: 900225
     Synergy_text: "\uC544\uAD70\uC758 \uACF5\uACA9 \uC0AC\uAC70\uB9AC\uAC00 \uC99D\uAC00\uD569\uB2C8\uB2E4."
-    Synergy_Avility: "<b>'(2) \uC544\uAD70 \uB9C8\uC778 \uC0AC\uAC70\uB9AC 20% \uC99D\uAC00</b>\n\n(3)\uAC19\uC740
+    Synergy_Avility: "<b>(2) \uC544\uAD70 \uB9C8\uC778 \uC0AC\uAC70\uB9AC 20% \uC99D\uAC00</b>\n\n(3)\uAC19\uC740
       \uAD6C\uC5ED \uC544\uAD70 \uC0AC\uAC70\uB9AC 40% \uC99D\uAC00"
-  - No: 15
-    Name_KR: "\uB9C8\uC7782"
+  - Name_KR: "\uB9C8\uC7782"
     Name_EN: Synergy015
     Code: 330008
     Rank: 2
@@ -401,8 +386,7 @@ MonoBehaviour:
     Synergy_text: "\uC544\uAD70\uC758 \uACF5\uACA9 \uC0AC\uAC70\uB9AC\uAC00 \uC99D\uAC00\uD569\uB2C8\uB2E4."
     Synergy_Avility: "(2) \uC544\uAD70 \uB9C8\uC778 \uC0AC\uAC70\uB9AC 20% \uC99D\uAC00\n\n<b>(3)\uAC19\uC740
       \uAD6C\uC5ED \uC544\uAD70 \uC0AC\uAC70\uB9AC 40% \uC99D\uAC00</b>"
-  - No: 16
-    Name_KR: "\uB4DC\uB798\uACE41"
+  - Name_KR: "\uB4DC\uB798\uACE41"
     Name_EN: Synergy016
     Code: 330009
     Rank: 1
@@ -424,10 +408,9 @@ MonoBehaviour:
     Prefab: 900226
     Synergy_text: "\uB4DC\uB798\uACE4\uC758 \uBAA8\uB4E0 \uACF5\uACA9\uC774 \uBC94\uC704
       \uACF5\uACA9\uC774 \uB429\uB2C8\uB2E4."
-    Synergy_Avility: "<b>'(1) \uC544\uAD70 \uB4DC\uB798\uACE4\uC758 \uACF5\uACA9\uC774
+    Synergy_Avility: "<b>(1) \uC544\uAD70 \uB4DC\uB798\uACE4\uC758 \uACF5\uACA9\uC774
       \uBC94\uC704 \uACF5\uACA9 \uC801\uC6A9</b>"
-  - No: 17
-    Name_KR: "\uD751\uC694\uC8151"
+  - Name_KR: "\uD751\uC694\uC8151"
     Name_EN: Synergy017
     Code: 330010
     Rank: 1
@@ -449,9 +432,8 @@ MonoBehaviour:
     Prefab: 900227
     Synergy_text: "\uD751\uC694\uC815\uC758 \uC77C\uBC18\uACF5\uACA9\uC5D0 \uD53C\uD574\uB97C
       \uC785\uC744 \uC2DC \uC77C\uC815 \uD655\uB960\uB85C \uC989\uC0AC\uD569\uB2C8\uB2E4."
-    Synergy_Avility: "<b>'(2) 10%\uC758 \uD655\uB960\uB85C \uC989\uC0AC</b>"
-  - No: 18
-    Name_KR: "\uC0AC\uB0E5\uAFBC1"
+    Synergy_Avility: "<b>(2) 10%\uC758 \uD655\uB960\uB85C \uC989\uC0AC</b>"
+  - Name_KR: "\uC0AC\uB0E5\uAFBC1"
     Name_EN: Synergy018
     Code: 330011
     Rank: 1
@@ -473,10 +455,9 @@ MonoBehaviour:
     Prefab: 900228
     Synergy_text: "\uC0AC\uB0E5\uAFBC\uC758 \uAE30\uBCF8 \uACF5\uACA9\uC774 \uC8FC\uBCC0
       \uC801\uC744 \uCD94\uAC00\uB85C \uACF5\uACA9\uD569\uB2C8\uB2E4."
-    Synergy_Avility: "<b>'(3) \uCD94\uAC00 \uACF5\uACA9 3\uD68C</b>\n\n(5) \uCD94\uAC00
+    Synergy_Avility: "<b>(3) \uCD94\uAC00 \uACF5\uACA9 3\uD68C</b>\n\n(5) \uCD94\uAC00
       \uACF5\uACA9 5\uD68C"
-  - No: 19
-    Name_KR: "\uC0AC\uB0E5\uAFBC2"
+  - Name_KR: "\uC0AC\uB0E5\uAFBC2"
     Name_EN: Synergy019
     Code: 330011
     Rank: 2
@@ -500,8 +481,7 @@ MonoBehaviour:
       \uC801\uC744 \uCD94\uAC00\uB85C \uACF5\uACA9\uD569\uB2C8\uB2E4."
     Synergy_Avility: "(3) \uCD94\uAC00 \uACF5\uACA9 3\uD68C\n\n<b>(5) \uCD94\uAC00
       \uACF5\uACA9 5\uD68C</b>"
-  - No: 20
-    Name_KR: "\uD751\uB9C8\uBC95\uC0AC1"
+  - Name_KR: "\uD751\uB9C8\uBC95\uC0AC1"
     Name_EN: Synergy020
     Code: 330012
     Rank: 1
@@ -523,11 +503,9 @@ MonoBehaviour:
     Prefab: 900229
     Synergy_text: "\uD751\uB9C8\uBC95\uC0AC\uC5D0\uAC8C \uD53C\uD574\uB97C \uC785\uC744
       \uC2DC \uC77C\uC815 \uD655\uB960\uB85C \uC774\uB3D9\uC18D\uB3C4\uAC00 \uAC10\uC18C\uD569\uB2C8\uB2E4."
-    Synergy_Avility: "<b>'(2) 40%\uD655\uB960\uB85C \uC774\uB3D9\uC18D\uB3C4 30%
-      \uAC10\uC18C</b>\n\n(4) 65%\uD655\uB960\uB85C \uC774\uB3D9\uC18D\uB3C4 45%
-      \uAC10\uC18C"
-  - No: 21
-    Name_KR: "\uD751\uB9C8\uBC95\uC0AC2"
+    Synergy_Avility: "<b>(2) 40%\uD655\uB960\uB85C \uC774\uB3D9\uC18D\uB3C4 30% \uAC10\uC18C</b>\n\n(4)
+      65%\uD655\uB960\uB85C \uC774\uB3D9\uC18D\uB3C4 45% \uAC10\uC18C"
+  - Name_KR: "\uD751\uB9C8\uBC95\uC0AC2"
     Name_EN: Synergy021
     Code: 330012
     Rank: 2
@@ -551,8 +529,7 @@ MonoBehaviour:
       \uC2DC \uC77C\uC815 \uD655\uB960\uB85C \uC774\uB3D9\uC18D\uB3C4\uAC00 \uAC10\uC18C\uD569\uB2C8\uB2E4."
     Synergy_Avility: "(2) 40%\uD655\uB960\uB85C \uC774\uB3D9\uC18D\uB3C4 30% \uAC10\uC18C\n\n<b>(4)
       65%\uD655\uB960\uB85C \uC774\uB3D9\uC18D\uB3C4 45% \uAC10\uC18C</b>"
-  - No: 22
-    Name_KR: "\uAD11\uC804\uC0AC1"
+  - Name_KR: "\uAD11\uC804\uC0AC1"
     Name_EN: Synergy022
     Code: 330013
     Rank: 1
@@ -575,12 +552,11 @@ MonoBehaviour:
     Synergy_text: "\uAD11\uC804\uC0AC\uAC00 \uAC19\uC740 \uC801\uC744 \uACF5\uACA9
       \uC2DC \uBC84\uC11C\uCEE4 \uD6A8\uACFC\uB97C \uBD80\uC5EC\uD569\uB2C8\uB2E4.\n(\uB300\uC0C1
       \uBCC0\uACBD \uC2DC \uBC84\uC11C\uCEE4 \uD6A8\uACFC\uB294 \uC0AC\uB77C\uC9D1\uB2C8\uB2E4.)"
-    Synergy_Avility: "<b>'(3) 1 \uC911\uCCA9 \uB2F9 \uACF5\uACA9\uB8255, \uACF5\uACA9\uC18D\uB3C45%
+    Synergy_Avility: "<b>(3) 1 \uC911\uCCA9 \uB2F9 \uACF5\uACA9\uB8255, \uACF5\uACA9\uC18D\uB3C45%
       \uC99D\uAC00 (\uCD5C\uB300 6\uC911\uCCA9)</b>\n\n(5) 1 \uC911\uCCA9 \uB2F9
       \uACF5\uACA9\uB825 10, \uACF5\uACA9\uC18D\uB3C4 10% \uC99D\uAC00 (\uCD5C\uB300
       6\uC911\uCCA9)"
-  - No: 23
-    Name_KR: "\uAD11\uC804\uC0AC2"
+  - Name_KR: "\uAD11\uC804\uC0AC2"
     Name_EN: Synergy023
     Code: 330013
     Rank: 2
@@ -606,8 +582,7 @@ MonoBehaviour:
     Synergy_Avility: "(3) 1 \uC911\uCCA9 \uB2F9 \uACF5\uACA9\uB8255, \uACF5\uACA9\uC18D\uB3C45%
       \uC99D\uAC00 (\uCD5C\uB300 6\uC911\uCCA9)\n\n<b>(5) 1 \uC911\uCCA9 \uB2F9 \uACF5\uACA9\uB825
       10, \uACF5\uACA9\uC18D\uB3C4 10% \uC99D\uAC00 (\uCD5C\uB300 6\uC911\uCCA9)</b>"
-  - No: 24
-    Name_KR: "\uC554\uC0B4\uC7901"
+  - Name_KR: "\uC554\uC0B4\uC7901"
     Name_EN: Synergy024
     Code: 330014
     Rank: 1
@@ -629,12 +604,11 @@ MonoBehaviour:
     Prefab: 900231
     Synergy_text: "\uC554\uC0B4\uC790\uC758 \uCE58\uBA85\uD0C0\uD655\uB960\uACFC 
       \uCE58\uBA85\uD0C0\uD53C\uD574\uB7C9\uC774 \uC99D\uAC00\uD569\uB2C8\uB2E4."
-    Synergy_Avility: "<b>'(2) \uC544\uAD70 \uC554\uC0B4\uC790 \uCE58\uBA85\uD0C0\uD655\uB960
+    Synergy_Avility: "<b>(2) \uC544\uAD70 \uC554\uC0B4\uC790 \uCE58\uBA85\uD0C0\uD655\uB960
       20% \uBC0F \uCE58\uBA85\uD0C0\uD53C\uD574\uB7C930% \uC99D\uAC00</b>\n\n(4)\uC544\uAD70
       \uC554\uC0B4\uC790  \uCE58\uBA85\uD0C0\uD655\uB960 30% \uBC0F \uCE58\uBA85\uD0C0\uD53C\uD574\uB7C9
       50% \uC99D\uAC00"
-  - No: 25
-    Name_KR: "\uC554\uC0B4\uC7902"
+  - Name_KR: "\uC554\uC0B4\uC7902"
     Name_EN: Synergy025
     Code: 330014
     Rank: 2
@@ -660,8 +634,7 @@ MonoBehaviour:
       20% \uBC0F \uCE58\uBA85\uD0C0\uD53C\uD574\uB7C930% \uC99D\uAC00\n\n<b>(4)\uC544\uAD70
       \uC554\uC0B4\uC790 \uCE58\uBA85\uD0C0\uD655\uB960 30% \uBC0F \uCE58\uBA85\uD0C0\uD53C\uD574\uB7C9
       50% \uC99D\uAC00</b>"
-  - No: 26
-    Name_KR: "\uC8FC\uC220\uC0AC1"
+  - Name_KR: "\uC8FC\uC220\uC0AC1"
     Name_EN: Synergy026
     Code: 330015
     Rank: 1
@@ -683,11 +656,10 @@ MonoBehaviour:
     Prefab: 900232
     Synergy_text: "\uC8FC\uC220\uC0AC\uC5D0\uAC8C \uD53C\uD574\uB97C \uC785\uC740
       \uC801\uC5D0\uAC8C \uB3C5 \uD6A8\uACFC\uB97C \uBD80\uC5EC\uD569\uB2C8\uB2E4."
-    Synergy_Avility: "<b>'(2) \uCD08 \uB2F9 (\uB370\uBBF8\uC9C0X0.2)\uC758 \uD53C\uD574
+    Synergy_Avility: "<b>(2) \uCD08 \uB2F9 (\uB370\uBBF8\uC9C0X0.2)\uC758 \uD53C\uD574
       \uBC0F \uC774\uB3D9\uC18D\uB3C4 20% \uAC10\uC18C</b>\n\n(4) \uCD08 \uB2F9 (\uB370\uBBF8\uC9C0X0.3)\uC758
       \uD53C\uD574 \uBC0F \uC774\uB3D9\uC18D\uB3C4 30% \uAC10\uC18C"
-  - No: 27
-    Name_KR: "\uC8FC\uC220\uC0AC2"
+  - Name_KR: "\uC8FC\uC220\uC0AC2"
     Name_EN: Synergy027
     Code: 330015
     Rank: 2
@@ -712,8 +684,7 @@ MonoBehaviour:
     Synergy_Avility: "(2) \uCD08 \uB2F9 (\uB370\uBBF8\uC9C0X0.2)\uC758 \uD53C\uD574
       \uBC0F \uC774\uB3D9\uC18D\uB3C4 20% \uAC10\uC18C\n\n<b>(4) \uCD08 \uB2F9 (\uB370\uBBF8\uC9C0X0.3)\uC758
       \uD53C\uD574 \uBC0F \uC774\uB3D9\uC18D\uB3C4 30% \uAC10\uC18C</b>"
-  - No: 28
-    Name_KR: "\uAC00\uB514\uC5B81"
+  - Name_KR: "\uAC00\uB514\uC5B81"
     Name_EN: Synergy028
     Code: 330016
     Rank: 1
@@ -736,10 +707,9 @@ MonoBehaviour:
     Synergy_text: "\uAC00\uB514\uC5B8\uC774 \uAE30\uBCF8 \uACF5\uACA9 \uC2DC \uC77C\uC815
       \uD655\uB960\uB85C \uB9C8\uC655\uC758 \uC2A4\uD0AC \uCFE8\uD0C0\uC784\uC774
       \uAC10\uC18C\uD569\uB2C8\uB2E4."
-    Synergy_Avility: "<b>'(2) 25% \uD655\uB960\uB85C \uCFE8\uD0C0\uC784 1\uCD08 \uAC10\uC18C</b>\n\n(3)
+    Synergy_Avility: "<b>(2) 25% \uD655\uB960\uB85C \uCFE8\uD0C0\uC784 1\uCD08 \uAC10\uC18C</b>\n\n(3)
       40% \uD655\uB960\uB85C \uCFE8\uD0C0\uC784 1\uCD08 \uAC10\uC18C"
-  - No: 29
-    Name_KR: "\uAC00\uB514\uC5B82"
+  - Name_KR: "\uAC00\uB514\uC5B82"
     Name_EN: Synergy029
     Code: 330016
     Rank: 2
@@ -764,8 +734,7 @@ MonoBehaviour:
       \uAC10\uC18C\uD569\uB2C8\uB2E4."
     Synergy_Avility: "(2) 25% \uD655\uB960\uB85C \uCFE8\uD0C0\uC784 1\uCD08 \uAC10\uC18C\n\n<b>(3)
       40% \uD655\uB960\uB85C \uCFE8\uD0C0\uC784 1\uCD08 \uAC10\uC18C</b>"
-  - No: 30
-    Name_KR: "\uAD70\uB2E8\uC7A51"
+  - Name_KR: "\uAD70\uB2E8\uC7A51"
     Name_EN: Synergy030
     Code: 330017
     Rank: 1
@@ -787,5 +756,5 @@ MonoBehaviour:
     Prefab: 900234
     Synergy_text: "\uAD70\uB2E8\uC7A5\uC774 \uC18D\uD55C \uAD6C\uC5ED \uC544\uAD70\uC758
       \uACF5\uACA9\uB825\uACFC \uACF5\uACA9\uC18D\uB3C4\uAC00 \uC99D\uAC00\uD569\uB2C8\uB2E4."
-    Synergy_Avility: "<b>'(2) \uACF5\uACA9\uB825 50% \uC99D\uAC00 \uACF5\uACA9\uC18D\uB3C4
+    Synergy_Avility: "<b>(2) \uACF5\uACA9\uB825 50% \uC99D\uAC00 \uACF5\uACA9\uC18D\uB3C4
       25% \uC99D\uAC00</b>"

@@ -9,6 +9,7 @@ public enum E_DataTableType
     None = -1,
 
     BuffCC,
+    Devil,
     Level,
     Enemy,
     Prefab,
