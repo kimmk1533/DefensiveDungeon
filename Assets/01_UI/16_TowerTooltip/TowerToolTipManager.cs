@@ -52,6 +52,7 @@ public class TowerToolTipManager : Singleton<TowerToolTipManager>
 
     public void FlushInvenSlot()
     {   // UI
+        TowerManager.Instance.DespawnTower(m_slot.TowerObj);
         m_slot.ClearInven();
     }
     public void FlushNode()

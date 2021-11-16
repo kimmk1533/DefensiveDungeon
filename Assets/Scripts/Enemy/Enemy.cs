@@ -1034,18 +1034,18 @@ public class Enemy : MonoBehaviour
 
 	public void CallSkill()
 	{
-		for (int i = 0; i < Enemy_obj.Count; i++)
-		{
-			if (Enemy_obj[i] != null)
-			{
-				BuffCC_TableExcel setbuff;
+		//for (int i = 0; i < Enemy_obj.Count; i++)
+		//{
+		//	if (Enemy_obj[i] != null)
+		//	{
+		//		BuffCC_TableExcel setbuff;
 
-				setbuff = buffcc_table.DataList.Where(item => item.Code == m_EnemyInfo.Skill1Code).Single();
+		//		setbuff = buffcc_table.DataList.Where(item => item.Code == m_EnemyInfo.Skill1Code).Single();
 
-				Enemy_obj[i].BuffList.Add(setbuff);
-				Enemy_obj[i].On_SkillBuff();
-			}
-		}
+		//		Enemy_obj[i].BuffList.Add(setbuff);
+		//		Enemy_obj[i].On_SkillBuff();
+		//	}
+		//}
 	}
 
 	public void CallDie()

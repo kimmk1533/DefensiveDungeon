@@ -321,6 +321,11 @@ public abstract class Devil : MonoBehaviour
 
 	public void CallAttack()
 	{
+		if (null == m_Target_Default)
+		{
+			return;
+		}
+
 		// 내부 데이터 정리
 		m_DevilInfo.AttackSpeed_Default = m_DevilInfo.Stat_Default.CoolTime;
 
