@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public abstract class Devil : MonoBehaviour
 {
@@ -336,6 +337,19 @@ public abstract class Devil : MonoBehaviour
 		// 기본 대미지 설정
 		statData.Dmg *= m_DevilInfo_Excel.Atk;
 		statData.Dmg += statData.Dmg_plus;
+
+		// 크리티컬 확률
+		float CritRate = m_DevilInfo_Excel.Crit_rate;
+		// 크리티컬 배율
+		float CritDmg = m_DevilInfo_Excel.Crit_Dmg;
+
+		// 크리티컬 대미지 설정
+		float CritRand = Random.Range(0.00001f, 1f);
+		bool CritApply = CritRand <= CritRate;
+		if (CritApply)
+		{
+			statData.Dmg *= CritDmg;
+		}
 
 		// 기본 스킬 투사체 생성
 		int DefaultSkillCode = conditionData.projectile_prefab;

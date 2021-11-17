@@ -522,6 +522,11 @@ public class Tower : MonoBehaviour
 		statData.Dmg *= m_TowerInfo_Excel.Atk;
 		statData.Dmg += statData.Dmg_plus;
 
+		// 크리티컬 확률
+		float CritRate = m_TowerInfo_Excel.Crit_rate;
+		// 크리티컬 배율
+		float CritDmg = m_TowerInfo_Excel.Crit_Dmg;
+
 		#region 버프
 		// 적용할 버프 리스트
 		List<BuffCC_TableExcel> BuffList;
@@ -612,8 +617,10 @@ public class Tower : MonoBehaviour
 							m_TowerInfo.AttackSpeed_Default -= BuffAmount;
 							break;
 						case E_BuffType.Crit_rate:
+							CritRate += BuffAmount;
 							break;
 						case E_BuffType.Crit_Dmg:
+							CritDmg += BuffAmount;
 							break;
 					}
 				}
@@ -645,8 +652,10 @@ public class Tower : MonoBehaviour
 								m_TowerInfo.AttackSpeed_Default -= BuffAmount;
 								break;
 							case E_BuffType.Crit_rate:
+								CritRate += BuffAmount;
 								break;
 							case E_BuffType.Crit_Dmg:
+								CritDmg += BuffAmount;
 								break;
 						}
 					}
@@ -678,8 +687,10 @@ public class Tower : MonoBehaviour
 									m_TowerInfo.AttackSpeed_Default -= BuffAmount;
 									break;
 								case E_BuffType.Crit_rate:
+									CritRate += BuffAmount;
 									break;
 								case E_BuffType.Crit_Dmg:
+									CritDmg += BuffAmount;
 									break;
 							}
 						}
@@ -721,8 +732,10 @@ public class Tower : MonoBehaviour
 								m_TowerInfo.AttackSpeed_Default -= BuffAmount;
 								break;
 							case E_BuffType.Crit_rate:
+								CritRate += BuffAmount;
 								break;
 							case E_BuffType.Crit_Dmg:
+								CritDmg += BuffAmount;
 								break;
 						}
 					}
@@ -754,8 +767,10 @@ public class Tower : MonoBehaviour
 									m_TowerInfo.AttackSpeed_Default -= BuffAmount;
 									break;
 								case E_BuffType.Crit_rate:
+									CritRate += BuffAmount;
 									break;
 								case E_BuffType.Crit_Dmg:
+									CritDmg += BuffAmount;
 									break;
 							}
 						}
@@ -787,8 +802,10 @@ public class Tower : MonoBehaviour
 										m_TowerInfo.AttackSpeed_Default -= BuffAmount;
 										break;
 									case E_BuffType.Crit_rate:
+										CritRate += BuffAmount;
 										break;
 									case E_BuffType.Crit_Dmg:
+										CritDmg += BuffAmount;
 										break;
 								}
 							}
@@ -829,8 +846,10 @@ public class Tower : MonoBehaviour
 							m_TowerInfo.AttackSpeed_Default *= BuffAmount;
 							break;
 						case E_BuffType.Crit_rate:
+							CritRate *= BuffAmount;
 							break;
 						case E_BuffType.Crit_Dmg:
+							CritDmg *= BuffAmount;
 							break;
 					}
 				}
@@ -862,8 +881,10 @@ public class Tower : MonoBehaviour
 								m_TowerInfo.AttackSpeed_Default *= BuffAmount;
 								break;
 							case E_BuffType.Crit_rate:
+								CritRate *= BuffAmount;
 								break;
 							case E_BuffType.Crit_Dmg:
+								CritDmg *= BuffAmount;
 								break;
 						}
 					}
@@ -895,8 +916,10 @@ public class Tower : MonoBehaviour
 									m_TowerInfo.AttackSpeed_Default *= BuffAmount;
 									break;
 								case E_BuffType.Crit_rate:
+									CritRate *= BuffAmount;
 									break;
 								case E_BuffType.Crit_Dmg:
+									CritDmg *= BuffAmount;
 									break;
 							}
 						}
@@ -938,8 +961,10 @@ public class Tower : MonoBehaviour
 								m_TowerInfo.AttackSpeed_Default *= BuffAmount;
 								break;
 							case E_BuffType.Crit_rate:
+								CritRate *= BuffAmount;
 								break;
 							case E_BuffType.Crit_Dmg:
+								CritDmg *= BuffAmount;
 								break;
 						}
 					}
@@ -971,8 +996,10 @@ public class Tower : MonoBehaviour
 									m_TowerInfo.AttackSpeed_Default *= BuffAmount;
 									break;
 								case E_BuffType.Crit_rate:
+									CritRate *= BuffAmount;
 									break;
 								case E_BuffType.Crit_Dmg:
+									CritDmg *= BuffAmount;
 									break;
 							}
 						}
@@ -1004,8 +1031,10 @@ public class Tower : MonoBehaviour
 										m_TowerInfo.AttackSpeed_Default *= BuffAmount;
 										break;
 									case E_BuffType.Crit_rate:
+										CritRate *= BuffAmount;
 										break;
 									case E_BuffType.Crit_Dmg:
+										CritDmg *= BuffAmount;
 										break;
 								}
 							}
@@ -1046,8 +1075,10 @@ public class Tower : MonoBehaviour
 							m_TowerInfo.AttackSpeed_Default *= BuffAmount;
 							break;
 						case E_BuffType.Crit_rate:
+							CritRate *= BuffAmount;
 							break;
 						case E_BuffType.Crit_Dmg:
+							CritDmg *= BuffAmount;
 							break;
 					}
 				}
@@ -1079,8 +1110,10 @@ public class Tower : MonoBehaviour
 								m_TowerInfo.AttackSpeed_Default *= BuffAmount;
 								break;
 							case E_BuffType.Crit_rate:
+								CritRate *= BuffAmount;
 								break;
 							case E_BuffType.Crit_Dmg:
+								CritDmg *= BuffAmount;
 								break;
 						}
 					}
@@ -1112,8 +1145,10 @@ public class Tower : MonoBehaviour
 									m_TowerInfo.AttackSpeed_Default *= BuffAmount;
 									break;
 								case E_BuffType.Crit_rate:
+									CritRate *= BuffAmount;
 									break;
 								case E_BuffType.Crit_Dmg:
+									CritDmg *= BuffAmount;
 									break;
 							}
 						}
@@ -1158,6 +1193,14 @@ public class Tower : MonoBehaviour
 			}
 		}
 		#endregion
+
+		// 크리티컬 대미지 설정
+		float CritRand = Random.Range(0.00001f, 1f);
+		bool CritApply = CritRand <= CritRate;
+		if (CritApply)
+		{
+			statData.Dmg *= CritDmg;
+		}
 
 		// 기본 스킬 투사체 생성
 		int DefaultSkillCode = conditionData.projectile_prefab;
@@ -1235,6 +1278,11 @@ public class Tower : MonoBehaviour
 		// 기본 대미지 설정
 		statData.Dmg *= m_TowerInfo_Excel.Atk;
 		statData.Dmg += statData.Dmg_plus;
+
+		// 크리티컬 확률
+		float CritRate = m_TowerInfo_Excel.Crit_rate;
+		// 크리티컬 배율
+		float CritDmg = m_TowerInfo_Excel.Crit_Dmg;
 
 		#region 버프
 		// 적용할 버프 리스트
@@ -1323,10 +1371,13 @@ public class Tower : MonoBehaviour
 							statData.Range += BuffAmount;
 							break;
 						case E_BuffType.Atk_spd:
+							m_TowerInfo.AttackSpeed_Skill01 -= BuffAmount;
 							break;
 						case E_BuffType.Crit_rate:
+							CritRate += BuffAmount;
 							break;
 						case E_BuffType.Crit_Dmg:
+							CritDmg += BuffAmount;
 							break;
 					}
 				}
@@ -1355,10 +1406,13 @@ public class Tower : MonoBehaviour
 								statData.Range += BuffAmount;
 								break;
 							case E_BuffType.Atk_spd:
+								m_TowerInfo.AttackSpeed_Skill01 -= BuffAmount;
 								break;
 							case E_BuffType.Crit_rate:
+								CritRate += BuffAmount;
 								break;
 							case E_BuffType.Crit_Dmg:
+								CritDmg += BuffAmount;
 								break;
 						}
 					}
@@ -1387,10 +1441,13 @@ public class Tower : MonoBehaviour
 									statData.Range += BuffAmount;
 									break;
 								case E_BuffType.Atk_spd:
+									m_TowerInfo.AttackSpeed_Skill01 -= BuffAmount;
 									break;
 								case E_BuffType.Crit_rate:
+									CritRate += BuffAmount;
 									break;
 								case E_BuffType.Crit_Dmg:
+									CritDmg += BuffAmount;
 									break;
 							}
 						}
@@ -1429,10 +1486,13 @@ public class Tower : MonoBehaviour
 								statData.Range += BuffAmount;
 								break;
 							case E_BuffType.Atk_spd:
+								m_TowerInfo.AttackSpeed_Skill01 -= BuffAmount;
 								break;
 							case E_BuffType.Crit_rate:
+								CritRate += BuffAmount;
 								break;
 							case E_BuffType.Crit_Dmg:
+								CritDmg += BuffAmount;
 								break;
 						}
 					}
@@ -1461,10 +1521,13 @@ public class Tower : MonoBehaviour
 									statData.Range += BuffAmount;
 									break;
 								case E_BuffType.Atk_spd:
+									m_TowerInfo.AttackSpeed_Skill01 -= BuffAmount;
 									break;
 								case E_BuffType.Crit_rate:
+									CritRate += BuffAmount;
 									break;
 								case E_BuffType.Crit_Dmg:
+									CritDmg += BuffAmount;
 									break;
 							}
 						}
@@ -1493,10 +1556,13 @@ public class Tower : MonoBehaviour
 										statData.Range += BuffAmount;
 										break;
 									case E_BuffType.Atk_spd:
+										m_TowerInfo.AttackSpeed_Skill01 -= BuffAmount;
 										break;
 									case E_BuffType.Crit_rate:
+										CritRate += BuffAmount;
 										break;
 									case E_BuffType.Crit_Dmg:
+										CritDmg += BuffAmount;
 										break;
 								}
 							}
@@ -1534,10 +1600,13 @@ public class Tower : MonoBehaviour
 							statData.Range *= BuffAmount;
 							break;
 						case E_BuffType.Atk_spd:
+							m_TowerInfo.AttackSpeed_Skill01 *= BuffAmount;
 							break;
 						case E_BuffType.Crit_rate:
+							CritRate *= BuffAmount;
 							break;
 						case E_BuffType.Crit_Dmg:
+							CritDmg *= BuffAmount;
 							break;
 					}
 				}
@@ -1566,10 +1635,13 @@ public class Tower : MonoBehaviour
 								statData.Range *= BuffAmount;
 								break;
 							case E_BuffType.Atk_spd:
+								m_TowerInfo.AttackSpeed_Skill01 *= BuffAmount;
 								break;
 							case E_BuffType.Crit_rate:
+								CritRate *= BuffAmount;
 								break;
 							case E_BuffType.Crit_Dmg:
+								CritDmg *= BuffAmount;
 								break;
 						}
 					}
@@ -1598,10 +1670,13 @@ public class Tower : MonoBehaviour
 									statData.Range *= BuffAmount;
 									break;
 								case E_BuffType.Atk_spd:
+									m_TowerInfo.AttackSpeed_Skill01 *= BuffAmount;
 									break;
 								case E_BuffType.Crit_rate:
+									CritRate *= BuffAmount;
 									break;
 								case E_BuffType.Crit_Dmg:
+									CritDmg *= BuffAmount;
 									break;
 							}
 						}
@@ -1640,10 +1715,13 @@ public class Tower : MonoBehaviour
 								statData.Range *= BuffAmount;
 								break;
 							case E_BuffType.Atk_spd:
+								m_TowerInfo.AttackSpeed_Skill01 *= BuffAmount;
 								break;
 							case E_BuffType.Crit_rate:
+								CritRate *= BuffAmount;
 								break;
 							case E_BuffType.Crit_Dmg:
+								CritDmg *= BuffAmount;
 								break;
 						}
 					}
@@ -1672,10 +1750,13 @@ public class Tower : MonoBehaviour
 									statData.Range *= BuffAmount;
 									break;
 								case E_BuffType.Atk_spd:
+									m_TowerInfo.AttackSpeed_Skill01 *= BuffAmount;
 									break;
 								case E_BuffType.Crit_rate:
+									CritRate *= BuffAmount;
 									break;
 								case E_BuffType.Crit_Dmg:
+									CritDmg *= BuffAmount;
 									break;
 							}
 						}
@@ -1704,10 +1785,13 @@ public class Tower : MonoBehaviour
 										statData.Range *= BuffAmount;
 										break;
 									case E_BuffType.Atk_spd:
+										m_TowerInfo.AttackSpeed_Skill01 *= BuffAmount;
 										break;
 									case E_BuffType.Crit_rate:
+										CritRate *= BuffAmount;
 										break;
 									case E_BuffType.Crit_Dmg:
+										CritDmg *= BuffAmount;
 										break;
 								}
 							}
@@ -1745,10 +1829,13 @@ public class Tower : MonoBehaviour
 							statData.Range *= BuffAmount;
 							break;
 						case E_BuffType.Atk_spd:
+							m_TowerInfo.AttackSpeed_Skill01 *= BuffAmount;
 							break;
 						case E_BuffType.Crit_rate:
+							CritRate *= BuffAmount;
 							break;
 						case E_BuffType.Crit_Dmg:
+							CritDmg *= BuffAmount;
 							break;
 					}
 				}
@@ -1777,10 +1864,13 @@ public class Tower : MonoBehaviour
 								statData.Range *= BuffAmount;
 								break;
 							case E_BuffType.Atk_spd:
+								m_TowerInfo.AttackSpeed_Skill01 *= BuffAmount;
 								break;
 							case E_BuffType.Crit_rate:
+								CritRate *= BuffAmount;
 								break;
 							case E_BuffType.Crit_Dmg:
+								CritDmg *= BuffAmount;
 								break;
 						}
 					}
@@ -1809,10 +1899,13 @@ public class Tower : MonoBehaviour
 									statData.Range *= BuffAmount;
 									break;
 								case E_BuffType.Atk_spd:
+									m_TowerInfo.AttackSpeed_Skill01 *= BuffAmount;
 									break;
 								case E_BuffType.Crit_rate:
+									CritRate *= BuffAmount;
 									break;
 								case E_BuffType.Crit_Dmg:
+									CritDmg *= BuffAmount;
 									break;
 							}
 						}
@@ -1825,6 +1918,14 @@ public class Tower : MonoBehaviour
 		// 사거리 업데이트
 		m_AttackRange_Skill01.Range = statData.Range;
 		#endregion
+
+		// 크리티컬 대미지 설정
+		float CritRand = Random.Range(0.00001f, 1f);
+		bool CritApply = CritRand <= CritRate;
+		if (CritApply)
+		{
+			statData.Dmg *= CritDmg;
+		}
 
 		// 스킬01 투사체 생성
 		int Skill01Code = conditionData.projectile_prefab;
@@ -1904,6 +2005,11 @@ public class Tower : MonoBehaviour
 		statData.Dmg *= m_TowerInfo_Excel.Atk;
 		statData.Dmg += statData.Dmg_plus;
 
+		// 크리티컬 확률
+		float CritRate = m_TowerInfo_Excel.Crit_rate;
+		// 크리티컬 배율
+		float CritDmg = m_TowerInfo_Excel.Crit_Dmg;
+
 		#region 버프
 		// 적용할 버프 리스트
 		List<BuffCC_TableExcel> BuffList;
@@ -1991,10 +2097,13 @@ public class Tower : MonoBehaviour
 							statData.Range += BuffAmount;
 							break;
 						case E_BuffType.Atk_spd:
+							m_TowerInfo.AttackSpeed_Skill02 -= BuffAmount;
 							break;
 						case E_BuffType.Crit_rate:
+							CritRate += BuffAmount;
 							break;
 						case E_BuffType.Crit_Dmg:
+							CritDmg += BuffAmount;
 							break;
 					}
 				}
@@ -2023,10 +2132,13 @@ public class Tower : MonoBehaviour
 								statData.Range += BuffAmount;
 								break;
 							case E_BuffType.Atk_spd:
+								m_TowerInfo.AttackSpeed_Skill02 -= BuffAmount;
 								break;
 							case E_BuffType.Crit_rate:
+								CritRate += BuffAmount;
 								break;
 							case E_BuffType.Crit_Dmg:
+								CritDmg += BuffAmount;
 								break;
 						}
 					}
@@ -2055,10 +2167,13 @@ public class Tower : MonoBehaviour
 									statData.Range += BuffAmount;
 									break;
 								case E_BuffType.Atk_spd:
+									m_TowerInfo.AttackSpeed_Skill02 -= BuffAmount;
 									break;
 								case E_BuffType.Crit_rate:
+									CritRate += BuffAmount;
 									break;
 								case E_BuffType.Crit_Dmg:
+									CritDmg += BuffAmount;
 									break;
 							}
 						}
@@ -2097,10 +2212,13 @@ public class Tower : MonoBehaviour
 								statData.Range += BuffAmount;
 								break;
 							case E_BuffType.Atk_spd:
+								m_TowerInfo.AttackSpeed_Skill02 -= BuffAmount;
 								break;
 							case E_BuffType.Crit_rate:
+								CritRate += BuffAmount;
 								break;
 							case E_BuffType.Crit_Dmg:
+								CritDmg += BuffAmount;
 								break;
 						}
 					}
@@ -2129,10 +2247,13 @@ public class Tower : MonoBehaviour
 									statData.Range += BuffAmount;
 									break;
 								case E_BuffType.Atk_spd:
+									m_TowerInfo.AttackSpeed_Skill02 -= BuffAmount;
 									break;
 								case E_BuffType.Crit_rate:
+									CritRate += BuffAmount;
 									break;
 								case E_BuffType.Crit_Dmg:
+									CritDmg += BuffAmount;
 									break;
 							}
 						}
@@ -2161,10 +2282,13 @@ public class Tower : MonoBehaviour
 										statData.Range += BuffAmount;
 										break;
 									case E_BuffType.Atk_spd:
+										m_TowerInfo.AttackSpeed_Skill02 -= BuffAmount;
 										break;
 									case E_BuffType.Crit_rate:
+										CritRate += BuffAmount;
 										break;
 									case E_BuffType.Crit_Dmg:
+										CritDmg += BuffAmount;
 										break;
 								}
 							}
@@ -2202,10 +2326,13 @@ public class Tower : MonoBehaviour
 							statData.Range *= BuffAmount;
 							break;
 						case E_BuffType.Atk_spd:
+							m_TowerInfo.AttackSpeed_Skill02 *= BuffAmount;
 							break;
 						case E_BuffType.Crit_rate:
+							CritRate *= BuffAmount;
 							break;
 						case E_BuffType.Crit_Dmg:
+							CritDmg *= BuffAmount;
 							break;
 					}
 				}
@@ -2234,10 +2361,13 @@ public class Tower : MonoBehaviour
 								statData.Range *= BuffAmount;
 								break;
 							case E_BuffType.Atk_spd:
+								m_TowerInfo.AttackSpeed_Skill02 *= BuffAmount;
 								break;
 							case E_BuffType.Crit_rate:
+								CritRate *= BuffAmount;
 								break;
 							case E_BuffType.Crit_Dmg:
+								CritDmg *= BuffAmount;
 								break;
 						}
 					}
@@ -2266,10 +2396,13 @@ public class Tower : MonoBehaviour
 									statData.Range *= BuffAmount;
 									break;
 								case E_BuffType.Atk_spd:
+									m_TowerInfo.AttackSpeed_Skill02 *= BuffAmount;
 									break;
 								case E_BuffType.Crit_rate:
+									CritRate *= BuffAmount;
 									break;
 								case E_BuffType.Crit_Dmg:
+									CritDmg *= BuffAmount;
 									break;
 							}
 						}
@@ -2308,10 +2441,13 @@ public class Tower : MonoBehaviour
 								statData.Range *= BuffAmount;
 								break;
 							case E_BuffType.Atk_spd:
+								m_TowerInfo.AttackSpeed_Skill02 *= BuffAmount;
 								break;
 							case E_BuffType.Crit_rate:
+								CritRate *= BuffAmount;
 								break;
 							case E_BuffType.Crit_Dmg:
+								CritDmg *= BuffAmount;
 								break;
 						}
 					}
@@ -2340,10 +2476,13 @@ public class Tower : MonoBehaviour
 									statData.Range *= BuffAmount;
 									break;
 								case E_BuffType.Atk_spd:
+									m_TowerInfo.AttackSpeed_Skill02 *= BuffAmount;
 									break;
 								case E_BuffType.Crit_rate:
+									CritRate *= BuffAmount;
 									break;
 								case E_BuffType.Crit_Dmg:
+									CritDmg *= BuffAmount;
 									break;
 							}
 						}
@@ -2372,10 +2511,13 @@ public class Tower : MonoBehaviour
 										statData.Range *= BuffAmount;
 										break;
 									case E_BuffType.Atk_spd:
+										m_TowerInfo.AttackSpeed_Skill02 *= BuffAmount;
 										break;
 									case E_BuffType.Crit_rate:
+										CritRate *= BuffAmount;
 										break;
 									case E_BuffType.Crit_Dmg:
+										CritDmg *= BuffAmount;
 										break;
 								}
 							}
@@ -2413,10 +2555,13 @@ public class Tower : MonoBehaviour
 							statData.Range *= BuffAmount;
 							break;
 						case E_BuffType.Atk_spd:
+							m_TowerInfo.AttackSpeed_Skill02 *= BuffAmount;
 							break;
 						case E_BuffType.Crit_rate:
+							CritRate *= BuffAmount;
 							break;
 						case E_BuffType.Crit_Dmg:
+							CritDmg *= BuffAmount;
 							break;
 					}
 				}
@@ -2445,10 +2590,13 @@ public class Tower : MonoBehaviour
 								statData.Range *= BuffAmount;
 								break;
 							case E_BuffType.Atk_spd:
+								m_TowerInfo.AttackSpeed_Skill02 *= BuffAmount;
 								break;
 							case E_BuffType.Crit_rate:
+								CritRate *= BuffAmount;
 								break;
 							case E_BuffType.Crit_Dmg:
+								CritDmg *= BuffAmount;
 								break;
 						}
 					}
@@ -2477,10 +2625,13 @@ public class Tower : MonoBehaviour
 									statData.Range *= BuffAmount;
 									break;
 								case E_BuffType.Atk_spd:
+									m_TowerInfo.AttackSpeed_Skill02 *= BuffAmount;
 									break;
 								case E_BuffType.Crit_rate:
+									CritRate *= BuffAmount;
 									break;
 								case E_BuffType.Crit_Dmg:
+									CritDmg *= BuffAmount;
 									break;
 							}
 						}
@@ -2493,6 +2644,14 @@ public class Tower : MonoBehaviour
 		// 사거리 업데이트
 		m_AttackRange_Skill02.Range = statData.Range;
 		#endregion
+
+		// 크리티컬 대미지 설정
+		float CritRand = Random.Range(0.00001f, 1f);
+		bool CritApply = CritRand <= CritRate;
+		if (CritApply)
+		{
+			statData.Dmg *= CritDmg;
+		}
 
 		// 스킬02 투사체 생성
 		int Skill02Code = conditionData.projectile_prefab;
