@@ -13,8 +13,8 @@ namespace forexcel2
 		{
 			// 1. 경로\파일이름 설정 (파일 우클릭 - 속성 - 일반 탭 - 위치)
 			// 예시 @"D:\TD\(ALL) DataTable_12.2.xlsx"
-			string filepath = 
-				@"C:\Users\kimmk\Desktop\Github Desktop\DefensiveDungeon\Documents\Table_List";
+			string filepath =
+				@"C:\Users\PC-02\Desktop\github\DefensiveDungeon\Documents\Table_List";
 
 
 			#region 파일 이름 (복사용)
@@ -31,7 +31,7 @@ namespace forexcel2
 			//	"11_Prefab_Table.xlsx"
 			#endregion
 
-			string filename = "02_Tower_Table.xlsx";
+			string filename = "04_Skill_Table.xlsx";
 
 
 			#region 시트 이름 (복사용)
@@ -44,7 +44,7 @@ namespace forexcel2
 			#endregion
 
 			// 2. 뽑고자 하는 테이블의 시트 이름 설정
-			string sheet = "Tower_Table";
+			string sheet = "SkillCondition_Table";
 
 
 			if (!filepath.EndsWith('\\'))
