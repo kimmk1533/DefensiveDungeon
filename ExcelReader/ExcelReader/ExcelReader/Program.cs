@@ -31,7 +31,7 @@ namespace forexcel2
 			//	"11_Prefab_Table.xlsx"
 			#endregion
 
-			string filename = "04_Skill_Table.xlsx";
+			string filename = "08_StageEnemy_Table.xlsx";
 
 
 			#region 시트 이름 (복사용)
@@ -44,7 +44,7 @@ namespace forexcel2
 			#endregion
 
 			// 2. 뽑고자 하는 테이블의 시트 이름 설정
-			string sheet = "SkillCondition_Table";
+			string sheet = "StageEnemy_Table";
 
 
 			if (!filepath.EndsWith('\\'))

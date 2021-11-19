@@ -30,6 +30,7 @@ MonoBehaviour:
     Skill1Code: 300149
     Skill2Code: 0
     HPSkillCast: 1
+    Atk_Speed: 1
     Prefab: 900085
   - Name_KR: "\uB514\uD39C\uB35402"
     Name_EN: Defender02
@@ -47,6 +48,7 @@ MonoBehaviour:
     Skill1Code: 300149
     Skill2Code: 0
     HPSkillCast: 1
+    Atk_Speed: 1
     Prefab: 900086
   - Name_KR: "\uB514\uD39C\uB35403"
     Name_EN: Defender03
@@ -64,6 +66,7 @@ MonoBehaviour:
     Skill1Code: 300149
     Skill2Code: 0
     HPSkillCast: 1
+    Atk_Speed: 1
     Prefab: 900087
   - Name_KR: "\uB514\uD39C\uB35404"
     Name_EN: Defender04
@@ -81,6 +84,7 @@ MonoBehaviour:
     Skill1Code: 300149
     Skill2Code: 0
     HPSkillCast: 1
+    Atk_Speed: 1
     Prefab: 900088
   - Name_KR: "\uB4DC\uC6CC\uD504 \uC6CC\uB9AC\uC5B401"
     Name_EN: DwarfWarrior01
@@ -98,6 +102,7 @@ MonoBehaviour:
     Skill1Code: 300150
     Skill2Code: 0
     HPSkillCast: 1
+    Atk_Speed: 1
     Prefab: 900089
   - Name_KR: "\uB4DC\uC6CC\uD504 \uC6CC\uB9AC\uC5B402"
     Name_EN: DwarfWarrior02
@@ -115,6 +120,7 @@ MonoBehaviour:
     Skill1Code: 300150
     Skill2Code: 0
     HPSkillCast: 1
+    Atk_Speed: 1
     Prefab: 900090
   - Name_KR: "\uB4DC\uC6CC\uD504 \uC6CC\uB9AC\uC5B403"
     Name_EN: DwarfWarrior03
@@ -132,6 +138,7 @@ MonoBehaviour:
     Skill1Code: 300150
     Skill2Code: 0
     HPSkillCast: 1
+    Atk_Speed: 1
     Prefab: 900091
   - Name_KR: "\uB4DC\uC6CC\uD504 \uC6CC\uB9AC\uC5B404"
     Name_EN: DwarfWarrior04
@@ -149,6 +156,7 @@ MonoBehaviour:
     Skill1Code: 300150
     Skill2Code: 0
     HPSkillCast: 1
+    Atk_Speed: 1
     Prefab: 900092
   - Name_KR: "\uADF8\uB9AC\uD540(\uD558\uB298)"
     Name_EN: Griffin01
@@ -166,6 +174,7 @@ MonoBehaviour:
     Skill1Code: 300150
     Skill2Code: 0
     HPSkillCast: 1
+    Atk_Speed: 1
     Prefab: 900093
   - Name_KR: "\uADF8\uB9AC\uD540(\uB545)"
     Name_EN: Griffin02
@@ -183,13 +192,14 @@ MonoBehaviour:
     Skill1Code: 300151
     Skill2Code: 0
     HPSkillCast: 0.5
+    Atk_Speed: 1
     Prefab: 900093
   - Name_KR: "\uAE30\uC0AC"
     Name_EN: Creep1_Knight
     Code: 200011
     Move_Type: 1
     Atk: 1
-    HP: 100
+    HP: 50
     Def: 10
     Shild: 0
     Move_spd: 2
@@ -200,6 +210,7 @@ MonoBehaviour:
     Skill1Code: 0
     Skill2Code: 0
     HPSkillCast: 1
+    Atk_Speed: 1
     Prefab: 900094
   - Name_KR: "\uB300\uAC80\uC0AC"
     Name_EN: Creep2_Fighter
@@ -217,6 +228,7 @@ MonoBehaviour:
     Skill1Code: 0
     Skill2Code: 0
     HPSkillCast: 1
+    Atk_Speed: 1
     Prefab: 900095
   - Name_KR: "\uB9C8\uBC95\uC0AC"
     Name_EN: Creep4_Wizard
@@ -234,6 +246,7 @@ MonoBehaviour:
     Skill1Code: 0
     Skill2Code: 0
     HPSkillCast: 1
+    Atk_Speed: 1
     Prefab: 900096
   - Name_KR: "\uAE30\uC0AC2"
     Name_EN: Creep5_Templar
@@ -251,6 +264,7 @@ MonoBehaviour:
     Skill1Code: 0
     Skill2Code: 0
     HPSkillCast: 1
+    Atk_Speed: 1
     Prefab: 900097
   - Name_KR: "\uAD81\uC218"
     Name_EN: Creep6_Bowman
@@ -268,6 +282,7 @@ MonoBehaviour:
     Skill1Code: 0
     Skill2Code: 0
     HPSkillCast: 1
+    Atk_Speed: 1
     Prefab: 900098
   - Name_KR: "\uC591\uC190\uAC80\uC0AC"
     Name_EN: Creep_Rogue
@@ -285,6 +300,7 @@ MonoBehaviour:
     Skill1Code: 0
     Skill2Code: 0
     HPSkillCast: 1
+    Atk_Speed: 1
     Prefab: 900099
   - Name_KR: "1\uAE30\uC0AC"
     Name_EN: Creep1_Knight
@@ -302,6 +318,7 @@ MonoBehaviour:
     Skill1Code: 0
     Skill2Code: 0
     HPSkillCast: 1
+    Atk_Speed: 1
     Prefab: 900094
   - Name_KR: "1\uB300\uAC80\uC0AC"
     Name_EN: Creep2_Fighter
@@ -319,6 +336,7 @@ MonoBehaviour:
     Skill1Code: 0
     Skill2Code: 0
     HPSkillCast: 1
+    Atk_Speed: 1
     Prefab: 900095
   - Name_KR: "1\uB9C8\uBC95\uC0AC"
     Name_EN: Creep4_Wizard
@@ -336,6 +354,7 @@ MonoBehaviour:
     Skill1Code: 0
     Skill2Code: 0
     HPSkillCast: 1
+    Atk_Speed: 1
     Prefab: 900096
   - Name_KR: "1\uAE30\uC0AC2"
     Name_EN: Creep5_Templar
@@ -353,6 +372,7 @@ MonoBehaviour:
     Skill1Code: 0
     Skill2Code: 0
     HPSkillCast: 1
+    Atk_Speed: 1
     Prefab: 900097
   - Name_KR: "1\uAD81\uC218"
     Name_EN: Creep6_Bowman
@@ -370,6 +390,7 @@ MonoBehaviour:
     Skill1Code: 0
     Skill2Code: 0
     HPSkillCast: 1
+    Atk_Speed: 1
     Prefab: 900098
   - Name_KR: "1\uC591\uC190\uAC80\uC0AC"
     Name_EN: Creep_Rogue
@@ -387,6 +408,7 @@ MonoBehaviour:
     Skill1Code: 0
     Skill2Code: 0
     HPSkillCast: 1
+    Atk_Speed: 1
     Prefab: 900099
   - Name_KR: "2\uAE30\uC0AC"
     Name_EN: Creep1_Knight
@@ -404,6 +426,7 @@ MonoBehaviour:
     Skill1Code: 0
     Skill2Code: 0
     HPSkillCast: 1
+    Atk_Speed: 1
     Prefab: 900094
   - Name_KR: "2\uB300\uAC80\uC0AC"
     Name_EN: Creep2_Fighter
@@ -421,6 +444,7 @@ MonoBehaviour:
     Skill1Code: 0
     Skill2Code: 0
     HPSkillCast: 1
+    Atk_Speed: 1
     Prefab: 900095
   - Name_KR: "2\uB9C8\uBC95\uC0AC"
     Name_EN: Creep4_Wizard
@@ -438,6 +462,7 @@ MonoBehaviour:
     Skill1Code: 0
     Skill2Code: 0
     HPSkillCast: 1
+    Atk_Speed: 1
     Prefab: 900096
   - Name_KR: "2\uAE30\uC0AC2"
     Name_EN: Creep5_Templar
@@ -455,6 +480,7 @@ MonoBehaviour:
     Skill1Code: 0
     Skill2Code: 0
     HPSkillCast: 1
+    Atk_Speed: 1
     Prefab: 900097
   - Name_KR: "2\uAD81\uC218"
     Name_EN: Creep6_Bowman
@@ -472,6 +498,7 @@ MonoBehaviour:
     Skill1Code: 0
     Skill2Code: 0
     HPSkillCast: 1
+    Atk_Speed: 1
     Prefab: 900098
   - Name_KR: "2\uC591\uC190\uAC80\uC0AC"
     Name_EN: Creep_Rogue
@@ -489,4 +516,5 @@ MonoBehaviour:
     Skill1Code: 0
     Skill2Code: 0
     HPSkillCast: 1
+    Atk_Speed: 1
     Prefab: 900099
