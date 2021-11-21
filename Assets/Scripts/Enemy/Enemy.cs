@@ -416,11 +416,10 @@ public class Enemy : MonoBehaviour
 			if (BuffApply[i * 3])
 			{
 				buff = new S_Buff(
+					BuffList[i].Name_KR + "_1",
 					BuffList[i].BuffType1,
 					BuffList[i].AddType1,
-					BuffList[i].BuffAmount1,
-					BuffList[i].BuffRand1,
-					BuffList[i].Summon1
+					BuffList[i].BuffAmount1
 					);
 
 				float BuffAmount = buff.BuffAmount;
@@ -471,11 +470,10 @@ public class Enemy : MonoBehaviour
 				if (BuffApply[i * 3 + 1])
 				{
 					buff = new S_Buff(
+						BuffList[i].Name_KR + "_2",
 						BuffList[i].BuffType2,
 						BuffList[i].AddType2,
-						BuffList[i].BuffAmount2,
-						BuffList[i].BuffRand2,
-						BuffList[i].Summon2
+						BuffList[i].BuffAmount2
 						);
 					BuffAmount = buff.BuffAmount;
 
@@ -519,11 +517,10 @@ public class Enemy : MonoBehaviour
 					if (BuffApply[i * 3 + 2])
 					{
 						buff = new S_Buff(
+							BuffList[i].Name_KR + "_3",
 							BuffList[i].BuffType3,
 							BuffList[i].AddType3,
-							BuffList[i].BuffAmount3,
-							BuffList[i].BuffRand3,
-							BuffList[i].Summon3
+							BuffList[i].BuffAmount3
 							);
 						BuffAmount = buff.BuffAmount;
 
@@ -579,11 +576,10 @@ public class Enemy : MonoBehaviour
 			if (BuffApply[i * 3])
 			{
 				buff = new S_Buff(
+					BuffList[i].Name_KR + "_1",
 					BuffList[i].BuffType1,
 					BuffList[i].AddType1,
-					BuffList[i].BuffAmount1,
-					BuffList[i].BuffRand1,
-					BuffList[i].Summon1
+					BuffList[i].BuffAmount1
 					);
 				float BuffAmount = buff.BuffAmount;
 				float Buff_Debufftime = BuffList[i].Duration;
@@ -616,11 +612,10 @@ public class Enemy : MonoBehaviour
 				if (BuffApply[i * 3 + 1])
 				{
 					buff = new S_Buff(
+						BuffList[i].Name_KR + "_2",
 						BuffList[i].BuffType2,
 						BuffList[i].AddType2,
-						BuffList[i].BuffAmount2,
-						BuffList[i].BuffRand2,
-						BuffList[i].Summon2
+						BuffList[i].BuffAmount2
 						);
 					BuffAmount = buff.BuffAmount;
 
@@ -639,11 +634,10 @@ public class Enemy : MonoBehaviour
 					if (BuffApply[i * 3 + 2])
 					{
 						buff = new S_Buff(
+							BuffList[i].Name_KR + "_3",
 							BuffList[i].BuffType3,
 							BuffList[i].AddType3,
-							BuffList[i].BuffAmount3,
-							BuffList[i].BuffRand3,
-							BuffList[i].Summon3
+							BuffList[i].BuffAmount3
 							);
 						BuffAmount = buff.BuffAmount;
 
@@ -714,11 +708,10 @@ public class Enemy : MonoBehaviour
 			if (BuffApply[i * 3])
 			{
 				buff = new S_Buff(
+					BuffList[i].Name_KR + "_1",
 					BuffList[i].BuffType1,
 					BuffList[i].AddType1,
-					BuffList[i].BuffAmount1,
-					BuffList[i].BuffRand1,
-					BuffList[i].Summon1
+					BuffList[i].BuffAmount1
 					);
 
 				float BuffAmount = buff.BuffAmount;
@@ -787,11 +780,10 @@ public class Enemy : MonoBehaviour
 				if (BuffApply[i * 3 + 1])
 				{
 					buff = new S_Buff(
+						BuffList[i].Name_KR + "_2",
 						BuffList[i].BuffType2,
 						BuffList[i].AddType2,
-						BuffList[i].BuffAmount2,
-						BuffList[i].BuffRand2,
-						BuffList[i].Summon2
+						BuffList[i].BuffAmount2
 						);
 					BuffAmount = buff.BuffAmount;
 
@@ -808,11 +800,10 @@ public class Enemy : MonoBehaviour
 					if (BuffApply[i * 3 + 2])
 					{
 						buff = new S_Buff(
+							BuffList[i].Name_KR + "_3",
 							BuffList[i].BuffType3,
 							BuffList[i].AddType3,
-							BuffList[i].BuffAmount3,
-							BuffList[i].BuffRand3,
-							BuffList[i].Summon3
+							BuffList[i].BuffAmount3
 							);
 						BuffAmount = buff.BuffAmount;
 
@@ -1028,7 +1019,7 @@ public class Enemy : MonoBehaviour
 
 	public void CallAttack()
 	{
-		m_EnemyInfo.Atk *= atkstatdata.Dmg;
+		m_EnemyInfo.Atk *= atkstatdata.Dmg_Percent;
 		enemyskillmanager.SpawnProjectileSkill(atkconditiondata.projectile_prefab, m_EnemyInfo.Atk, atkconditiondata, atkstatdata, AttackPivot);
 	}
 

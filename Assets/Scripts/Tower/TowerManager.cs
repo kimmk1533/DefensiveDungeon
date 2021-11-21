@@ -53,7 +53,7 @@ public class TowerManager : Singleton<TowerManager>
 		string key = GetData(code).Name_EN;
 		Tower spawn = M_TowerPool.GetPool(key).Spawn();
 		spawn.InitializeTower(code);
-		spawn.m_TowerInfo.IsOnInventory = true;
+		spawn.IsOnInventory = true;
 		m_TowerList.Add(spawn);
 		return spawn;
 	}
@@ -68,9 +68,9 @@ public class TowerManager : Singleton<TowerManager>
 		tower_pool.DeSpawn(tower);
 	}
 
-	public void AddTower(Tower tower, E_Direction dir)
+	public void AddTower(Tower tower)
 	{
-		m_DirTowerList[dir].Add(tower);
+		m_DirTowerList[tower.Direction].Add(tower);
 	}
 
 	public int GetSameTowerCount(int tower_code)

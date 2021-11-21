@@ -5,550 +5,260 @@ using UnityEngine;
 
 public class SynergyManager : Singleton<SynergyManager>
 {
-    public delegate void SynergyEventHandler();
-    public event SynergyEventHandler UpdateSynergyEndEvent;
+	public delegate void SynergyEventHandler();
+	public event SynergyEventHandler OnUpdateSynergyStartEvent;
+	public event SynergyEventHandler OnUpdateSynergyEndEvent;
 
-    protected Synergy_TableExcelLoader m_SynergyData;
+	protected Synergy_TableExcelLoader m_SynergyData;
 
-    // ½Ã³ÊÁö ÃÖ´ë ·©Å©
-    [SerializeField]
-    protected int m_MaxRank = 3;
-    // °ñµå Ãß°¡ ½Ã³ÊÁö¿¡ »ç¿ëµÉ Ãß°¡ °ñµå
-    protected int m_BonusGold;
-    public int BonusGold => m_BonusGold;
+	// ì‹œë„ˆì§€ ìµœëŒ€ ë­í¬
+	[SerializeField]
+	protected int m_MaxRank = 3;
+	// ê³¨ë“œ ì¶”ê°€ ì‹œë„ˆì§€ì— ì‚¬ìš©ë  ì¶”ê°€ ê³¨ë“œ
+	protected int m_BonusGold;
+	public int BonusGold => m_BonusGold;
 
-    // ¹æÇâº° ½Ã³ÊÁö ¸®½ºÆ®
-    protected Dictionary<E_Direction, List<Synergy_TableExcel>> m_Synergys = null;
-    // ¹æÇâº°, ½Ã³ÊÁö ÄÚµåº° Å¸¿ö °¹¼ö
-    protected Dictionary<E_Direction, Dictionary<int, int>> m_TowerCount = null;
+	// ë°©í–¥ë³„ ì‹œë„ˆì§€ ë¦¬ìŠ¤íŠ¸
+	protected Dictionary<E_Direction, List<Synergy_TableExcel>> m_Synergys = null;
+	// ë°©í–¥ë³„, ì‹œë„ˆì§€ ì½”ë“œë³„ íƒ€ì›Œ ê°¯ìˆ˜
+	protected Dictionary<E_Direction, Dictionary<int, int>> m_TowerCount = null;
 
-    #region ³»ºÎ ÇÁ·ÎÆÛÆ¼
-    protected TowerManager M_Tower => TowerManager.Instance;
-    protected EnemyManager M_Enemy => EnemyManager.Instance;
-    protected BuffManager M_Buff => BuffManager.Instance;
-    protected NodeManager M_Node => NodeManager.Instance;
-    protected DataTableManager M_DataTable => DataTableManager.Instance;
-    protected CombinationManager M_Combination => CombinationManager.Instance;
-    #endregion
+	#region ë‚´ë¶€ í”„ë¡œí¼í‹°
+	protected TowerManager M_Tower => TowerManager.Instance;
+	protected EnemyManager M_Enemy => EnemyManager.Instance;
+	protected BuffManager M_Buff => BuffManager.Instance;
+	protected NodeManager M_Node => NodeManager.Instance;
+	protected DataTableManager M_DataTable => DataTableManager.Instance;
+	protected CombinationManager M_Combination => CombinationManager.Instance;
+	#endregion
 
-    private void Awake()
-    {
-        m_SynergyData = M_DataTable.GetDataTable<Synergy_TableExcelLoader>();
+	#region ë‚´ë¶€ í•¨ìˆ˜
+	protected void LoadSynergyCode(Tower tower, ref Dictionary<int, List<Tower>> SynergyTowers)
+	{
+		// ì¤‘ë³µ ì²´í¬ìš©
+		bool flag;
+		// ì‹œë„ˆì§€ ì½”ë“œ
+		int code1 = tower.SynergyCode1;
+		int code2 = tower.SynergyCode2;
 
-        m_Synergys = new Dictionary<E_Direction, List<Synergy_TableExcel>>();
-        m_TowerCount = new Dictionary<E_Direction, Dictionary<int, int>>();
-        for (E_Direction i = 0; i < E_Direction.Max; ++i)
-        {
-            m_Synergys.Add(i, new List<Synergy_TableExcel>());
-            m_TowerCount.Add(i, new Dictionary<int, int>());
-        }
-    }
+		#region ì‹œë„ˆì§€1
+		// ì²« ì²´í¬ë©´ ë¦¬ìŠ¤íŠ¸ ì¶”ê°€
+		if (!SynergyTowers.ContainsKey(code1))
+		{
+			SynergyTowers[code1] = new List<Tower>();
+		}
 
-    private void Start()
-    {
-        M_Node.m_RotateEndEvent += UpdateSynergy;
-        M_Combination.OnCombinationCompleteEvent += UpdateSynergy_Combination;
-    }
+		// ì¤‘ë³µ íƒ€ì›Œ ì²´í¬
+		flag = false;
+		foreach (var item in SynergyTowers[code1])
+		{
+			if (item.TowerKind == tower.TowerKind)
+			{
+				flag = true;
+				break;
+			}
+		}
 
-    public Synergy_TableExcel GetData(int code, int rank = 1)
-    {
-        var datas = m_SynergyData.DataList.Where(item => item.Code == code).ToList();
-        Synergy_TableExcel synergy = datas.Where(item => item.Rank == rank).SingleOrDefault();
+		// ì¤‘ë³µ íƒ€ì›Œ ì—†ìœ¼ë©´ ì‹œë„ˆì§€ ë¦¬ìŠ¤íŠ¸ì— ì¶”ê°€
+		if (!flag)
+			SynergyTowers[code1].Add(tower);
+		#endregion
 
-        return synergy;
-    }
-    public List<Synergy_TableExcel> GetSynergyList(E_Direction dir)
-    {
-        return m_Synergys[dir];
-    }
+		#region ì‹œë„ˆì§€2
+		// ì²« ì²´í¬ë©´ ë¦¬ìŠ¤íŠ¸ ì¶”ê°€
+		if (!SynergyTowers.ContainsKey(code2))
+		{
+			SynergyTowers[code2] = new List<Tower>();
+		}
 
-    public void UpdateSynergy()
-    {
-        Debug.Log("½Ã³ÊÁö ¾÷µ¥ÀÌÆ®");
+		// ì¤‘ë³µ íƒ€ì›Œ ì²´í¬
+		flag = false;
+		foreach (var item in SynergyTowers[code2])
+		{
+			if (item.TowerKind == tower.TowerKind)
+			{
+				flag = true;
+				break;
+			}
+		}
 
-        // ½Ã³ÊÁö °ü¸® ¸®½ºÆ® ÃÊ±âÈ­
-        for (E_Direction i = 0; i < E_Direction.Max; ++i)
-        {
-            m_Synergys[i].Clear();
-        }
+		// ì¤‘ë³µ íƒ€ì›Œ ì—†ìœ¼ë©´ ì‹œë„ˆì§€ ë¦¬ìŠ¤íŠ¸ì— ì¶”ê°€
+		if (!flag)
+			SynergyTowers[code2].Add(tower);
+		#endregion
+	}
+	protected void UpdateSynergy_Dir(E_Direction dir)
+	{
+		List<Tower> towers = M_Tower.GetTowerList(dir);
 
-        // °ñµå Ãß°¡
-        m_BonusGold = 0;
+		if (towers.Count <= 0)
+			return;
 
-        for (E_Direction i = 0; i < E_Direction.Max; ++i)
-        {
-            UpdateSynergy(i);
-            m_Synergys[i] = m_Synergys[i]
-                .OrderByDescending(item => item.Rank)
-                //.OrderByDescending(item => m_TowerCount[i][item.Code])
-                .OrderBy(item => item.Code)
-                .ToList();
-        }
+		// ì‹œë„ˆì§€ ì½”ë“œ, ì‹œë„ˆì§€ ì ìš©ë  íƒ€ì›Œë“¤
+		Dictionary<int, List<Tower>> SynergyTowers = new Dictionary<int, List<Tower>>();
 
-        UpdateSynergyEndEvent?.Invoke();
-    }
-    public void UpdateSynergy_Combination(bool flag)
-    {
-        if (flag)
-        {
-            UpdateSynergy();
-        }
-    }
-    protected void LoadSynergyCode(Tower tower, ref Dictionary<int, List<Tower>> SynergyTowers)
-    {
-        // Áßº¹ Ã¼Å©¿ë
-        bool flag;
-        // ½Ã³ÊÁö ÄÚµå
-        int code1 = tower.SynergyCode1;
-        int code2 = tower.SynergyCode2;
+		// ì‹œë„ˆì§€ ì½”ë“œ ë¡œë“œ
+		for (int i = 0; i < towers.Count; ++i)
+		{
+			LoadSynergyCode(towers[i], ref SynergyTowers);
+		}
 
-        #region ½Ã³ÊÁö1
-        // Ã¹ Ã¼Å©¸é ¸®½ºÆ® Ãß°¡
-        if (!SynergyTowers.ContainsKey(code1))
-        {
-            SynergyTowers[code1] = new List<Tower>();
-        }
+		foreach (var item in SynergyTowers)
+		{
+			int Rank = m_MaxRank;
+			int TowerCount = item.Value.Count;
+			m_TowerCount[dir][item.Key] = TowerCount;
+			Synergy_TableExcel synergy;
 
-        // Áßº¹ Å¸¿ö Ã¼Å©
-        flag = false;
-        foreach (var item in SynergyTowers[code1])
-        {
-            if (item.TowerKind == tower.TowerKind)
-            {
-                flag = true;
-                break;
-            }
-        }
+			while (true)
+			{
+				do
+				{
+					synergy = GetData(item.Key, Rank--);
+				} while (synergy.Code == 0 && Rank > 0);
 
-        // Áßº¹ Å¸¿ö ¾øÀ¸¸é ½Ã³ÊÁö ¸®½ºÆ®¿¡ Ãß°¡
-        if (!flag)
-            SynergyTowers[code1].Add(tower);
-        #endregion
+				if (Rank < 0)
+					break;
 
-        #region ½Ã³ÊÁö2
-        // Ã¹ Ã¼Å©¸é ¸®½ºÆ® Ãß°¡
-        if (!SynergyTowers.ContainsKey(code2))
-        {
-            SynergyTowers[code2] = new List<Tower>();
-        }
+				// íƒ€ì›Œ ìˆ˜ê°€ í•„ìš” ìˆ˜ ì´ìƒì´ë©´
+				if (synergy.MemReq <= TowerCount)
+				{
+					if (synergy.EffectType1 == 0)
+						continue;
 
-        // Áßº¹ Å¸¿ö Ã¼Å©
-        flag = false;
-        foreach (var item in SynergyTowers[code2])
-        {
-            if (item.TowerKind == tower.TowerKind)
-            {
-                flag = true;
-                break;
-            }
-        }
+					// ì‹œë„ˆì§€ ê´€ë¦¬ ë¦¬ìŠ¤íŠ¸ì— ì¶”ê°€
+					m_Synergys[dir].Add(synergy);
 
-        // Áßº¹ Å¸¿ö ¾øÀ¸¸é ½Ã³ÊÁö ¸®½ºÆ®¿¡ Ãß°¡
-        if (!flag)
-            SynergyTowers[code2].Add(tower);
-        #endregion
-    }
-    protected void UpdateSynergy(E_Direction dir)
-    {
-        List<Tower> towers = M_Tower.GetTowerList(dir);
+					// ì‹œë„ˆì§€ ì ìš©í•  íƒ€ì›Œ ë¦¬ìŠ¤íŠ¸
+					List<Tower> towerList = null;
 
-        if (towers.Count <= 0)
-            return;
+					// ê°™ì€ ì‹œë„ˆì§€ íƒ€ì›Œë“¤ë§Œ
+					if (synergy.TargetMem == 1)
+					{
+						towerList = item.Value;
+					}
+					// í˜„ì¬ ë¼ì¸ íƒ€ì›Œ ì „ë¶€
+					else if (synergy.TargetMem == 2)
+					{
+						towerList = M_Tower.GetTowerList(dir);
+					}
 
-        // ½Ã³ÊÁö ÃÊ±âÈ­
-        for (int i = 0; i < towers.Count; ++i)
-        {
-            // ¹öÇÁ
-            towers[i].m_TowerInfo.BuffList.Clear();
+					// ì‹œë„ˆì§€ ì ìš©
+					for (int i = 0; i < towerList.Count; ++i)
+					{
+						towerList[i].AddSynergy(synergy);
+					}
 
-            // °ø°İ Å¸ÀÔ º¯°æ
-            towers[i].m_TowerInfo.Synergy_Atk_type = E_AttackType.None;
+					// ë³´ë„ˆìŠ¤ ê³¨ë“œ
+					if (synergy.EffectType1 == (int)E_SynergyEffectType.AddGold)
+						m_BonusGold += synergy.EffectReq1;
+					if (synergy.EffectType2 == (int)E_SynergyEffectType.AddGold)
+						m_BonusGold += synergy.EffectReq2;
+					break;
+				}
+			}
+		}
+	}
+	#endregion
+	#region ì™¸ë¶€ í•¨ìˆ˜
+	public Synergy_TableExcel GetData(int code, int rank = 1)
+	{
+		var datas = m_SynergyData.DataList.Where(item => item.Code == code).ToList();
+		Synergy_TableExcel synergy = datas.Where(item => item.Rank == rank).SingleOrDefault();
 
-            // ¹ö¼­Ä¿
-            towers[i].m_TowerInfo.Berserker = false;
-            towers[i].m_TowerInfo.BerserkerStack = 0;
-            towers[i].m_TowerInfo.BerserkerMaxStack = 0;
-            towers[i].m_TowerInfo.BerserkerBuffList.Clear();
-        }
+		return synergy;
+	}
+	public List<Synergy_TableExcel> GetSynergyList(E_Direction dir)
+	{
+		return m_Synergys[dir];
+	}
 
-        // ½Ã³ÊÁö ÄÚµå, ½Ã³ÊÁö Àû¿ëµÉ Å¸¿öµé
-        Dictionary<int, List<Tower>> SynergyTowers = new Dictionary<int, List<Tower>>();
+	public void UpdateSynergy()
+	{
+		Debug.Log("ì‹œë„ˆì§€ ì—…ë°ì´íŠ¸");
 
-        // ½Ã³ÊÁö ÄÚµå ·Îµå
-        for (int i = 0; i < towers.Count; ++i)
-        {
-            LoadSynergyCode(towers[i], ref SynergyTowers);
-        }
+		// ì‹œë„ˆì§€ ê´€ë¦¬ ë¦¬ìŠ¤íŠ¸ ì´ˆê¸°í™”
+		for (E_Direction i = 0; i < E_Direction.Max; ++i)
+		{
+			m_Synergys[i].Clear();
+		}
 
-        foreach (var item in SynergyTowers)
-        {
-            int Rank = m_MaxRank;
-            int TowerCount = item.Value.Count;
-            m_TowerCount[dir][item.Key] = TowerCount;
-            Synergy_TableExcel data;
-            S_SynergyEffect effect;
-            BuffCC_TableExcel buffData;
+		// ê³¨ë“œ ì¶”ê°€
+		m_BonusGold = 0;
 
-            while (true)
-            {
-                do
-                {
-                    data = GetData(item.Key, Rank--);
-                } while (data.Code == 0 && Rank > 0);
+		OnUpdateSynergyStartEvent?.Invoke();
 
-                if (Rank < 0)
-                    break;
+		for (E_Direction i = 0; i < E_Direction.Max; ++i)
+		{
+			UpdateSynergy_Dir(i);
+			m_Synergys[i] = m_Synergys[i]
+				.OrderByDescending(item => item.Rank)
+				//.OrderByDescending(item => m_TowerCount[i][item.Code])
+				.OrderBy(item => item.Code)
+				.ToList();
+		}
 
-                if (data.MemReq <= TowerCount)
-                {
-                    m_Synergys[dir].Add(data);
+		OnUpdateSynergyEndEvent?.Invoke();
+	}
+	#endregion
+	#region ìœ ë‹ˆí‹° ì½œë°± í•¨ìˆ˜
+	private void Awake()
+	{
+		m_SynergyData = M_DataTable.GetDataTable<Synergy_TableExcelLoader>();
 
-                    if (data.EffectType1 != 0)
-                    {
-                        effect = new S_SynergyEffect(
-                            data.EffectType1,
-                            data.EffectAmount1,
-                            data.EffectCode1,
-                            data.EffectChange1,
-                            data.EffectReq1,
-                            data.EffectRand1
-                            );
-                        buffData = M_Buff.GetData(effect.EffectCode);
+		m_Synergys = new Dictionary<E_Direction, List<Synergy_TableExcel>>();
+		m_TowerCount = new Dictionary<E_Direction, Dictionary<int, int>>();
+		for (E_Direction i = 0; i < E_Direction.Max; ++i)
+		{
+			m_Synergys.Add(i, new List<Synergy_TableExcel>());
+			m_TowerCount.Add(i, new Dictionary<int, int>());
+		}
+	}
 
-                        // ½Ã³ÊÁö1 Àû¿ë
-                        switch (effect.EffectType)
-                        {
-                            case E_SynergyEffectType.Buff:
-                                {
-                                    // Å¸¿ö ¹öÇÁ
-                                    if (effect.EffectAmount == E_SynergyEffectAmount.Tower)
-                                    {
-                                        // ½Ã³ÊÁö Àû¿ëÇÒ Å¸¿ö ¸®½ºÆ®
-                                        List<Tower> towerList = null;
-
-                                        // °°Àº ½Ã³ÊÁö Å¸¿öµé¸¸
-                                        if (data.TargetMem == 1)
-                                        {
-                                            towerList = item.Value;
-                                        }
-                                        // ÇöÀç ¶óÀÎ Å¸¿ö ÀüºÎ
-                                        else if (data.TargetMem == 2)
-                                        {
-                                            towerList = M_Tower.GetTowerList(dir);
-                                        }
-
-                                        // ½Ã³ÊÁö Àû¿ë
-                                        for (int i = 0; i < towerList.Count; ++i)
-                                        {
-                                            towerList[i].m_TowerInfo.BuffList.Add(buffData);
-                                        }
-                                    }
-                                    // ¸ó½ºÅÍ µğ¹öÇÁ
-                                    else if (effect.EffectAmount == E_SynergyEffectAmount.Enemy)
-                                    {
-                                        // ½Ã³ÊÁö Àû¿ëÇÒ Àû ¸®½ºÆ®
-                                        List<Enemy> enemyList = null;
-
-                                        // °°Àº ¶óÀÎ Àû
-                                        if (data.TargetMem == 1)
-                                        {
-                                            enemyList = M_Enemy.GetEnemyList(dir);
-                                        }
-                                        // ÀüÃ¼ ¶óÀÎ Àû
-                                        if (data.TargetMem == 2)
-                                        {
-                                            enemyList = M_Enemy.GetEnemyList();
-                                        }
-
-                                        // ½Ã³ÊÁö Àû¿ë
-                                        for (int i = 0; i < enemyList.Count; ++i)
-                                        {
-                                            enemyList[i].BuffList.Add(buffData);
-                                        }
-                                    }
-                                    // ¸¶¿Õ ¹öÇÁ
-                                    else if (effect.EffectAmount == E_SynergyEffectAmount.Devil)
-                                    {
-
-                                    }
-                                }
-                                break;
-                            case E_SynergyEffectType.ChangeAtkType:
-                                {
-                                    // Å¸¿ö
-                                    if (effect.EffectAmount == E_SynergyEffectAmount.Tower)
-                                    {
-                                        // ½Ã³ÊÁö Àû¿ëÇÒ Å¸¿ö ¸®½ºÆ®
-                                        List<Tower> towerList = null;
-
-                                        // °°Àº ½Ã³ÊÁö Å¸¿öµé¸¸
-                                        if (data.TargetMem == 1)
-                                        {
-                                            towerList = item.Value;
-                                        }
-                                        // ÇöÀç ¶óÀÎ Å¸¿ö ÀüºÎ
-                                        else if (data.TargetMem == 2)
-                                        {
-                                            towerList = towers;
-                                        }
-
-                                        // ½Ã³ÊÁö Àû¿ë
-                                        for (int i = 0; i < towerList.Count; ++i)
-                                        {
-                                            towerList[i].m_TowerInfo.Synergy_Atk_type = effect.EffectChange;
-                                            towerList[i].m_TowerInfo.BounceCount = effect.EffectReq;
-                                        }
-                                    }
-                                }
-                                break;
-                            case E_SynergyEffectType.ReduceCooldown:
-                                {
-                                    // ¸¶¿Õ
-                                    if (effect.EffectAmount == E_SynergyEffectAmount.Devil)
-                                    {
-
-                                    }
-                                }
-                                break;
-                            case E_SynergyEffectType.Berserker:
-                                {
-                                    // Å¸¿ö
-                                    if (effect.EffectAmount == E_SynergyEffectAmount.Tower)
-                                    {
-                                        // ½Ã³ÊÁö Àû¿ëÇÒ Å¸¿ö ¸®½ºÆ®
-                                        List<Tower> towerList = null;
-
-                                        // °°Àº ½Ã³ÊÁö Å¸¿öµé¸¸
-                                        if (data.TargetMem == 1)
-                                        {
-                                            towerList = item.Value;
-                                        }
-                                        // ÇöÀç ¶óÀÎ Å¸¿ö ÀüºÎ
-                                        else if (data.TargetMem == 2)
-                                        {
-                                            towerList = towers;
-                                        }
-
-                                        // ½Ã³ÊÁö Àû¿ë
-                                        for (int i = 0; i < towerList.Count; ++i)
-                                        {
-                                            towerList[i].m_TowerInfo.Berserker = true;
-                                            towerList[i].m_TowerInfo.BerserkerMaxStack = effect.EffectReq;
-                                            towerList[i].m_TowerInfo.BerserkerBuffList.Add(buffData);
-                                        }
-                                    }
-                                }
-                                break;
-                            case E_SynergyEffectType.AddGold:
-                                {
-                                    m_BonusGold += effect.EffectReq;
-                                }
-                                break;
-                        }
-                    }
-                    if (data.EffectType2 != 0)
-                    {
-                        effect = new S_SynergyEffect(
-                            data.EffectType2,
-                            data.EffectAmount2,
-                            data.EffectCode2,
-                            data.EffectChange2,
-                            data.EffectReq2,
-                            data.EffectRand2
-                            );
-                        buffData = M_Buff.GetData(effect.EffectCode);
-
-                        // ½Ã³ÊÁö2 Àû¿ë
-                        switch (effect.EffectType)
-                        {
-                            case E_SynergyEffectType.Buff:
-                                {
-                                    // Å¸¿ö ¹öÇÁ
-                                    if (effect.EffectAmount == E_SynergyEffectAmount.Tower)
-                                    {
-                                        // ½Ã³ÊÁö Àû¿ëÇÒ Å¸¿ö ¸®½ºÆ®
-                                        List<Tower> towerList = null;
-
-                                        // °°Àº ½Ã³ÊÁö Å¸¿öµé¸¸
-                                        if (data.TargetMem == 1)
-                                        {
-                                            towerList = item.Value;
-                                        }
-                                        // ÇöÀç ¶óÀÎ Å¸¿ö ÀüºÎ
-                                        else if (data.TargetMem == 2)
-                                        {
-                                            towerList = towers;
-                                        }
-
-                                        // ½Ã³ÊÁö Àû¿ë
-                                        for (int i = 0; i < towerList.Count; ++i)
-                                        {
-                                            towerList[i].m_TowerInfo.BuffList.Add(buffData);
-                                        }
-                                    }
-                                    // ¸ó½ºÅÍ µğ¹öÇÁ
-                                    else if (effect.EffectAmount == E_SynergyEffectAmount.Enemy)
-                                    {
-                                        // ½Ã³ÊÁö Àû¿ëÇÒ Àû ¸®½ºÆ®
-                                        List<Enemy> enemyList = null;
-
-                                        // °°Àº ¶óÀÎ Àû
-                                        if (data.TargetMem == 1)
-                                        {
-                                            enemyList = M_Enemy.GetEnemyList(dir);
-                                        }
-                                        // ÀüÃ¼ ¶óÀÎ Àû
-                                        if (data.TargetMem == 2)
-                                        {
-                                            enemyList = M_Enemy.GetEnemyList();
-                                        }
-
-                                        // ½Ã³ÊÁö Àû¿ë
-                                        for (int i = 0; i < enemyList.Count; ++i)
-                                        {
-                                            enemyList[i].BuffList.Add(buffData);
-                                        }
-                                    }
-                                    // ¸¶¿Õ ¹öÇÁ
-                                    else if (effect.EffectAmount == E_SynergyEffectAmount.Devil)
-                                    {
-
-                                    }
-                                }
-                                break;
-                            case E_SynergyEffectType.ChangeAtkType:
-                                {
-                                    // Å¸¿ö
-                                    if (effect.EffectAmount == E_SynergyEffectAmount.Tower)
-                                    {
-                                        // ½Ã³ÊÁö Àû¿ëÇÒ Å¸¿ö ¸®½ºÆ®
-                                        List<Tower> towerList = null;
-
-                                        // °°Àº ½Ã³ÊÁö Å¸¿öµé¸¸
-                                        if (data.TargetMem == 1)
-                                        {
-                                            towerList = item.Value;
-                                        }
-                                        // ÇöÀç ¶óÀÎ Å¸¿ö ÀüºÎ
-                                        else if (data.TargetMem == 2)
-                                        {
-                                            towerList = towers;
-                                        }
-
-                                        // ½Ã³ÊÁö Àû¿ë
-                                        for (int i = 0; i < towerList.Count; ++i)
-                                        {
-                                            towerList[i].m_TowerInfo.Synergy_Atk_type = effect.EffectChange;
-                                        }
-                                    }
-                                }
-                                break;
-                            case E_SynergyEffectType.ReduceCooldown:
-                                {
-                                    // Å¸¿ö
-                                    if (effect.EffectAmount == E_SynergyEffectAmount.Tower)
-                                    {
-                                        // ½Ã³ÊÁö Àû¿ëÇÒ Å¸¿ö ¸®½ºÆ®
-                                        List<Tower> towerList = null;
-
-                                        // °°Àº ½Ã³ÊÁö Å¸¿öµé¸¸
-                                        if (data.TargetMem == 1)
-                                        {
-                                            towerList = item.Value;
-                                        }
-                                        // ÇöÀç ¶óÀÎ Å¸¿ö ÀüºÎ
-                                        else if (data.TargetMem == 2)
-                                        {
-                                            towerList = towers;
-                                        }
-
-                                        // ½Ã³ÊÁö Àû¿ë
-                                        for (int i = 0; i < towerList.Count; ++i)
-                                        {
-                                            //towerList[i].m_TowerInfo.Synergy_Atk_type = effect.EffectChange;
-                                        }
-                                    }
-                                }
-                                break;
-                            case E_SynergyEffectType.Berserker:
-                                {
-                                    // Å¸¿ö
-                                    if (effect.EffectAmount == E_SynergyEffectAmount.Tower)
-                                    {
-                                        // ½Ã³ÊÁö Àû¿ëÇÒ Å¸¿ö ¸®½ºÆ®
-                                        List<Tower> towerList = null;
-
-                                        // °°Àº ½Ã³ÊÁö Å¸¿öµé¸¸
-                                        if (data.TargetMem == 1)
-                                        {
-                                            towerList = item.Value;
-                                        }
-                                        // ÇöÀç ¶óÀÎ Å¸¿ö ÀüºÎ
-                                        else if (data.TargetMem == 2)
-                                        {
-                                            towerList = towers;
-                                        }
-
-                                        // ½Ã³ÊÁö Àû¿ë
-                                        for (int i = 0; i < towerList.Count; ++i)
-                                        {
-                                            towerList[i].m_TowerInfo.Berserker = true;
-                                            towerList[i].m_TowerInfo.BerserkerMaxStack = effect.EffectReq;
-                                            towerList[i].m_TowerInfo.BerserkerBuffList.Add(buffData);
-                                        }
-                                    }
-                                }
-                                break;
-                            case E_SynergyEffectType.AddGold:
-                                {
-                                    m_BonusGold += effect.EffectReq;
-                                }
-                                break;
-                        }
-                    }
-                    break;
-                }
-            }
-        }
-    }
+	private void Start()
+	{
+		M_Node.m_RotateEndEvent += UpdateSynergy;
+		M_Combination.OnCombinationDespawnObjEvent += UpdateSynergy;
+	}
+	#endregion
 }
 
 public enum E_SynergyEffectType
 {
-    None,
+	None,
 
-    Buff,
-    ChangeAtkType,
-    ReduceCooldown,
-    Berserker,
-    AddGold
+	Buff,
+	ChangeAtkType,
+	ReduceCooldown,
+	Berserker,
+	AddGold
 }
 public enum E_SynergyEffectAmount
 {
-    None,
+	None,
 
-    Tower,
-    Enemy,
-    Devil
+	Tower,
+	Enemy,
+	Devil
 }
 
-[System.Serializable]
-public struct S_SynergyEffect
-{
-    public E_SynergyEffectType EffectType;
-    public E_SynergyEffectAmount EffectAmount;
-    public int EffectCode;
-    public E_AttackType EffectChange;
-    public int EffectReq;
-    public float EffectRand;
+//[System.Serializable]
+//public struct S_SynergyEffect
+//{
+//	public E_SynergyEffectType EffectType;
+//	public E_SynergyEffectAmount EffectAmount;
+//	public int EffectCode;
+//	public E_AttackType EffectChange;
+//	public int EffectReq;
+//	public float EffectRand;
 
-    public S_SynergyEffect(int effectType, int effectAmount, int effectCode, int effectChange, int effectReq, float effectRand)
-    {
-        EffectType = (E_SynergyEffectType)effectType;
-        EffectAmount = (E_SynergyEffectAmount)effectAmount;
-        EffectCode = effectCode;
-        EffectChange = (E_AttackType)effectChange;
-        EffectReq = effectReq;
-        EffectRand = effectRand;
-    }
-}
+//	public S_SynergyEffect(int effectType, int effectAmount, int effectCode, int effectChange, int effectReq, float effectRand)
+//	{
+//		EffectType = (E_SynergyEffectType)effectType;
+//		EffectAmount = (E_SynergyEffectAmount)effectAmount;
+//		EffectCode = effectCode;
+//		EffectChange = (E_AttackType)effectChange;
+//		EffectReq = effectReq;
+//		EffectRand = effectRand;
+//	}
+//}

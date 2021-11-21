@@ -39,14 +39,14 @@ public class Node : MonoBehaviour
 			m_Tower.transform.localPosition = transform.Find("Quad").transform.localPosition + Vector3.up * 0.01f;
 			m_Tower.transform.localEulerAngles = Vector3.zero;
 			//m_Tower.transform.localScale = Vector3.one;
-			m_Tower.m_TowerInfo.Direction = m_Direction;
-			m_Tower.m_TowerInfo.LookingDir = m_Tower.transform.forward;
+			m_Tower.Direction = m_Direction;
+			m_Tower.LookingDir = m_Tower.transform.forward;
 
-			m_Tower.m_TowerInfo.IsOnInventory = false;
-			m_Tower.m_TowerInfo.CanAttack_Node = true;
-			m_Tower.m_TowerInfo.CanAttack_Skill = true;
+			m_Tower.IsOnInventory = false;
+			m_Tower.CanAttack_Node = true;
+			m_Tower.CanAttack_Skill = true;
 
-			M_Tower.AddTower(tower, m_Tower.m_TowerInfo.Direction);
+			M_Tower.AddTower(tower);
 			M_Synergy.UpdateSynergy();
 		}
 	}

@@ -217,7 +217,7 @@ public class ShopManager : Singleton<ShopManager>
         var towers = TowerManager.Instance.GetTowers(tower_code);
         for (int i = 0; i < 3; i++)
         {
-            if (towers[i].m_TowerInfo.IsOnInventory)
+            if (towers[i].IsOnInventory)
                 TowerManager.Instance.DespawnTower(towers[i]);
         }
 

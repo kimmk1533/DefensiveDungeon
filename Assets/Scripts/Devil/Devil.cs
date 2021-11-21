@@ -322,22 +322,21 @@ public abstract class Devil : MonoBehaviour
 
 	public void CallAttack()
 	{
-		if (null == m_Target_Default)
-		{
-			return;
-		}
-
 		// 내부 데이터 정리
 		m_DevilInfo.AttackSpeed_Default = m_DevilInfo.Stat_Default.CoolTime;
+
+		if ((E_TargetType)m_DevilInfo.Condition_Default.Target_type != E_TargetType.TileTarget &&
+			null == m_Target_Default)
+			return;
 
 		// 기본 스킬 데이터 불러오기
 		SkillCondition_TableExcel conditionData = m_DevilInfo.Condition_Default;
 		SkillStat_TableExcel statData = m_DevilInfo.Stat_Default;
 
 		// 기본 대미지 설정
-		statData.Dmg *= m_DevilInfo_Excel.Atk;
-		statData.Dmg += statData.Dmg_plus;
+		statData.Dmg_Fix += m_DevilInfo_Excel.Atk;
 
+		#region 크리티컬
 		// 크리티컬 확률
 		float CritRate = m_DevilInfo_Excel.Crit_rate;
 		// 크리티컬 배율
@@ -348,35 +347,56 @@ public abstract class Devil : MonoBehaviour
 		bool CritApply = CritRand <= CritRate;
 		if (CritApply)
 		{
-			statData.Dmg *= CritDmg;
+			statData.Dmg_Percent *= CritDmg;
 		}
+		#endregion
 
 		// 기본 스킬 투사체 생성
 		int DefaultSkillCode = conditionData.projectile_prefab;
+
+		void Attack(Enemy target)
+		{
+			Skill skill = M_Skill.SpawnProjectileSkill(DefaultSkillCode);
+
+			switch ((E_FireType)conditionData.Atk_pick)
+			{
+				case E_FireType.Select_point:
+					break;
+				case E_FireType.Select_self:
+					skill.transform.position = m_DevilInfo.AttackPivot.position;
+					break;
+				case E_FireType.Select_enemy:
+					skill.transform.position = target.HitPivot.position;
+					break;
+			}
+
+			skill.enabled = true;
+			skill.gameObject.SetActive(true);
+
+			// 기본 스킬 데이터 설정
+			skill.InitializeSkill(target, conditionData, statData);
+		}
+
 		if ((E_TargetType)m_DevilInfo.Condition_Default.Target_type == E_TargetType.TileTarget)
 		{
 			List<Enemy> EnemyList = M_Enemy.GetEnemyList();
 
 			for (int i = 0; i < EnemyList.Count; ++i)
 			{
-				Skill DefaultSkill = M_Skill.SpawnProjectileSkill(DefaultSkillCode);
-				DefaultSkill.transform.position = m_DevilInfo.AttackPivot.position;
-				DefaultSkill.enabled = true;
-				DefaultSkill.gameObject.SetActive(true);
-
-				// 기본 스킬 데이터 설정
-				DefaultSkill.InitializeSkill(EnemyList[i], conditionData, statData);
+				Attack(EnemyList[i]);
 			}
 		}
 		else
 		{
-			Skill DefaultSkill = M_Skill.SpawnProjectileSkill(DefaultSkillCode);
-			DefaultSkill.transform.position = m_DevilInfo.AttackPivot.position;
-			DefaultSkill.enabled = true;
-			DefaultSkill.gameObject.SetActive(true);
+			Attack(m_Target_Default);
+		}
 
-			// 기본 스킬 데이터 설정
-			DefaultSkill.InitializeSkill(m_Target_Default, conditionData, statData);
+		// 이펙트 생성
+		Effect atkEffect = M_Effect.SpawnEffect(conditionData.Atk_prefab);
+		if (null != atkEffect)
+		{
+			atkEffect.transform.position = m_DevilInfo.AttackPivot.position;
+			atkEffect.gameObject.SetActive(true);
 		}
 	}
 	public void CallDie()

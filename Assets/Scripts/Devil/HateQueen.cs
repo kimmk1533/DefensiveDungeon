@@ -16,41 +16,11 @@ public class HateQueen : Devil
 
 	protected IEnumerator SK001(DevilSkillArg arg)
 	{
-		BuffCC_TableExcel buffData = M_Buff.GetData(arg.skillData.m_StatData.Buff_CC);
-		List<Tower> towerList = M_Tower.GetTowerList(arg.dir);
-
-		foreach (var item in towerList)
-		{
-			item.m_TowerInfo.DevilSkillBuffList.Add(buffData);
-		}
-
-		yield return new WaitForSeconds(buffData.Duration);
-
-		foreach (var item in towerList)
-		{
-			item.m_TowerInfo.DevilSkillBuffList.Remove(buffData);
-		}
+		yield return null;
 	}
 	protected IEnumerator SK002(DevilSkillArg arg)
 	{
-		BuffCC_TableExcel buffData = M_Buff.GetData(arg.skillData.m_StatData.Buff_CC);
-
-		for (E_Direction i = 0; i < E_Direction.Max; ++i)
-		{
-			List<Tower> towerList = M_Tower.GetTowerList(i);
-
-			foreach (var item in towerList)
-			{
-				item.m_TowerInfo.DevilSkillBuffList.Add(buffData);
-			}
-
-			yield return new WaitForSeconds(buffData.Duration);
-
-			foreach (var item in towerList)
-			{
-				item.m_TowerInfo.DevilSkillBuffList.Remove(buffData);
-			}
-		}
+		yield return null;
 	}
 	#endregion
 

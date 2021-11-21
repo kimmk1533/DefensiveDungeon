@@ -9,8 +9,8 @@ public struct SkillStat_TableExcel
 	public int Code;
 	public int Max_Charge;
 	public float CoolTime;
-	public float Dmg;
-	public float Dmg_plus;
+	public float Dmg_Percent;
+	public float Dmg_Fix;
 	public float Range;
 	public float Speed;
 	public int Target_num;
@@ -43,8 +43,8 @@ public class  SkillStat_TableExcelLoader : ScriptableObject
 		data.Code = int.Parse(strs[idx++]);
 		data.Max_Charge = int.Parse(strs[idx++]);
 		data.CoolTime = float.Parse(strs[idx++]);
-		data.Dmg = float.Parse(strs[idx++]);
-		data.Dmg_plus = float.Parse(strs[idx++]);
+		data.Dmg_Percent = float.Parse(strs[idx++]);
+		data.Dmg_Fix = float.Parse(strs[idx++]);
 		data.Range = float.Parse(strs[idx++]);
 		data.Speed = float.Parse(strs[idx++]);
 		data.Target_num = int.Parse(strs[idx++]);

@@ -67,7 +67,7 @@ public class SynergyLineSlot : MonoBehaviour
         m_extend_root_panel.gameObject.SetActive(false);
 
         // link event               
-        SynergyManager.Instance.UpdateSynergyEndEvent += __OnSynergyUpdated;
+        SynergyManager.Instance.OnUpdateSynergyEndEvent += __OnSynergyUpdated;
     }
 
 

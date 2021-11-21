@@ -492,9 +492,9 @@ public class NodeManager : Singleton<NodeManager>
 			{
 				if (null != item.m_Tower)
 				{
-					m_LookingDir.transform.position = item.m_Tower.m_TowerInfo.LookingDir;
+					m_LookingDir.transform.position = item.m_Tower.LookingDir;
 					m_LookingDir.transform.RotateAround(m_Center.transform.position, Vector3.up, angle);
-					item.m_Tower.m_TowerInfo.LookingDir = m_LookingDir.transform.position;
+					item.m_Tower.LookingDir = m_LookingDir.transform.position;
 				}
 			}
 		}
