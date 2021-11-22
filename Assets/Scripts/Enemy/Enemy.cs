@@ -141,6 +141,7 @@ public class Enemy : MonoBehaviour
 	public void FinializeEnemy()
 	{
 		M_EnemyHPBar.DespawnHPBar(m_HPBar);
+		m_HPBar = null;
 	}
 
 	// 대미지
