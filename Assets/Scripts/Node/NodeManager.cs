@@ -6,6 +6,8 @@ using UnityEngine;
 public class NodeManager : Singleton<NodeManager>
 {
 	public delegate void NodeEventHandler();
+	// 노드 회전 시작시 호출되는 이벤트
+	public event NodeEventHandler m_RotateStartEvent;
 	// 노드 회전 종료시 호출되는 이벤트
 	public event NodeEventHandler m_RotateEndEvent;
 
@@ -103,6 +105,9 @@ public class NodeManager : Singleton<NodeManager>
 		m_LookingDir = new GameObject();
 		m_LookingDir.transform.SetParent(transform);
 		m_LookingDir.SetActive(false);
+
+		// 타워 타겟 업데이트
+		m_RotateStartEvent += UpdateTowerTarget;
 	}
 
 	private void Update()
@@ -288,8 +293,8 @@ public class NodeManager : Singleton<NodeManager>
 		// 회전할 각도
 		float angle;
 
-		// 타워 타겟 업데이트
-		UpdateTowerTarget();
+		// 회전 시작 이벤트 호출
+		m_RotateStartEvent?.Invoke();
 
 		// 예외 처리 (회전에 걸리는 시간이 0이하인 경우)
 		if (m_Duration <= 0f)
@@ -310,7 +315,7 @@ public class NodeManager : Singleton<NodeManager>
 			// 노드 업데이트
 			UpdateNode(clockwise);
 
-			// 타워 공격 여부 설정
+			// 타워 공격 가능 여부 설정
 			UpdateTowerAttack(true);
 
 			// 회전 여부 설정
@@ -323,7 +328,7 @@ public class NodeManager : Singleton<NodeManager>
 			yield break;
 		}
 
-		// 타워 공격 여부 설정
+		// 타워 공격 가능 여부 설정
 		UpdateTowerAttack(false);
 
 		// 위로 이동
@@ -401,7 +406,7 @@ public class NodeManager : Singleton<NodeManager>
 		// 노드 업데이트
 		UpdateNode(clockwise);
 
-		// 타워 공격 여부 설정
+		// 타워 공격 가능 여부 설정
 		UpdateTowerAttack(true);
 
 		// 회전 여부 설정
@@ -510,10 +515,10 @@ public class NodeManager : Singleton<NodeManager>
 			}
 		}
 	}
-	// 타워 공격 여부 업데이트
+	// 타워 공격 가능 여부 업데이트
 	protected void UpdateTowerAttack(bool flag)
 	{
-		// 타워 공격 여부 업데이트
+		// 타워 공격 가능 여부 업데이트
 		for (E_Direction i = 0; i < E_Direction.Max; ++i)
 		{
 			foreach (var item in m_NodeList[StandardNodeType][i])

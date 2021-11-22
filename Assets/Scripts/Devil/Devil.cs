@@ -160,6 +160,7 @@ public abstract class Devil : MonoBehaviour
 			m_AttackRange_Default.Initialize();
 		}
 		m_AttackRange_Default.Range = m_DevilInfo.Stat_Default.Range;
+		m_AttackRange_Default.CanFindTarget = true;
 		#endregion
 
 		#region 마왕 스킬 정리
@@ -292,7 +293,6 @@ public abstract class Devil : MonoBehaviour
 
 	#endregion
 	#region 외부 함수
-
 	// 스킬01 쿨타임 감소
 	public void ReduceSkill01Cooldown(float time)
 	{

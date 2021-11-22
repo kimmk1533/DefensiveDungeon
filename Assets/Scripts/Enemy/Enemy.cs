@@ -206,13 +206,13 @@ public class Enemy : MonoBehaviour
 		//벽이나 중간에 장애물이 있다면 바꿔야함
 		if (m_WayPoint.isLast)
 		{
-			float Distance = Vector3.Distance(transform.position, new Vector3(0f, 0f, 0f));
-			
+			transform.LookAt(Vector3.zero);
+
+			float Distance = Vector3.Distance(transform.position, Vector3.zero);
+
 			//거리 안에 있다면
 			if (Distance <= m_EnemyInfo.Stat_Default.Range)
 			{
-				transform.LookAt(Vector3.zero);
-
 				if (m_EnemyInfo.AttackTimer_Default >= m_EnemyInfo.Stat_Default.CoolTime)
 				{
 					m_Animator.SetTrigger("Attack");

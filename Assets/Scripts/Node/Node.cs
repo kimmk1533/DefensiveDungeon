@@ -33,13 +33,14 @@ public class Node : MonoBehaviour
 
 		if (E_NodeType.None != m_NodeType)
 		{
+			m_Tower.Direction = m_Direction;
+
 			m_Tower.transform.SetParent(transform);
 			m_Tower.gameObject.SetActive(true);
 
 			m_Tower.transform.localPosition = transform.Find("Quad").transform.localPosition + Vector3.up * 0.01f;
 			m_Tower.transform.localEulerAngles = Vector3.zero;
 			//m_Tower.transform.localScale = Vector3.one;
-			m_Tower.Direction = m_Direction;
 			m_Tower.LookingDir = m_Tower.transform.forward;
 
 			m_Tower.IsOnInventory = false;

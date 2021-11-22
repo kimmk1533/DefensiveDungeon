@@ -9,6 +9,11 @@ public class AttackRange : MonoBehaviour
 	[SerializeField]
 	protected List<Enemy> m_TargetList;
 
+	[SerializeField]
+	protected E_Direction m_Direction;
+	[SerializeField]
+	protected bool m_CanFindTarget;
+
 	#region 내부 컴포넌트
 	protected SphereCollider m_RangeCollider;
 	#endregion
@@ -29,6 +34,8 @@ public class AttackRange : MonoBehaviour
 	#region 외부 프로퍼티
 	public List<Enemy> TargetList => m_TargetList;
 	public float Range { get => RangeCollider.radius; set => RangeCollider.radius = value; }
+	public E_Direction Direction { get => m_Direction; set => m_Direction = value; }
+	public bool CanFindTarget { get => m_CanFindTarget; set => m_CanFindTarget = value; }
 	#endregion
 
 	#region 외부 함수
@@ -99,11 +106,22 @@ public class AttackRange : MonoBehaviour
 	#region 유니티 콜백 함수
 	private void OnTriggerEnter(Collider other)
 	{
-		m_TargetList.Add(other.GetComponent<Enemy>());
+		Enemy enemy = other.GetComponent<Enemy>();
+
+		if (null == enemy)
+			return;
+
+		if (m_CanFindTarget && (m_Direction == E_Direction.None || enemy.Direction == m_Direction))
+			m_TargetList.Add(enemy);
 	}
 	private void OnTriggerExit(Collider other)
 	{
-		m_TargetList.Remove(other.GetComponent<Enemy>());
+		Enemy enemy = other.GetComponent<Enemy>();
+
+		if (null == enemy)
+			return;
+
+		m_TargetList.Remove(enemy);
 	}
 	#endregion
 }
