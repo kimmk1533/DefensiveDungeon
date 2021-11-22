@@ -10,45 +10,37 @@ public class TowerAnimator : MonoBehaviour
 	#region 내부 컴포넌트
 	protected Animator m_Animator;
 	#endregion
-	#region 내부 프로퍼티
-	protected Animator animator // => m_Animator ??= GetComponent<Animator>();
-	{
-		get
-		{
-			if (m_Animator == null)
-				m_Animator = GetComponent<Animator>();
-
-			return m_Animator;
-		}
-	}
-	#endregion
 
 	#region 외부 함수
 	public void Initialize(Tower tower)
 	{
 		m_Tower = tower;
+		m_Animator = GetComponent<Animator>();
 
 		m_Tower.OnLostDefaultTargetEvent += new Action(() =>
 		{
-			animator.ResetTrigger("Attack");
+			m_Tower.CanAttack_Skill = true;
+			m_Animator.ResetTrigger("Attack");
 		});
 		m_Tower.OnLostSkill01TargetEvent += new Action(() =>
 		{
-			animator.ResetTrigger("Skill01");
+			m_Tower.CanAttack_Skill = true;
+			m_Animator.ResetTrigger("Skill01");
 		});
 		m_Tower.OnLostSkill02TargetEvent += new Action(() =>
 		{
-			animator.ResetTrigger("Skill02");
+			m_Tower.CanAttack_Skill = true;
+			m_Animator.ResetTrigger("Skill02");
 		});
 	}
 
 	public void SetFloat(string name, float value)
 	{
-		animator.SetFloat(name, value);
+		m_Animator.SetFloat(name, value);
 	}
 	public void SetTrigger(string name)
 	{
-		animator.SetTrigger(name);
+		m_Animator.SetTrigger(name);
 	}
 
 	public void CallAttack()

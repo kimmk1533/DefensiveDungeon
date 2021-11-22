@@ -9,13 +9,22 @@ public class Tower : MonoBehaviour
 	// 타워 정보(엑셀)
 	[SerializeField]
 	protected Tower_TableExcel m_TowerInfo_Excel;
+
+	[Space(10)]
+
 	// 타워 정보
+	[SerializeField]
 	protected S_TowerData m_TowerInfo;
 
+	[Space(10)]
+
 	// 타겟
-	public Enemy m_Target_Default;
-	public Enemy m_Target_Skill01;
-	public Enemy m_Target_Skill02;
+	[SerializeField]
+	protected Enemy m_Target_Default;
+	[SerializeField]
+	protected Enemy m_Target_Skill01;
+	[SerializeField]
+	protected Enemy m_Target_Skill02;
 
 	public event Action OnLostDefaultTargetEvent;
 	public event Action OnLostSkill01TargetEvent;
@@ -26,11 +35,8 @@ public class Tower : MonoBehaviour
 	[SerializeField, ReadOnly]
 	protected TowerAnimator m_TowerAnimator;
 
-	[SerializeField]
 	protected AttackRange m_AttackRange_Default;
-	[SerializeField]
 	protected AttackRange m_AttackRange_Skill01;
-	[SerializeField]
 	protected AttackRange m_AttackRange_Skill02;
 	#endregion
 	#region 내부 프로퍼티
@@ -854,51 +860,64 @@ public class Tower : MonoBehaviour
 			m_TowerInfo.AttackPivot = transform.Find("Mesh").GetChild("AttackPivot");
 		}
 
+		#region 기본 스킬
 		// 기본 스킬 데이터
 		m_TowerInfo.Condition_Default_Origin = M_Skill.GetConditionData(m_TowerInfo_Excel.Atk_Code);
 		m_TowerInfo.Stat_Default_Origin = M_Skill.GetStatData(m_TowerInfo.Condition_Default_Origin.PassiveCode);
 		// 기본 스킬
 		m_TowerInfo.AttackSpeed_Default = m_TowerInfo.Stat_Default_Origin.CoolTime;
 		m_TowerInfo.AttackTimer_Default = m_TowerInfo.Stat_Default_Origin.CoolTime;
+		#endregion
 
-		// 스킬1 데이터
+		#region 스킬01
+		// 스킬01 데이터
 		m_TowerInfo.Condition_Skill01_Origin = M_Skill.GetConditionData(m_TowerInfo_Excel.Skill1Code);
 		m_TowerInfo.Stat_Skill01_Origin = M_Skill.GetStatData(m_TowerInfo.Condition_Skill01_Origin.PassiveCode);
-		// 스킬1
+		// 스킬01
 		m_TowerInfo.AttackSpeed_Skill01 = m_TowerInfo.Stat_Skill01_Origin.CoolTime;
 		m_TowerInfo.AttackTimer_Skill01 = 0f;
+		#endregion
 
-		// 스킬2 데이터
+		#region 스킬02
+		// 스킬02 데이터
 		m_TowerInfo.Condition_Skill02_Origin = M_Skill.GetConditionData(m_TowerInfo_Excel.Skill2Code);
 		m_TowerInfo.Stat_Skill02_Origin = M_Skill.GetStatData(m_TowerInfo.Condition_Skill02_Origin.PassiveCode);
-		// 스킬2
+		// 스킬02
 		m_TowerInfo.AttackSpeed_Skill02 = m_TowerInfo.Stat_Skill02_Origin.CoolTime;
 		m_TowerInfo.AttackTimer_Skill02 = 0f;
+		#endregion
 
+		#region 시너지
+		// 시너지
 		if (null == m_TowerInfo.SynergyList)
 			m_TowerInfo.SynergyList = new List<Synergy_TableExcel>();
 		else if (m_TowerInfo.SynergyList.Count > 0)
 			m_TowerInfo.SynergyList.Clear();
 
+		// 버프 (합연산)
 		if (null == m_TowerInfo.BuffList_Fix)
 			m_TowerInfo.BuffList_Fix = new List<S_Buff>();
 		else if (m_TowerInfo.BuffList_Fix.Count > 0)
 			m_TowerInfo.BuffList_Fix.Clear();
-
+		// 버프 (곱연산)
 		if (null == m_TowerInfo.BuffList_Percent)
 			m_TowerInfo.BuffList_Percent = new List<S_Buff>();
 		else if (m_TowerInfo.BuffList_Percent.Count > 0)
 			m_TowerInfo.BuffList_Percent.Clear();
 
+		// 버서커 버프 (합연산)
 		if (null == m_TowerInfo.BerserkerBuffList_Fix)
 			m_TowerInfo.BerserkerBuffList_Fix = new List<S_Buff>();
 		else if (m_TowerInfo.BerserkerBuffList_Fix.Count > 0)
 			m_TowerInfo.BerserkerBuffList_Fix.Clear();
-
+		// 버서커 버프 (곱연산)
 		if (null == m_TowerInfo.BerserkerBuffList_Percent)
 			m_TowerInfo.BerserkerBuffList_Percent = new List<S_Buff>();
 		else if (m_TowerInfo.BerserkerBuffList_Percent.Count > 0)
 			m_TowerInfo.BerserkerBuffList_Percent.Clear();
+
+		ClearSynergyBuff();
+		#endregion
 		#endregion
 
 		#region 내부 컴포넌트
@@ -1321,13 +1340,6 @@ public class Tower : MonoBehaviour
 		// 공격 가능 여부 (스킬 중복)
 		public bool CanAttack_Skill;
 
-		#region 능력치
-		public float Crit_Rate_Fix;
-		public float Crit_Rate_Percent;
-		public float Crit_Dmg_Fix;
-		public float Crit_Dmg_Percent;
-		#endregion
-
 		#region 기본 스킬
 		// 기본 스킬 엑셀 데이터
 		public SkillCondition_TableExcel Condition_Default_Origin;
@@ -1363,6 +1375,13 @@ public class Tower : MonoBehaviour
 		public float AttackSpeed_Skill02;
 		// 스킬02 타이머
 		public float AttackTimer_Skill02;
+		#endregion
+
+		#region 크리티컬
+		public float Crit_Rate_Fix;
+		public float Crit_Rate_Percent;
+		public float Crit_Dmg_Fix;
+		public float Crit_Dmg_Percent;
 		#endregion
 
 		#region 시너지
