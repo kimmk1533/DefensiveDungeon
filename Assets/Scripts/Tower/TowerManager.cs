@@ -31,22 +31,8 @@ public class TowerManager : Singleton<TowerManager>
 	}
 	#endregion
 
-	private void Awake()
-	{
-		m_TowerData = M_DataTable.GetDataTable<Tower_TableExcelLoader>();
-
-		m_TowerList = new List<Tower>();
-		m_DirTowerList = new Dictionary<E_Direction, List<Tower>>();
-
-		for (E_Direction i = 0; i < E_Direction.Max; ++i)
-		{
-			m_DirTowerList.Add(i, new List<Tower>());
-		}
-
-		M_Node.m_RotateEndEvent += UpdateTowerList;
-	}
-
-	public Tower SpawnTower(int code)
+	#region 외부 함수
+	public Tower SpawnTower_Inventory(int code)
 	{
 		// only spawn in inventory
 		// do not call this function other class
@@ -57,7 +43,10 @@ public class TowerManager : Singleton<TowerManager>
 		m_TowerList.Add(spawn);
 		return spawn;
 	}
-
+	public void SpawnTower_Node(E_Direction direction, Tower tower)
+	{
+		m_DirTowerList[direction].Add(tower);
+	}
 	public void DespawnTower(Tower tower)
 	{   // only on NODE
 		// cha
@@ -68,41 +57,10 @@ public class TowerManager : Singleton<TowerManager>
 		tower_pool.DeSpawn(tower);
 	}
 
-	public void AddTower(Tower tower)
-	{
-		m_DirTowerList[tower.Direction].Add(tower);
-	}
-
-	public int GetSameTowerCount(int tower_code)
-	{
-		return m_TowerList.FindAll((item) =>
-		{ return item.TowerCode == tower_code; }).Count;
-	}
-
-	public Tower[] GetTowers(int tower_code)
-	{
-		return m_TowerList.FindAll((item) =>
-		{ return item.TowerCode == tower_code; }).ToArray();
-	}
-	//public Tower SpawnTower(E_Tower tower, E_Direction dir)
-	//{
-	//    Tower spawn = SpawnTower(tower);
-	//    m_DirTowerList[dir].Add(spawn);
-	//    spawn.m_TowerInfo.Direction = dir;
-	//    return spawn;
-	//}
-
 	public Tower_TableExcel GetData(int code)
 	{
 		Tower_TableExcel result = TowerData.DataList
 			.Where(item => item.Code == code).SingleOrDefault();
-
-		return result;
-	}
-	public Tower_TableExcel GetTower(int kind, int star)
-	{
-		Tower_TableExcel result = TowerData.DataList
-			.Where(item => item.Tower_Kinds == kind && item.Star == star).SingleOrDefault();
 
 		return result;
 	}
@@ -134,4 +92,40 @@ public class TowerManager : Singleton<TowerManager>
 			}
 		}
 	}
+
+	//public int GetSameTowerCount(int tower_code)
+	//{
+	//	return m_TowerList.FindAll((item) =>
+	//	{ return item.TowerCode == tower_code; }).Count;
+	//}
+	//public Tower[] GetTowers(int tower_code)
+	//{
+	//	return m_TowerList.FindAll((item) =>
+	//	{ return item.TowerCode == tower_code; }).ToArray();
+	//}
+	//public Tower_TableExcel GetTower(int kind, int star)
+	//{
+	//	Tower_TableExcel result = TowerData.DataList
+	//		.Where(item => item.Tower_Kinds == kind && item.Star == star)
+	//		.SingleOrDefault();
+
+	//	return result;
+	//}
+	#endregion
+	#region 유니티 콜백 함수
+	private void Awake()
+	{
+		m_TowerData = M_DataTable.GetDataTable<Tower_TableExcelLoader>();
+
+		m_TowerList = new List<Tower>();
+		m_DirTowerList = new Dictionary<E_Direction, List<Tower>>();
+
+		for (E_Direction i = 0; i < E_Direction.Max; ++i)
+		{
+			m_DirTowerList.Add(i, new List<Tower>());
+		}
+
+		M_Node.m_RotateEndEvent += UpdateTowerList;
+	}
+	#endregion
 }

@@ -5,11 +5,30 @@ using UnityEngine;
 public class EnemyAnimator : MonoBehaviour
 {
 	#region 내부 컴포넌트
-	public Enemy m_Enemy;
-	public Animator m_animator;
+	protected Enemy m_Enemy;
+	protected Animator m_Animator;
 	#endregion
 
 	#region 외부 함수
+	public void Initialize(Enemy enemy)
+	{
+		m_Enemy = enemy;
+		m_Animator = GetComponent<Animator>();
+	}
+
+	public void SetBool(string name, bool value)
+	{
+		m_Animator.SetBool(name, value);
+	}
+	public void SetFloat(string name, float value)
+	{
+		m_Animator.SetFloat(name, value);
+	}
+	public void SetTrigger(string name)
+	{
+		m_Animator.SetTrigger(name);
+	}
+
 	public void CallAttack()
 	{
 		m_Enemy.CallAttack();
@@ -21,14 +40,6 @@ public class EnemyAnimator : MonoBehaviour
 	public void CallDie()
 	{
 		m_Enemy.CallDie();
-	}
-	#endregion
-
-	#region 유니티 콜백 함수
-	void Awake()
-	{
-		m_Enemy = transform.parent.GetComponent<Enemy>();
-		m_animator = GetComponent<Animator>();
 	}
 	#endregion
 }

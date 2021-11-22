@@ -6,43 +6,80 @@ using UnityEngine;
 
 public class EnemyManager : Singleton<EnemyManager>
 {
-    protected Enemy_TableExcelLoader m_EnemyData => M_DataTable.GetDataTable<Enemy_TableExcelLoader>();
+	protected Enemy_TableExcelLoader m_EnemyData;
 
-    protected DataTableManager M_DataTable => DataTableManager.Instance;
+	// ì „ì²´ ëª¬ìŠ¤í„°
+	protected List<Enemy> m_EnemyList;
+	// ë°©í–¥ë³„ ë‚˜ì˜¨ ëª¬ìŠ¤í„° ì €ì¥í•˜ëŠ” ë¦¬ìŠ¤íŠ¸
+	protected Dictionary<E_Direction, List<Enemy>> m_DirEnemyList;
 
-    //¹æÇâº° ³ª¿Â ¸ó½ºÅÍ ÀúÀåÇÏ´Â ¸®½ºÆ®
-    public Dictionary<E_Direction, List<Enemy>> Enemy_Direction;
+	#region ë‚´ë¶€ í”„ë¡œí¼í‹°
+	#region ë§¤ë‹ˆì €
+	protected EnemyPool M_EnemyPool => EnemyPool.Instance;
+	protected DataTableManager M_DataTable => DataTableManager.Instance;
+	#endregion
 
-    //ÀüÃ¼ ¸ó½ºÅÍ
-    public List<Enemy> All_Enemy;
+	protected Enemy_TableExcelLoader EnemyData
+	{
+		get
+		{
+			if (null == m_EnemyData)
+			{
+				m_EnemyData = M_DataTable.GetDataTable<Enemy_TableExcelLoader>();
+			}
 
-    private void Awake()
-    {
-        All_Enemy = new List<Enemy>();
+			return m_EnemyData;
+		}
+	}
+	#endregion
 
-        Enemy_Direction = new Dictionary<E_Direction, List<Enemy>>();
+	#region ì™¸ë¶€ í•¨ìˆ˜
+	public Enemy SpawnEnemy(E_Direction dir, int code)
+	{
+		string key = GetData(code).Name_EN;
+		Enemy enemy = M_EnemyPool.GetPool(key).Spawn();
+		enemy.InitializeEnemy(code, dir);
 
-        for (E_Direction i = 0; i < E_Direction.Max; ++i)
-        {
-            Enemy_Direction[i] = new List<Enemy>();
-        }
-    }
+		m_EnemyList.Add(enemy);
+		m_DirEnemyList[dir].Add(enemy);
+		return enemy;
+	}
+	public void Despawn(Enemy enemy)
+	{
+		m_DirEnemyList[enemy.Direction].Remove(enemy);
+		m_EnemyList.Remove(enemy);
+		enemy.FinializeEnemy();
+		M_EnemyPool.GetPool(enemy.Get_EnemyName_EN).DeSpawn(enemy);
+	}
 
-    public Enemy_TableExcel GetData(int code)
-    {
-        Enemy_TableExcel origin = m_EnemyData.DataList.Where(item => item.Code == code).Single();
-        return origin;
-    }
+	public Enemy_TableExcel GetData(int code)
+	{
+		Enemy_TableExcel origin = EnemyData.DataList.Where(item => item.Code == code).Single();
+		return origin;
+	}
+	// ì „ì²´ ëª¬ìŠ¤í„° ë°ì´í„° ë½‘ì•„ì˜¤ëŠ” í•¨ìˆ˜
+	public List<Enemy> GetEnemyList()
+	{
+		return m_EnemyList;
+	}
+	// ê° ë°©ìœ„ ì „ì²´ ëª¬ìŠ¤í„° ë½‘ì•„ì˜¤ëŠ” í•¨ìˆ˜
+	public List<Enemy> GetEnemyList(E_Direction direc)
+	{
+		return m_DirEnemyList[direc];
+	}
+	#endregion
+	#region ìœ ë‹ˆí‹° ì½œë°± í•¨ìˆ˜
+	private void Awake()
+	{
+		m_EnemyData = M_DataTable.GetDataTable<Enemy_TableExcelLoader>();
 
-    //ÀüÃ¼ ¸ó½ºÅÍ µ¥ÀÌÅÍ »Ì¾Æ¿À´Â ÇÔ¼ö
-    public List<Enemy> GetEnemyList()
-    {
-        return All_Enemy;
-    }
+		m_EnemyList = new List<Enemy>();
+		m_DirEnemyList = new Dictionary<E_Direction, List<Enemy>>();
 
-    //°¢ ¹æÀ§ ÀüÃ¼ ¸ó½ºÅÍ »Ì¾Æ¿À´Â ÇÔ¼ö
-    public List<Enemy> GetEnemyList(E_Direction direc)
-    {
-        return Enemy_Direction[direc];
-    }
+		for (E_Direction i = 0; i < E_Direction.Max; ++i)
+		{
+			m_DirEnemyList[i] = new List<Enemy>();
+		}
+	}
+	#endregion
 }

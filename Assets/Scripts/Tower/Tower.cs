@@ -823,6 +823,9 @@ public class Tower : MonoBehaviour
 			}
 		}
 		#endregion
+
+		// 공격속도 적용
+		m_TowerAnimator.SetFloat("AttackSpeed", m_TowerInfo_Excel.Atk_Speed);
 	}
 
 	protected void SetAttackTrigger()
@@ -924,10 +927,10 @@ public class Tower : MonoBehaviour
 		// m_TowerAnimator ??= GetComponentInChildren<TowerAnimator>(true);
 		if (null == m_TowerAnimator)
 		{
-			m_TowerAnimator = GetComponentInChildren<TowerAnimator>(true);
+			m_TowerAnimator = transform.Find("Mesh").GetComponent<TowerAnimator>();
 			m_TowerAnimator.Initialize(this);
 		}
-		m_TowerAnimator.SetFloat("Attack", m_TowerInfo_Excel.Atk_Speed);
+		m_TowerAnimator.SetFloat("AttackSpeed", m_TowerInfo_Excel.Atk_Speed);
 
 		// m_AttackRange_Default ??= transform.Find("AttackRange_Default").AddComponent<AttackRange>();
 		if (null == m_AttackRange_Default)

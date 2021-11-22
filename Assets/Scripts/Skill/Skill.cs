@@ -325,7 +325,7 @@ public class Skill : MonoBehaviour
 
 					if (buffData.Code != 0)
 					{
-						m_Target.BuffList.Add(buffData);
+						//m_Target.BuffList.Add(buffData);
 					}
 
 					m_Target.On_DaMage(damage);
@@ -350,7 +350,7 @@ public class Skill : MonoBehaviour
 
 						if (buffData.Code != 0)
 						{
-							target.BuffList.Add(buffData);
+							//target.BuffList.Add(buffData);
 						}
 
 						target.On_DaMage(damage);
@@ -375,7 +375,7 @@ public class Skill : MonoBehaviour
 
 							if (buffData.Code != 0)
 							{
-								target.BuffList.Add(buffData);
+								//target.BuffList.Add(buffData);
 							}
 
 							target.On_DaMage(damage);
@@ -396,7 +396,7 @@ public class Skill : MonoBehaviour
 
 					if (buffData.Code != 0)
 					{
-						m_Target.BuffList.Add(buffData);
+						//m_Target.BuffList.Add(buffData);
 					}
 
 					m_Target.On_DaMage(damage);
@@ -407,7 +407,9 @@ public class Skill : MonoBehaviour
 	}
 	#endregion
 	#region 외부 함수
-	public void InitializeSkill(Enemy target, SkillCondition_TableExcel conditionData, SkillStat_TableExcel statData)
+	public void InitializeSkill(Enemy target,
+		SkillCondition_TableExcel conditionData,
+		SkillStat_TableExcel statData)
 	{
 		m_Target = target;
 
@@ -483,6 +485,7 @@ public class Skill : MonoBehaviour
 	[System.Serializable]
 	public struct S_SkillData
 	{
+		public List<S_Buff> DebuffList;
 		public bool CanOverlapBounce;
 		public int BounceCount;
 		public List<Enemy> FixedTargetList;

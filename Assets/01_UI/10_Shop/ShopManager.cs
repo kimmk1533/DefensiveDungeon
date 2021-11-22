@@ -3,269 +3,253 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-// Root Panel ¿¡ origin slotÀ» µ¿ÀûÀ¸·Î »ı¼º
-// Root Panel ¿¡´Â CellSizeFitter °¡ Á¸ÀçÇØ¾ßÇÔ
+// Root Panel ì— origin slotì„ ë™ì ìœ¼ë¡œ ìƒì„±
+// Root Panel ì—ëŠ” CellSizeFitter ê°€ ì¡´ì¬í•´ì•¼í•¨
 public class ShopManager : Singleton<ShopManager>
 {
-    [SerializeField] Tower_TableExcelLoader m_excel_towerdata_so;
-    List<Tower_TableExcel> m_tower_data_list;
-    [SerializeField] Shop_TableExcelLoader m_excel_shopdata_so;
-    private Shop_TableExcel m_cur_data;         // °¡Àå ÃÖ±Ù¿¡ UserInfoManger ·ÎºÎÅÍ ºÒ·¯¿Â µ¥ÀÌÅÍ °ª
-    private List<float> m_rates = null;         // À§ÀÇ data ¿¡¼­ È®·ü¸¸ »Ì¾Æ³í ¸®½ºÆ®
-    private List<int> m_costs = null;           // À§ÀÇ data ¿¡¼­ cost¸¸ »Ì¾Æ³í ¸®½ºÆ®
+	[SerializeField] Tower_TableExcelLoader m_excel_towerdata_so;
+	List<Tower_TableExcel> m_tower_data_list;
+	[SerializeField] Shop_TableExcelLoader m_excel_shopdata_so;
+	private Shop_TableExcel m_cur_data;         // ê°€ì¥ ìµœê·¼ì— UserInfoManger ë¡œë¶€í„° ë¶ˆëŸ¬ì˜¨ ë°ì´í„° ê°’
+	private List<float> m_rates = null;         // ìœ„ì˜ data ì—ì„œ í™•ë¥ ë§Œ ë½‘ì•„ë…¼ ë¦¬ìŠ¤íŠ¸
+	private List<int> m_costs = null;           // ìœ„ì˜ data ì—ì„œ costë§Œ ë½‘ì•„ë…¼ ë¦¬ìŠ¤íŠ¸
 
-    // SetActive On Off ¿ë
-    [SerializeField] Image m_shop_panel;
-    // root panel ÀÇ ÇÏÀ§·Î slot À» »ı¼º
-    [SerializeField] Image m_root_panel;
-    // root panel ÀÇ size fitter
-    // fitter ¿¡¼­ Á¤ÀÇÇÑ slot °³¼ö¸¸Å­ »ı¼º
-    private CellSizeFitter m_fitter;
+	// SetActive On Off ìš©
+	[SerializeField] Image m_shop_panel;
+	// root panel ì˜ í•˜ìœ„ë¡œ slot ì„ ìƒì„±
+	[SerializeField] Image m_root_panel;
+	// root panel ì˜ size fitter
+	// fitter ì—ì„œ ì •ì˜í•œ slot ê°œìˆ˜ë§Œí¼ ìƒì„±
+	private CellSizeFitter m_fitter;
 
-    // ÁÂÃø ÇÏ´Ü ·¹º§°ú È®·üÀ» Á¶Àı
-    [SerializeField] ShopStatusUIController m_status_controller;
+	// ì¢Œì¸¡ í•˜ë‹¨ ë ˆë²¨ê³¼ í™•ë¥ ì„ ì¡°ì ˆ
+	[SerializeField] ShopStatusUIController m_status_controller;
 
-    [SerializeField] ShopSlot m_origin;
-    [SerializeField] List<ShopSlot> m_slot_list;
+	[SerializeField] ShopSlot m_origin;
+	[SerializeField] List<ShopSlot> m_slot_list;
 
-    private void Awake()
-    {
-        __Initialize();
-    }
+	private void Awake()
+	{
+		__Initialize();
+	}
 
-    private void Start()
-    {
-        // ÃÖÃÊ Status ¸®¼Â        
-        OnLevelChanged(UserInfoManager.Instance.Level);
-        // ÃÖÃÊ »óÁ¡ ¸®¼Â
-        ShopReset();
-        // lock button release
-        ShopUnLock();
+	private void Start()
+	{
+		// ìµœì´ˆ Status ë¦¬ì…‹        
+		OnLevelChanged(UserInfoManager.Instance.Level);
+		// ìµœì´ˆ ìƒì  ë¦¬ì…‹
+		ShopReset();
+		// lock button release
+		ShopUnLock();
 
-        m_shop_panel.gameObject.SetActive(false);
+		m_shop_panel.gameObject.SetActive(false);
 
-        // link callback
-        UserInfoManager.Instance.OnLevelChanged += OnLevelChanged;
-        StageInfoManager.Instance.OnRestStageChangedEvent += OnStageChanged;
-    }
+		// link callback
+		UserInfoManager.Instance.OnLevelChanged += OnLevelChanged;
+		StageInfoManager.Instance.OnRestStageChangedEvent += OnStageChanged;
+	}
 
-    public void __Initialize()
-    {
-        // this memeber alloc
-        m_cur_data = new Shop_TableExcel();
-        m_rates = new List<float>();
-        m_costs = new List<int>();
+	public void __Initialize()
+	{
+		// this memeber alloc
+		m_cur_data = new Shop_TableExcel();
+		m_rates = new List<float>();
+		m_costs = new List<int>();
 
-        // setting
-        m_origin.gameObject.SetActive(false);
+		// setting
+		m_origin.gameObject.SetActive(false);
 
-        m_fitter = m_root_panel.GetComponent<CellSizeFitter>();
-        int total_alloc_count = m_fitter.CellCount.x * m_fitter.CellCount.y;
+		m_fitter = m_root_panel.GetComponent<CellSizeFitter>();
+		int total_alloc_count = m_fitter.CellCount.x * m_fitter.CellCount.y;
 
-        // new slots Instantiate
-        for (int i = 0; i < total_alloc_count; i++)
-        {
-            ShopSlot newSlot = GameObject.Instantiate<ShopSlot>(m_origin);
-            m_slot_list.Add(newSlot);
-            newSlot.__Indexing(i);
-            newSlot.transform.SetParent(m_root_panel.transform);
-            newSlot.gameObject.SetActive(true);
-            newSlot.MoveRenderPosition(new Vector3(100 * i, 100 * i, 0));   // ·»´õ¸µ À§Ä¡°¡ ´Ş¶óÁöµµ·Ï
-        }
+		// new slots Instantiate
+		for (int i = 0; i < total_alloc_count; i++)
+		{
+			ShopSlot newSlot = GameObject.Instantiate<ShopSlot>(m_origin);
+			m_slot_list.Add(newSlot);
+			newSlot.__Indexing(i);
+			newSlot.transform.SetParent(m_root_panel.transform);
+			newSlot.gameObject.SetActive(true);
+			newSlot.MoveRenderPosition(new Vector3(100 * i, 100 * i, 0));   // ë Œë”ë§ ìœ„ì¹˜ê°€ ë‹¬ë¼ì§€ë„ë¡
+		}
 
-        // sub 3 item form front ( except devil )
-        m_tower_data_list = m_excel_towerdata_so.DataList.GetRange(
-            3,
-            m_excel_towerdata_so.DataList.Count - 3);
-    }
-
-
-    public void OnStageChanged(StageChangedEventArgs args)
-    {
-        ShopReset();
-    }
-
-    /*************************** UI Control ******************************/
-
-    // ·¹º§ º¯°æ½Ã ÁÂÃø ÇÏ´Ü ÆĞ³ÎÀÇ text º¯°æ
-    public void OnLevelChanged(int level)
-    {
-        // user info ¸¦ °¡Á®¿À°í ·¹º§¿¡ µû¶ó È®·üÀ» ¼ÂÆÃÇÔ
-        int cur_user_level = UserInfoManager.Instance.Level;
-
-        var data_list = m_excel_shopdata_so.DataList;
-
-        m_cur_data = data_list.Find((item) => { return cur_user_level == item.User_Level; });
+		// sub 3 item form front ( except devil )
+		m_tower_data_list = m_excel_towerdata_so.DataList.GetRange(
+			3,
+			m_excel_towerdata_so.DataList.Count - 3);
+	}
 
 
-        m_rates.Clear();
-        m_rates.Add(m_cur_data.Tower_Rand1);
-        m_rates.Add(m_cur_data.Tower_Rand2);
-        m_rates.Add(m_cur_data.Tower_Rand3);
-        m_rates.Add(m_cur_data.Tower_Rand4);
-        m_rates.Add(m_cur_data.Tower_Rand5);
+	public void OnStageChanged(StageChangedEventArgs args)
+	{
+		ShopReset();
+	}
 
-        m_costs.Clear();
-        m_costs.Add(m_cur_data.Tower_Gold1);
-        m_costs.Add(m_cur_data.Tower_Gold2);
-        m_costs.Add(m_cur_data.Tower_Gold3);
-        m_costs.Add(m_cur_data.Tower_Gold4);
-        m_costs.Add(m_cur_data.Tower_Gold5);
+	/*************************** UI Control ******************************/
 
-        m_status_controller.SetRates(m_rates.ToArray());
-        m_status_controller.SetLevel(cur_user_level);
-    }
+	// ë ˆë²¨ ë³€ê²½ì‹œ ì¢Œì¸¡ í•˜ë‹¨ íŒ¨ë„ì˜ text ë³€ê²½
+	public void OnLevelChanged(int level)
+	{
+		// user info ë¥¼ ê°€ì ¸ì˜¤ê³  ë ˆë²¨ì— ë”°ë¼ í™•ë¥ ì„ ì…‹íŒ…í•¨
+		int cur_user_level = UserInfoManager.Instance.Level;
 
-    /*************************** Mouse callback ******************************/
-    // TODO : Å¸¿ö ¸Å´ÏÀú¸¦ ÅëÇØ Å¸¿ö »ı¼º
-    // TODO : Inventory ¿¡ Ãß°¡
-    /*************************** button Process ******************************/
+		var data_list = m_excel_shopdata_so.DataList;
 
-    [Space(30)]
-    [SerializeField] bool m_isLocked = false;
-    [SerializeField] Image m_LockButtonImage;
-    [SerializeField] Sprite m_LockSprite;
-    [SerializeField] Sprite m_UnLockSprite;
-
-    private void ShopReset()
-    {
-        // rank ÁöÁ¤ È®·ü
-        float rand_val = 0.0f;
-
-        // tower data °³¼ö
-        int total_towerType_count = m_tower_data_list.Count;
-        // tower type ÁöÁ¤ È®·ü        
-        int rand_val_tower = 0;
-
-        // slot °³¼ö¸¸Å­ ¹İº¹
-        for (int i = 0; i < m_slot_list.Count; i++)
-        {
-            rand_val = Random.Range(0.0f, 1.0f);
-            rand_val_tower = Random.Range(0, total_towerType_count);    // index ±âÁØ(No - 1)
-
-            int rank_forCreate = 1;
-            int cost = 0;
-            float acc = 0.0f;
-            // ³·Àº ·©Å©ÀÇ È®·üºÎÅÍ °è»ê
-            for (int j = 0; j < m_rates.Count; j++)
-            {
-                acc += m_rates[j];
-                if (rand_val <= acc)
-                {
-                    rank_forCreate = j + 1;
-                    cost = m_costs[j];
-                    break;
-                }
-            }
-
-            //Debug.Log($"rank : {rank_forCreate}");           
-
-            // shop can create tower ONLY 1 STAR
-            var OnlyOneStar_tower_data_list = m_tower_data_list.FindAll((item) => { return item.Star == 1; });
-
-            // rank ¿¡ ºÎÇÕÇÏ´Â µ¥ÀÌÅÍ »Ì±â
-            var tower_data_list = OnlyOneStar_tower_data_list.FindAll((item) => { return item.Rank == rank_forCreate; });
-
-            // tower_data_list Áß¿¡ ÇÏ³ª
-            int selected_index = Random.Range(0, tower_data_list.Count);
-
-            // À§¿¡¼­ »ı¼ºµÈ µ¥ÀÌÅÍ·Î Shop SlotÀÇ Á¤º¸ ¾÷µ¥ÀÌÆ®            
-            var tower_data = tower_data_list[selected_index];
-            m_slot_list[i].SetInfo(cost, tower_data);
-        }
-    }
+		m_cur_data = data_list.Find((item) => { return cur_user_level == item.User_Level; });
 
 
-    private void ShopLock()
-    {
-        m_LockButtonImage.sprite = m_LockSprite;
-    }
-    private void ShopUnLock()
-    {
-        m_LockButtonImage.sprite = m_UnLockSprite;
-    }
+		m_rates.Clear();
+		m_rates.Add(m_cur_data.Tower_Rand1);
+		m_rates.Add(m_cur_data.Tower_Rand2);
+		m_rates.Add(m_cur_data.Tower_Rand3);
+		m_rates.Add(m_cur_data.Tower_Rand4);
+		m_rates.Add(m_cur_data.Tower_Rand5);
 
-    public bool PurchaseProcess(int slotIndex)
-    {
-        ShopSlot slot = m_slot_list[slotIndex];
+		m_costs.Clear();
+		m_costs.Add(m_cur_data.Tower_Gold1);
+		m_costs.Add(m_cur_data.Tower_Gold2);
+		m_costs.Add(m_cur_data.Tower_Gold3);
+		m_costs.Add(m_cur_data.Tower_Gold4);
+		m_costs.Add(m_cur_data.Tower_Gold5);
 
-        if (false == InventoryManager.Instance.IsAllOccupied())
-        {   // ÀÎº¥¿¡ ºó °ø°£ÀÌ ÀÖÀ¸¸é
-            if (false == UserInfoManager.Instance.UseGold(slot.Price))
-            {   // º¸À¯ °ñµå°¡ ºÎÁ·ÇÏ¸é
-                Debug.Log("Shop : have not enough minerals");
-                return false;
-            }
+		m_status_controller.SetRates(m_rates.ToArray());
+		m_status_controller.SetLevel(cur_user_level);
+	}
 
-            var info = slot.GetInfo();
+	/*************************** Mouse callback ******************************/
+	// TODO : íƒ€ì›Œ ë§¤ë‹ˆì €ë¥¼ í†µí•´ íƒ€ì›Œ ìƒì„±
+	// TODO : Inventory ì— ì¶”ê°€
+	/*************************** button Process ******************************/
 
-            InventoryManager.Instance.AddNewTower(info.excel_data.Value);
+	[Space(30)]
+	[SerializeField] bool m_isLocked = false;
+	[SerializeField] Image m_LockButtonImage;
+	[SerializeField] Sprite m_LockSprite;
+	[SerializeField] Sprite m_UnLockSprite;
 
-            Debug.Log("Puchase!!");
-            return true;
-        }
-        else
-        {
+	private void ShopReset()
+	{
+		// rank ì§€ì • í™•ë¥ 
+		float rand_val = 0.0f;
 
-        }
+		// tower data ê°œìˆ˜
+		int total_towerType_count = m_tower_data_list.Count;
+		// tower type ì§€ì • í™•ë¥         
+		int rand_val_tower = 0;
 
-        return false;
-    }
+		// slot ê°œìˆ˜ë§Œí¼ ë°˜ë³µ
+		for (int i = 0; i < m_slot_list.Count; i++)
+		{
+			rand_val = Random.Range(0.0f, 1.0f);
+			rand_val_tower = Random.Range(0, total_towerType_count);    // index ê¸°ì¤€(No - 1)
 
-    public Tower CombineTowerProcess(int tower_code)
-    {   // tower count is always over 2
-        var towers = TowerManager.Instance.GetTowers(tower_code);
-        for (int i = 0; i < 3; i++)
-        {
-            if (towers[i].IsOnInventory)
-                TowerManager.Instance.DespawnTower(towers[i]);
-        }
+			int rank_forCreate = 1;
+			int cost = 0;
+			float acc = 0.0f;
+			// ë‚®ì€ ë­í¬ì˜ í™•ë¥ ë¶€í„° ê³„ì‚°
+			for (int j = 0; j < m_rates.Count; j++)
+			{
+				acc += m_rates[j];
+				if (rand_val <= acc)
+				{
+					rank_forCreate = j + 1;
+					cost = m_costs[j];
+					break;
+				}
+			}
 
-        // TODO : fix
+			//Debug.Log($"rank : {rank_forCreate}");           
 
-        //TowerManager.Instance.SpawnTower
+			// shop can create tower ONLY 1 STAR
+			var OnlyOneStar_tower_data_list = m_tower_data_list.FindAll((item) => { return item.Star == 1; });
 
-        return null;
-    }
+			// rank ì— ë¶€í•©í•˜ëŠ” ë°ì´í„° ë½‘ê¸°
+			var tower_data_list = OnlyOneStar_tower_data_list.FindAll((item) => { return item.Rank == rank_forCreate; });
 
-    /*************************** button callback ******************************/
+			// tower_data_list ì¤‘ì— í•˜ë‚˜
+			int selected_index = Random.Range(0, tower_data_list.Count);
 
-    public void __OnResetButtonClicked()
-    {
-        Debug.Log("ShopReset");
+			// ìœ„ì—ì„œ ìƒì„±ëœ ë°ì´í„°ë¡œ Shop Slotì˜ ì •ë³´ ì—…ë°ì´íŠ¸            
+			var tower_data = tower_data_list[selected_index];
+			m_slot_list[i].SetInfo(cost, tower_data);
+		}
+	}
 
-        if (false == m_isLocked)
-        {
-            int reset_cost = m_excel_shopdata_so.DataList.Find(
-                (item) => { return item.User_Level == UserInfoManager.Instance.Level; }).Reset_Gold;
 
-            if (UserInfoManager.Instance.UseGold(reset_cost))
-                ShopReset();
-        }
-    }
+	private void ShopLock()
+	{
+		m_LockButtonImage.sprite = m_LockSprite;
+	}
+	private void ShopUnLock()
+	{
+		m_LockButtonImage.sprite = m_UnLockSprite;
+	}
 
-    // Lock µÈ °æ¿ì true
-    // UnLock µÈ °æ¿ì false
-    public void __OnLockButtonClicked()
-    {
-        m_isLocked = !m_isLocked;
-        if (m_isLocked)
-        {
-            ShopLock();
-            Debug.Log("ShopLock");
-        }
-        else
-        {
-            ShopUnLock();
-            Debug.Log("ShopUnLock");
-        }
-    }
+	public bool PurchaseProcess(int slotIndex)
+	{
+		ShopSlot slot = m_slot_list[slotIndex];
 
-    public void __OnShopButtonClicked()
-    {
-        if (m_shop_panel.gameObject.activeSelf)
-            m_shop_panel.gameObject.SetActive(false);
-        else
-            m_shop_panel.gameObject.SetActive(true);
-    }
+		if (false == InventoryManager.Instance.IsAllOccupied())
+		{   // ì¸ë²¤ì— ë¹ˆ ê³µê°„ì´ ìˆìœ¼ë©´
+			if (false == UserInfoManager.Instance.UseGold(slot.Price))
+			{   // ë³´ìœ  ê³¨ë“œê°€ ë¶€ì¡±í•˜ë©´
+				Debug.Log("Shop : have not enough minerals");
+				return false;
+			}
+
+			var info = slot.GetInfo();
+
+			InventoryManager.Instance.AddNewTower(info.excel_data.Value);
+
+			Debug.Log("Puchase!!");
+			return true;
+		}
+		else
+		{
+
+		}
+
+		return false;
+	}
+
+	/*************************** button callback ******************************/
+
+	public void __OnResetButtonClicked()
+	{
+		Debug.Log("ShopReset");
+
+		if (false == m_isLocked)
+		{
+			int reset_cost = m_excel_shopdata_so.DataList.Find(
+				(item) => { return item.User_Level == UserInfoManager.Instance.Level; }).Reset_Gold;
+
+			if (UserInfoManager.Instance.UseGold(reset_cost))
+				ShopReset();
+		}
+	}
+
+	// Lock ëœ ê²½ìš° true
+	// UnLock ëœ ê²½ìš° false
+	public void __OnLockButtonClicked()
+	{
+		m_isLocked = !m_isLocked;
+		if (m_isLocked)
+		{
+			ShopLock();
+			Debug.Log("ShopLock");
+		}
+		else
+		{
+			ShopUnLock();
+			Debug.Log("ShopUnLock");
+		}
+	}
+
+	public void __OnShopButtonClicked()
+	{
+		if (m_shop_panel.gameObject.activeSelf)
+			m_shop_panel.gameObject.SetActive(false);
+		else
+			m_shop_panel.gameObject.SetActive(true);
+	}
 }

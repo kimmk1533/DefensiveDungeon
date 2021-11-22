@@ -46,7 +46,7 @@ public class Node : MonoBehaviour
 			m_Tower.CanAttack_Node = true;
 			m_Tower.CanAttack_Skill = true;
 
-			M_Tower.AddTower(tower);
+			M_Tower.SpawnTower_Node(m_Direction, m_Tower);
 			M_Synergy.UpdateSynergy();
 		}
 	}

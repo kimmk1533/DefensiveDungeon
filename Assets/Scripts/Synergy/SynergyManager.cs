@@ -142,6 +142,16 @@ public class SynergyManager : Singleton<SynergyManager>
 					{
 						towerList = M_Tower.GetTowerList(dir);
 					}
+					// 전체 타워 전부
+					else if (synergy.TargetMem == 3)
+					{
+						towerList = M_Tower.GetTowerList();
+					}
+					// 예외 처리
+					else
+					{
+						Debug.LogError("시너지 테이블 TargetMem 에러");
+					}
 
 					// 시너지 적용
 					for (int i = 0; i < towerList.Count; ++i)

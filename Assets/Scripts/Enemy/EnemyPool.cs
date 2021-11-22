@@ -4,36 +4,46 @@ using UnityEngine;
 
 public class EnemyPool : ObjectPool<EnemyPool, Enemy>
 {
-    protected DataTableManager M_DataTable => DataTableManager.Instance;
-    protected Enemy_TableExcelLoader M_EnemyData => M_DataTable.GetDataTable<Enemy_TableExcelLoader>();
-    protected Prefab_TableExcelLoader M_PrefabData => M_DataTable.GetDataTable<Prefab_TableExcelLoader>();
+	#region 내부 프로퍼티
+	#region 매니저
+	protected DataTableManager M_DataTable => DataTableManager.Instance;
+	#endregion
 
-    public override void __Initialize()
-    {
-        base.__Initialize();
+	protected Enemy_TableExcelLoader M_EnemyData => M_DataTable.GetDataTable<Enemy_TableExcelLoader>();
+	protected Prefab_TableExcelLoader M_PrefabData => M_DataTable.GetDataTable<Prefab_TableExcelLoader>();
+	#endregion
 
-        for (int i = 0; i < M_EnemyData.DataList.Count; ++i)
-        {
-            int PrefabCode = M_EnemyData.DataList[i].Prefab;
-            Debug.Log("Enemy_" + PrefabCode);
+	#region 외부 함수
+	public override void __Initialize()
+	{
+		base.__Initialize();
 
-            GameObject originObj = M_PrefabData.GetPrefab(PrefabCode);
+		for (int i = 0; i < M_EnemyData.DataList.Count; ++i)
+		{
+			int PrefabCode = M_EnemyData.DataList[i].Prefab;
 
-            if (originObj != null)
-            {
-                GameObject originClone = GameObject.Instantiate(originObj);
-                string key = originClone.name = originObj.name;
+			GameObject originObj = M_PrefabData.GetPrefab(PrefabCode);
 
-                Enemy origin = originClone.AddComponent<Enemy>();
-                origin.InitializeEnemy(M_EnemyData.DataList[i].Code);
+			if (originObj != null)
+			{
+				GameObject originClone = GameObject.Instantiate(originObj);
+				originClone.name = originObj.name;
 
-                origin.gameObject.SetActive(false);
+				Enemy origin = originClone.AddComponent<Enemy>();
 
-                if (!AddPool(key, origin, transform))
-                {
-                    GameObject.Destroy(originClone);
-                }
-            }
-        }
-    }
+				float size = M_PrefabData.DataList[i].Size;
+
+				origin.transform.Find("Mesh").localScale = Vector3.one * size;
+				origin.gameObject.layer = LayerMask.NameToLayer("Enemy");
+				origin.gameObject.SetActive(false);
+
+				string key = M_EnemyData.DataList[i].Name_EN;
+				if (!AddPool(key, origin, transform))
+				{
+					GameObject.Destroy(originClone);
+				}
+			}
+		}
+	}
+	#endregion
 }
