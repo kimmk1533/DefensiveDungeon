@@ -15,7 +15,7 @@ public class FloatingText : MonoBehaviour
     #endregion
     #endregion
     #region 외부 프로퍼티
-    public string text { get => m_Text.text; set => m_Text.text = value; }
+    public TextMeshProUGUI textMeshPro { get => m_Text; set => m_Text = value; }
     #endregion
     #region 외부 함수
     public void __Initialize()

@@ -29,6 +29,8 @@ public class Enemy : MonoBehaviour
 
 	protected FloatingTextManager M_DamageText => FloatingTextManager.Instance;
 	#endregion
+
+	protected float MoveSpeed => m_EnemyInfo.Move_spd * Time.deltaTime;
 	#endregion
 	#region 외부 프로퍼티
 	public string Get_EnemyName_EN => m_EnemyInfo_Excel.Name_EN;
@@ -145,7 +147,7 @@ public class Enemy : MonoBehaviour
 	}
 
 	// 대미지
-	public void On_DaMage(float damage)
+	public void On_DaMage(float damage, bool isCrit)
 	{
 		// 예외 처리
 		if (m_EnemyInfo.IsDead)
@@ -163,7 +165,13 @@ public class Enemy : MonoBehaviour
 
 		// 대미지 텍스트
 		Vector3 text_position = transform.position + Vector3.forward * 2.5f;
-		M_DamageText.SpawnDamageText(damage.ToString(), text_position);
+		M_DamageText.SpawnDamageText(damage.ToString(), new FloatingTextFilter()
+		{
+			position = text_position,
+			postionType = FloatingTextFilter.E_PostionType.Screen,
+			outlineColor = isCrit ? M_Enemy.criticalDamageColor : M_Enemy.normalDamageColor,
+			outlineWidth = 0.3f,
+		});
 
 		// 체력바 UI
 		if (!m_HPBar.gameObject.activeSelf)
@@ -199,18 +207,11 @@ public class Enemy : MonoBehaviour
 		if (m_WayPoint.isLast)
 		{
 			float Distance = Vector3.Distance(transform.position, new Vector3(0f, 0f, 0f));
-
+			
 			//거리 안에 있다면
 			if (Distance <= m_EnemyInfo.Stat_Default.Range)
 			{
-				// 회전할 방향
-				Vector3 lookingDir = m_WayPoint.transform.position - transform.position;
-
-				// y 회전 방지
-				lookingDir.y = 0f;
-
-				// 회전
-				transform.rotation = Quaternion.LookRotation(lookingDir);
+				transform.LookAt(Vector3.zero);
 
 				if (m_EnemyInfo.AttackTimer_Default >= m_EnemyInfo.Stat_Default.CoolTime)
 				{
@@ -225,7 +226,7 @@ public class Enemy : MonoBehaviour
 		}
 
 		Vector3 dir = m_WayPoint.transform.position - transform.position;
-		transform.Translate(dir.normalized * 2f * Time.deltaTime, Space.World);
+		transform.Translate(dir.normalized * MoveSpeed, Space.World);
 		m_HPBar.transform.position = M_EnemyHPBar.m_HPBarCanvas.worldCamera.WorldToScreenPoint(transform.position) + M_EnemyHPBar.Distance;
 
 		if (Vector3.Distance(transform.position, m_WayPoint.transform.position) <= 0.2f)

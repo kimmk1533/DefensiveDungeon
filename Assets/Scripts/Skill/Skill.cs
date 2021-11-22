@@ -76,7 +76,7 @@ public class Skill : MonoBehaviour
 			skill.enabled = true;
 			skill.gameObject.SetActive(true);
 
-			skill.InitializeSkill(m_Target, condition, stat);
+			skill.InitializeSkill(m_Target, condition, stat, m_SkillInfo.Critical);
 		}
 
 		m_Target = null;
@@ -315,6 +315,23 @@ public class Skill : MonoBehaviour
 		{
 			case E_AttackType.NormalFire:
 				{
+					if (buffData.Code != 0)
+					{
+						//m_Target.BuffList.Add(buffData);
+					}
+
+					float critRate = m_SkillInfo.Critical.critRate;
+					float critDmg = m_SkillInfo.Critical.critDmg;
+
+					bool isCrit = Random.Range(0.00001f, 1f) <= critRate;
+
+					if (isCrit)
+					{
+						damage *= critDmg;
+					}
+
+					m_Target.On_DaMage(damage, isCrit);
+
 					// 피격 이펙트 생성
 					Effect hitEffect = M_Effect.SpawnEffect(m_ConditionInfo_Excel.damage_prefab);
 					if (null != hitEffect)
@@ -322,13 +339,6 @@ public class Skill : MonoBehaviour
 						hitEffect.transform.position = m_Target.HitPivot.transform.position;
 						hitEffect.gameObject.SetActive(true);
 					}
-
-					if (buffData.Code != 0)
-					{
-						//m_Target.BuffList.Add(buffData);
-					}
-
-					m_Target.On_DaMage(damage);
 				}
 				break;
 			case E_AttackType.FixedFire:
@@ -340,6 +350,23 @@ public class Skill : MonoBehaviour
 						if (null == target || target.IsDead)
 							continue;
 
+						if (buffData.Code != 0)
+						{
+							//target.BuffList.Add(buffData);
+						}
+
+						float critRate = m_SkillInfo.Critical.critRate;
+						float critDmg = m_SkillInfo.Critical.critDmg;
+
+						bool isCrit = Random.Range(0.00001f, 1f) <= critRate;
+
+						if (isCrit)
+						{
+							damage *= critDmg;
+						}
+
+						m_Target.On_DaMage(damage, isCrit);
+
 						// 피격 이펙트 생성
 						Effect hitEffect = M_Effect.SpawnEffect(m_ConditionInfo_Excel.damage_prefab);
 						if (null != hitEffect)
@@ -347,13 +374,6 @@ public class Skill : MonoBehaviour
 							hitEffect.transform.position = target.HitPivot.transform.position;
 							hitEffect.gameObject.SetActive(true);
 						}
-
-						if (buffData.Code != 0)
-						{
-							//target.BuffList.Add(buffData);
-						}
-
-						target.On_DaMage(damage);
 					}
 				}
 				break;
@@ -365,6 +385,25 @@ public class Skill : MonoBehaviour
 
 						if (!m_SkillInfo.PenetrateTargetList.Contains(target))
 						{
+							if (buffData.Code != 0)
+							{
+								//target.BuffList.Add(buffData);
+							}
+
+							float critRate = m_SkillInfo.Critical.critRate;
+							float critDmg = m_SkillInfo.Critical.critDmg;
+
+							bool isCrit = Random.Range(0.00001f, 1f) <= critRate;
+
+							if (isCrit)
+							{
+								damage *= critDmg;
+							}
+
+							m_Target.On_DaMage(damage, isCrit);
+
+							m_SkillInfo.PenetrateTargetList.Add(target);
+
 							// 피격 이펙트 생성
 							Effect hitEffect = M_Effect.SpawnEffect(m_ConditionInfo_Excel.damage_prefab);
 							if (null != hitEffect)
@@ -372,20 +411,31 @@ public class Skill : MonoBehaviour
 								hitEffect.transform.position = target.HitPivot.transform.position;
 								hitEffect.gameObject.SetActive(true);
 							}
-
-							if (buffData.Code != 0)
-							{
-								//target.BuffList.Add(buffData);
-							}
-
-							target.On_DaMage(damage);
-							m_SkillInfo.PenetrateTargetList.Add(target);
 						}
 					}
 				}
 				break;
 			case E_AttackType.BounceFire:
 				{
+					if (buffData.Code != 0)
+					{
+						//m_Target.BuffList.Add(buffData);
+					}
+
+					float critRate = m_SkillInfo.Critical.critRate;
+					float critDmg = m_SkillInfo.Critical.critDmg;
+
+					bool isCrit = Random.Range(0.00001f, 1f) <= critRate;
+
+					if (isCrit)
+					{
+						damage *= critDmg;
+					}
+
+					m_Target.On_DaMage(damage, isCrit);
+
+					--m_SkillInfo.BounceCount;
+
 					// 피격 이펙트 생성
 					Effect hitEffect = M_Effect.SpawnEffect(m_ConditionInfo_Excel.damage_prefab);
 					if (null != hitEffect)
@@ -393,14 +443,6 @@ public class Skill : MonoBehaviour
 						hitEffect.transform.position = m_Target.HitPivot.transform.position;
 						hitEffect.gameObject.SetActive(true);
 					}
-
-					if (buffData.Code != 0)
-					{
-						//m_Target.BuffList.Add(buffData);
-					}
-
-					m_Target.On_DaMage(damage);
-					--m_SkillInfo.BounceCount;
 				}
 				break;
 		}
@@ -409,9 +451,11 @@ public class Skill : MonoBehaviour
 	#region 외부 함수
 	public void InitializeSkill(Enemy target,
 		SkillCondition_TableExcel conditionData,
-		SkillStat_TableExcel statData)
+		SkillStat_TableExcel statData,
+		S_Critical critical)
 	{
 		m_Target = target;
+		m_SkillInfo.Critical = critical;
 
 		m_ConditionInfo_Excel = conditionData;
 		m_StatInfo_Excel = statData;
@@ -496,5 +540,22 @@ public class Skill : MonoBehaviour
 		public AttackRange AttackRange;
 		public Vector3 InitPos;
 		public Vector3 TargetInitPos;
+
+		public S_Critical Critical;
+	}
+}
+
+public struct S_Critical
+{
+	private float m_CritRate;
+	private float m_CritDmg;
+
+	public float critRate => m_CritRate;
+	public float critDmg => m_CritDmg;
+
+	public S_Critical(float rate, float dmg)
+	{
+		m_CritRate = rate;
+		m_CritDmg = dmg;
 	}
 }

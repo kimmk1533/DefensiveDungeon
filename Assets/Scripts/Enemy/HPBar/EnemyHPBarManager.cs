@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class EnemyHPBarManager : Singleton<EnemyHPBarManager>
 {
 	public Canvas m_HPBarCanvas;
+
 	[SerializeField]
 	protected Vector3 m_Distance = new Vector3(0f, 50f, 0f);
 	protected const string key = "EnemyHPBar";

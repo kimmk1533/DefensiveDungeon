@@ -336,21 +336,6 @@ public abstract class Devil : MonoBehaviour
 		// 기본 대미지 설정
 		statData.Dmg_Fix += m_DevilInfo_Excel.Atk;
 
-		#region 크리티컬
-		// 크리티컬 확률
-		float CritRate = m_DevilInfo_Excel.Crit_rate;
-		// 크리티컬 배율
-		float CritDmg = m_DevilInfo_Excel.Crit_Dmg;
-
-		// 크리티컬 대미지 설정
-		float CritRand = Random.Range(0.00001f, 1f);
-		bool CritApply = CritRand <= CritRate;
-		if (CritApply)
-		{
-			statData.Dmg_Percent *= CritDmg;
-		}
-		#endregion
-
 		// 기본 스킬 투사체 생성
 		int DefaultSkillCode = conditionData.projectile_prefab;
 
@@ -374,7 +359,15 @@ public abstract class Devil : MonoBehaviour
 			skill.gameObject.SetActive(true);
 
 			// 기본 스킬 데이터 설정
-			skill.InitializeSkill(target, conditionData, statData);
+			skill.InitializeSkill(
+				target,
+				conditionData,
+				statData,
+				new S_Critical(
+					m_DevilInfo_Excel.Crit_rate,
+					m_DevilInfo_Excel.Crit_Dmg
+					)
+				);
 		}
 
 		if ((E_TargetType)m_DevilInfo.Condition_Default.Target_type == E_TargetType.TileTarget)

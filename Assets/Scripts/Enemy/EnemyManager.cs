@@ -6,6 +6,9 @@ using UnityEngine;
 
 public class EnemyManager : Singleton<EnemyManager>
 {
+	public Color m_NormalDamageColor = new Color(255f, 200f, 50f, 255f) / 255f;
+	public Color m_CriticalDamageColor = new Color(200f, 10f, 20f, 255f) / 255f;
+
 	protected Enemy_TableExcelLoader m_EnemyData;
 
 	// 전체 몬스터
@@ -31,6 +34,10 @@ public class EnemyManager : Singleton<EnemyManager>
 			return m_EnemyData;
 		}
 	}
+	#endregion
+	#region 외부 프로퍼티
+	public Color normalDamageColor => m_NormalDamageColor;
+	public Color criticalDamageColor => m_CriticalDamageColor;
 	#endregion
 
 	#region 외부 함수

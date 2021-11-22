@@ -12,54 +12,54 @@ public class FloatingTextManager : Singleton<FloatingTextManager>
 	#endregion
 
 	#region 내부 함수
-	IEnumerator Co_SpawnDamageText(string text, float time)
+	IEnumerator Co_SpawnDamageText(string text, FloatingTextFilter filter)
 	{
-		if (time > 0f)
+		if (filter.time > 0f)
 		{
-			yield return new WaitForSeconds(time);
+			yield return new WaitForSeconds(filter.time);
 		}
 
-		SpawnDamageText(text, Vector2.one * 0.5f);
-	}
-	IEnumerator Co_SpawnDamageText(string text, float time, Vector2 position)
-	{
-		if (time > 0f)
-		{
-			yield return new WaitForSeconds(time);
-		}
-
-		SpawnDamageText(text, position);
-	}
-	#endregion
-	#region 외부 함수
-	public void SpawnDamageText(string text)
-	{
-		SpawnDamageText(text, Vector2.one * 0.5f);
-	}
-	public void SpawnDamageText(string text, Vector3 position)
-	{
 		// 스폰
 		FloatingText floatingText = M_FloatingTextPool.GetPool("DamageText").Spawn();
 		// 초기화
 		floatingText.__Initialize();
 		// 텍스트 설정
-		floatingText.text = text;
+		floatingText.textMeshPro.text = text;
+		// 색 설정
+		if (filter.color != default(Color) &&
+			floatingText.textMeshPro.color != filter.color)
+			floatingText.textMeshPro.color = filter.color;
+		// 아웃라인 색 설정
+		if (filter.outlineColor != default(Color32) &&
+			floatingText.textMeshPro.outlineColor != filter.outlineColor)
+			floatingText.textMeshPro.outlineColor = filter.outlineColor;
+		// 아웃라인 두께 설정
+		floatingText.textMeshPro.outlineWidth = filter.outlineWidth;
 		// 부모 설정
 		floatingText.transform.SetParent(m_Canvas.transform);
 		// 위치 설정
-		floatingText.transform.position = Camera.main.WorldToScreenPoint(position);
+		switch (filter.postionType)
+		{
+			case FloatingTextFilter.E_PostionType.World:
+				floatingText.transform.position = filter.position;
+				break;
+			case FloatingTextFilter.E_PostionType.Screen:
+				floatingText.transform.position = Camera.main.WorldToScreenPoint(filter.position);
+				break;
+			case FloatingTextFilter.E_PostionType.View:
+				floatingText.transform.position = Camera.main.WorldToViewportPoint(filter.position);
+				break;
+		}
 		// 활성화 설정
 		floatingText.gameObject.SetActive(true);
 		// 관리 리스트에 추가
 		m_FloatingTextList.Add(floatingText);
 	}
-	public void SpawnDamageText(string text, float time)
+	#endregion
+	#region 외부 함수
+	public void SpawnDamageText(string text, FloatingTextFilter filter)
 	{
-		StartCoroutine(Co_SpawnDamageText(text, time));
-	}
-	public void SpawnDamageText(string text, float time, Vector3 position)
-	{
-		StartCoroutine(Co_SpawnDamageText(text, time, position));
+		StartCoroutine(Co_SpawnDamageText(text, filter));
 	}
 	public void DespawnDamageText(FloatingText floatingText)
 	{

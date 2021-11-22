@@ -1081,21 +1081,6 @@ public class Tower : MonoBehaviour
 		}
 		#endregion
 
-		#region 크리티컬
-		// 크리티컬 확률
-		float CritRate = (m_TowerInfo_Excel.Crit_rate + m_TowerInfo.Crit_Rate_Fix) * m_TowerInfo.Crit_Rate_Percent;
-		// 크리티컬 배율
-		float CritDmg = (m_TowerInfo_Excel.Crit_Dmg + m_TowerInfo.Crit_Dmg_Fix) * m_TowerInfo.Crit_Dmg_Percent;
-
-		// 크리티컬 대미지 설정
-		float CritRand = Random.Range(0.00001f, 1f);
-		bool CritApply = CritRand <= CritRate;
-		if (CritApply)
-		{
-			statData.Dmg_Percent *= CritDmg;
-		}
-		#endregion
-
 		// 기본 스킬 투사체 생성
 		int DefaultSkillCode = conditionData.projectile_prefab;
 
@@ -1119,7 +1104,15 @@ public class Tower : MonoBehaviour
 			skill.gameObject.SetActive(true);
 
 			// 기본 스킬 데이터 설정
-			skill.InitializeSkill(target, conditionData, statData);
+			skill.InitializeSkill(
+				target,
+				conditionData,
+				statData,
+				new S_Critical(
+					(m_TowerInfo_Excel.Crit_rate + m_TowerInfo.Crit_Rate_Fix) * m_TowerInfo.Crit_Rate_Percent,
+					(m_TowerInfo_Excel.Crit_Dmg + m_TowerInfo.Crit_Dmg_Fix) * m_TowerInfo.Crit_Dmg_Percent
+					)
+				);
 		}
 
 		if ((E_TargetType)conditionData.Target_type == E_TargetType.TileTarget)
@@ -1158,21 +1151,6 @@ public class Tower : MonoBehaviour
 		SkillCondition_TableExcel conditionData = m_TowerInfo.Condition_Skill01;
 		SkillStat_TableExcel statData = m_TowerInfo.Stat_Skill01;
 
-		#region 크리티컬
-		// 크리티컬 확률
-		float CritRate = (m_TowerInfo_Excel.Crit_rate + m_TowerInfo.Crit_Rate_Fix) * m_TowerInfo.Crit_Rate_Percent;
-		// 크리티컬 배율
-		float CritDmg = (m_TowerInfo_Excel.Crit_Dmg + m_TowerInfo.Crit_Dmg_Fix) * m_TowerInfo.Crit_Dmg_Percent;
-
-		// 크리티컬 대미지 설정
-		float CritRand = Random.Range(0.00001f, 1f);
-		bool CritApply = CritRand <= CritRate;
-		if (CritApply)
-		{
-			statData.Dmg_Percent *= CritDmg;
-		}
-		#endregion
-
 		// 스킬01 투사체 생성
 		int Skill01Code = conditionData.projectile_prefab;
 
@@ -1196,7 +1174,15 @@ public class Tower : MonoBehaviour
 			skill.gameObject.SetActive(true);
 
 			// 스킬01 데이터 설정
-			skill.InitializeSkill(target, conditionData, statData);
+			skill.InitializeSkill(
+				target,
+				conditionData,
+				statData,
+				new S_Critical(
+					(m_TowerInfo_Excel.Crit_rate + m_TowerInfo.Crit_Rate_Fix) * m_TowerInfo.Crit_Rate_Percent,
+					(m_TowerInfo_Excel.Crit_Dmg + m_TowerInfo.Crit_Dmg_Fix) * m_TowerInfo.Crit_Dmg_Percent
+					)
+				);
 		}
 
 		if ((E_TargetType)m_TowerInfo.Condition_Skill01_Origin.Target_type == E_TargetType.TileTarget)
@@ -1235,21 +1221,6 @@ public class Tower : MonoBehaviour
 		SkillCondition_TableExcel conditionData = m_TowerInfo.Condition_Skill02;
 		SkillStat_TableExcel statData = m_TowerInfo.Stat_Skill02;
 
-		#region 크리티컬
-		// 크리티컬 확률
-		float CritRate = (m_TowerInfo_Excel.Crit_rate + m_TowerInfo.Crit_Rate_Fix) * m_TowerInfo.Crit_Rate_Percent;
-		// 크리티컬 배율
-		float CritDmg = (m_TowerInfo_Excel.Crit_Dmg + m_TowerInfo.Crit_Dmg_Fix) * m_TowerInfo.Crit_Dmg_Percent;
-
-		// 크리티컬 대미지 설정
-		float CritRand = Random.Range(0.00001f, 1f);
-		bool CritApply = CritRand <= CritRate;
-		if (CritApply)
-		{
-			statData.Dmg_Percent *= CritDmg;
-		}
-		#endregion
-
 		// 스킬02 투사체 생성
 		int Skill02Code = conditionData.projectile_prefab;
 
@@ -1273,7 +1244,15 @@ public class Tower : MonoBehaviour
 			skill.gameObject.SetActive(true);
 
 			// 스킬02 데이터 설정
-			skill.InitializeSkill(target, conditionData, statData);
+			skill.InitializeSkill(
+				target,
+				conditionData,
+				statData,
+				new S_Critical(
+					(m_TowerInfo_Excel.Crit_rate + m_TowerInfo.Crit_Rate_Fix) * m_TowerInfo.Crit_Rate_Percent,
+					(m_TowerInfo_Excel.Crit_Dmg + m_TowerInfo.Crit_Dmg_Fix) * m_TowerInfo.Crit_Dmg_Percent
+					)
+				);
 		}
 
 		if ((E_TargetType)m_TowerInfo.Condition_Skill02_Origin.Target_type == E_TargetType.TileTarget)
