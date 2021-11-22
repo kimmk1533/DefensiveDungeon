@@ -80,6 +80,26 @@ public class DevilManager : Singleton<DevilManager>
 
 		return result;
 	}
+	bool use_skill = false;
+	bool is_gizmodraw = false;
+	public bool UseSkill
+	{
+		get => use_skill;
+		set => use_skill = value;
+	}
+	public bool Is_GizmoDraw
+	{
+		get => is_gizmodraw;
+		set => is_gizmodraw = value;
+	}
+	public int skillnumber = 0;
+	public void Doskill1()
+	{
+		if(use_skill)
+		{
+			m_Devil.ActiveRange((Devil.E_SkillNumber)skillnumber);
+		}
+	}
 	#endregion
 
 	#region 유니티 콜백 함수
@@ -93,5 +113,10 @@ public class DevilManager : Singleton<DevilManager>
 	{
 		SelectDevil(M_UserInfo.DevilCode);
 	}
+	private void Update()
+	{
+		Doskill1();
+	}
 	#endregion
+
 }

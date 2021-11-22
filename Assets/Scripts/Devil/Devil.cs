@@ -62,10 +62,12 @@ public abstract class Devil : MonoBehaviour
 	#region 외부 프로퍼티
 	public float MaxHP => m_DevilInfo_Excel.HP;
 	public float HP => m_DevilInfo.m_HP;
-	public bool IsDie => m_DevilInfo.isDie;
+	public bool IsDead => m_DevilInfo.IsDead;
 
 	public Devil_TableExcel ExcelData => m_DevilInfo_Excel;
 	public Transform HitPivot => m_DevilInfo.HitPivot;
+	public E_Devil GetBossType => m_DevilInfo.Boss_type;
+	
 	#endregion
 
 	#region 내부 함수
@@ -77,6 +79,7 @@ public abstract class Devil : MonoBehaviour
 		#endregion
 
 		#region 내부 데이터 정리
+		m_DevilInfo.Boss_type = no;
 		m_DevilInfo.RotateSpeed = 5f;
 		m_DevilInfo.LookingDir = Vector3.back;
 
@@ -102,8 +105,45 @@ public abstract class Devil : MonoBehaviour
 
 		// 현재 체력
 		m_DevilInfo.m_HP = m_DevilInfo_Excel.HP;
+		m_DevilInfo.m_originalHP = m_DevilInfo_Excel.HP;
+		m_DevilInfo.m_halfHP = m_DevilInfo_Excel.HP * 0.5f;
 		// 현재 방어력
 		m_DevilInfo.m_Def = m_DevilInfo_Excel.Def;
+
+		m_DevilInfo.m_Atk = m_DevilInfo_Excel.Atk;
+
+		//여기서 스킬 데이터 넣기
+		//스킬 1
+		m_DevilInfo.m_Skill01.m_ConditionData = M_Skill.GetConditionData(m_DevilInfo_Excel.Skill1Code);
+		m_DevilInfo.m_Skill01.m_StatData = M_Skill.GetStatData(m_DevilInfo.m_Skill01.m_ConditionData.PassiveCode);
+		SkillCondition_TableExcel skill_codition = m_DevilInfo.m_Skill01.m_ConditionData;
+		SkillStat_TableExcel skill_stat = m_DevilInfo.m_Skill01.m_StatData;
+		//테이블이 없어서 임의로 값을 넣음.
+		m_DevilInfo.m_Skill01.m_SkillType = E_SkillType.Active;
+		m_DevilInfo.m_Skill01.m_SkillRangeType = E_SkillRangeType.Direction;
+		m_DevilInfo.m_Skill01.m_MaxCharge = skill_stat.Max_Charge;
+		m_DevilInfo.m_Skill01.m_Cooltime = skill_stat.CoolTime;
+		m_DevilInfo.m_Skill01.m_CooltimeTimer = skill_stat.CoolTime;
+		m_DevilInfo.m_Skill01.m_Dmg_Fix = m_DevilInfo.m_Atk;
+		m_DevilInfo.m_Skill01.m_Dmg_Fix += m_DevilInfo.m_Skill01.m_StatData.Dmg_Fix;
+		m_DevilInfo.m_Skill01.m_Dmg_Percent = m_DevilInfo.m_Skill01.m_StatData.Dmg_Percent;
+		m_DevilInfo.m_Size = m_DevilInfo.m_Skill01.m_StatData.Size;
+
+		//스킬 2
+		m_DevilInfo.m_Skill02.m_ConditionData = M_Skill.GetConditionData(m_DevilInfo_Excel.Skill1Code);
+		m_DevilInfo.m_Skill02.m_StatData = M_Skill.GetStatData(m_DevilInfo.m_Skill02.m_ConditionData.PassiveCode);
+		skill_codition = m_DevilInfo.m_Skill02.m_ConditionData;
+		skill_stat = m_DevilInfo.m_Skill02.m_StatData;
+		//테이블이 없어서 임의로 값을 넣음.
+		m_DevilInfo.m_Skill02.m_SkillType = E_SkillType.Active;
+		m_DevilInfo.m_Skill02.m_SkillRangeType = E_SkillRangeType.All;
+		m_DevilInfo.m_Skill02.m_MaxCharge = skill_stat.Max_Charge;
+		m_DevilInfo.m_Skill02.m_Cooltime = skill_stat.CoolTime;
+		m_DevilInfo.m_Skill02.m_CooltimeTimer = skill_stat.CoolTime;
+		m_DevilInfo.m_Skill02.m_Dmg_Fix = m_DevilInfo.m_Atk;
+		m_DevilInfo.m_Skill02.m_Dmg_Fix += m_DevilInfo.m_Skill02.m_StatData.Dmg_Fix;
+		m_DevilInfo.m_Skill01.m_Dmg_Percent = m_DevilInfo.m_Skill02.m_StatData.Dmg_Percent;
+		m_DevilInfo.m_Size = m_DevilInfo.m_Skill02.m_StatData.Size;
 		#endregion
 
 		#region 내부 컴포넌트
@@ -247,11 +287,12 @@ public abstract class Devil : MonoBehaviour
 	{
 		m_DevilAnimator.SetTrigger("Die");
 	}
-
 	protected abstract void DoSkill01(DevilSkillArg arg);
 	protected abstract void DoSkill02(DevilSkillArg arg);
+
 	#endregion
 	#region 외부 함수
+
 	// 스킬01 쿨타임 감소
 	public void ReduceSkill01Cooldown(float time)
 	{
@@ -282,8 +323,76 @@ public abstract class Devil : MonoBehaviour
 			}
 		}
 	}
+	Vector3 mos = Vector3.one * 1000000f;
+
+	RaycastHit hit = new RaycastHit();
+	float Range = 0;
+	
+	public void ActiveRange(E_SkillNumber number)
+	{
+		mos = Input.mousePosition;
+		Ray ray = Camera.main.ScreenPointToRay(mos);
+		mos = Camera.main.ScreenToWorldPoint(mos);
+
+		LayerMask mask = LayerMask.GetMask("DevilSkillCollider");
+		//스킬 1
+		if (number == E_SkillNumber.Skill1)
+		{
+			Debug.DrawRay(ray.origin, ray.direction * 1000, Color.red, 1f);
+			DevilSkillArg skillarg = GetDevilSkillArg(Devil.E_SkillNumber.Skill1);
+			//범위표시
+			if (Physics.Raycast(ray, out hit, float.PositiveInfinity, mask))
+			{
+				M_Devil.Is_GizmoDraw = true;
+
+				if (Input.GetMouseButtonDown(0))
+				{
+					switch (hit.transform.tag)
+					{
+						case "East":
+							skillarg.dir = E_Direction.East;
+							break;
+						case "West":
+							skillarg.dir = E_Direction.West;
+							break;
+						case "North":
+							skillarg.dir = E_Direction.North;
+							break;
+						case "South":
+							skillarg.dir = E_Direction.South;
+							break;
+					}
+					m_DevilInfo.m_Skill01.mousepos = hit.point;
+					OnSkill01(skillarg);
+					M_Devil.Is_GizmoDraw = false;
+					M_Devil.UseSkill = false;
+				}
+			}
+		}//스킬2
+		else if (number == E_SkillNumber.Skill2)
+		{
+			if (m_DevilInfo.Boss_type == E_Devil.HellLord)
+			{
+				return;
+			}
+			//범위표시
+			if (Physics.Raycast(ray, out hit, float.PositiveInfinity, mask))
+			{
+				M_Devil.Is_GizmoDraw = true;
+				if (Input.GetMouseButton(0))
+				{
+					m_DevilInfo.m_Skill02.mousepos = hit.point;
+					OnSkill02(GetDevilSkillArg(Devil.E_SkillNumber.Skill2));
+					M_Devil.Is_GizmoDraw = false;
+					M_Devil.UseSkill = false;
+				}
+			}
+		}
+
+	}
 	public void OnSkill01(DevilSkillArg arg)
 	{
+		arg.mousepos = m_DevilInfo.m_Skill01.mousepos;
 		if (m_DevilInfo.m_Skill01.m_CurrentCharge > 0)
 		{
 			--m_DevilInfo.m_Skill01.m_CurrentCharge;
@@ -293,16 +402,27 @@ public abstract class Devil : MonoBehaviour
 	}
 	public void OnSkill02(DevilSkillArg arg)
 	{
+		arg.mousepos = m_DevilInfo.m_Skill02.mousepos;
 		if (m_DevilInfo.m_Skill02.m_CurrentCharge > 0)
 		{
 			--m_DevilInfo.m_Skill02.m_CurrentCharge;
 
 			Skill02Event?.Invoke(arg);
+			Debug.Log("링크 잘됨");
 		}
+	}
+	public DevilSkillArg GetDevilSkillArg(E_SkillNumber number)
+	{
+		DevilSkillArg temp = new DevilSkillArg();
+		if (number == E_SkillNumber.Skill1)
+			temp.skillData = m_DevilInfo.m_Skill01;
+		else if (number == E_SkillNumber.Skill2)
+			temp.skillData = m_DevilInfo.m_Skill02;
+		return temp;
 	}
 	public void GetDamage(float damage)
 	{
-		if (IsDie)
+		if (IsDead)
 			return;
 
 		float Damage = damage - m_DevilInfo.m_Def;
@@ -315,12 +435,12 @@ public abstract class Devil : MonoBehaviour
 
 		if (m_DevilInfo.m_HP <= 0f)
 		{
-			m_DevilInfo.isDie = true;
+			m_DevilInfo.IsDead = true;
 			SetDieTrigger();
 		}
 	}
 
-	public void CallAttack()
+	virtual public void CallAttack()
 	{
 		// 내부 데이터 정리
 		m_DevilInfo.AttackSpeed_Default = m_DevilInfo.Stat_Default.CoolTime;
@@ -399,23 +519,35 @@ public abstract class Devil : MonoBehaviour
 			IsWin = false
 		});
 	}
+
 	#endregion
 	#region 유니티 콜백 함수
 	protected void Update()
 	{
-		if (IsDie)
+		if (IsDead)
 			return;
-
 		UpdateTarget();
 		RotateToTarget();
 		AttackTarget();
 		ReduceSkillCooldown();
 	}
+	private void OnDrawGizmos()
+	{
+		if (M_Devil.Is_GizmoDraw)
+		{
+			Color color = Gizmos.color;
+			Gizmos.color = Color.red;
+			Gizmos.DrawSphere(hit.point, m_DevilInfo.m_Size);
+			Gizmos.color = color;
+		}
+	}
+
 	#endregion
 
 	[System.Serializable]
 	public struct S_DevilData
 	{
+		public E_Devil Boss_type;
 		// 회전 속도
 		public float RotateSpeed;
 		// 초기 바라볼 방향
@@ -425,7 +557,7 @@ public abstract class Devil : MonoBehaviour
 		// 피격 피벗
 		public Transform HitPivot;
 		// 사망 여부
-		public bool isDie;
+		public bool IsDead;
 
 		// 기본 스킬 데이터
 		public SkillCondition_TableExcel Condition_Default;
@@ -438,10 +570,14 @@ public abstract class Devil : MonoBehaviour
 		// 스킬
 		public S_DevilSkillData m_Skill01;
 		public S_DevilSkillData m_Skill02;
-
+		public float m_originalHP;
+		public float m_halfHP;
 		public float m_HP;
 		public float m_Def;
 		public float m_DefaultSkill_LifeSteal;
+		public float m_Atk;
+		public float m_Size;
+		public bool check2;
 	}
 	// 마왕 스킬 정보
 	[System.Serializable]
@@ -456,14 +592,24 @@ public abstract class Devil : MonoBehaviour
 		public int m_CurrentCharge;
 		public float m_Cooltime;
 		public float m_CooltimeTimer;
+		public Vector3 mousepos;//범위스킬 생성할 마우스 위치.
+		public float m_Dmg_Fix;
+		public float m_Dmg_Percent;
+		public float m_total_Dmg;
 	}
 
 	public struct DevilSkillArg
 	{
 		public S_DevilSkillData skillData;
 		public E_Direction dir;
+		public Vector3 mousepos;//범위스킬 생성할 마우스 위치.
 	}
-
+	public enum E_SkillNumber
+	{
+		None,
+		Skill1,
+		Skill2,
+	}
 	public enum E_SkillType
 	{
 		None,
