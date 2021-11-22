@@ -32,7 +32,9 @@ public class TowerPool : ObjectPool<TowerPool, Tower>
 
 				Tower origin = originClone.AddComponent<Tower>();
 
-				float size = M_PrefabData.DataList[i].Size;
+				float size = M_PrefabData.DataList
+					.Find((item) => { return PrefabCode == item.Code; })
+					.Size;
 
 				origin.transform.Find("Mesh").localScale = Vector3.one * size;
 				origin.gameObject.layer = LayerMask.NameToLayer("Tower");
