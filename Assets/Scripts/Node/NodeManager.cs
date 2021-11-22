@@ -506,10 +506,7 @@ public class NodeManager : Singleton<NodeManager>
 		{
 			foreach (var item in m_NodeList[StandardNodeType][i])
 			{
-				if (null != item.m_Tower)
-				{
-					item.m_Tower.m_Target_Default = null;
-				}
+				item.m_Tower?.ClearTarget();
 			}
 		}
 	}

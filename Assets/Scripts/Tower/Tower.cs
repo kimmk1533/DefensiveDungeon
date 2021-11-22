@@ -1301,6 +1301,13 @@ public class Tower : MonoBehaviour
 		// 시너지 추가
 		m_TowerInfo.SynergyList.Add(synergy);
 	}
+
+	public void ClearTarget()
+	{
+		m_Target_Default = null;
+		m_Target_Skill01 = null;
+		m_Target_Skill02 = null;
+	}
 	#endregion
 	#region 유니티 콜백 함수
 	private void Update()
