@@ -434,6 +434,11 @@ public class Skill : MonoBehaviour
 
 					m_Target.On_DaMage(damage, isCrit);
 
+					if (m_Target.IsDead)
+					{
+						m_SkillInfo.BounceTargetList.Remove(m_Target);
+					}
+
 					--m_SkillInfo.BounceCount;
 
 					// 피격 이펙트 생성
@@ -474,8 +479,10 @@ public class Skill : MonoBehaviour
 				m_SkillInfo.FixedTargetList = m_SkillInfo.AttackRange.TargetList;
 				break;
 			case E_AttackType.BounceFire:
-				// 다음 타겟 찾는 사거리 = 타워 사거리의 1 / 4
-				m_SkillInfo.AttackRange.Range = m_StatInfo_Excel.Range * 0.25f;
+				// 다음 타겟 찾는 사거리 = 타워 사거리의 1 / 2
+				m_SkillInfo.AttackRange.Range = m_StatInfo_Excel.Range * 0.5f;
+				m_SkillInfo.AttackRange.CanFindTarget = true;
+				m_SkillInfo.AttackRange.Direction = target.Direction;
 				break;
 		}
 

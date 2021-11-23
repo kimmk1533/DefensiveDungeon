@@ -110,6 +110,8 @@ public class AttackRange : MonoBehaviour
 
 		if (null == enemy)
 			return;
+		if (enemy.IsDead)
+			return;
 
 		if (m_CanFindTarget && (m_Direction == E_Direction.None || enemy.Direction == m_Direction))
 			m_TargetList.Add(enemy);

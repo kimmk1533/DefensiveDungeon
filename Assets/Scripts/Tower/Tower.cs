@@ -467,14 +467,17 @@ public class Tower : MonoBehaviour
 		m_TowerInfo.BuffList_Fix.Clear();
 		m_TowerInfo.BuffList_Percent.Clear();
 
+		m_TowerInfo.Buff_AttackType = E_AttackType.None;
+		m_TowerInfo.Target_num = m_TowerInfo.Stat_Default.Target_num;
+
+		m_TowerInfo.ReduceCooldown = false;
+		m_TowerInfo.ReduceCooldownSec = 0f;
+
 		m_TowerInfo.Berserker = false;
 		m_TowerInfo.BerserkerStack = 0;
 		m_TowerInfo.BerserkerMaxStack = 0;
 		m_TowerInfo.BerserkerBuffList_Fix.Clear();
 		m_TowerInfo.BerserkerBuffList_Percent.Clear();
-
-		m_TowerInfo.ReduceCooldown = false;
-		m_TowerInfo.ReduceCooldownSec = 0f;
 	}
 	protected void UpdateSynergyBuff()
 	{
@@ -549,11 +552,11 @@ public class Tower : MonoBehaviour
 						break;
 					case E_SynergyEffectType.ChangeAtkType:
 						{
-							m_TowerInfo.Condition_Default.Atk_type = item.EffectChange1;
+							m_TowerInfo.Buff_AttackType = (E_AttackType)item.EffectChange1;
 
-							if ((E_AttackType)item.EffectChange1 == E_AttackType.BounceFire)
+							if (m_TowerInfo.Buff_AttackType == E_AttackType.BounceFire)
 							{
-								m_TowerInfo.Stat_Default.Target_num = item.EffectReq1;
+								m_TowerInfo.Target_num = item.EffectReq1;
 							}
 						}
 						break;
@@ -699,11 +702,11 @@ public class Tower : MonoBehaviour
 						break;
 					case E_SynergyEffectType.ChangeAtkType:
 						{
-							m_TowerInfo.Condition_Default.Atk_type = item.EffectChange2;
+							m_TowerInfo.Buff_AttackType = (E_AttackType)item.EffectChange2;
 
-							if ((E_AttackType)item.EffectChange2 == E_AttackType.BounceFire)
+							if (m_TowerInfo.Buff_AttackType == E_AttackType.BounceFire)
 							{
-								m_TowerInfo.Stat_Default.Target_num = item.EffectReq2;
+								m_TowerInfo.Target_num = item.EffectReq2;
 							}
 						}
 						break;
@@ -1294,12 +1297,15 @@ public class Tower : MonoBehaviour
 			null == m_Target_Default)
 			return;
 
+		SkillCondition_TableExcel conditionData = m_TowerInfo.Condition_Default;
+		SkillStat_TableExcel statData = m_TowerInfo.Stat_Default;
+
 		#region 시너지
-		// 버서커
-		if (m_TowerInfo.Berserker)
+		// 공격 타입 변경
+		if (m_TowerInfo.Buff_AttackType != E_AttackType.None)
 		{
-			if (m_TowerInfo.BerserkerStack < m_TowerInfo.BerserkerMaxStack)
-				++m_TowerInfo.BerserkerStack;
+			conditionData.Atk_type = (int)m_TowerInfo.Buff_AttackType;
+			statData.Target_num = m_TowerInfo.Target_num;
 		}
 
 		// 마왕 스킬 쿨타임 변경
@@ -1316,10 +1322,14 @@ public class Tower : MonoBehaviour
 				M_Devil.Devil.ReduceSkill02Cooldown(m_TowerInfo.ReduceCooldownSec);
 			}
 		}
-		#endregion
 
-		SkillCondition_TableExcel conditionData = m_TowerInfo.Condition_Default;
-		SkillStat_TableExcel statData = m_TowerInfo.Stat_Default;
+		// 버서커
+		if (m_TowerInfo.Berserker)
+		{
+			if (m_TowerInfo.BerserkerStack < m_TowerInfo.BerserkerMaxStack)
+				++m_TowerInfo.BerserkerStack;
+		}
+		#endregion
 
 		#region 버프
 		statData.Dmg_Fix += m_TowerInfo_Excel.Atk + m_TowerInfo.Buff_Atk_Fix;
@@ -1350,7 +1360,7 @@ public class Tower : MonoBehaviour
 							Atk_Range += m_TowerInfo.Buff_Range_Fix + BuffAmount;
 							Atk_Range *= m_TowerInfo.Buff_Range_Percent;
 
-							m_AttackRange_Default.Range = Atk_Range;
+							statData.Range = m_AttackRange_Default.Range = Atk_Range;
 						}
 						break;
 					case E_BuffType.Atk_spd:
@@ -1393,7 +1403,7 @@ public class Tower : MonoBehaviour
 							Atk_Range += m_TowerInfo.Buff_Range_Fix;
 							Atk_Range *= m_TowerInfo.Buff_Range_Percent * BuffAmount;
 
-							m_AttackRange_Default.Range = Atk_Range;
+							statData.Range = m_AttackRange_Default.Range = Atk_Range;
 						}
 						break;
 					case E_BuffType.Atk_spd:
@@ -1845,6 +1855,11 @@ public class Tower : MonoBehaviour
 		public List<S_Buff> BuffList_Fix;
 		// 곱버프 리스트
 		public List<S_Buff> BuffList_Percent;
+		#endregion
+
+		#region 공격 타입 변경
+		public E_AttackType Buff_AttackType;
+		public int Target_num;
 		#endregion
 
 		#region 마왕 스킬 쿨타임 변경
