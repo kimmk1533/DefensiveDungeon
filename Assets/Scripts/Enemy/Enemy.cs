@@ -165,7 +165,7 @@ public class Enemy : MonoBehaviour
 
 		// 대미지 텍스트
 		Vector3 text_position = transform.position + Vector3.forward * 2.5f;
-		M_DamageText.SpawnDamageText(damage.ToString(), new FloatingTextFilter()
+		M_DamageText.SpawnDamageText(((int)damage).ToString(), new FloatingTextFilter()
 		{
 			position = text_position,
 			postionType = FloatingTextFilter.E_PostionType.Screen,
