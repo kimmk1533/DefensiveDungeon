@@ -30,18 +30,14 @@ public class SkillUI : MonoBehaviour
 	}
 	void Skill1()
 	{  
-		activebtn = !activebtn;
-		M_Devil.UseSkill = activebtn;
+		activebtn = !M_Devil.UseSkill;
 		M_Devil.UseSkill = activebtn;
 		M_Devil.skillnumber = (int)Devil.E_SkillNumber.Skill1;
-		// M_Devil.Devil.OnSkill01(M_Devil.Devil.GetDevilSkillArg(Devil.E_SkillNumber.Skill1));
 	}
 	void Skill2()
 	{
-		activebtn = !activebtn;
+		activebtn = !M_Devil.UseSkill;
 		M_Devil.UseSkill = activebtn;
-		M_Devil.Is_GizmoDraw = activebtn;
 		M_Devil.skillnumber = (int)Devil.E_SkillNumber.Skill2;
-		//M_Devil.Devil.OnSkill02(M_Devil.Devil.GetDevilSkillArg(Devil.E_SkillNumber.Skill2));
 	}
 }

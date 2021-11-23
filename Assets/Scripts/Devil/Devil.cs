@@ -67,7 +67,7 @@ public abstract class Devil : MonoBehaviour
 	public Devil_TableExcel ExcelData => m_DevilInfo_Excel;
 	public Transform HitPivot => m_DevilInfo.HitPivot;
 	public E_Devil GetBossType => m_DevilInfo.Boss_type;
-	
+
 	#endregion
 
 	#region 내부 함수
@@ -326,8 +326,7 @@ public abstract class Devil : MonoBehaviour
 	Vector3 mos = Vector3.one * 1000000f;
 
 	RaycastHit hit = new RaycastHit();
-	float Range = 0;
-	
+
 	public void ActiveRange(E_SkillNumber number)
 	{
 		mos = Input.mousePosition;
@@ -340,11 +339,16 @@ public abstract class Devil : MonoBehaviour
 		{
 			Debug.DrawRay(ray.origin, ray.direction * 1000, Color.red, 1f);
 			DevilSkillArg skillarg = GetDevilSkillArg(Devil.E_SkillNumber.Skill1);
+			if (m_DevilInfo.m_Skill01.m_CurrentCharge <= 0)
+			{
+				M_Devil.Is_GizmoDraw = false;
+				M_Devil.UseSkill = false;
+				return;
+			}
 			//범위표시
 			if (Physics.Raycast(ray, out hit, float.PositiveInfinity, mask))
 			{
 				M_Devil.Is_GizmoDraw = true;
-
 				if (Input.GetMouseButtonDown(0))
 				{
 					switch (hit.transform.tag)
@@ -379,6 +383,7 @@ public abstract class Devil : MonoBehaviour
 			if (Physics.Raycast(ray, out hit, float.PositiveInfinity, mask))
 			{
 				M_Devil.Is_GizmoDraw = true;
+				//M_Devil.Is_GizmoDraw = true;
 				if (Input.GetMouseButton(0))
 				{
 					m_DevilInfo.m_Skill02.mousepos = hit.point;
@@ -533,12 +538,19 @@ public abstract class Devil : MonoBehaviour
 	}
 	private void OnDrawGizmos()
 	{
-		if (M_Devil.Is_GizmoDraw)
+
+		if (M_Devil.Is_GizmoDraw && m_DevilInfo.m_Skill01.m_CurrentCharge > 0)
 		{
-			Color color = Gizmos.color;
-			Gizmos.color = Color.red;
-			Gizmos.DrawSphere(hit.point, m_DevilInfo.m_Size);
-			Gizmos.color = color;
+			if (hit.collider != null)
+			{
+				if (hit.transform.gameObject.layer == LayerMask.NameToLayer("DevilSkillCollider"))
+				{
+					Color color = Gizmos.color;
+					Gizmos.color = Color.red;
+					Gizmos.DrawSphere(hit.point, m_DevilInfo.m_Size);
+					Gizmos.color = color;
+				}
+			}
 		}
 	}
 
@@ -577,7 +589,6 @@ public abstract class Devil : MonoBehaviour
 		public float m_DefaultSkill_LifeSteal;
 		public float m_Atk;
 		public float m_Size;
-		public bool check2;
 	}
 	// 마왕 스킬 정보
 	[System.Serializable]
