@@ -123,7 +123,7 @@ public class HellLord : Devil
 			}
 
 			//최종 데미지
-			m_DevilInfo.m_Skill01.m_total_Dmg = m_DevilInfo.m_Skill01.m_Dmg_Fix * dmg_percent;
+			arg.skillData.m_total_Dmg = m_DevilInfo.m_Skill01.m_Dmg_Fix * dmg_percent;
 
 			#endregion
 
