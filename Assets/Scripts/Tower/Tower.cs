@@ -157,41 +157,31 @@ public class Tower : MonoBehaviour
 		{
 			if (IsTargetDead_Default || LostTarget_Default)
 			{
+				if (m_TowerInfo.Berserker)
+				{
+					m_TowerInfo.BerserkerStack = 0;
+				}
+
 				// 타겟 변경 기준에 따라
-				switch ((E_TargetType)m_TowerInfo.Condition_Default_Origin.Target_type)
+				switch ((E_TargetType)m_TowerInfo.Condition_Default.Target_type)
 				{
 					case E_TargetType.CloseTarget:
 						{
 							m_Target_Default = m_AttackRange_Default.GetNearTarget();
-
-							if (m_TowerInfo.Berserker)
-							{
-								m_TowerInfo.BerserkerStack = 0;
-							}
 						}
 						break;
 					case E_TargetType.RandTarget:
 						{
 							m_Target_Default = m_AttackRange_Default.GetRandomTarget();
-
-							if (m_TowerInfo.Berserker)
-							{
-								m_TowerInfo.BerserkerStack = 0;
-							}
 						}
 						break;
 					// FixTarget (타겟이 사거리를 벗어나거나 죽은 경우 변경)
 					case E_TargetType.FixTarget:
 						{
 							if (null == m_Target_Default || // 예외처리
-								DistanceToTarget_Default > m_TowerInfo.Stat_Default_Origin.Range) // 타겟이 사거리를 벗어난 경우
+								DistanceToTarget_Default > m_TowerInfo.Stat_Default.Range) // 타겟이 사거리를 벗어난 경우
 							{
 								m_Target_Default = m_AttackRange_Default.GetNearTarget();
-
-								if (m_TowerInfo.Berserker)
-								{
-									m_TowerInfo.BerserkerStack = 0;
-								}
 							}
 						}
 						break;
@@ -217,40 +207,25 @@ public class Tower : MonoBehaviour
 			if (IsTargetDead_Skill01 || LostTarget_Skill01)
 			{
 				// 타겟 변경 기준에 따라
-				switch ((E_TargetType)m_TowerInfo.Condition_Skill01_Origin.Target_type)
+				switch ((E_TargetType)m_TowerInfo.Condition_Skill01.Target_type)
 				{
 					case E_TargetType.CloseTarget:
 						{
 							m_Target_Skill01 = m_AttackRange_Skill01.GetNearTarget();
-
-							if (m_TowerInfo.Berserker)
-							{
-								m_TowerInfo.BerserkerStack = 0;
-							}
 						}
 						break;
 					case E_TargetType.RandTarget:
 						{
 							m_Target_Skill01 = m_AttackRange_Skill01.GetRandomTarget();
-
-							if (m_TowerInfo.Berserker)
-							{
-								m_TowerInfo.BerserkerStack = 0;
-							}
 						}
 						break;
 					// FixTarget (타겟이 사거리를 벗어나거나 죽은 경우 변경)
 					case E_TargetType.FixTarget:
 						{
 							if (null == m_Target_Skill01 || // 예외처리
-								DistanceToTarget_Skill01 > m_TowerInfo.Stat_Skill01_Origin.Range) // 타겟이 사거리를 벗어난 경우
+								DistanceToTarget_Skill01 > m_TowerInfo.Stat_Skill01.Range) // 타겟이 사거리를 벗어난 경우
 							{
 								m_Target_Skill01 = m_AttackRange_Skill01.GetNearTarget();
-
-								if (m_TowerInfo.Berserker)
-								{
-									m_TowerInfo.BerserkerStack = 0;
-								}
 							}
 						}
 						break;
@@ -276,40 +251,25 @@ public class Tower : MonoBehaviour
 			if (IsTargetDead_Skill02 || LostTarget_Skill02)
 			{
 				// 타겟 변경 기준에 따라
-				switch ((E_TargetType)m_TowerInfo.Condition_Skill02_Origin.Target_type)
+				switch ((E_TargetType)m_TowerInfo.Condition_Skill02.Target_type)
 				{
 					case E_TargetType.CloseTarget:
 						{
 							m_Target_Skill02 = m_AttackRange_Skill02.GetNearTarget();
-
-							if (m_TowerInfo.Berserker)
-							{
-								m_TowerInfo.BerserkerStack = 0;
-							}
 						}
 						break;
 					case E_TargetType.RandTarget:
 						{
 							m_Target_Skill02 = m_AttackRange_Skill02.GetRandomTarget();
-
-							if (m_TowerInfo.Berserker)
-							{
-								m_TowerInfo.BerserkerStack = 0;
-							}
 						}
 						break;
 					// FixTarget (타겟이 사거리를 벗어나거나 죽은 경우 변경)
 					case E_TargetType.FixTarget:
 						{
 							if (null == m_Target_Skill02 || // 예외처리
-								DistanceToTarget_Skill02 > m_TowerInfo.Stat_Skill02_Origin.Range) // 타겟이 사거리를 벗어난 경우
+								DistanceToTarget_Skill02 > m_TowerInfo.Stat_Skill02.Range) // 타겟이 사거리를 벗어난 경우
 							{
 								m_Target_Skill02 = m_AttackRange_Skill02.GetNearTarget();
-
-								if (m_TowerInfo.Berserker)
-								{
-									m_TowerInfo.BerserkerStack = 0;
-								}
 							}
 						}
 						break;
@@ -414,21 +374,94 @@ public class Tower : MonoBehaviour
 
 	protected void ClearSynergyBuff()
 	{
-		m_TowerInfo.Crit_Rate_Percent = m_TowerInfo_Excel.Crit_rate;
-		m_TowerInfo.Crit_Dmg_Percent = m_TowerInfo_Excel.Crit_Dmg;
+		#region 버프 합연산 제거
+		foreach (var item in m_TowerInfo.BuffList_Fix)
+		{
+			float BuffAmount = item.BuffAmount;
 
-		// 기본 스킬 데이터 초기화
-		m_TowerInfo.Condition_Default = m_TowerInfo.Condition_Default_Origin;
-		m_TowerInfo.Stat_Default = m_TowerInfo.Stat_Default_Origin;
-		m_TowerInfo.Stat_Default.Dmg_Fix += m_TowerInfo_Excel.Atk;
-		// 스킬01 데이터 초기화
-		m_TowerInfo.Condition_Skill01 = m_TowerInfo.Condition_Skill01_Origin;
-		m_TowerInfo.Stat_Skill01 = m_TowerInfo.Stat_Skill01_Origin;
-		m_TowerInfo.Stat_Skill01.Dmg_Fix += m_TowerInfo_Excel.Atk;
-		// 스킬02 데이터 초기화
-		m_TowerInfo.Condition_Skill02 = m_TowerInfo.Condition_Skill02_Origin;
-		m_TowerInfo.Stat_Skill02 = m_TowerInfo.Stat_Skill02_Origin;
-		m_TowerInfo.Stat_Skill02.Dmg_Fix += m_TowerInfo_Excel.Atk;
+			switch (item.BuffType)
+			{
+				case E_BuffType.Atk:
+					m_TowerInfo.Buff_Atk_Fix -= BuffAmount;
+					break;
+				case E_BuffType.Range:
+					{
+						m_TowerInfo.Buff_Range_Fix -= BuffAmount;
+
+						float Atk_Range = m_TowerInfo.Stat_Default.Range;
+
+						Atk_Range += m_TowerInfo.Buff_Range_Fix;
+						Atk_Range *= m_TowerInfo.Buff_Range_Percent;
+
+						m_AttackRange_Default.Range = Atk_Range;
+					}
+					break;
+				case E_BuffType.Atk_spd:
+					{
+						m_TowerInfo.Buff_Atk_spd_Fix -= BuffAmount;
+
+						float Atk_Speed = m_TowerInfo_Excel.Atk_Speed;
+
+						Atk_Speed += m_TowerInfo.Buff_Atk_spd_Fix;
+						Atk_Speed *= m_TowerInfo.Buff_Atk_spd_Percent;
+
+						// 공격속도 적용
+						m_TowerAnimator.SetFloat("AttackSpeed", Atk_Speed);
+					}
+					break;
+				case E_BuffType.Crit_rate:
+					m_TowerInfo.Buff_Crit_rate_Fix -= BuffAmount;
+					break;
+				case E_BuffType.Crit_Dmg:
+					m_TowerInfo.Buff_Crit_Dmg_Fix -= BuffAmount;
+					break;
+			}
+		}
+		#endregion
+		#region 버프 곱연산 제거
+		foreach (var item in m_TowerInfo.BuffList_Percent)
+		{
+			float BuffAmount = item.BuffAmount;
+
+			switch (item.BuffType)
+			{
+				case E_BuffType.Atk:
+					m_TowerInfo.Buff_Atk_Percent /= BuffAmount;
+					break;
+				case E_BuffType.Range:
+					{
+						m_TowerInfo.Buff_Range_Percent /= BuffAmount;
+
+						float Atk_Range = m_TowerInfo.Stat_Default.Range;
+
+						Atk_Range += m_TowerInfo.Buff_Range_Fix;
+						Atk_Range *= m_TowerInfo.Buff_Range_Percent;
+
+						m_AttackRange_Default.Range = Atk_Range;
+					}
+					break;
+				case E_BuffType.Atk_spd:
+					{
+						m_TowerInfo.Buff_Atk_spd_Percent /= BuffAmount;
+
+						float Atk_Speed = m_TowerInfo_Excel.Atk_Speed;
+
+						Atk_Speed += m_TowerInfo.Buff_Atk_spd_Fix;
+						Atk_Speed *= m_TowerInfo.Buff_Atk_spd_Percent;
+
+						// 공격속도 적용
+						m_TowerAnimator.SetFloat("AttackSpeed", Atk_Speed);
+					}
+					break;
+				case E_BuffType.Crit_rate:
+					m_TowerInfo.Buff_Crit_rate_Percent /= BuffAmount;
+					break;
+				case E_BuffType.Crit_Dmg:
+					m_TowerInfo.Buff_Crit_Dmg_Percent /= BuffAmount;
+					break;
+			}
+		}
+		#endregion
 
 		m_TowerInfo.SynergyList.Clear();
 		m_TowerInfo.BuffList_Fix.Clear();
@@ -437,6 +470,8 @@ public class Tower : MonoBehaviour
 		m_TowerInfo.Berserker = false;
 		m_TowerInfo.BerserkerStack = 0;
 		m_TowerInfo.BerserkerMaxStack = 0;
+		m_TowerInfo.BerserkerBuffList_Fix.Clear();
+		m_TowerInfo.BerserkerBuffList_Percent.Clear();
 
 		m_TowerInfo.ReduceCooldown = false;
 		m_TowerInfo.ReduceCooldownSec = 0f;
@@ -747,28 +782,47 @@ public class Tower : MonoBehaviour
 			}
 		}
 
-		#region 버프 합연산
+		#region 버프 합연산 추가
 		foreach (var item in m_TowerInfo.BuffList_Fix)
 		{
+			float BuffAmount = item.BuffAmount;
+
 			switch (item.BuffType)
 			{
 				#region 타워 버프
 				case E_BuffType.Atk:
-					m_TowerInfo.Stat_Default.Dmg_Fix += item.BuffAmount;
+					m_TowerInfo.Buff_Atk_Fix += BuffAmount;
 					break;
 				case E_BuffType.Range:
-					m_TowerInfo.Stat_Default.Range += item.BuffAmount;
-					m_TowerInfo.Stat_Skill01.Range += item.BuffAmount;
-					m_TowerInfo.Stat_Skill02.Range += item.BuffAmount;
+					{
+						m_TowerInfo.Buff_Range_Fix += BuffAmount;
+
+						float Atk_Range = m_TowerInfo.Stat_Default.Range;
+
+						Atk_Range += m_TowerInfo.Buff_Range_Fix;
+						Atk_Range *= m_TowerInfo.Buff_Range_Percent;
+
+						m_AttackRange_Default.Range = Atk_Range;
+					}
 					break;
 				case E_BuffType.Atk_spd:
-					m_TowerInfo.AttackSpeed_Default -= item.BuffAmount;
+					{
+						m_TowerInfo.Buff_Atk_spd_Fix += BuffAmount;
+
+						float Atk_Speed = m_TowerInfo_Excel.Atk_Speed;
+
+						Atk_Speed += m_TowerInfo.Buff_Atk_spd_Fix;
+						Atk_Speed *= m_TowerInfo.Buff_Atk_spd_Percent;
+
+						// 공격속도 적용
+						m_TowerAnimator.SetFloat("AttackSpeed", Atk_Speed);
+					}
 					break;
 				case E_BuffType.Crit_rate:
-					m_TowerInfo.Crit_Rate_Fix += item.BuffAmount;
+					m_TowerInfo.Buff_Crit_rate_Fix += BuffAmount;
 					break;
 				case E_BuffType.Crit_Dmg:
-					m_TowerInfo.Crit_Dmg_Fix += item.BuffAmount;
+					m_TowerInfo.Buff_Crit_Dmg_Fix += BuffAmount;
 					break;
 				#endregion
 
@@ -791,28 +845,47 @@ public class Tower : MonoBehaviour
 			}
 		}
 		#endregion
-		#region 버프 곱연산
+		#region 버프 곱연산 추가
 		foreach (var item in m_TowerInfo.BuffList_Percent)
 		{
+			float BuffAmount = item.BuffAmount;
+
 			switch (item.BuffType)
 			{
 				#region 타워 버프
 				case E_BuffType.Atk:
-					m_TowerInfo.Stat_Default.Dmg_Percent *= item.BuffAmount;
+					m_TowerInfo.Buff_Atk_Percent *= BuffAmount;
 					break;
 				case E_BuffType.Range:
-					m_TowerInfo.Stat_Default.Range *= item.BuffAmount;
-					m_TowerInfo.Stat_Skill01.Range *= item.BuffAmount;
-					m_TowerInfo.Stat_Skill02.Range *= item.BuffAmount;
+					{
+						m_TowerInfo.Buff_Range_Percent *= BuffAmount;
+
+						float Atk_Range = m_TowerInfo.Stat_Default.Range;
+
+						Atk_Range += m_TowerInfo.Buff_Range_Fix;
+						Atk_Range *= m_TowerInfo.Buff_Range_Percent;
+
+						m_AttackRange_Default.Range = Atk_Range;
+					}
 					break;
 				case E_BuffType.Atk_spd:
-					m_TowerInfo.AttackSpeed_Default *= item.BuffAmount;
+					{
+						m_TowerInfo.Buff_Atk_spd_Percent *= BuffAmount;
+
+						float Atk_Speed = m_TowerInfo_Excel.Atk_Speed;
+
+						Atk_Speed += m_TowerInfo.Buff_Atk_spd_Fix;
+						Atk_Speed *= m_TowerInfo.Buff_Atk_spd_Percent;
+
+						// 공격속도 적용
+						m_TowerAnimator.SetFloat("AttackSpeed", Atk_Speed);
+					}
 					break;
 				case E_BuffType.Crit_rate:
-					m_TowerInfo.Crit_Rate_Percent *= item.BuffAmount;
+					m_TowerInfo.Buff_Crit_rate_Percent *= BuffAmount;
 					break;
 				case E_BuffType.Crit_Dmg:
-					m_TowerInfo.Crit_Dmg_Percent *= item.BuffAmount;
+					m_TowerInfo.Buff_Crit_Dmg_Percent *= BuffAmount;
 					break;
 				#endregion
 
@@ -835,9 +908,6 @@ public class Tower : MonoBehaviour
 			}
 		}
 		#endregion
-
-		// 공격속도 적용
-		m_TowerAnimator.SetFloat("AttackSpeed", m_TowerInfo_Excel.Atk_Speed);
 	}
 
 	protected void SetAttackTrigger()
@@ -855,19 +925,178 @@ public class Tower : MonoBehaviour
 
 	protected IEnumerator Co_DevilSkillBuff_Fix(S_Buff buff, float time)
 	{
-		m_TowerInfo.DevilSkillBuffList_Fix.Add(buff);
+		float BuffAmount = buff.BuffAmount;
+
+		#region 마왕 스킬 버프 합연산 추가
+		switch (buff.BuffType)
+		{
+			case E_BuffType.Atk:
+				m_TowerInfo.Buff_Atk_Fix += BuffAmount;
+				break;
+			case E_BuffType.Range:
+				{
+					m_TowerInfo.Buff_Range_Fix += BuffAmount;
+
+					float Atk_Range = m_TowerInfo.Stat_Default.Range;
+
+					Atk_Range += m_TowerInfo.Buff_Range_Fix;
+					Atk_Range *= m_TowerInfo.Buff_Range_Percent;
+
+					m_AttackRange_Default.Range = Atk_Range;
+				}
+				break;
+			case E_BuffType.Atk_spd:
+				{
+					m_TowerInfo.Buff_Atk_spd_Fix += BuffAmount;
+
+					float Atk_Speed = m_TowerInfo_Excel.Atk_Speed;
+
+					Atk_Speed += m_TowerInfo.Buff_Atk_spd_Fix;
+					Atk_Speed *= m_TowerInfo.Buff_Atk_spd_Percent;
+
+					// 공격속도 적용
+					m_TowerAnimator.SetFloat("AttackSpeed", Atk_Speed);
+				}
+				break;
+			case E_BuffType.Crit_rate:
+				m_TowerInfo.Buff_Crit_rate_Fix += BuffAmount;
+				break;
+			case E_BuffType.Crit_Dmg:
+				m_TowerInfo.Buff_Crit_Dmg_Fix += BuffAmount;
+				break;
+		}
+		#endregion
 
 		yield return new WaitForSeconds(time);
 
-		m_TowerInfo.DevilSkillBuffList_Fix.Remove(buff);
+		#region 마왕 스킬 버프 합연산 제거
+		switch (buff.BuffType)
+		{
+			case E_BuffType.Atk:
+				m_TowerInfo.Buff_Atk_Fix -= BuffAmount;
+				break;
+			case E_BuffType.Range:
+				{
+					m_TowerInfo.Buff_Range_Fix -= BuffAmount;
+
+					float Atk_Range = m_TowerInfo.Stat_Default.Range;
+
+					Atk_Range += m_TowerInfo.Buff_Range_Fix;
+					Atk_Range *= m_TowerInfo.Buff_Range_Percent;
+
+					m_AttackRange_Default.Range = Atk_Range;
+				}
+				break;
+			case E_BuffType.Atk_spd:
+				{
+					m_TowerInfo.Buff_Atk_spd_Fix -= BuffAmount;
+					m_TowerInfo.AttackSpeed_Default -= BuffAmount;
+					m_TowerInfo.AttackSpeed_Skill01 -= BuffAmount;
+					m_TowerInfo.AttackSpeed_Skill02 -= BuffAmount;
+
+					float Atk_Speed = m_TowerInfo_Excel.Atk_Speed;
+
+					Atk_Speed += m_TowerInfo.Buff_Atk_spd_Fix;
+					Atk_Speed *= m_TowerInfo.Buff_Atk_spd_Percent;
+
+					// 공격속도 적용
+					m_TowerAnimator.SetFloat("AttackSpeed", Atk_Speed);
+				}
+				break;
+			case E_BuffType.Crit_rate:
+				m_TowerInfo.Buff_Crit_rate_Fix -= BuffAmount;
+				break;
+			case E_BuffType.Crit_Dmg:
+				m_TowerInfo.Buff_Crit_Dmg_Fix -= BuffAmount;
+				break;
+		}
+		#endregion
 	}
 	protected IEnumerator Co_DevilSkillBuff_Percent(S_Buff buff, float time)
 	{
-		m_TowerInfo.DevilSkillBuffList_Percent.Add(buff);
+		float BuffAmount = buff.BuffAmount;
+
+		#region 마왕 스킬 버프 곱연산 추가
+		switch (buff.BuffType)
+		{
+			case E_BuffType.Atk:
+				m_TowerInfo.Buff_Atk_Percent *= BuffAmount;
+				break;
+			case E_BuffType.Range:
+				{
+					m_TowerInfo.Buff_Range_Percent *= BuffAmount;
+
+					float Atk_Range = m_TowerInfo.Stat_Default.Range;
+
+					Atk_Range += m_TowerInfo.Buff_Range_Fix;
+					Atk_Range *= m_TowerInfo.Buff_Range_Percent;
+
+					m_AttackRange_Default.Range = Atk_Range;
+				}
+				break;
+			case E_BuffType.Atk_spd:
+				{
+					m_TowerInfo.Buff_Atk_spd_Percent *= BuffAmount;
+
+					float Atk_Speed = m_TowerInfo_Excel.Atk_Speed;
+
+					Atk_Speed += m_TowerInfo.Buff_Atk_spd_Fix;
+					Atk_Speed *= m_TowerInfo.Buff_Atk_spd_Percent;
+
+					// 공격속도 적용
+					m_TowerAnimator.SetFloat("AttackSpeed", Atk_Speed);
+				}
+				break;
+			case E_BuffType.Crit_rate:
+				m_TowerInfo.Buff_Crit_rate_Percent *= BuffAmount;
+				break;
+			case E_BuffType.Crit_Dmg:
+				m_TowerInfo.Buff_Crit_Dmg_Percent *= BuffAmount;
+				break;
+		}
+		#endregion
 
 		yield return new WaitForSeconds(time);
 
-		m_TowerInfo.DevilSkillBuffList_Percent.Remove(buff);
+		#region 마왕 스킬 버프 곱연산 제거
+		switch (buff.BuffType)
+		{
+			case E_BuffType.Atk:
+				m_TowerInfo.Buff_Atk_Percent /= BuffAmount;
+				break;
+			case E_BuffType.Range:
+				{
+					m_TowerInfo.Buff_Range_Percent /= BuffAmount;
+
+					float Atk_Range = m_TowerInfo.Stat_Default.Range;
+
+					Atk_Range += m_TowerInfo.Buff_Range_Fix;
+					Atk_Range *= m_TowerInfo.Buff_Range_Percent;
+
+					m_AttackRange_Default.Range = Atk_Range;
+				}
+				break;
+			case E_BuffType.Atk_spd:
+				{
+					m_TowerInfo.Buff_Atk_spd_Percent /= BuffAmount;
+
+					float Atk_Speed = m_TowerInfo_Excel.Atk_Speed;
+
+					Atk_Speed += m_TowerInfo.Buff_Atk_spd_Fix;
+					Atk_Speed *= m_TowerInfo.Buff_Atk_spd_Percent;
+
+					// 공격속도 적용
+					m_TowerAnimator.SetFloat("AttackSpeed", Atk_Speed);
+				}
+				break;
+			case E_BuffType.Crit_rate:
+				m_TowerInfo.Buff_Crit_rate_Percent /= BuffAmount;
+				break;
+			case E_BuffType.Crit_Dmg:
+				m_TowerInfo.Buff_Crit_Dmg_Percent /= BuffAmount;
+				break;
+		}
+		#endregion
 	}
 	#endregion
 	#region 외부 함수
@@ -894,28 +1123,26 @@ public class Tower : MonoBehaviour
 
 		#region 기본 스킬
 		// 기본 스킬 데이터
-		m_TowerInfo.Condition_Default_Origin = M_Skill.GetConditionData(m_TowerInfo_Excel.Atk_Code);
-		m_TowerInfo.Stat_Default_Origin = M_Skill.GetStatData(m_TowerInfo.Condition_Default_Origin.PassiveCode);
+		m_TowerInfo.Condition_Default = M_Skill.GetConditionData(m_TowerInfo_Excel.Atk_Code);
+		m_TowerInfo.Stat_Default = M_Skill.GetStatData(m_TowerInfo.Condition_Default.PassiveCode);
 		// 기본 스킬
-		m_TowerInfo.AttackSpeed_Default = m_TowerInfo.Stat_Default_Origin.CoolTime;
-		m_TowerInfo.AttackTimer_Default = m_TowerInfo.Stat_Default_Origin.CoolTime;
+		m_TowerInfo.AttackSpeed_Default = m_TowerInfo.Stat_Default.CoolTime;
+		m_TowerInfo.AttackTimer_Default = m_TowerInfo.Stat_Default.CoolTime;
 		#endregion
-
 		#region 스킬01
 		// 스킬01 데이터
-		m_TowerInfo.Condition_Skill01_Origin = M_Skill.GetConditionData(m_TowerInfo_Excel.Skill1Code);
-		m_TowerInfo.Stat_Skill01_Origin = M_Skill.GetStatData(m_TowerInfo.Condition_Skill01_Origin.PassiveCode);
+		m_TowerInfo.Condition_Skill01 = M_Skill.GetConditionData(m_TowerInfo_Excel.Skill1Code);
+		m_TowerInfo.Stat_Skill01 = M_Skill.GetStatData(m_TowerInfo.Condition_Skill01.PassiveCode);
 		// 스킬01
-		m_TowerInfo.AttackSpeed_Skill01 = m_TowerInfo.Stat_Skill01_Origin.CoolTime;
+		m_TowerInfo.AttackSpeed_Skill01 = m_TowerInfo.Stat_Skill01.CoolTime;
 		m_TowerInfo.AttackTimer_Skill01 = 0f;
 		#endregion
-
 		#region 스킬02
 		// 스킬02 데이터
-		m_TowerInfo.Condition_Skill02_Origin = M_Skill.GetConditionData(m_TowerInfo_Excel.Skill2Code);
-		m_TowerInfo.Stat_Skill02_Origin = M_Skill.GetStatData(m_TowerInfo.Condition_Skill02_Origin.PassiveCode);
+		m_TowerInfo.Condition_Skill02 = M_Skill.GetConditionData(m_TowerInfo_Excel.Skill2Code);
+		m_TowerInfo.Stat_Skill02 = M_Skill.GetStatData(m_TowerInfo.Condition_Skill02.PassiveCode);
 		// 스킬02
-		m_TowerInfo.AttackSpeed_Skill02 = m_TowerInfo.Stat_Skill02_Origin.CoolTime;
+		m_TowerInfo.AttackSpeed_Skill02 = m_TowerInfo.Stat_Skill02.CoolTime;
 		m_TowerInfo.AttackTimer_Skill02 = 0f;
 		#endregion
 
@@ -950,6 +1177,20 @@ public class Tower : MonoBehaviour
 
 		ClearSynergyBuff();
 		#endregion
+
+		#region 버프
+		m_TowerInfo.Buff_Atk_Fix = 0f;
+		m_TowerInfo.Buff_Range_Fix = 0f;
+		m_TowerInfo.Buff_Atk_spd_Fix = 0f;
+		m_TowerInfo.Buff_Crit_rate_Fix = 0f;
+		m_TowerInfo.Buff_Crit_Dmg_Fix = 0f;
+
+		m_TowerInfo.Buff_Atk_Percent = 1f;
+		m_TowerInfo.Buff_Range_Percent = 1f;
+		m_TowerInfo.Buff_Atk_spd_Percent = 1f;
+		m_TowerInfo.Buff_Crit_rate_Percent = 1f;
+		m_TowerInfo.Buff_Crit_Dmg_Percent = 1f;
+		#endregion
 		#endregion
 
 		#region 내부 컴포넌트
@@ -968,7 +1209,7 @@ public class Tower : MonoBehaviour
 			m_AttackRange_Default.gameObject.layer = LayerMask.NameToLayer("TowerAttackRange");
 			m_AttackRange_Default.Initialize();
 		}
-		m_AttackRange_Default.Range = m_TowerInfo.Stat_Default_Origin.Range;
+		m_AttackRange_Default.Range = m_TowerInfo.Stat_Default.Range;
 		m_AttackRange_Default.CanFindTarget = true;
 
 		//m_AttackRange_Skill01 ??= transform.Find("AttackRange_Skill01").AddComponent<AttackRange>();
@@ -978,7 +1219,7 @@ public class Tower : MonoBehaviour
 			m_AttackRange_Skill01.gameObject.layer = LayerMask.NameToLayer("TowerAttackRange");
 			m_AttackRange_Skill01.Initialize();
 		}
-		m_AttackRange_Skill01.Range = m_TowerInfo.Stat_Skill01_Origin.Range;
+		m_AttackRange_Skill01.Range = m_TowerInfo.Stat_Skill01.Range;
 		m_AttackRange_Skill01.CanFindTarget = true;
 
 		//m_AttackRange_Skill02 ??= transform.Find("AttackRange_Skill02").AddComponent<AttackRange>();
@@ -988,7 +1229,7 @@ public class Tower : MonoBehaviour
 			m_AttackRange_Skill02.gameObject.layer = LayerMask.NameToLayer("TowerAttackRange");
 			m_AttackRange_Skill02.Initialize();
 		}
-		m_AttackRange_Skill02.Range = m_TowerInfo.Stat_Skill02_Origin.Range;
+		m_AttackRange_Skill02.Range = m_TowerInfo.Stat_Skill02.Range;
 		m_AttackRange_Skill02.CanFindTarget = true;
 		#endregion
 
@@ -1053,6 +1294,14 @@ public class Tower : MonoBehaviour
 			null == m_Target_Default)
 			return;
 
+		#region 시너지
+		// 버서커
+		if (m_TowerInfo.Berserker)
+		{
+			if (m_TowerInfo.BerserkerStack < m_TowerInfo.BerserkerMaxStack)
+				++m_TowerInfo.BerserkerStack;
+		}
+
 		// 마왕 스킬 쿨타임 변경
 		if (m_TowerInfo.ReduceCooldown)
 		{
@@ -1067,16 +1316,24 @@ public class Tower : MonoBehaviour
 				M_Devil.Devil.ReduceSkill02Cooldown(m_TowerInfo.ReduceCooldownSec);
 			}
 		}
+		#endregion
 
 		SkillCondition_TableExcel conditionData = m_TowerInfo.Condition_Default;
 		SkillStat_TableExcel statData = m_TowerInfo.Stat_Default;
 
+		#region 버프
+		statData.Dmg_Fix += m_TowerInfo_Excel.Atk + m_TowerInfo.Buff_Atk_Fix;
+		statData.Dmg_Percent *= m_TowerInfo.Buff_Atk_Percent;
+		statData.Range = (statData.Range + m_TowerInfo.Buff_Range_Fix) * m_TowerInfo.Buff_Range_Percent;
+
+		float Crit_rate_Fix = m_TowerInfo.Buff_Crit_rate_Fix;
+		float Crit_rate_Percent = m_TowerInfo.Buff_Crit_rate_Percent;
+		float Crit_Dmg_Fix = m_TowerInfo.Buff_Crit_Dmg_Fix;
+		float Crit_Dmg_Percent = m_TowerInfo.Buff_Crit_Dmg_Percent;
+
 		#region 버서커 버프 합연산
 		if (m_TowerInfo.Berserker)
 		{
-			if (m_TowerInfo.BerserkerStack < m_TowerInfo.BerserkerMaxStack)
-				++m_TowerInfo.BerserkerStack;
-
 			foreach (var item in m_TowerInfo.BerserkerBuffList_Fix)
 			{
 				float BuffAmount = item.BuffAmount * m_TowerInfo.BerserkerStack;
@@ -1084,21 +1341,34 @@ public class Tower : MonoBehaviour
 				switch (item.BuffType)
 				{
 					case E_BuffType.Atk:
-						m_TowerInfo.Stat_Default.Dmg_Fix += BuffAmount;
+						statData.Dmg_Fix += BuffAmount;
 						break;
 					case E_BuffType.Range:
-						m_TowerInfo.Stat_Default.Range += BuffAmount;
-						m_TowerInfo.Stat_Skill01.Range += BuffAmount;
-						m_TowerInfo.Stat_Skill02.Range += BuffAmount;
+						{
+							float Atk_Range = m_TowerInfo.Stat_Default.Range;
+
+							Atk_Range += m_TowerInfo.Buff_Range_Fix + BuffAmount;
+							Atk_Range *= m_TowerInfo.Buff_Range_Percent;
+
+							m_AttackRange_Default.Range = Atk_Range;
+						}
 						break;
 					case E_BuffType.Atk_spd:
-						m_TowerInfo.AttackSpeed_Default -= BuffAmount;
+						{
+							float Atk_Speed = m_TowerInfo_Excel.Atk_Speed;
+
+							Atk_Speed += m_TowerInfo.Buff_Atk_spd_Fix + BuffAmount;
+							Atk_Speed *= m_TowerInfo.Buff_Atk_spd_Percent;
+
+							// 공격속도 적용
+							m_TowerAnimator.SetFloat("AttackSpeed", Atk_Speed);
+						}
 						break;
 					case E_BuffType.Crit_rate:
-						m_TowerInfo.Crit_Rate_Fix += BuffAmount;
+						Crit_rate_Fix += BuffAmount;
 						break;
 					case E_BuffType.Crit_Dmg:
-						m_TowerInfo.Crit_Dmg_Fix += BuffAmount;
+						Crit_Dmg_Fix += BuffAmount;
 						break;
 				}
 			}
@@ -1114,86 +1384,43 @@ public class Tower : MonoBehaviour
 				switch (item.BuffType)
 				{
 					case E_BuffType.Atk:
-						m_TowerInfo.Stat_Default.Dmg_Percent *= BuffAmount;
+						statData.Dmg_Percent *= BuffAmount;
 						break;
 					case E_BuffType.Range:
-						m_TowerInfo.Stat_Default.Range *= BuffAmount;
-						m_TowerInfo.Stat_Skill01.Range *= BuffAmount;
-						m_TowerInfo.Stat_Skill02.Range *= BuffAmount;
+						{
+							float Atk_Range = m_TowerInfo.Stat_Default.Range;
+
+							Atk_Range += m_TowerInfo.Buff_Range_Fix;
+							Atk_Range *= m_TowerInfo.Buff_Range_Percent * BuffAmount;
+
+							m_AttackRange_Default.Range = Atk_Range;
+						}
 						break;
 					case E_BuffType.Atk_spd:
-						m_TowerInfo.AttackSpeed_Default *= BuffAmount;
+						{
+							float Atk_Speed = m_TowerInfo_Excel.Atk_Speed;
+
+							Atk_Speed += m_TowerInfo.Buff_Atk_spd_Fix;
+							Atk_Speed *= m_TowerInfo.Buff_Atk_spd_Percent * BuffAmount;
+
+							// 공격속도 적용
+							m_TowerAnimator.SetFloat("AttackSpeed", Atk_Speed);
+						}
 						break;
 					case E_BuffType.Crit_rate:
-						m_TowerInfo.Crit_Rate_Percent *= BuffAmount;
+						Crit_rate_Percent *= BuffAmount;
 						break;
 					case E_BuffType.Crit_Dmg:
-						m_TowerInfo.Crit_Dmg_Percent *= BuffAmount;
+						Crit_Dmg_Percent *= BuffAmount;
 						break;
 				}
 			}
 		}
 		#endregion
 
-		#region 마왕 스킬 버프 합연산
-		if (m_TowerInfo.DevilSkillBuffList_Fix.Count > 0)
-		{
-			foreach (var item in m_TowerInfo.DevilSkillBuffList_Fix)
-			{
-				float BuffAmount = item.BuffAmount;
-
-				switch (item.BuffType)
-				{
-					case E_BuffType.Atk:
-						m_TowerInfo.Stat_Default.Dmg_Fix += BuffAmount;
-						break;
-					case E_BuffType.Range:
-						m_TowerInfo.Stat_Default.Range += BuffAmount;
-						m_TowerInfo.Stat_Skill01.Range += BuffAmount;
-						m_TowerInfo.Stat_Skill02.Range += BuffAmount;
-						break;
-					case E_BuffType.Atk_spd:
-						m_TowerInfo.AttackSpeed_Default -= BuffAmount;
-						break;
-					case E_BuffType.Crit_rate:
-						m_TowerInfo.Crit_Rate_Fix += BuffAmount;
-						break;
-					case E_BuffType.Crit_Dmg:
-						m_TowerInfo.Crit_Dmg_Fix += BuffAmount;
-						break;
-				}
-			}
-		}
-		#endregion
-		#region 마왕 스킬 버프 곱연산
-		if (m_TowerInfo.DevilSkillBuffList_Percent.Count > 0)
-		{
-			foreach (var item in m_TowerInfo.DevilSkillBuffList_Percent)
-			{
-				float BuffAmount = item.BuffAmount;
-
-				switch (item.BuffType)
-				{
-					case E_BuffType.Atk:
-						m_TowerInfo.Stat_Default.Dmg_Fix *= BuffAmount;
-						break;
-					case E_BuffType.Range:
-						m_TowerInfo.Stat_Default.Range *= BuffAmount;
-						m_TowerInfo.Stat_Skill01.Range *= BuffAmount;
-						m_TowerInfo.Stat_Skill02.Range *= BuffAmount;
-						break;
-					case E_BuffType.Atk_spd:
-						m_TowerInfo.AttackSpeed_Default *= BuffAmount;
-						break;
-					case E_BuffType.Crit_rate:
-						m_TowerInfo.Crit_Rate_Fix *= BuffAmount;
-						break;
-					case E_BuffType.Crit_Dmg:
-						m_TowerInfo.Crit_Dmg_Fix *= BuffAmount;
-						break;
-				}
-			}
-		}
+		float Crit_rate = (m_TowerInfo_Excel.Crit_rate + Crit_rate_Fix) * Crit_rate_Percent;
+		float Crit_Dmg = (m_TowerInfo_Excel.Crit_Dmg + Crit_Dmg_Fix) * Crit_Dmg_Percent;
+		S_Critical critical = new S_Critical(Crit_rate, Crit_Dmg);
 		#endregion
 
 		// 기본 스킬 투사체 생성
@@ -1223,10 +1450,7 @@ public class Tower : MonoBehaviour
 				target,
 				conditionData,
 				statData,
-				new S_Critical(
-					(m_TowerInfo_Excel.Crit_rate + m_TowerInfo.Crit_Rate_Fix) * m_TowerInfo.Crit_Rate_Percent,
-					(m_TowerInfo_Excel.Crit_Dmg + m_TowerInfo.Crit_Dmg_Fix) * m_TowerInfo.Crit_Dmg_Percent
-					)
+				critical
 				);
 		}
 
@@ -1244,18 +1468,19 @@ public class Tower : MonoBehaviour
 			Attack(m_Target_Default);
 		}
 
-		// 이펙트 생성
+		#region 공격 이펙트
 		Effect atkEffect = M_Effect.SpawnEffect(conditionData.Atk_prefab);
 		if (null != atkEffect)
 		{
 			atkEffect.transform.position = m_TowerInfo.AttackPivot.position;
 			atkEffect.gameObject.SetActive(true);
 		}
+		#endregion
 	}
 	public void CallSkill01()
 	{
 		// 내부 데이터 정리
-		m_TowerInfo.AttackSpeed_Skill01 = m_TowerInfo.Stat_Skill01_Origin.CoolTime;
+		m_TowerInfo.AttackSpeed_Skill01 = m_TowerInfo.Stat_Skill01.CoolTime;
 		m_TowerInfo.CanAttack_Skill = true;
 
 		if ((E_TargetType)m_TowerInfo.Condition_Skill01.Target_type != E_TargetType.TileTarget &&
@@ -1266,65 +1491,63 @@ public class Tower : MonoBehaviour
 		SkillCondition_TableExcel conditionData = m_TowerInfo.Condition_Skill01;
 		SkillStat_TableExcel statData = m_TowerInfo.Stat_Skill01;
 
-		#region 마왕 스킬 버프 합연산
-		if (m_TowerInfo.DevilSkillBuffList_Fix.Count > 0)
+		#region 버프
+		statData.Dmg_Fix += m_TowerInfo_Excel.Atk + m_TowerInfo.Buff_Atk_Fix;
+		statData.Dmg_Percent *= m_TowerInfo.Buff_Atk_Percent;
+
+		float Crit_rate_Fix = m_TowerInfo.Buff_Crit_rate_Fix;
+		float Crit_rate_Percent = m_TowerInfo.Buff_Crit_rate_Percent;
+		float Crit_Dmg_Fix = m_TowerInfo.Buff_Crit_Dmg_Fix;
+		float Crit_Dmg_Percent = m_TowerInfo.Buff_Crit_Dmg_Percent;
+
+		#region 버서커 버프 합연산
+		if (m_TowerInfo.Berserker)
 		{
-			foreach (var item in m_TowerInfo.DevilSkillBuffList_Fix)
+			foreach (var item in m_TowerInfo.BerserkerBuffList_Fix)
 			{
-				float BuffAmount = item.BuffAmount;
+				float BuffAmount = item.BuffAmount * m_TowerInfo.BerserkerStack;
 
 				switch (item.BuffType)
 				{
 					case E_BuffType.Atk:
-						m_TowerInfo.Stat_Default.Dmg_Fix += BuffAmount;
-						break;
-					case E_BuffType.Range:
-						m_TowerInfo.Stat_Default.Range += BuffAmount;
-						m_TowerInfo.Stat_Skill01.Range += BuffAmount;
-						m_TowerInfo.Stat_Skill02.Range += BuffAmount;
-						break;
-					case E_BuffType.Atk_spd:
-						m_TowerInfo.AttackSpeed_Default -= BuffAmount;
+						statData.Dmg_Fix += BuffAmount;
 						break;
 					case E_BuffType.Crit_rate:
-						m_TowerInfo.Crit_Rate_Fix += BuffAmount;
+						Crit_rate_Fix += BuffAmount;
 						break;
 					case E_BuffType.Crit_Dmg:
-						m_TowerInfo.Crit_Dmg_Fix += BuffAmount;
+						Crit_Dmg_Fix += BuffAmount;
 						break;
 				}
 			}
 		}
 		#endregion
-		#region 마왕 스킬 버프 곱연산
-		if (m_TowerInfo.DevilSkillBuffList_Percent.Count > 0)
+		#region 버서커 버프 곱연산
+		if (m_TowerInfo.Berserker)
 		{
-			foreach (var item in m_TowerInfo.DevilSkillBuffList_Percent)
+			foreach (var item in m_TowerInfo.BerserkerBuffList_Percent)
 			{
-				float BuffAmount = item.BuffAmount;
+				float BuffAmount = item.BuffAmount * m_TowerInfo.BerserkerStack;
 
 				switch (item.BuffType)
 				{
 					case E_BuffType.Atk:
-						m_TowerInfo.Stat_Default.Dmg_Fix *= BuffAmount;
-						break;
-					case E_BuffType.Range:
-						m_TowerInfo.Stat_Default.Range *= BuffAmount;
-						m_TowerInfo.Stat_Skill01.Range *= BuffAmount;
-						m_TowerInfo.Stat_Skill02.Range *= BuffAmount;
-						break;
-					case E_BuffType.Atk_spd:
-						m_TowerInfo.AttackSpeed_Default *= BuffAmount;
+						statData.Dmg_Percent *= BuffAmount;
 						break;
 					case E_BuffType.Crit_rate:
-						m_TowerInfo.Crit_Rate_Fix *= BuffAmount;
+						Crit_rate_Percent *= BuffAmount;
 						break;
 					case E_BuffType.Crit_Dmg:
-						m_TowerInfo.Crit_Dmg_Fix *= BuffAmount;
+						Crit_Dmg_Percent *= BuffAmount;
 						break;
 				}
 			}
 		}
+		#endregion
+
+		float Crit_rate = (m_TowerInfo_Excel.Crit_rate + Crit_rate_Fix) * Crit_rate_Percent;
+		float Crit_Dmg = (m_TowerInfo_Excel.Crit_Dmg + Crit_Dmg_Fix) * Crit_Dmg_Percent;
+		S_Critical critical = new S_Critical(Crit_rate, Crit_Dmg);
 		#endregion
 
 		// 스킬01 투사체 생성
@@ -1354,14 +1577,11 @@ public class Tower : MonoBehaviour
 				target,
 				conditionData,
 				statData,
-				new S_Critical(
-					(m_TowerInfo_Excel.Crit_rate + m_TowerInfo.Crit_Rate_Fix) * m_TowerInfo.Crit_Rate_Percent,
-					(m_TowerInfo_Excel.Crit_Dmg + m_TowerInfo.Crit_Dmg_Fix) * m_TowerInfo.Crit_Dmg_Percent
-					)
+				critical
 				);
 		}
 
-		if ((E_TargetType)m_TowerInfo.Condition_Skill01_Origin.Target_type == E_TargetType.TileTarget)
+		if ((E_TargetType)m_TowerInfo.Condition_Skill01.Target_type == E_TargetType.TileTarget)
 		{
 			List<Enemy> EnemyList = M_Enemy.GetEnemyList(m_TowerInfo.Direction);
 
@@ -1375,18 +1595,19 @@ public class Tower : MonoBehaviour
 			Skill01(m_Target_Skill01);
 		}
 
-		// 이펙트 생성
+		#region 공격 이펙트
 		Effect atkEffect = M_Effect.SpawnEffect(conditionData.Atk_prefab);
 		if (null != atkEffect)
 		{
 			atkEffect.transform.position = m_TowerInfo.AttackPivot.position;
 			atkEffect.gameObject.SetActive(true);
 		}
+		#endregion
 	}
 	public void CallSkill02()
 	{
 		// 내부 데이터 정리
-		m_TowerInfo.AttackSpeed_Skill02 = m_TowerInfo.Stat_Skill02_Origin.CoolTime;
+		m_TowerInfo.AttackSpeed_Skill02 = m_TowerInfo.Stat_Skill02.CoolTime;
 		m_TowerInfo.CanAttack_Skill = true;
 
 		if ((E_TargetType)m_TowerInfo.Condition_Skill02.Target_type != E_TargetType.TileTarget &&
@@ -1397,65 +1618,63 @@ public class Tower : MonoBehaviour
 		SkillCondition_TableExcel conditionData = m_TowerInfo.Condition_Skill02;
 		SkillStat_TableExcel statData = m_TowerInfo.Stat_Skill02;
 
-		#region 마왕 스킬 버프 합연산
-		if (m_TowerInfo.DevilSkillBuffList_Fix.Count > 0)
+		#region 버프
+		statData.Dmg_Fix += m_TowerInfo_Excel.Atk + m_TowerInfo.Buff_Atk_Fix;
+		statData.Dmg_Percent *= m_TowerInfo.Buff_Atk_Percent;
+
+		float Crit_rate_Fix = m_TowerInfo.Buff_Crit_rate_Fix;
+		float Crit_rate_Percent = m_TowerInfo.Buff_Crit_rate_Percent;
+		float Crit_Dmg_Fix = m_TowerInfo.Buff_Crit_Dmg_Fix;
+		float Crit_Dmg_Percent = m_TowerInfo.Buff_Crit_Dmg_Percent;
+
+		#region 버서커 버프 합연산
+		if (m_TowerInfo.Berserker)
 		{
-			foreach (var item in m_TowerInfo.DevilSkillBuffList_Fix)
+			foreach (var item in m_TowerInfo.BerserkerBuffList_Fix)
 			{
-				float BuffAmount = item.BuffAmount;
+				float BuffAmount = item.BuffAmount * m_TowerInfo.BerserkerStack;
 
 				switch (item.BuffType)
 				{
 					case E_BuffType.Atk:
-						m_TowerInfo.Stat_Default.Dmg_Fix += BuffAmount;
-						break;
-					case E_BuffType.Range:
-						m_TowerInfo.Stat_Default.Range += BuffAmount;
-						m_TowerInfo.Stat_Skill01.Range += BuffAmount;
-						m_TowerInfo.Stat_Skill02.Range += BuffAmount;
-						break;
-					case E_BuffType.Atk_spd:
-						m_TowerInfo.AttackSpeed_Default -= BuffAmount;
+						statData.Dmg_Fix += BuffAmount;
 						break;
 					case E_BuffType.Crit_rate:
-						m_TowerInfo.Crit_Rate_Fix += BuffAmount;
+						Crit_rate_Fix += BuffAmount;
 						break;
 					case E_BuffType.Crit_Dmg:
-						m_TowerInfo.Crit_Dmg_Fix += BuffAmount;
+						Crit_Dmg_Fix += BuffAmount;
 						break;
 				}
 			}
 		}
 		#endregion
-		#region 마왕 스킬 버프 곱연산
-		if (m_TowerInfo.DevilSkillBuffList_Percent.Count > 0)
+		#region 버서커 버프 곱연산
+		if (m_TowerInfo.Berserker)
 		{
-			foreach (var item in m_TowerInfo.DevilSkillBuffList_Percent)
+			foreach (var item in m_TowerInfo.BerserkerBuffList_Percent)
 			{
-				float BuffAmount = item.BuffAmount;
+				float BuffAmount = item.BuffAmount * m_TowerInfo.BerserkerStack;
 
 				switch (item.BuffType)
 				{
 					case E_BuffType.Atk:
-						m_TowerInfo.Stat_Default.Dmg_Fix *= BuffAmount;
-						break;
-					case E_BuffType.Range:
-						m_TowerInfo.Stat_Default.Range *= BuffAmount;
-						m_TowerInfo.Stat_Skill01.Range *= BuffAmount;
-						m_TowerInfo.Stat_Skill02.Range *= BuffAmount;
-						break;
-					case E_BuffType.Atk_spd:
-						m_TowerInfo.AttackSpeed_Default *= BuffAmount;
+						statData.Dmg_Percent *= BuffAmount;
 						break;
 					case E_BuffType.Crit_rate:
-						m_TowerInfo.Crit_Rate_Fix *= BuffAmount;
+						Crit_rate_Percent *= BuffAmount;
 						break;
 					case E_BuffType.Crit_Dmg:
-						m_TowerInfo.Crit_Dmg_Fix *= BuffAmount;
+						Crit_Dmg_Percent *= BuffAmount;
 						break;
 				}
 			}
 		}
+		#endregion
+
+		float Crit_rate = (m_TowerInfo_Excel.Crit_rate + Crit_rate_Fix) * Crit_rate_Percent;
+		float Crit_Dmg = (m_TowerInfo_Excel.Crit_Dmg + Crit_Dmg_Fix) * Crit_Dmg_Percent;
+		S_Critical critical = new S_Critical(Crit_rate, Crit_Dmg);
 		#endregion
 
 		// 스킬02 투사체 생성
@@ -1485,14 +1704,11 @@ public class Tower : MonoBehaviour
 				target,
 				conditionData,
 				statData,
-				new S_Critical(
-					(m_TowerInfo_Excel.Crit_rate + m_TowerInfo.Crit_Rate_Fix) * m_TowerInfo.Crit_Rate_Percent,
-					(m_TowerInfo_Excel.Crit_Dmg + m_TowerInfo.Crit_Dmg_Fix) * m_TowerInfo.Crit_Dmg_Percent
-					)
+				critical
 				);
 		}
 
-		if ((E_TargetType)m_TowerInfo.Condition_Skill02_Origin.Target_type == E_TargetType.TileTarget)
+		if ((E_TargetType)m_TowerInfo.Condition_Skill02.Target_type == E_TargetType.TileTarget)
 		{
 			List<Enemy> EnemyList = M_Enemy.GetEnemyList(m_TowerInfo.Direction);
 
@@ -1506,13 +1722,14 @@ public class Tower : MonoBehaviour
 			Skill02(m_Target_Skill02);
 		}
 
-		// 이펙트 생성
+		#region 공격 이펙트
 		Effect atkEffect = M_Effect.SpawnEffect(conditionData.Atk_prefab);
 		if (null != atkEffect)
 		{
 			atkEffect.transform.position = m_TowerInfo.AttackPivot.position;
 			atkEffect.gameObject.SetActive(true);
 		}
+		#endregion
 	}
 
 	public void AddSynergy(Synergy_TableExcel synergy)
@@ -1579,9 +1796,6 @@ public class Tower : MonoBehaviour
 
 		#region 기본 스킬
 		// 기본 스킬 엑셀 데이터
-		public SkillCondition_TableExcel Condition_Default_Origin;
-		public SkillStat_TableExcel Stat_Default_Origin;
-		// 기본 스킬 데이터
 		public SkillCondition_TableExcel Condition_Default;
 		public SkillStat_TableExcel Stat_Default;
 		// 기본 스킬 공격 속도
@@ -1591,9 +1805,6 @@ public class Tower : MonoBehaviour
 		#endregion
 		#region 스킬01
 		// 스킬01 엑셀 데이터
-		public SkillCondition_TableExcel Condition_Skill01_Origin;
-		public SkillStat_TableExcel Stat_Skill01_Origin;
-		// 스킬01 데이터
 		public SkillCondition_TableExcel Condition_Skill01;
 		public SkillStat_TableExcel Stat_Skill01;
 		// 스킬01 공격 속도
@@ -1603,9 +1814,6 @@ public class Tower : MonoBehaviour
 		#endregion
 		#region 스킬02
 		// 스킬02 엑셀 데이터
-		public SkillCondition_TableExcel Condition_Skill02_Origin;
-		public SkillStat_TableExcel Stat_Skill02_Origin;
-		// 스킬02 데이터
 		public SkillCondition_TableExcel Condition_Skill02;
 		public SkillStat_TableExcel Stat_Skill02;
 		// 스킬02 공격 속도
@@ -1614,11 +1822,18 @@ public class Tower : MonoBehaviour
 		public float AttackTimer_Skill02;
 		#endregion
 
-		#region 크리티컬
-		public float Crit_Rate_Fix;
-		public float Crit_Rate_Percent;
-		public float Crit_Dmg_Fix;
-		public float Crit_Dmg_Percent;
+		#region 능력치
+		public float Buff_Atk_Fix;
+		public float Buff_Range_Fix;
+		public float Buff_Atk_spd_Fix;
+		public float Buff_Crit_rate_Fix;
+		public float Buff_Crit_Dmg_Fix;
+
+		public float Buff_Atk_Percent;
+		public float Buff_Range_Percent;
+		public float Buff_Atk_spd_Percent;
+		public float Buff_Crit_rate_Percent;
+		public float Buff_Crit_Dmg_Percent;
 		#endregion
 
 		#region 시너지
@@ -1647,8 +1862,5 @@ public class Tower : MonoBehaviour
 		public List<S_Buff> BerserkerBuffList_Percent;
 		#endregion
 		#endregion
-
-		public List<S_Buff> DevilSkillBuffList_Fix;
-		public List<S_Buff> DevilSkillBuffList_Percent;
 	}
 }
