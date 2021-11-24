@@ -8,19 +8,18 @@ namespace CryptUI.Scripts
         public Image image;
         private static readonly int FillLevel = Shader.PropertyToID("_FillLevel");
 
-        public void ApplyValue(float value)
+		private void Awake()
+		{
+            image.material = Material.Instantiate<Material>(image.material);
+		}
+
+		public void ApplyValue(float value)
         {
             if (image == null)
             {
                 return;
             }
             image.material.SetFloat(FillLevel, value);
-        }
-
-        [ContextMenu("Test")]
-        public void Test()
-        {
-            ApplyValue(0.5f);
         }
     }
 }

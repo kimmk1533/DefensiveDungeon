@@ -19,10 +19,14 @@ public class LevelInfoUIController : MonoBehaviour , IPointerClickHandler
     [SerializeField] TMPro.TextMeshProUGUI m_level_textpro;
     [SerializeField] TMPro.TextMeshProUGUI m_exp_textpro;
 
+    [SerializeField] Image m_gold_image;
     [SerializeField] TMPro.TextMeshProUGUI m_gold_textpro;
-    [SerializeField] Image m_exp_image;
+    [SerializeField] TMPro.TextMeshProUGUI m_purchace_textpro;
+    [SerializeField] Slider m_exp_image;
 
-    [SerializeField] LevelUIInfo m_info; 
+    [SerializeField] LevelUIInfo m_info;
+
+    bool m_max_level;
 
     private void Start()
     {
@@ -31,12 +35,23 @@ public class LevelInfoUIController : MonoBehaviour , IPointerClickHandler
         m_info.curr_level = UserInfoManager.Instance.Level;
         m_info.requireGoldForPurchase = UserInfoManager.Instance.RequireGoldForPurchaseEXP;
 
+        m_exp_image.value = 0f;
+
+        m_max_level = false;
+
         UserInfoManager.Instance.OnLevelChanged += __OnLevelChanged;
         UserInfoManager.Instance.OnExpChangedEvent += __OnExpChanged;
+        UserInfoManager.Instance.OnMaxLevelEvent_OnlyOnce += () =>
+        {
+            m_max_level = true;
+        };
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        if (m_max_level)
+            return;
+
         __OnEXPPurchaseProcess();
     }
 
@@ -78,12 +93,21 @@ public class LevelInfoUIController : MonoBehaviour , IPointerClickHandler
 
     public void __OnInfoChanged()
     {
+        if (m_max_level)
+        {
+            m_exp_image.value = 1f;
+            m_exp_textpro.text = "EXP Max";
+            m_gold_textpro.text = null;
+            m_purchace_textpro.text = null;
+            return;
+        }
+
         m_level_textpro.text = "Level " + m_info.curr_level;
         m_exp_textpro.text = "EXP " + m_info.curr_exp.ToString() + "/" + m_info.max_exp.ToString();
         m_gold_textpro.text = m_info.requireGoldForPurchase.ToString();
 
         float rate = (float)m_info.curr_exp / m_info.max_exp;
-        m_exp_image.fillAmount = rate;
+        m_exp_image.value = rate;
     }
     
 }

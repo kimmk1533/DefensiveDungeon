@@ -22,6 +22,7 @@ public class UserInfoManager : Singleton<UserInfoManager>
 	public event GoldChangeHandler OnGoldChangedEvent;
 	public delegate void ExpChangeHandler(int max_exp, int curr_epx);
 	public event ExpChangeHandler OnExpChangedEvent;
+	public event System.Action OnMaxLevelEvent_OnlyOnce;
 
 	[SerializeField] UserInfo m_info;
 	[SerializeField] Level_TableExcelLoader m_levelLadoer;
@@ -104,6 +105,12 @@ public class UserInfoManager : Singleton<UserInfoManager>
 
 		m_info.level += val;
 		OnLevelChanged?.Invoke(m_info.level);
+
+		if (Level >= 10)
+		{
+			OnMaxLevelEvent_OnlyOnce?.Invoke();
+			OnMaxLevelEvent_OnlyOnce = null;
+		}
 	}
 
 	public void AddGold(int val)
@@ -125,7 +132,11 @@ public class UserInfoManager : Singleton<UserInfoManager>
 	public void AddExp(int val)
 	{
 		if (Level >= 10)
+		{
+			OnMaxLevelEvent_OnlyOnce?.Invoke();
+			OnMaxLevelEvent_OnlyOnce = null;
 			return;
+		}
 
 		// Get current Require EXP       
 		m_info.exp = m_info.exp + val;
