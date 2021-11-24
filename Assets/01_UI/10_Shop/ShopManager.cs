@@ -8,7 +8,6 @@ using UnityEngine.UI;
 public class ShopManager : Singleton<ShopManager>
 {
 	[SerializeField] Tower_TableExcelLoader m_excel_towerdata_so;
-	List<Tower_TableExcel> m_tower_data_list;
 	[SerializeField] Shop_TableExcelLoader m_excel_shopdata_so;
 	private Shop_TableExcel m_cur_data;         // 가장 최근에 UserInfoManger 로부터 불러온 데이터 값
 	private List<float> m_rates = null;         // 위의 data 에서 확률만 뽑아논 리스트
@@ -72,11 +71,6 @@ public class ShopManager : Singleton<ShopManager>
 			newSlot.gameObject.SetActive(true);
 			newSlot.MoveRenderPosition(new Vector3(100 * i, 100 * i, 0));   // 렌더링 위치가 달라지도록
 		}
-
-		// sub 3 item form front ( except devil )
-		m_tower_data_list = m_excel_towerdata_so.DataList.GetRange(
-			3,
-			m_excel_towerdata_so.DataList.Count - 3);
 	}
 
 
@@ -133,7 +127,7 @@ public class ShopManager : Singleton<ShopManager>
 		float rand_val = 0.0f;
 
 		// tower data 개수
-		int total_towerType_count = m_tower_data_list.Count;
+		int total_towerType_count = m_excel_towerdata_so.DataList.Count;
 		// tower type 지정 확률        
 		int rand_val_tower = 0;
 
@@ -161,7 +155,7 @@ public class ShopManager : Singleton<ShopManager>
 			//Debug.Log($"rank : {rank_forCreate}");           
 
 			// shop can create tower ONLY 1 STAR
-			var OnlyOneStar_tower_data_list = m_tower_data_list.FindAll((item) => { return item.Star == 1; });
+			var OnlyOneStar_tower_data_list = m_excel_towerdata_so.DataList.FindAll((item) => { return item.Star == 1; });
 
 			// rank 에 부합하는 데이터 뽑기
 			var tower_data_list = OnlyOneStar_tower_data_list.FindAll((item) => { return item.Rank == rank_forCreate; });

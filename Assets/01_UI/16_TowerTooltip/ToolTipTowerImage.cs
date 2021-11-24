@@ -42,9 +42,7 @@ public class ToolTipTowerImage : MonoBehaviour
         m_renderCamera.transform.eulerAngles = camera_rotation;
 
         // get tower data except devil(player character)
-        var tower_data_list = m_towerLoader.DataList.GetRange(
-            3,  // 3 : devil count
-            m_towerLoader.DataList.Count - 3);
+        var tower_data_list = m_towerLoader.DataList;
 
         // instantiate all tower
         foreach (var item in tower_data_list)

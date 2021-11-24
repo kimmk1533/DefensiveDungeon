@@ -104,8 +104,7 @@ public class ShopSlot : MonoBehaviour, IPointerClickHandler
 		/// tower objects setting
 
 		// create all tower for this ShopSlotUI
-		// except devil (character)
-		var tower_data_list = m_towerLoader.DataList.GetRange(3, m_towerLoader.DataList.Count - 3);
+		var tower_data_list = m_towerLoader.DataList;
 		foreach (var item in tower_data_list)
 		{
 			GameObject origin_obj = m_prefabLoader.GetPrefab(item.Prefab); // get only tower
