@@ -374,543 +374,437 @@ public class Tower : MonoBehaviour
 
 	protected void ClearSynergyBuff()
 	{
-		#region 버프 합연산 제거
-		foreach (var item in m_TowerInfo.BuffList_Fix)
-		{
-			float BuffAmount = item.BuffAmount;
-
-			switch (item.BuffType)
-			{
-				case E_BuffType.Atk:
-					m_TowerInfo.Buff_Atk_Fix -= BuffAmount;
-					break;
-				case E_BuffType.Range:
-					{
-						m_TowerInfo.Buff_Range_Fix -= BuffAmount;
-
-						float Atk_Range = m_TowerInfo.Stat_Default.Range;
-
-						Atk_Range += m_TowerInfo.Buff_Range_Fix;
-						Atk_Range *= m_TowerInfo.Buff_Range_Percent;
-
-						m_AttackRange_Default.Range = Atk_Range;
-					}
-					break;
-				case E_BuffType.Atk_spd:
-					{
-						m_TowerInfo.Buff_Atk_spd_Fix -= BuffAmount;
-
-						float Atk_Speed = m_TowerInfo_Excel.Atk_Speed;
-
-						Atk_Speed += m_TowerInfo.Buff_Atk_spd_Fix;
-						Atk_Speed *= m_TowerInfo.Buff_Atk_spd_Percent;
-
-						// 공격속도 적용
-						m_TowerAnimator.SetFloat("AttackSpeed", Atk_Speed);
-					}
-					break;
-				case E_BuffType.Crit_rate:
-					m_TowerInfo.Buff_Crit_rate_Fix -= BuffAmount;
-					break;
-				case E_BuffType.Crit_Dmg:
-					m_TowerInfo.Buff_Crit_Dmg_Fix -= BuffAmount;
-					break;
-			}
-		}
-		#endregion
-		#region 버프 곱연산 제거
-		foreach (var item in m_TowerInfo.BuffList_Percent)
-		{
-			float BuffAmount = item.BuffAmount;
-
-			switch (item.BuffType)
-			{
-				case E_BuffType.Atk:
-					m_TowerInfo.Buff_Atk_Percent /= BuffAmount;
-					break;
-				case E_BuffType.Range:
-					{
-						m_TowerInfo.Buff_Range_Percent /= BuffAmount;
-
-						float Atk_Range = m_TowerInfo.Stat_Default.Range;
-
-						Atk_Range += m_TowerInfo.Buff_Range_Fix;
-						Atk_Range *= m_TowerInfo.Buff_Range_Percent;
-
-						m_AttackRange_Default.Range = Atk_Range;
-					}
-					break;
-				case E_BuffType.Atk_spd:
-					{
-						m_TowerInfo.Buff_Atk_spd_Percent /= BuffAmount;
-
-						float Atk_Speed = m_TowerInfo_Excel.Atk_Speed;
-
-						Atk_Speed += m_TowerInfo.Buff_Atk_spd_Fix;
-						Atk_Speed *= m_TowerInfo.Buff_Atk_spd_Percent;
-
-						// 공격속도 적용
-						m_TowerAnimator.SetFloat("AttackSpeed", Atk_Speed);
-					}
-					break;
-				case E_BuffType.Crit_rate:
-					m_TowerInfo.Buff_Crit_rate_Percent /= BuffAmount;
-					break;
-				case E_BuffType.Crit_Dmg:
-					m_TowerInfo.Buff_Crit_Dmg_Percent /= BuffAmount;
-					break;
-			}
-		}
-		#endregion
-
 		m_TowerInfo.SynergyList.Clear();
-		m_TowerInfo.BuffList_Fix.Clear();
-		m_TowerInfo.BuffList_Percent.Clear();
 
 		m_TowerInfo.Buff_AttackType = E_AttackType.None;
 		m_TowerInfo.Target_num = m_TowerInfo.Stat_Default.Target_num;
 
-		m_TowerInfo.ReduceCooldown = false;
-		m_TowerInfo.ReduceCooldownSec = 0f;
-
 		m_TowerInfo.Berserker = false;
 		m_TowerInfo.BerserkerStack = 0;
 		m_TowerInfo.BerserkerMaxStack = 0;
-		m_TowerInfo.BerserkerBuffList_Fix.Clear();
-		m_TowerInfo.BerserkerBuffList_Percent.Clear();
+
+		#region 마왕 스킬 버프만 적용
+		List<S_Buff> BuffList_Fix = new List<S_Buff>(m_TowerInfo.DevilSkillBuffList_Fix);
+		List<S_Buff> BuffList_Percent = new List<S_Buff>(m_TowerInfo.DevilSkillBuffList_Percent);
+
+		float Range_Fix = 0f;
+		float Range_Percent = 1f;
+		float Atk_spd_Fix = 0f;
+		float Atk_spd_Percent = 1f;
+
+		float Range = m_TowerInfo.Stat_Default.Range;
+		float AttackSpeed = m_TowerInfo_Excel.Atk_Speed;
+
+		foreach (var item in BuffList_Fix)
+		{
+			switch (item.BuffType)
+			{
+				case E_BuffType.Range:
+					Range_Fix += item.BuffAmount;
+					break;
+				case E_BuffType.Atk_spd:
+					Atk_spd_Fix += item.BuffAmount;
+					break;
+			}
+		}
+		foreach (var item in BuffList_Percent)
+		{
+			switch (item.BuffType)
+			{
+				case E_BuffType.Range:
+					Range_Percent *= item.BuffAmount;
+					break;
+				case E_BuffType.Atk_spd:
+					Atk_spd_Percent *= item.BuffAmount;
+					break;
+			}
+		}
+
+		Range += Range_Fix;
+		Range *= Range_Percent;
+		m_AttackRange_Default.Range = Range;
+
+		AttackSpeed += Atk_spd_Fix;
+		AttackSpeed *= Atk_spd_Percent;
+		m_TowerAnimator.SetFloat("AttackSpeed", AttackSpeed);
+		#endregion
 	}
 	protected void UpdateSynergyBuff()
 	{
-		// 시너지 적용
+		// 마왕 스킬 버프 추가
+		List<S_Buff> BuffList_Fix = new List<S_Buff>(m_TowerInfo.DevilSkillBuffList_Fix);
+		List<S_Buff> BuffList_Percent = new List<S_Buff>(m_TowerInfo.DevilSkillBuffList_Percent);
+
+		float Range_Fix = 0f;
+		float Range_Percent = 1f;
+		float Atk_spd_Fix = 0f;
+		float Atk_spd_Percent = 1f;
+
+		float Range = m_AttackRange_Default.Range;
+		float AttackSpeed = m_TowerAnimator.GetFloat("AttackSpeed");
+
+		// 시너지 버프, 버서커 버프 추가
+		#region 시너지
 		foreach (var item in m_TowerInfo.SynergyList)
 		{
-			float synergyRand = Random.Range(0.00001f, 1f);
-			bool synergyApply = synergyRand <= item.EffectRand1;
-
-			if (synergyApply)
+			switch ((E_SynergyEffectType)item.EffectType1)
 			{
-				switch ((E_SynergyEffectType)item.EffectType1)
-				{
-					case E_SynergyEffectType.Buff:
-						{
-							BuffCC_TableExcel buffData = M_Buff.GetData(item.EffectCode1);
-
-							float buffRand1 = Random.Range(0.00001f, 1f);
-							bool buffApply1 = buffRand1 <= buffData.BuffRand1;
-
-							if (buffApply1)
-							{
-								S_Buff buff = new S_Buff(
-									buffData.Name_KR + "_1",
-									buffData.BuffType1,
-									buffData.AddType1,
-									buffData.BuffAmount1
-									);
-
-								if (buff.AddType == E_AddType.Fix)
-									m_TowerInfo.BuffList_Fix.Add(buff);
-								else if (buff.AddType == E_AddType.Percent)
-									m_TowerInfo.BuffList_Percent.Add(buff);
-
-								float buffRand2 = Random.Range(0.00001f, 1f);
-								bool buffApply2 = buffRand2 <= buffData.BuffRand2;
-
-								if (buffApply2)
-								{
-									buff = new S_Buff(
-										buffData.Name_KR + "_2",
-										buffData.BuffType2,
-										buffData.AddType2,
-										buffData.BuffAmount2
-										);
-
-									if (buff.AddType == E_AddType.Fix)
-										m_TowerInfo.BuffList_Fix.Add(buff);
-									else if (buff.AddType == E_AddType.Percent)
-										m_TowerInfo.BuffList_Percent.Add(buff);
-
-									float buffRand3 = Random.Range(0.00001f, 1f);
-									bool buffApply3 = buffRand3 <= buffData.BuffRand3;
-
-									if (buffApply3)
-									{
-										buff = new S_Buff(
-											buffData.Name_KR + "_3",
-											buffData.BuffType3,
-											buffData.AddType3,
-											buffData.BuffAmount3
-											);
-
-										if (buff.AddType == E_AddType.Fix)
-											m_TowerInfo.BuffList_Fix.Add(buff);
-										else if (buff.AddType == E_AddType.Percent)
-											m_TowerInfo.BuffList_Percent.Add(buff);
-									}
-								}
-							}
-						}
-						break;
-					case E_SynergyEffectType.ChangeAtkType:
-						{
-							m_TowerInfo.Buff_AttackType = (E_AttackType)item.EffectChange1;
-
-							if (m_TowerInfo.Buff_AttackType == E_AttackType.BounceFire)
-							{
-								m_TowerInfo.Target_num = item.EffectReq1;
-							}
-						}
-						break;
-					case E_SynergyEffectType.ReduceCooldown:
-						{
-							m_TowerInfo.ReduceCooldown = true;
-							m_TowerInfo.ReduceCooldownSec = 1f;
-						}
-						break;
-					case E_SynergyEffectType.Berserker:
-						{
-							if (!m_TowerInfo.Berserker)
-							{
-								m_TowerInfo.Berserker = true;
-								m_TowerInfo.BerserkerMaxStack = item.EffectReq1;
-							}
-
-							BuffCC_TableExcel buffData = M_Buff.GetData(item.EffectCode1);
-
-							float buffRand1 = Random.Range(0.00001f, 1f);
-							bool buffApply1 = buffRand1 <= buffData.BuffRand1;
-
-							if (buffApply1)
-							{
-								S_Buff buff = new S_Buff(
-									buffData.Name_KR + "_1",
-									buffData.BuffType1,
-									buffData.AddType1,
-									buffData.BuffAmount1
-									);
-
-								if (buff.AddType == E_AddType.Fix)
-									m_TowerInfo.BerserkerBuffList_Fix.Add(buff);
-								else if (buff.AddType == E_AddType.Percent)
-									m_TowerInfo.BerserkerBuffList_Percent.Add(buff);
-
-								float buffRand2 = Random.Range(0.00001f, 1f);
-								bool buffApply2 = buffRand2 <= buffData.BuffRand2;
-
-								if (buffApply2)
-								{
-									buff = new S_Buff(
-										buffData.Name_KR + "_2",
-										buffData.BuffType2,
-										buffData.AddType2,
-										buffData.BuffAmount2
-										);
-
-									if (buff.AddType == E_AddType.Fix)
-										m_TowerInfo.BerserkerBuffList_Fix.Add(buff);
-									else if (buff.AddType == E_AddType.Percent)
-										m_TowerInfo.BerserkerBuffList_Percent.Add(buff);
-
-									float buffRand3 = Random.Range(0.00001f, 1f);
-									bool buffApply3 = buffRand3 <= buffData.BuffRand3;
-
-									if (buffApply3)
-									{
-										buff = new S_Buff(
-											buffData.Name_KR + "_3",
-											buffData.BuffType3,
-											buffData.AddType3,
-											buffData.BuffAmount3
-											);
-
-										if (buff.AddType == E_AddType.Fix)
-											m_TowerInfo.BerserkerBuffList_Fix.Add(buff);
-										else if (buff.AddType == E_AddType.Percent)
-											m_TowerInfo.BerserkerBuffList_Percent.Add(buff);
-									}
-								}
-							}
-						}
-						break;
-				}
-			}
-
-			synergyRand = Random.Range(0.00001f, 1f);
-			synergyApply = synergyRand <= item.EffectRand2;
-
-			if (synergyApply)
-			{
-				switch ((E_SynergyEffectType)item.EffectType2)
-				{
-					case E_SynergyEffectType.Buff:
-						{
-							BuffCC_TableExcel buffData = M_Buff.GetData(item.EffectCode2);
-
-							float buffRand1 = Random.Range(0.00001f, 1f);
-							bool buffApply1 = buffRand1 <= buffData.BuffRand1;
-
-							if (buffApply1)
-							{
-								S_Buff buff = new S_Buff(
-									buffData.Name_KR + "_1",
-									buffData.BuffType1,
-									buffData.AddType1,
-									buffData.BuffAmount1
-									);
-
-								if (buff.AddType == E_AddType.Fix)
-									m_TowerInfo.BuffList_Fix.Add(buff);
-								else if (buff.AddType == E_AddType.Percent)
-									m_TowerInfo.BuffList_Percent.Add(buff);
-
-								float buffRand2 = Random.Range(0.00001f, 1f);
-								bool buffApply2 = buffRand2 <= buffData.BuffRand2;
-
-								if (buffApply2)
-								{
-									buff = new S_Buff(
-										buffData.Name_KR + "_2",
-										buffData.BuffType2,
-										buffData.AddType2,
-										buffData.BuffAmount2
-										);
-
-									if (buff.AddType == E_AddType.Fix)
-										m_TowerInfo.BuffList_Fix.Add(buff);
-									else if (buff.AddType == E_AddType.Percent)
-										m_TowerInfo.BuffList_Percent.Add(buff);
-
-									float buffRand3 = Random.Range(0.00001f, 1f);
-									bool buffApply3 = buffRand3 <= buffData.BuffRand3;
-
-									if (buffApply3)
-									{
-										buff = new S_Buff(
-											buffData.Name_KR + "_3",
-											buffData.BuffType3,
-											buffData.AddType3,
-											buffData.BuffAmount3
-											);
-
-										if (buff.AddType == E_AddType.Fix)
-											m_TowerInfo.BuffList_Fix.Add(buff);
-										else if (buff.AddType == E_AddType.Percent)
-											m_TowerInfo.BuffList_Percent.Add(buff);
-									}
-								}
-							}
-						}
-						break;
-					case E_SynergyEffectType.ChangeAtkType:
-						{
-							m_TowerInfo.Buff_AttackType = (E_AttackType)item.EffectChange2;
-
-							if (m_TowerInfo.Buff_AttackType == E_AttackType.BounceFire)
-							{
-								m_TowerInfo.Target_num = item.EffectReq2;
-							}
-						}
-						break;
-					case E_SynergyEffectType.ReduceCooldown:
-						{
-							m_TowerInfo.ReduceCooldown = true;
-							m_TowerInfo.ReduceCooldownSec = 1f;
-						}
-						break;
-					case E_SynergyEffectType.Berserker:
-						{
-							if (!m_TowerInfo.Berserker)
-							{
-								m_TowerInfo.Berserker = true;
-								m_TowerInfo.BerserkerMaxStack = item.EffectReq2;
-							}
-
-							BuffCC_TableExcel buffData = M_Buff.GetData(item.EffectCode2);
-
-							float buffRand1 = Random.Range(0.00001f, 1f);
-							bool buffApply1 = buffRand1 <= buffData.BuffRand1;
-
-							if (buffApply1)
-							{
-								S_Buff buff = new S_Buff(
-									buffData.Name_KR + "_1",
-									buffData.BuffType1,
-									buffData.AddType1,
-									buffData.BuffAmount1
-									);
-
-								if (buff.AddType == E_AddType.Fix)
-									m_TowerInfo.BerserkerBuffList_Fix.Add(buff);
-								else if (buff.AddType == E_AddType.Percent)
-									m_TowerInfo.BerserkerBuffList_Percent.Add(buff);
-
-								float buffRand2 = Random.Range(0.00001f, 1f);
-								bool buffApply2 = buffRand2 <= buffData.BuffRand2;
-
-								if (buffApply2)
-								{
-									buff = new S_Buff(
-										buffData.Name_KR + "_2",
-										buffData.BuffType2,
-										buffData.AddType2,
-										buffData.BuffAmount2
-										);
-
-									if (buff.AddType == E_AddType.Fix)
-										m_TowerInfo.BerserkerBuffList_Fix.Add(buff);
-									else if (buff.AddType == E_AddType.Percent)
-										m_TowerInfo.BerserkerBuffList_Percent.Add(buff);
-
-									float buffRand3 = Random.Range(0.00001f, 1f);
-									bool buffApply3 = buffRand3 <= buffData.BuffRand3;
-
-									if (buffApply3)
-									{
-										buff = new S_Buff(
-											buffData.Name_KR + "_3",
-											buffData.BuffType3,
-											buffData.AddType3,
-											buffData.BuffAmount3
-											);
-
-										if (buff.AddType == E_AddType.Fix)
-											m_TowerInfo.BerserkerBuffList_Fix.Add(buff);
-										else if (buff.AddType == E_AddType.Percent)
-											m_TowerInfo.BerserkerBuffList_Percent.Add(buff);
-									}
-								}
-							}
-						}
-						break;
-				}
-			}
-		}
-
-		#region 버프 합연산 추가
-		foreach (var item in m_TowerInfo.BuffList_Fix)
-		{
-			float BuffAmount = item.BuffAmount;
-
-			switch (item.BuffType)
-			{
-				#region 타워 버프
-				case E_BuffType.Atk:
-					m_TowerInfo.Buff_Atk_Fix += BuffAmount;
-					break;
-				case E_BuffType.Range:
+				case E_SynergyEffectType.Buff:
 					{
-						m_TowerInfo.Buff_Range_Fix += BuffAmount;
+						BuffCC_TableExcel buffData = M_Buff.GetData(item.EffectCode1);
 
-						float Atk_Range = m_TowerInfo.Stat_Default.Range;
+						#region 버프1
+						if (buffData.BuffType1 != 0)
+						{
+							float buffRand1 = Random.Range(0.00001f, 1f);
+							bool buffApply1 = buffRand1 <= buffData.BuffRand1;
 
-						Atk_Range += m_TowerInfo.Buff_Range_Fix;
-						Atk_Range *= m_TowerInfo.Buff_Range_Percent;
+							if (buffApply1)
+							{
+								S_Buff buff = new S_Buff(
+									buffData.Name_KR + "_1",
+									buffData.BuffType1,
+									buffData.AddType1,
+									buffData.BuffAmount1
+									);
 
-						m_AttackRange_Default.Range = Atk_Range;
+								if (buff.AddType == E_AddType.Fix)
+									BuffList_Fix.Add(buff);
+								else if (buff.AddType == E_AddType.Percent)
+									BuffList_Percent.Add(buff);
+
+								#region 버프2
+								if (buffData.BuffType2 != 0)
+								{
+									float buffRand2 = Random.Range(0.00001f, 1f);
+									bool buffApply2 = buffRand2 <= buffData.BuffRand2;
+
+									if (buffApply2)
+									{
+										buff = new S_Buff(
+											buffData.Name_KR + "_2",
+											buffData.BuffType2,
+											buffData.AddType2,
+											buffData.BuffAmount2
+											);
+
+										if (buff.AddType == E_AddType.Fix)
+											BuffList_Fix.Add(buff);
+										else if (buff.AddType == E_AddType.Percent)
+											BuffList_Percent.Add(buff);
+
+										#region 버프3
+										if (buffData.BuffType3 != 0)
+										{
+											float buffRand3 = Random.Range(0.00001f, 1f);
+											bool buffApply3 = buffRand3 <= buffData.BuffRand3;
+
+											if (buffApply3)
+											{
+												buff = new S_Buff(
+													buffData.Name_KR + "_3",
+													buffData.BuffType3,
+													buffData.AddType3,
+													buffData.BuffAmount3
+													);
+
+												if (buff.AddType == E_AddType.Fix)
+													BuffList_Fix.Add(buff);
+												else if (buff.AddType == E_AddType.Percent)
+													BuffList_Percent.Add(buff);
+											}
+										}
+										#endregion
+									}
+								}
+								#endregion
+							}
+						}
+						#endregion
 					}
 					break;
-				case E_BuffType.Atk_spd:
+				case E_SynergyEffectType.ChangeAtkType:
 					{
-						m_TowerInfo.Buff_Atk_spd_Fix += BuffAmount;
+						m_TowerInfo.Buff_AttackType = (E_AttackType)item.EffectChange1;
 
-						float Atk_Speed = m_TowerInfo_Excel.Atk_Speed;
-
-						Atk_Speed += m_TowerInfo.Buff_Atk_spd_Fix;
-						Atk_Speed *= m_TowerInfo.Buff_Atk_spd_Percent;
-
-						// 공격속도 적용
-						m_TowerAnimator.SetFloat("AttackSpeed", Atk_Speed);
+						if (m_TowerInfo.Buff_AttackType == E_AttackType.BounceFire)
+						{
+							m_TowerInfo.Target_num = item.EffectReq1;
+						}
 					}
 					break;
-				case E_BuffType.Crit_rate:
-					m_TowerInfo.Buff_Crit_rate_Fix += BuffAmount;
-					break;
-				case E_BuffType.Crit_Dmg:
-					m_TowerInfo.Buff_Crit_Dmg_Fix += BuffAmount;
-					break;
-				#endregion
+				case E_SynergyEffectType.Berserker:
+					{
+						BuffCC_TableExcel buffData = M_Buff.GetData(item.EffectCode1);
 
-				#region 적 디버프
-				case E_BuffType.Def:
+						#region 버프1
+						if (buffData.BuffType1 != 0)
+						{
+							float buffRand1 = Random.Range(0.00001f, 1f);
+							bool buffApply1 = buffRand1 <= buffData.BuffRand1;
+
+							if (buffApply1)
+							{
+								S_Buff buff = new S_Buff(
+									buffData.Name_KR + "_1",
+									buffData.BuffType1,
+									buffData.AddType1,
+									buffData.BuffAmount1 * m_TowerInfo.BerserkerStack
+									);
+
+								if (buff.AddType == E_AddType.Fix)
+									BuffList_Fix.Add(buff);
+								else if (buff.AddType == E_AddType.Percent)
+									BuffList_Percent.Add(buff);
+
+								#region 버프2
+								if (buffData.BuffType2 != 0)
+								{
+									float buffRand2 = Random.Range(0.00001f, 1f);
+									bool buffApply2 = buffRand2 <= buffData.BuffRand2;
+
+									if (buffApply2)
+									{
+										buff = new S_Buff(
+											buffData.Name_KR + "_2",
+											buffData.BuffType2,
+											buffData.AddType2,
+											buffData.BuffAmount2 * m_TowerInfo.BerserkerStack
+											);
+
+										if (buff.AddType == E_AddType.Fix)
+											BuffList_Fix.Add(buff);
+										else if (buff.AddType == E_AddType.Percent)
+											BuffList_Percent.Add(buff);
+
+										#region 버프3
+										if (buffData.BuffType3 != 0)
+										{
+											float buffRand3 = Random.Range(0.00001f, 1f);
+											bool buffApply3 = buffRand3 <= buffData.BuffRand3;
+
+											if (buffApply3)
+											{
+												buff = new S_Buff(
+													buffData.Name_KR + "_3",
+													buffData.BuffType3,
+													buffData.AddType3,
+													buffData.BuffAmount3 * m_TowerInfo.BerserkerStack
+													);
+
+												if (buff.AddType == E_AddType.Fix)
+													BuffList_Fix.Add(buff);
+												else if (buff.AddType == E_AddType.Percent)
+													BuffList_Percent.Add(buff);
+											}
+										}
+										#endregion
+									}
+								}
+								#endregion
+							}
+						}
+						#endregion
+					}
 					break;
-				case E_BuffType.Move_spd:
+			}
+
+			switch ((E_SynergyEffectType)item.EffectType2)
+			{
+				case E_SynergyEffectType.Buff:
+					{
+						BuffCC_TableExcel buffData = M_Buff.GetData(item.EffectCode2);
+
+						#region 버프1
+						if (buffData.BuffType1 != 0)
+						{
+							float buffRand1 = Random.Range(0.00001f, 1f);
+							bool buffApply1 = buffRand1 <= buffData.BuffRand1;
+
+							if (buffApply1)
+							{
+								S_Buff buff = new S_Buff(
+									buffData.Name_KR + "_1",
+									buffData.BuffType1,
+									buffData.AddType1,
+									buffData.BuffAmount1
+									);
+
+								if (buff.AddType == E_AddType.Fix)
+									BuffList_Fix.Add(buff);
+								else if (buff.AddType == E_AddType.Percent)
+									BuffList_Percent.Add(buff);
+
+								#region 버프2
+								if (buffData.BuffType2 != 0)
+								{
+									float buffRand2 = Random.Range(0.00001f, 1f);
+									bool buffApply2 = buffRand2 <= buffData.BuffRand2;
+
+									if (buffApply2)
+									{
+										buff = new S_Buff(
+											buffData.Name_KR + "_2",
+											buffData.BuffType2,
+											buffData.AddType2,
+											buffData.BuffAmount2
+											);
+
+										if (buff.AddType == E_AddType.Fix)
+											BuffList_Fix.Add(buff);
+										else if (buff.AddType == E_AddType.Percent)
+											BuffList_Percent.Add(buff);
+
+										#region 버프3
+										if (buffData.BuffType3 != 0)
+										{
+											float buffRand3 = Random.Range(0.00001f, 1f);
+											bool buffApply3 = buffRand3 <= buffData.BuffRand3;
+
+											if (buffApply3)
+											{
+												buff = new S_Buff(
+													buffData.Name_KR + "_3",
+													buffData.BuffType3,
+													buffData.AddType3,
+													buffData.BuffAmount3
+													);
+
+												if (buff.AddType == E_AddType.Fix)
+													BuffList_Fix.Add(buff);
+												else if (buff.AddType == E_AddType.Percent)
+													BuffList_Percent.Add(buff);
+											}
+										}
+										#endregion
+									}
+								}
+								#endregion
+							}
+						}
+						#endregion
+					}
 					break;
-				case E_BuffType.Stun:
+				case E_SynergyEffectType.ChangeAtkType:
+					{
+						m_TowerInfo.Buff_AttackType = (E_AttackType)item.EffectChange2;
+
+						if (m_TowerInfo.Buff_AttackType == E_AttackType.BounceFire)
+						{
+							m_TowerInfo.Target_num = item.EffectReq2;
+						}
+					}
 					break;
-				case E_BuffType.Dot_Dmg:
+				case E_SynergyEffectType.Berserker:
+					{
+						BuffCC_TableExcel buffData = M_Buff.GetData(item.EffectCode2);
+
+						#region 버프1
+						if (buffData.BuffType1 != 0)
+						{
+							float buffRand1 = Random.Range(0.00001f, 1f);
+							bool buffApply1 = buffRand1 <= buffData.BuffRand1;
+
+							if (buffApply1)
+							{
+								S_Buff buff = new S_Buff(
+									buffData.Name_KR + "_1",
+									buffData.BuffType1,
+									buffData.AddType1,
+									buffData.BuffAmount1 * m_TowerInfo.BerserkerStack
+									);
+
+								if (buff.AddType == E_AddType.Fix)
+									BuffList_Fix.Add(buff);
+								else if (buff.AddType == E_AddType.Percent)
+									BuffList_Percent.Add(buff);
+
+								#region 버프2
+								if (buffData.BuffType2 != 0)
+								{
+									float buffRand2 = Random.Range(0.00001f, 1f);
+									bool buffApply2 = buffRand2 <= buffData.BuffRand2;
+
+									if (buffApply2)
+									{
+										buff = new S_Buff(
+											buffData.Name_KR + "_2",
+											buffData.BuffType2,
+											buffData.AddType2,
+											buffData.BuffAmount2 * m_TowerInfo.BerserkerStack
+											);
+
+										if (buff.AddType == E_AddType.Fix)
+											BuffList_Fix.Add(buff);
+										else if (buff.AddType == E_AddType.Percent)
+											BuffList_Percent.Add(buff);
+
+										#region 버프3
+										if (buffData.BuffType3 != 0)
+										{
+											float buffRand3 = Random.Range(0.00001f, 1f);
+											bool buffApply3 = buffRand3 <= buffData.BuffRand3;
+
+											if (buffApply3)
+											{
+												buff = new S_Buff(
+													buffData.Name_KR + "_3",
+													buffData.BuffType3,
+													buffData.AddType3,
+													buffData.BuffAmount3 * m_TowerInfo.BerserkerStack
+													);
+
+												if (buff.AddType == E_AddType.Fix)
+													BuffList_Fix.Add(buff);
+												else if (buff.AddType == E_AddType.Percent)
+													BuffList_Percent.Add(buff);
+											}
+										}
+										#endregion
+									}
+								}
+								#endregion
+							}
+						}
+						#endregion
+					}
 					break;
-				case E_BuffType.Insta_Kill:
-					break;
-				case E_BuffType.CritDmg_less:
-					break;
-				case E_BuffType.CritDmg_more:
-					break;
-					#endregion
 			}
 		}
 		#endregion
-		#region 버프 곱연산 추가
-		foreach (var item in m_TowerInfo.BuffList_Percent)
-		{
-			float BuffAmount = item.BuffAmount;
 
+		foreach (var item in BuffList_Fix)
+		{
 			switch (item.BuffType)
 			{
-				#region 타워 버프
-				case E_BuffType.Atk:
-					m_TowerInfo.Buff_Atk_Percent *= BuffAmount;
-					break;
 				case E_BuffType.Range:
-					{
-						m_TowerInfo.Buff_Range_Percent *= BuffAmount;
-
-						float Atk_Range = m_TowerInfo.Stat_Default.Range;
-
-						Atk_Range += m_TowerInfo.Buff_Range_Fix;
-						Atk_Range *= m_TowerInfo.Buff_Range_Percent;
-
-						m_AttackRange_Default.Range = Atk_Range;
-					}
+					Range_Fix += item.BuffAmount;
 					break;
 				case E_BuffType.Atk_spd:
-					{
-						m_TowerInfo.Buff_Atk_spd_Percent *= BuffAmount;
-
-						float Atk_Speed = m_TowerInfo_Excel.Atk_Speed;
-
-						Atk_Speed += m_TowerInfo.Buff_Atk_spd_Fix;
-						Atk_Speed *= m_TowerInfo.Buff_Atk_spd_Percent;
-
-						// 공격속도 적용
-						m_TowerAnimator.SetFloat("AttackSpeed", Atk_Speed);
-					}
+					Atk_spd_Fix += item.BuffAmount;
 					break;
-				case E_BuffType.Crit_rate:
-					m_TowerInfo.Buff_Crit_rate_Percent *= BuffAmount;
-					break;
-				case E_BuffType.Crit_Dmg:
-					m_TowerInfo.Buff_Crit_Dmg_Percent *= BuffAmount;
-					break;
-				#endregion
-
-				#region 적 디버프
-				case E_BuffType.Def:
-					break;
-				case E_BuffType.Move_spd:
-					break;
-				case E_BuffType.Stun:
-					break;
-				case E_BuffType.Dot_Dmg:
-					break;
-				case E_BuffType.Insta_Kill:
-					break;
-				case E_BuffType.CritDmg_less:
-					break;
-				case E_BuffType.CritDmg_more:
-					break;
-					#endregion
 			}
 		}
-		#endregion
+		foreach (var item in BuffList_Percent)
+		{
+			switch (item.BuffType)
+			{
+				case E_BuffType.Range:
+					Range_Percent *= item.BuffAmount;
+					break;
+				case E_BuffType.Atk_spd:
+					Atk_spd_Percent *= item.BuffAmount;
+					break;
+			}
+		}
+
+		Range += Range_Fix;
+		Range *= Range_Percent;
+		m_AttackRange_Default.Range = Range;
+
+		AttackSpeed += Atk_spd_Fix;
+		AttackSpeed *= Atk_spd_Percent;
+		m_TowerAnimator.SetFloat("AttackSpeed", AttackSpeed);
 	}
 
 	protected void SetAttackTrigger()
@@ -928,184 +822,111 @@ public class Tower : MonoBehaviour
 
 	protected IEnumerator Co_DevilSkillBuff_Fix(S_Buff buff, float time)
 	{
+		if (buff.AddType != E_AddType.Fix)
+			yield break;
+
+		m_TowerInfo.DevilSkillBuffList_Fix.AddLast(buff);
+
 		float BuffAmount = buff.BuffAmount;
 
-		#region 마왕 스킬 버프 합연산 추가
 		switch (buff.BuffType)
 		{
-			case E_BuffType.Atk:
-				m_TowerInfo.Buff_Atk_Fix += BuffAmount;
-				break;
 			case E_BuffType.Range:
 				{
-					m_TowerInfo.Buff_Range_Fix += BuffAmount;
-
-					float Atk_Range = m_TowerInfo.Stat_Default.Range;
-
-					Atk_Range += m_TowerInfo.Buff_Range_Fix;
-					Atk_Range *= m_TowerInfo.Buff_Range_Percent;
-
-					m_AttackRange_Default.Range = Atk_Range;
+					float Range = m_AttackRange_Default.Range + BuffAmount;
+					m_AttackRange_Default.Range = Range;
 				}
 				break;
 			case E_BuffType.Atk_spd:
 				{
-					m_TowerInfo.Buff_Atk_spd_Fix += BuffAmount;
-
-					float Atk_Speed = m_TowerInfo_Excel.Atk_Speed;
-
-					Atk_Speed += m_TowerInfo.Buff_Atk_spd_Fix;
-					Atk_Speed *= m_TowerInfo.Buff_Atk_spd_Percent;
-
-					// 공격속도 적용
-					m_TowerAnimator.SetFloat("AttackSpeed", Atk_Speed);
+					float AttackSpeed = m_TowerAnimator.GetFloat("AttackSpeed") + BuffAmount;
+					m_TowerAnimator.SetFloat("AttackSpeed", AttackSpeed);
 				}
 				break;
-			case E_BuffType.Crit_rate:
-				m_TowerInfo.Buff_Crit_rate_Fix += BuffAmount;
-				break;
-			case E_BuffType.Crit_Dmg:
-				m_TowerInfo.Buff_Crit_Dmg_Fix += BuffAmount;
-				break;
 		}
-		#endregion
 
 		yield return new WaitForSeconds(time);
 
-		#region 마왕 스킬 버프 합연산 제거
-		switch (buff.BuffType)
-		{
-			case E_BuffType.Atk:
-				m_TowerInfo.Buff_Atk_Fix -= BuffAmount;
-				break;
-			case E_BuffType.Range:
-				{
-					m_TowerInfo.Buff_Range_Fix -= BuffAmount;
+		m_TowerInfo.DevilSkillBuffList_Fix.Remove(buff);
 
-					float Atk_Range = m_TowerInfo.Stat_Default.Range;
-
-					Atk_Range += m_TowerInfo.Buff_Range_Fix;
-					Atk_Range *= m_TowerInfo.Buff_Range_Percent;
-
-					m_AttackRange_Default.Range = Atk_Range;
-				}
-				break;
-			case E_BuffType.Atk_spd:
-				{
-					m_TowerInfo.Buff_Atk_spd_Fix -= BuffAmount;
-					m_TowerInfo.AttackSpeed_Default -= BuffAmount;
-					m_TowerInfo.AttackSpeed_Skill01 -= BuffAmount;
-					m_TowerInfo.AttackSpeed_Skill02 -= BuffAmount;
-
-					float Atk_Speed = m_TowerInfo_Excel.Atk_Speed;
-
-					Atk_Speed += m_TowerInfo.Buff_Atk_spd_Fix;
-					Atk_Speed *= m_TowerInfo.Buff_Atk_spd_Percent;
-
-					// 공격속도 적용
-					m_TowerAnimator.SetFloat("AttackSpeed", Atk_Speed);
-				}
-				break;
-			case E_BuffType.Crit_rate:
-				m_TowerInfo.Buff_Crit_rate_Fix -= BuffAmount;
-				break;
-			case E_BuffType.Crit_Dmg:
-				m_TowerInfo.Buff_Crit_Dmg_Fix -= BuffAmount;
-				break;
-		}
-		#endregion
+		UpdateSynergyBuff();
 	}
 	protected IEnumerator Co_DevilSkillBuff_Percent(S_Buff buff, float time)
 	{
+		if (buff.AddType != E_AddType.Percent)
+			yield break;
+
+		m_TowerInfo.DevilSkillBuffList_Percent.AddLast(buff);
+
 		float BuffAmount = buff.BuffAmount;
 
-		#region 마왕 스킬 버프 곱연산 추가
 		switch (buff.BuffType)
 		{
-			case E_BuffType.Atk:
-				m_TowerInfo.Buff_Atk_Percent *= BuffAmount;
-				break;
 			case E_BuffType.Range:
 				{
-					m_TowerInfo.Buff_Range_Percent *= BuffAmount;
-
-					float Atk_Range = m_TowerInfo.Stat_Default.Range;
-
-					Atk_Range += m_TowerInfo.Buff_Range_Fix;
-					Atk_Range *= m_TowerInfo.Buff_Range_Percent;
-
-					m_AttackRange_Default.Range = Atk_Range;
+					float Range = m_AttackRange_Default.Range * BuffAmount;
+					m_AttackRange_Default.Range = Range;
 				}
 				break;
 			case E_BuffType.Atk_spd:
 				{
-					m_TowerInfo.Buff_Atk_spd_Percent *= BuffAmount;
-
-					float Atk_Speed = m_TowerInfo_Excel.Atk_Speed;
-
-					Atk_Speed += m_TowerInfo.Buff_Atk_spd_Fix;
-					Atk_Speed *= m_TowerInfo.Buff_Atk_spd_Percent;
-
-					// 공격속도 적용
-					m_TowerAnimator.SetFloat("AttackSpeed", Atk_Speed);
+					float AttackSpeed = m_TowerAnimator.GetFloat("AttackSpeed") * BuffAmount;
+					m_TowerAnimator.SetFloat("AttackSpeed", AttackSpeed);
 				}
 				break;
-			case E_BuffType.Crit_rate:
-				m_TowerInfo.Buff_Crit_rate_Percent *= BuffAmount;
-				break;
-			case E_BuffType.Crit_Dmg:
-				m_TowerInfo.Buff_Crit_Dmg_Percent *= BuffAmount;
-				break;
 		}
-		#endregion
 
 		yield return new WaitForSeconds(time);
 
-		#region 마왕 스킬 버프 곱연산 제거
-		switch (buff.BuffType)
-		{
-			case E_BuffType.Atk:
-				m_TowerInfo.Buff_Atk_Percent /= BuffAmount;
-				break;
-			case E_BuffType.Range:
-				{
-					m_TowerInfo.Buff_Range_Percent /= BuffAmount;
+		m_TowerInfo.DevilSkillBuffList_Percent.Remove(buff);
 
-					float Atk_Range = m_TowerInfo.Stat_Default.Range;
-
-					Atk_Range += m_TowerInfo.Buff_Range_Fix;
-					Atk_Range *= m_TowerInfo.Buff_Range_Percent;
-
-					m_AttackRange_Default.Range = Atk_Range;
-				}
-				break;
-			case E_BuffType.Atk_spd:
-				{
-					m_TowerInfo.Buff_Atk_spd_Percent /= BuffAmount;
-
-					float Atk_Speed = m_TowerInfo_Excel.Atk_Speed;
-
-					Atk_Speed += m_TowerInfo.Buff_Atk_spd_Fix;
-					Atk_Speed *= m_TowerInfo.Buff_Atk_spd_Percent;
-
-					// 공격속도 적용
-					m_TowerAnimator.SetFloat("AttackSpeed", Atk_Speed);
-				}
-				break;
-			case E_BuffType.Crit_rate:
-				m_TowerInfo.Buff_Crit_rate_Percent /= BuffAmount;
-				break;
-			case E_BuffType.Crit_Dmg:
-				m_TowerInfo.Buff_Crit_Dmg_Percent /= BuffAmount;
-				break;
-		}
-		#endregion
+		UpdateSynergyBuff();
 	}
 	#endregion
 	#region 외부 함수
 	// 타워 초기화
 	public void InitializeTower(int code)
 	{
+		#region 내부 컴포넌트
+		// m_TowerAnimator ??= GetComponentInChildren<TowerAnimator>(true);
+		if (null == m_TowerAnimator)
+		{
+			m_TowerAnimator = transform.Find("Mesh").GetComponent<TowerAnimator>();
+			m_TowerAnimator.Initialize(this);
+		}
+		m_TowerAnimator.SetFloat("AttackSpeed", m_TowerInfo_Excel.Atk_Speed);
+
+		// m_AttackRange_Default ??= transform.Find("AttackRange_Default").AddComponent<AttackRange>();
+		if (null == m_AttackRange_Default)
+		{
+			m_AttackRange_Default = transform.Find("AttackRange_Default").AddComponent<AttackRange>();
+			m_AttackRange_Default.gameObject.layer = LayerMask.NameToLayer("TowerAttackRange");
+			m_AttackRange_Default.Initialize();
+		}
+		m_AttackRange_Default.Range = m_TowerInfo.Stat_Default.Range;
+		m_AttackRange_Default.CanFindTarget = true;
+
+		//m_AttackRange_Skill01 ??= transform.Find("AttackRange_Skill01").AddComponent<AttackRange>();
+		if (m_AttackRange_Skill01 == null)
+		{
+			m_AttackRange_Skill01 = transform.Find("AttackRange_Skill01").AddComponent<AttackRange>();
+			m_AttackRange_Skill01.gameObject.layer = LayerMask.NameToLayer("TowerAttackRange");
+			m_AttackRange_Skill01.Initialize();
+		}
+		m_AttackRange_Skill01.Range = m_TowerInfo.Stat_Skill01.Range;
+		m_AttackRange_Skill01.CanFindTarget = true;
+
+		//m_AttackRange_Skill02 ??= transform.Find("AttackRange_Skill02").AddComponent<AttackRange>();
+		if (m_AttackRange_Skill02 == null)
+		{
+			m_AttackRange_Skill02 = transform.Find("AttackRange_Skill02").AddComponent<AttackRange>();
+			m_AttackRange_Skill02.gameObject.layer = LayerMask.NameToLayer("TowerAttackRange");
+			m_AttackRange_Skill02.Initialize();
+		}
+		m_AttackRange_Skill02.Range = m_TowerInfo.Stat_Skill02.Range;
+		m_AttackRange_Skill02.CanFindTarget = true;
+		#endregion
+
 		#region 엑셀 데이터
 		m_TowerInfo_Excel = M_Tower.GetData(code);
 		#endregion
@@ -1157,83 +978,18 @@ public class Tower : MonoBehaviour
 			m_TowerInfo.SynergyList.Clear();
 
 		// 버프 (합연산)
-		if (null == m_TowerInfo.BuffList_Fix)
-			m_TowerInfo.BuffList_Fix = new List<S_Buff>();
-		else if (m_TowerInfo.BuffList_Fix.Count > 0)
-			m_TowerInfo.BuffList_Fix.Clear();
+		if (null == m_TowerInfo.DevilSkillBuffList_Fix)
+			m_TowerInfo.DevilSkillBuffList_Fix = new LinkedList<S_Buff>();
+		else if (m_TowerInfo.DevilSkillBuffList_Fix.Count > 0)
+			m_TowerInfo.DevilSkillBuffList_Fix.Clear();
 		// 버프 (곱연산)
-		if (null == m_TowerInfo.BuffList_Percent)
-			m_TowerInfo.BuffList_Percent = new List<S_Buff>();
-		else if (m_TowerInfo.BuffList_Percent.Count > 0)
-			m_TowerInfo.BuffList_Percent.Clear();
-
-		// 버서커 버프 (합연산)
-		if (null == m_TowerInfo.BerserkerBuffList_Fix)
-			m_TowerInfo.BerserkerBuffList_Fix = new List<S_Buff>();
-		else if (m_TowerInfo.BerserkerBuffList_Fix.Count > 0)
-			m_TowerInfo.BerserkerBuffList_Fix.Clear();
-		// 버서커 버프 (곱연산)
-		if (null == m_TowerInfo.BerserkerBuffList_Percent)
-			m_TowerInfo.BerserkerBuffList_Percent = new List<S_Buff>();
-		else if (m_TowerInfo.BerserkerBuffList_Percent.Count > 0)
-			m_TowerInfo.BerserkerBuffList_Percent.Clear();
+		if (null == m_TowerInfo.DevilSkillBuffList_Percent)
+			m_TowerInfo.DevilSkillBuffList_Percent = new LinkedList<S_Buff>();
+		else if (m_TowerInfo.DevilSkillBuffList_Percent.Count > 0)
+			m_TowerInfo.DevilSkillBuffList_Percent.Clear();
 
 		ClearSynergyBuff();
 		#endregion
-
-		#region 버프
-		m_TowerInfo.Buff_Atk_Fix = 0f;
-		m_TowerInfo.Buff_Range_Fix = 0f;
-		m_TowerInfo.Buff_Atk_spd_Fix = 0f;
-		m_TowerInfo.Buff_Crit_rate_Fix = 0f;
-		m_TowerInfo.Buff_Crit_Dmg_Fix = 0f;
-
-		m_TowerInfo.Buff_Atk_Percent = 1f;
-		m_TowerInfo.Buff_Range_Percent = 1f;
-		m_TowerInfo.Buff_Atk_spd_Percent = 1f;
-		m_TowerInfo.Buff_Crit_rate_Percent = 1f;
-		m_TowerInfo.Buff_Crit_Dmg_Percent = 1f;
-		#endregion
-		#endregion
-
-		#region 내부 컴포넌트
-		// m_TowerAnimator ??= GetComponentInChildren<TowerAnimator>(true);
-		if (null == m_TowerAnimator)
-		{
-			m_TowerAnimator = transform.Find("Mesh").GetComponent<TowerAnimator>();
-			m_TowerAnimator.Initialize(this);
-		}
-		m_TowerAnimator.SetFloat("AttackSpeed", m_TowerInfo_Excel.Atk_Speed);
-
-		// m_AttackRange_Default ??= transform.Find("AttackRange_Default").AddComponent<AttackRange>();
-		if (null == m_AttackRange_Default)
-		{
-			m_AttackRange_Default = transform.Find("AttackRange_Default").AddComponent<AttackRange>();
-			m_AttackRange_Default.gameObject.layer = LayerMask.NameToLayer("TowerAttackRange");
-			m_AttackRange_Default.Initialize();
-		}
-		m_AttackRange_Default.Range = m_TowerInfo.Stat_Default.Range;
-		m_AttackRange_Default.CanFindTarget = true;
-
-		//m_AttackRange_Skill01 ??= transform.Find("AttackRange_Skill01").AddComponent<AttackRange>();
-		if (m_AttackRange_Skill01 == null)
-		{
-			m_AttackRange_Skill01 = transform.Find("AttackRange_Skill01").AddComponent<AttackRange>();
-			m_AttackRange_Skill01.gameObject.layer = LayerMask.NameToLayer("TowerAttackRange");
-			m_AttackRange_Skill01.Initialize();
-		}
-		m_AttackRange_Skill01.Range = m_TowerInfo.Stat_Skill01.Range;
-		m_AttackRange_Skill01.CanFindTarget = true;
-
-		//m_AttackRange_Skill02 ??= transform.Find("AttackRange_Skill02").AddComponent<AttackRange>();
-		if (m_AttackRange_Skill02 == null)
-		{
-			m_AttackRange_Skill02 = transform.Find("AttackRange_Skill02").AddComponent<AttackRange>();
-			m_AttackRange_Skill02.gameObject.layer = LayerMask.NameToLayer("TowerAttackRange");
-			m_AttackRange_Skill02.Initialize();
-		}
-		m_AttackRange_Skill02.Range = m_TowerInfo.Stat_Skill02.Range;
-		m_AttackRange_Skill02.CanFindTarget = true;
 		#endregion
 
 		#region 이벤트 링크
@@ -1250,7 +1006,6 @@ public class Tower : MonoBehaviour
 			m_AttackRange_Skill01.Clear();
 			m_AttackRange_Skill02.Clear();
 		};
-
 		M_Node.m_RotateEndEvent += () =>
 		{
 			m_AttackRange_Default.CanFindTarget = true;
@@ -1269,10 +1024,8 @@ public class Tower : MonoBehaviour
 		m_TowerInfo.node?.ClearNode();
 
 		m_TowerInfo.SynergyList?.Clear();
-		m_TowerInfo.BuffList_Fix?.Clear();
-		m_TowerInfo.BuffList_Percent?.Clear();
-		m_TowerInfo.BerserkerBuffList_Fix?.Clear();
-		m_TowerInfo.BerserkerBuffList_Percent?.Clear();
+		m_TowerInfo.DevilSkillBuffList_Fix?.Clear();
+		m_TowerInfo.DevilSkillBuffList_Percent?.Clear();
 		#endregion
 
 		#region 내부 컴포넌트
@@ -1299,141 +1052,435 @@ public class Tower : MonoBehaviour
 
 		SkillCondition_TableExcel conditionData = m_TowerInfo.Condition_Default;
 		SkillStat_TableExcel statData = m_TowerInfo.Stat_Default;
+		statData.Dmg_Fix += m_TowerInfo_Excel.Atk;
 
 		#region 시너지
-		// 공격 타입 변경
 		if (m_TowerInfo.Buff_AttackType != E_AttackType.None)
 		{
 			conditionData.Atk_type = (int)m_TowerInfo.Buff_AttackType;
-			statData.Target_num = m_TowerInfo.Target_num;
-		}
-
-		// 마왕 스킬 쿨타임 변경
-		if (m_TowerInfo.ReduceCooldown)
-		{
-			float ReduceRand = Random.Range(0.00001f, 1f);
-
-			if (ReduceRand <= 0.5f)
+			if (m_TowerInfo.Buff_AttackType == E_AttackType.BounceFire)
 			{
-				M_Devil.Devil.ReduceSkill01Cooldown(m_TowerInfo.ReduceCooldownSec);
-			}
-			else
-			{
-				M_Devil.Devil.ReduceSkill02Cooldown(m_TowerInfo.ReduceCooldownSec);
+				statData.Target_num = m_TowerInfo.Target_num;
 			}
 		}
 
-		// 버서커
-		if (m_TowerInfo.Berserker)
+		if (m_TowerInfo.Berserker &&
+			m_TowerInfo.BerserkerStack < m_TowerInfo.BerserkerMaxStack)
 		{
-			if (m_TowerInfo.BerserkerStack < m_TowerInfo.BerserkerMaxStack)
-				++m_TowerInfo.BerserkerStack;
+			++m_TowerInfo.BerserkerStack;
 		}
 		#endregion
 
 		#region 버프
-		statData.Dmg_Fix += m_TowerInfo_Excel.Atk + m_TowerInfo.Buff_Atk_Fix;
-		statData.Dmg_Percent *= m_TowerInfo.Buff_Atk_Percent;
-		statData.Range = (statData.Range + m_TowerInfo.Buff_Range_Fix) * m_TowerInfo.Buff_Range_Percent;
+		// 마왕 버프 추가
+		List<S_Buff> BuffList_Fix = new List<S_Buff>(m_TowerInfo.DevilSkillBuffList_Fix);
+		List<S_Buff> BuffList_Percent = new List<S_Buff>(m_TowerInfo.DevilSkillBuffList_Percent);
 
-		float Crit_rate_Fix = m_TowerInfo.Buff_Crit_rate_Fix;
-		float Crit_rate_Percent = m_TowerInfo.Buff_Crit_rate_Percent;
-		float Crit_Dmg_Fix = m_TowerInfo.Buff_Crit_Dmg_Fix;
-		float Crit_Dmg_Percent = m_TowerInfo.Buff_Crit_Dmg_Percent;
+		float Range_Fix = 0f;
+		float Range_Percent = 1f;
+		float Atk_spd_Fix = 0f;
+		float Atk_spd_Percent = 1f;
+		float Crit_rate_Fix = 0f;
+		float Crit_rate_Percent = 1f;
+		float Crit_Dmg_Fix = 0f;
+		float Crit_Dmg_Percent = 1f;
 
-		#region 버서커 버프 합연산
-		if (m_TowerInfo.Berserker)
+		#region 시너지 버프, 버서커 버프 추가
+		foreach (var item in m_TowerInfo.SynergyList)
 		{
-			foreach (var item in m_TowerInfo.BerserkerBuffList_Fix)
+			switch ((E_SynergyEffectType)item.EffectType1)
 			{
-				float BuffAmount = item.BuffAmount * m_TowerInfo.BerserkerStack;
+				case E_SynergyEffectType.Buff:
+					{
+						BuffCC_TableExcel buffData = M_Buff.GetData(item.EffectCode1);
 
-				switch (item.BuffType)
-				{
-					case E_BuffType.Atk:
-						statData.Dmg_Fix += BuffAmount;
-						break;
-					case E_BuffType.Range:
+						#region 버프1
+						if (buffData.BuffType1 != 0)
 						{
-							float Atk_Range = m_TowerInfo.Stat_Default.Range;
+							float buffRand1 = Random.Range(0.00001f, 1f);
+							bool buffApply1 = buffRand1 <= buffData.BuffRand1;
 
-							Atk_Range += m_TowerInfo.Buff_Range_Fix + BuffAmount;
-							Atk_Range *= m_TowerInfo.Buff_Range_Percent;
+							if (buffApply1)
+							{
+								S_Buff buff = new S_Buff(
+									buffData.Name_KR + "_1",
+									buffData.BuffType1,
+									buffData.AddType1,
+									buffData.BuffAmount1
+									);
 
-							statData.Range = m_AttackRange_Default.Range = Atk_Range;
+								if (buff.AddType == E_AddType.Fix)
+									BuffList_Fix.Add(buff);
+								else if (buff.AddType == E_AddType.Percent)
+									BuffList_Percent.Add(buff);
+
+								#region 버프2
+								if (buffData.BuffType2 != 0)
+								{
+									float buffRand2 = Random.Range(0.00001f, 1f);
+									bool buffApply2 = buffRand2 <= buffData.BuffRand2;
+
+									if (buffApply2)
+									{
+										buff = new S_Buff(
+											buffData.Name_KR + "_2",
+											buffData.BuffType2,
+											buffData.AddType2,
+											buffData.BuffAmount2
+											);
+
+										if (buff.AddType == E_AddType.Fix)
+											BuffList_Fix.Add(buff);
+										else if (buff.AddType == E_AddType.Percent)
+											BuffList_Percent.Add(buff);
+
+										#region 버프3
+										if (buffData.BuffType3 != 0)
+										{
+											float buffRand3 = Random.Range(0.00001f, 1f);
+											bool buffApply3 = buffRand3 <= buffData.BuffRand3;
+
+											if (buffApply3)
+											{
+												buff = new S_Buff(
+													buffData.Name_KR + "_3",
+													buffData.BuffType3,
+													buffData.AddType3,
+													buffData.BuffAmount3
+													);
+
+												if (buff.AddType == E_AddType.Fix)
+													BuffList_Fix.Add(buff);
+												else if (buff.AddType == E_AddType.Percent)
+													BuffList_Percent.Add(buff);
+											}
+										}
+										#endregion
+									}
+								}
+								#endregion
+							}
 						}
-						break;
-					case E_BuffType.Atk_spd:
+						#endregion
+					}
+					break;
+				case E_SynergyEffectType.Berserker:
+					{
+						if (!m_TowerInfo.Berserker)
 						{
-							float Atk_Speed = m_TowerInfo_Excel.Atk_Speed;
-
-							Atk_Speed += m_TowerInfo.Buff_Atk_spd_Fix + BuffAmount;
-							Atk_Speed *= m_TowerInfo.Buff_Atk_spd_Percent;
-
-							// 공격속도 적용
-							m_TowerAnimator.SetFloat("AttackSpeed", Atk_Speed);
+							++m_TowerInfo.BerserkerStack;
 						}
-						break;
-					case E_BuffType.Crit_rate:
-						Crit_rate_Fix += BuffAmount;
-						break;
-					case E_BuffType.Crit_Dmg:
-						Crit_Dmg_Fix += BuffAmount;
-						break;
-				}
+
+						m_TowerInfo.Berserker = true;
+						m_TowerInfo.BerserkerMaxStack = item.EffectReq1;
+
+						BuffCC_TableExcel buffData = M_Buff.GetData(item.EffectCode1);
+
+						#region 버프1
+						if (buffData.BuffType1 != 0)
+						{
+							float buffRand1 = Random.Range(0.00001f, 1f);
+							bool buffApply1 = buffRand1 <= buffData.BuffRand1;
+
+							if (buffApply1)
+							{
+								S_Buff buff = new S_Buff(
+									buffData.Name_KR + "_1",
+									buffData.BuffType1,
+									buffData.AddType1,
+									buffData.BuffAmount1 * m_TowerInfo.BerserkerStack
+									);
+
+								if (buff.AddType == E_AddType.Fix)
+									BuffList_Fix.Add(buff);
+								else if (buff.AddType == E_AddType.Percent)
+									BuffList_Percent.Add(buff);
+
+								#region 버프2
+								if (buffData.BuffType2 != 0)
+								{
+									float buffRand2 = Random.Range(0.00001f, 1f);
+									bool buffApply2 = buffRand2 <= buffData.BuffRand2;
+
+									if (buffApply2)
+									{
+										buff = new S_Buff(
+											buffData.Name_KR + "_2",
+											buffData.BuffType2,
+											buffData.AddType2,
+											buffData.BuffAmount2 * m_TowerInfo.BerserkerStack
+											);
+
+										if (buff.AddType == E_AddType.Fix)
+											BuffList_Fix.Add(buff);
+										else if (buff.AddType == E_AddType.Percent)
+											BuffList_Percent.Add(buff);
+
+										#region 버프3
+										if (buffData.BuffType3 != 0)
+										{
+											float buffRand3 = Random.Range(0.00001f, 1f);
+											bool buffApply3 = buffRand3 <= buffData.BuffRand3;
+
+											if (buffApply3)
+											{
+												buff = new S_Buff(
+													buffData.Name_KR + "_3",
+													buffData.BuffType3,
+													buffData.AddType3,
+													buffData.BuffAmount3 * m_TowerInfo.BerserkerStack
+													);
+
+												if (buff.AddType == E_AddType.Fix)
+													BuffList_Fix.Add(buff);
+												else if (buff.AddType == E_AddType.Percent)
+													BuffList_Percent.Add(buff);
+											}
+										}
+										#endregion
+									}
+								}
+								#endregion
+							}
+						}
+						#endregion
+					}
+					break;
+			}
+
+			switch ((E_SynergyEffectType)item.EffectType2)
+			{
+				case E_SynergyEffectType.Buff:
+					{
+						BuffCC_TableExcel buffData = M_Buff.GetData(item.EffectCode2);
+
+						#region 버프1
+						if (buffData.BuffType1 != 0)
+						{
+							float buffRand1 = Random.Range(0.00001f, 1f);
+							bool buffApply1 = buffRand1 <= buffData.BuffRand1;
+
+							if (buffApply1)
+							{
+								S_Buff buff = new S_Buff(
+									buffData.Name_KR + "_1",
+									buffData.BuffType1,
+									buffData.AddType1,
+									buffData.BuffAmount1
+									);
+
+								if (buff.AddType == E_AddType.Fix)
+									BuffList_Fix.Add(buff);
+								else if (buff.AddType == E_AddType.Percent)
+									BuffList_Percent.Add(buff);
+
+								#region 버프2
+								if (buffData.BuffType2 != 0)
+								{
+									float buffRand2 = Random.Range(0.00001f, 1f);
+									bool buffApply2 = buffRand2 <= buffData.BuffRand2;
+
+									if (buffApply2)
+									{
+										buff = new S_Buff(
+											buffData.Name_KR + "_2",
+											buffData.BuffType2,
+											buffData.AddType2,
+											buffData.BuffAmount2
+											);
+
+										if (buff.AddType == E_AddType.Fix)
+											BuffList_Fix.Add(buff);
+										else if (buff.AddType == E_AddType.Percent)
+											BuffList_Percent.Add(buff);
+
+										#region 버프3
+										if (buffData.BuffType3 != 0)
+										{
+											float buffRand3 = Random.Range(0.00001f, 1f);
+											bool buffApply3 = buffRand3 <= buffData.BuffRand3;
+
+											if (buffApply3)
+											{
+												buff = new S_Buff(
+													buffData.Name_KR + "_3",
+													buffData.BuffType3,
+													buffData.AddType3,
+													buffData.BuffAmount3
+													);
+
+												if (buff.AddType == E_AddType.Fix)
+													BuffList_Fix.Add(buff);
+												else if (buff.AddType == E_AddType.Percent)
+													BuffList_Percent.Add(buff);
+											}
+										}
+										#endregion
+									}
+								}
+								#endregion
+							}
+						}
+						#endregion
+					}
+					break;
+				case E_SynergyEffectType.Berserker:
+					{
+						if (!m_TowerInfo.Berserker)
+						{
+							++m_TowerInfo.BerserkerStack;
+						}
+
+						m_TowerInfo.Berserker = true;
+						m_TowerInfo.BerserkerMaxStack = item.EffectReq1;
+
+						BuffCC_TableExcel buffData = M_Buff.GetData(item.EffectCode2);
+
+						#region 버프1
+						if (buffData.BuffType1 != 0)
+						{
+							float buffRand1 = Random.Range(0.00001f, 1f);
+							bool buffApply1 = buffRand1 <= buffData.BuffRand1;
+
+							if (buffApply1)
+							{
+								S_Buff buff = new S_Buff(
+									buffData.Name_KR + "_1",
+									buffData.BuffType1,
+									buffData.AddType1,
+									buffData.BuffAmount1 * m_TowerInfo.BerserkerStack
+									);
+
+								if (buff.AddType == E_AddType.Fix)
+									BuffList_Fix.Add(buff);
+								else if (buff.AddType == E_AddType.Percent)
+									BuffList_Percent.Add(buff);
+
+								#region 버프2
+								if (buffData.BuffType2 != 0)
+								{
+									float buffRand2 = Random.Range(0.00001f, 1f);
+									bool buffApply2 = buffRand2 <= buffData.BuffRand2;
+
+									if (buffApply2)
+									{
+										buff = new S_Buff(
+											buffData.Name_KR + "_2",
+											buffData.BuffType2,
+											buffData.AddType2,
+											buffData.BuffAmount2 * m_TowerInfo.BerserkerStack
+											);
+
+										if (buff.AddType == E_AddType.Fix)
+											BuffList_Fix.Add(buff);
+										else if (buff.AddType == E_AddType.Percent)
+											BuffList_Percent.Add(buff);
+
+										#region 버프3
+										if (buffData.BuffType3 != 0)
+										{
+											float buffRand3 = Random.Range(0.00001f, 1f);
+											bool buffApply3 = buffRand3 <= buffData.BuffRand3;
+
+											if (buffApply3)
+											{
+												buff = new S_Buff(
+													buffData.Name_KR + "_3",
+													buffData.BuffType3,
+													buffData.AddType3,
+													buffData.BuffAmount3 * m_TowerInfo.BerserkerStack
+													);
+
+												if (buff.AddType == E_AddType.Fix)
+													BuffList_Fix.Add(buff);
+												else if (buff.AddType == E_AddType.Percent)
+													BuffList_Percent.Add(buff);
+											}
+										}
+										#endregion
+									}
+								}
+								#endregion
+							}
+						}
+						#endregion
+					}
+					break;
 			}
 		}
 		#endregion
-		#region 버서커 버프 곱연산
-		if (m_TowerInfo.Berserker)
+
+		#region 합연산
+		foreach (var item in BuffList_Fix)
 		{
-			foreach (var item in m_TowerInfo.BerserkerBuffList_Percent)
+			float BuffAmount = item.BuffAmount;
+
+			switch (item.BuffType)
 			{
-				float BuffAmount = item.BuffAmount * m_TowerInfo.BerserkerStack;
+				case E_BuffType.Atk:
+					statData.Dmg_Fix += BuffAmount;
+					break;
+				case E_BuffType.Range:
+					Range_Fix += BuffAmount;
+					break;
+				case E_BuffType.Atk_spd:
+					Atk_spd_Fix += BuffAmount;
+					break;
+				case E_BuffType.Crit_rate:
+					Crit_rate_Fix += BuffAmount;
+					break;
+				case E_BuffType.Crit_Dmg:
+					Crit_Dmg_Fix += BuffAmount;
+					break;
+			}
+		}
+		#endregion
+		#region 곱연산
+		foreach (var item in BuffList_Percent)
+		{
+			float BuffAmount = item.BuffAmount;
 
-				switch (item.BuffType)
-				{
-					case E_BuffType.Atk:
-						statData.Dmg_Percent *= BuffAmount;
-						break;
-					case E_BuffType.Range:
-						{
-							float Atk_Range = m_TowerInfo.Stat_Default.Range;
-
-							Atk_Range += m_TowerInfo.Buff_Range_Fix;
-							Atk_Range *= m_TowerInfo.Buff_Range_Percent * BuffAmount;
-
-							statData.Range = m_AttackRange_Default.Range = Atk_Range;
-						}
-						break;
-					case E_BuffType.Atk_spd:
-						{
-							float Atk_Speed = m_TowerInfo_Excel.Atk_Speed;
-
-							Atk_Speed += m_TowerInfo.Buff_Atk_spd_Fix;
-							Atk_Speed *= m_TowerInfo.Buff_Atk_spd_Percent * BuffAmount;
-
-							// 공격속도 적용
-							m_TowerAnimator.SetFloat("AttackSpeed", Atk_Speed);
-						}
-						break;
-					case E_BuffType.Crit_rate:
-						Crit_rate_Percent *= BuffAmount;
-						break;
-					case E_BuffType.Crit_Dmg:
-						Crit_Dmg_Percent *= BuffAmount;
-						break;
-				}
+			switch (item.BuffType)
+			{
+				case E_BuffType.Atk:
+					statData.Dmg_Percent *= BuffAmount;
+					break;
+				case E_BuffType.Range:
+					Range_Percent *= BuffAmount;
+					break;
+				case E_BuffType.Atk_spd:
+					Atk_spd_Percent *= BuffAmount;
+					break;
+				case E_BuffType.Crit_rate:
+					Crit_rate_Percent *= BuffAmount;
+					break;
+				case E_BuffType.Crit_Dmg:
+					Crit_Dmg_Percent *= BuffAmount;
+					break;
 			}
 		}
 		#endregion
 
+		#region 버프 적용
+		statData.Range += Range_Fix;
+		statData.Range *= Range_Percent;
+		m_AttackRange_Default.Range = statData.Range;
+
+		float Atk_Speed = m_TowerInfo_Excel.Atk_Speed;
+		Atk_Speed += Atk_spd_Fix;
+		Atk_Speed *= Atk_spd_Percent;
+		m_TowerAnimator.SetFloat("AttackSpeed", Atk_Speed);
+		#endregion
+		#endregion
+
+		#region 크리티컬
 		float Crit_rate = (m_TowerInfo_Excel.Crit_rate + Crit_rate_Fix) * Crit_rate_Percent;
 		float Crit_Dmg = (m_TowerInfo_Excel.Crit_Dmg + Crit_Dmg_Fix) * Crit_Dmg_Percent;
 		S_Critical critical = new S_Critical(Crit_rate, Crit_Dmg);
 		#endregion
 
-		// 기본 스킬 투사체 생성
+		#region 공격
+		// 기본 스킬 투사체 코드
 		int DefaultSkillCode = conditionData.projectile_prefab;
 
 		void Attack(Enemy target)
@@ -1477,6 +1524,7 @@ public class Tower : MonoBehaviour
 		{
 			Attack(m_Target_Default);
 		}
+		#endregion
 
 		#region 공격 이펙트
 		Effect atkEffect = M_Effect.SpawnEffect(conditionData.Atk_prefab);
@@ -1500,67 +1548,375 @@ public class Tower : MonoBehaviour
 		// 스킬01 데이터 불러오기
 		SkillCondition_TableExcel conditionData = m_TowerInfo.Condition_Skill01;
 		SkillStat_TableExcel statData = m_TowerInfo.Stat_Skill01;
+		statData.Dmg_Fix += m_TowerInfo_Excel.Atk;
 
 		#region 버프
-		statData.Dmg_Fix += m_TowerInfo_Excel.Atk + m_TowerInfo.Buff_Atk_Fix;
-		statData.Dmg_Percent *= m_TowerInfo.Buff_Atk_Percent;
+		// 마왕 버프 추가
+		List<S_Buff> BuffList_Fix = new List<S_Buff>(m_TowerInfo.DevilSkillBuffList_Fix);
+		List<S_Buff> BuffList_Percent = new List<S_Buff>(m_TowerInfo.DevilSkillBuffList_Percent);
 
-		float Crit_rate_Fix = m_TowerInfo.Buff_Crit_rate_Fix;
-		float Crit_rate_Percent = m_TowerInfo.Buff_Crit_rate_Percent;
-		float Crit_Dmg_Fix = m_TowerInfo.Buff_Crit_Dmg_Fix;
-		float Crit_Dmg_Percent = m_TowerInfo.Buff_Crit_Dmg_Percent;
+		float Crit_rate_Fix = 0f;
+		float Crit_rate_Percent = 1f;
+		float Crit_Dmg_Fix = 0f;
+		float Crit_Dmg_Percent = 1f;
 
-		#region 버서커 버프 합연산
-		if (m_TowerInfo.Berserker)
+		#region 시너지 버프, 버서커 버프 추가
+		foreach (var item in m_TowerInfo.SynergyList)
 		{
-			foreach (var item in m_TowerInfo.BerserkerBuffList_Fix)
+			switch ((E_SynergyEffectType)item.EffectType1)
 			{
-				float BuffAmount = item.BuffAmount * m_TowerInfo.BerserkerStack;
+				case E_SynergyEffectType.Buff:
+					{
+						BuffCC_TableExcel buffData = M_Buff.GetData(item.EffectCode1);
 
-				switch (item.BuffType)
-				{
-					case E_BuffType.Atk:
-						statData.Dmg_Fix += BuffAmount;
-						break;
-					case E_BuffType.Crit_rate:
-						Crit_rate_Fix += BuffAmount;
-						break;
-					case E_BuffType.Crit_Dmg:
-						Crit_Dmg_Fix += BuffAmount;
-						break;
-				}
+						#region 버프1
+						if (buffData.BuffType1 != 0)
+						{
+							float buffRand1 = Random.Range(0.00001f, 1f);
+							bool buffApply1 = buffRand1 <= buffData.BuffRand1;
+
+							if (buffApply1)
+							{
+								S_Buff buff = new S_Buff(
+									buffData.Name_KR + "_1",
+									buffData.BuffType1,
+									buffData.AddType1,
+									buffData.BuffAmount1
+									);
+
+								if (buff.AddType == E_AddType.Fix)
+									BuffList_Fix.Add(buff);
+								else if (buff.AddType == E_AddType.Percent)
+									BuffList_Percent.Add(buff);
+
+								#region 버프2
+								if (buffData.BuffType2 != 0)
+								{
+									float buffRand2 = Random.Range(0.00001f, 1f);
+									bool buffApply2 = buffRand2 <= buffData.BuffRand2;
+
+									if (buffApply2)
+									{
+										buff = new S_Buff(
+											buffData.Name_KR + "_2",
+											buffData.BuffType2,
+											buffData.AddType2,
+											buffData.BuffAmount2
+											);
+
+										if (buff.AddType == E_AddType.Fix)
+											BuffList_Fix.Add(buff);
+										else if (buff.AddType == E_AddType.Percent)
+											BuffList_Percent.Add(buff);
+
+										#region 버프3
+										if (buffData.BuffType3 != 0)
+										{
+											float buffRand3 = Random.Range(0.00001f, 1f);
+											bool buffApply3 = buffRand3 <= buffData.BuffRand3;
+
+											if (buffApply3)
+											{
+												buff = new S_Buff(
+													buffData.Name_KR + "_3",
+													buffData.BuffType3,
+													buffData.AddType3,
+													buffData.BuffAmount3
+													);
+
+												if (buff.AddType == E_AddType.Fix)
+													BuffList_Fix.Add(buff);
+												else if (buff.AddType == E_AddType.Percent)
+													BuffList_Percent.Add(buff);
+											}
+										}
+										#endregion
+									}
+								}
+								#endregion
+							}
+						}
+						#endregion
+					}
+					break;
+				case E_SynergyEffectType.Berserker:
+					{
+						BuffCC_TableExcel buffData = M_Buff.GetData(item.EffectCode1);
+
+						#region 버프1
+						if (buffData.BuffType1 != 0)
+						{
+							float buffRand1 = Random.Range(0.00001f, 1f);
+							bool buffApply1 = buffRand1 <= buffData.BuffRand1;
+
+							if (buffApply1)
+							{
+								S_Buff buff = new S_Buff(
+									buffData.Name_KR + "_1",
+									buffData.BuffType1,
+									buffData.AddType1,
+									buffData.BuffAmount1 * m_TowerInfo.BerserkerStack
+									);
+
+								if (buff.AddType == E_AddType.Fix)
+									BuffList_Fix.Add(buff);
+								else if (buff.AddType == E_AddType.Percent)
+									BuffList_Percent.Add(buff);
+
+								#region 버프2
+								if (buffData.BuffType2 != 0)
+								{
+									float buffRand2 = Random.Range(0.00001f, 1f);
+									bool buffApply2 = buffRand2 <= buffData.BuffRand2;
+
+									if (buffApply2)
+									{
+										buff = new S_Buff(
+											buffData.Name_KR + "_2",
+											buffData.BuffType2,
+											buffData.AddType2,
+											buffData.BuffAmount2 * m_TowerInfo.BerserkerStack
+											);
+
+										if (buff.AddType == E_AddType.Fix)
+											BuffList_Fix.Add(buff);
+										else if (buff.AddType == E_AddType.Percent)
+											BuffList_Percent.Add(buff);
+
+										#region 버프3
+										if (buffData.BuffType3 != 0)
+										{
+											float buffRand3 = Random.Range(0.00001f, 1f);
+											bool buffApply3 = buffRand3 <= buffData.BuffRand3;
+
+											if (buffApply3)
+											{
+												buff = new S_Buff(
+													buffData.Name_KR + "_3",
+													buffData.BuffType3,
+													buffData.AddType3,
+													buffData.BuffAmount3 * m_TowerInfo.BerserkerStack
+													);
+
+												if (buff.AddType == E_AddType.Fix)
+													BuffList_Fix.Add(buff);
+												else if (buff.AddType == E_AddType.Percent)
+													BuffList_Percent.Add(buff);
+											}
+										}
+										#endregion
+									}
+								}
+								#endregion
+							}
+						}
+						#endregion
+					}
+					break;
+			}
+
+			switch ((E_SynergyEffectType)item.EffectType2)
+			{
+				case E_SynergyEffectType.Buff:
+					{
+						BuffCC_TableExcel buffData = M_Buff.GetData(item.EffectCode2);
+
+						#region 버프1
+						if (buffData.BuffType1 != 0)
+						{
+							float buffRand1 = Random.Range(0.00001f, 1f);
+							bool buffApply1 = buffRand1 <= buffData.BuffRand1;
+
+							if (buffApply1)
+							{
+								S_Buff buff = new S_Buff(
+									buffData.Name_KR + "_1",
+									buffData.BuffType1,
+									buffData.AddType1,
+									buffData.BuffAmount1
+									);
+
+								if (buff.AddType == E_AddType.Fix)
+									BuffList_Fix.Add(buff);
+								else if (buff.AddType == E_AddType.Percent)
+									BuffList_Percent.Add(buff);
+
+								#region 버프2
+								if (buffData.BuffType2 != 0)
+								{
+									float buffRand2 = Random.Range(0.00001f, 1f);
+									bool buffApply2 = buffRand2 <= buffData.BuffRand2;
+
+									if (buffApply2)
+									{
+										buff = new S_Buff(
+											buffData.Name_KR + "_2",
+											buffData.BuffType2,
+											buffData.AddType2,
+											buffData.BuffAmount2
+											);
+
+										if (buff.AddType == E_AddType.Fix)
+											BuffList_Fix.Add(buff);
+										else if (buff.AddType == E_AddType.Percent)
+											BuffList_Percent.Add(buff);
+
+										#region 버프3
+										if (buffData.BuffType3 != 0)
+										{
+											float buffRand3 = Random.Range(0.00001f, 1f);
+											bool buffApply3 = buffRand3 <= buffData.BuffRand3;
+
+											if (buffApply3)
+											{
+												buff = new S_Buff(
+													buffData.Name_KR + "_3",
+													buffData.BuffType3,
+													buffData.AddType3,
+													buffData.BuffAmount3
+													);
+
+												if (buff.AddType == E_AddType.Fix)
+													BuffList_Fix.Add(buff);
+												else if (buff.AddType == E_AddType.Percent)
+													BuffList_Percent.Add(buff);
+											}
+										}
+										#endregion
+									}
+								}
+								#endregion
+							}
+						}
+						#endregion
+					}
+					break;
+				case E_SynergyEffectType.Berserker:
+					{
+						BuffCC_TableExcel buffData = M_Buff.GetData(item.EffectCode2);
+
+						#region 버프1
+						if (buffData.BuffType1 != 0)
+						{
+							float buffRand1 = Random.Range(0.00001f, 1f);
+							bool buffApply1 = buffRand1 <= buffData.BuffRand1;
+
+							if (buffApply1)
+							{
+								S_Buff buff = new S_Buff(
+									buffData.Name_KR + "_1",
+									buffData.BuffType1,
+									buffData.AddType1,
+									buffData.BuffAmount1 * m_TowerInfo.BerserkerStack
+									);
+
+								if (buff.AddType == E_AddType.Fix)
+									BuffList_Fix.Add(buff);
+								else if (buff.AddType == E_AddType.Percent)
+									BuffList_Percent.Add(buff);
+
+								#region 버프2
+								if (buffData.BuffType2 != 0)
+								{
+									float buffRand2 = Random.Range(0.00001f, 1f);
+									bool buffApply2 = buffRand2 <= buffData.BuffRand2;
+
+									if (buffApply2)
+									{
+										buff = new S_Buff(
+											buffData.Name_KR + "_2",
+											buffData.BuffType2,
+											buffData.AddType2,
+											buffData.BuffAmount2 * m_TowerInfo.BerserkerStack
+											);
+
+										if (buff.AddType == E_AddType.Fix)
+											BuffList_Fix.Add(buff);
+										else if (buff.AddType == E_AddType.Percent)
+											BuffList_Percent.Add(buff);
+
+										#region 버프3
+										if (buffData.BuffType3 != 0)
+										{
+											float buffRand3 = Random.Range(0.00001f, 1f);
+											bool buffApply3 = buffRand3 <= buffData.BuffRand3;
+
+											if (buffApply3)
+											{
+												buff = new S_Buff(
+													buffData.Name_KR + "_3",
+													buffData.BuffType3,
+													buffData.AddType3,
+													buffData.BuffAmount3 * m_TowerInfo.BerserkerStack
+													);
+
+												if (buff.AddType == E_AddType.Fix)
+													BuffList_Fix.Add(buff);
+												else if (buff.AddType == E_AddType.Percent)
+													BuffList_Percent.Add(buff);
+											}
+										}
+										#endregion
+									}
+								}
+								#endregion
+							}
+						}
+						#endregion
+					}
+					break;
 			}
 		}
 		#endregion
-		#region 버서커 버프 곱연산
-		if (m_TowerInfo.Berserker)
-		{
-			foreach (var item in m_TowerInfo.BerserkerBuffList_Percent)
-			{
-				float BuffAmount = item.BuffAmount * m_TowerInfo.BerserkerStack;
 
-				switch (item.BuffType)
-				{
-					case E_BuffType.Atk:
-						statData.Dmg_Percent *= BuffAmount;
-						break;
-					case E_BuffType.Crit_rate:
-						Crit_rate_Percent *= BuffAmount;
-						break;
-					case E_BuffType.Crit_Dmg:
-						Crit_Dmg_Percent *= BuffAmount;
-						break;
-				}
+		#region 합연산
+		foreach (var item in BuffList_Fix)
+		{
+			float BuffAmount = item.BuffAmount;
+
+			switch (item.BuffType)
+			{
+				case E_BuffType.Atk:
+					statData.Dmg_Fix += BuffAmount;
+					break;
+				case E_BuffType.Crit_rate:
+					Crit_rate_Fix += BuffAmount;
+					break;
+				case E_BuffType.Crit_Dmg:
+					Crit_Dmg_Fix += BuffAmount;
+					break;
 			}
 		}
 		#endregion
+		#region 곱연산
+		foreach (var item in BuffList_Percent)
+		{
+			float BuffAmount = item.BuffAmount;
 
+			switch (item.BuffType)
+			{
+				case E_BuffType.Atk:
+					statData.Dmg_Percent *= BuffAmount;
+					break;
+				case E_BuffType.Crit_rate:
+					Crit_rate_Percent *= BuffAmount;
+					break;
+				case E_BuffType.Crit_Dmg:
+					Crit_Dmg_Percent *= BuffAmount;
+					break;
+			}
+		}
+		#endregion
+		#endregion
+
+		#region 크리티컬
 		float Crit_rate = (m_TowerInfo_Excel.Crit_rate + Crit_rate_Fix) * Crit_rate_Percent;
 		float Crit_Dmg = (m_TowerInfo_Excel.Crit_Dmg + Crit_Dmg_Fix) * Crit_Dmg_Percent;
 		S_Critical critical = new S_Critical(Crit_rate, Crit_Dmg);
 		#endregion
 
-		// 스킬01 투사체 생성
+		#region 공격
+		// 스킬01 투사체 코드
 		int Skill01Code = conditionData.projectile_prefab;
 
 		void Skill01(Enemy target)
@@ -1604,6 +1960,7 @@ public class Tower : MonoBehaviour
 		{
 			Skill01(m_Target_Skill01);
 		}
+		#endregion
 
 		#region 공격 이펙트
 		Effect atkEffect = M_Effect.SpawnEffect(conditionData.Atk_prefab);
@@ -1627,67 +1984,375 @@ public class Tower : MonoBehaviour
 		// 스킬02 데이터 불러오기
 		SkillCondition_TableExcel conditionData = m_TowerInfo.Condition_Skill02;
 		SkillStat_TableExcel statData = m_TowerInfo.Stat_Skill02;
+		statData.Dmg_Fix += m_TowerInfo_Excel.Atk;
 
 		#region 버프
-		statData.Dmg_Fix += m_TowerInfo_Excel.Atk + m_TowerInfo.Buff_Atk_Fix;
-		statData.Dmg_Percent *= m_TowerInfo.Buff_Atk_Percent;
+		// 마왕 버프 추가
+		List<S_Buff> BuffList_Fix = new List<S_Buff>(m_TowerInfo.DevilSkillBuffList_Fix);
+		List<S_Buff> BuffList_Percent = new List<S_Buff>(m_TowerInfo.DevilSkillBuffList_Percent);
 
-		float Crit_rate_Fix = m_TowerInfo.Buff_Crit_rate_Fix;
-		float Crit_rate_Percent = m_TowerInfo.Buff_Crit_rate_Percent;
-		float Crit_Dmg_Fix = m_TowerInfo.Buff_Crit_Dmg_Fix;
-		float Crit_Dmg_Percent = m_TowerInfo.Buff_Crit_Dmg_Percent;
+		float Crit_rate_Fix = 0f;
+		float Crit_rate_Percent = 1f;
+		float Crit_Dmg_Fix = 0f;
+		float Crit_Dmg_Percent = 1f;
 
-		#region 버서커 버프 합연산
-		if (m_TowerInfo.Berserker)
+		#region 시너지 버프, 버서커 버프 추가
+		foreach (var item in m_TowerInfo.SynergyList)
 		{
-			foreach (var item in m_TowerInfo.BerserkerBuffList_Fix)
+			switch ((E_SynergyEffectType)item.EffectType1)
 			{
-				float BuffAmount = item.BuffAmount * m_TowerInfo.BerserkerStack;
+				case E_SynergyEffectType.Buff:
+					{
+						BuffCC_TableExcel buffData = M_Buff.GetData(item.EffectCode1);
 
-				switch (item.BuffType)
-				{
-					case E_BuffType.Atk:
-						statData.Dmg_Fix += BuffAmount;
-						break;
-					case E_BuffType.Crit_rate:
-						Crit_rate_Fix += BuffAmount;
-						break;
-					case E_BuffType.Crit_Dmg:
-						Crit_Dmg_Fix += BuffAmount;
-						break;
-				}
+						#region 버프1
+						if (buffData.BuffType1 != 0)
+						{
+							float buffRand1 = Random.Range(0.00001f, 1f);
+							bool buffApply1 = buffRand1 <= buffData.BuffRand1;
+
+							if (buffApply1)
+							{
+								S_Buff buff = new S_Buff(
+									buffData.Name_KR + "_1",
+									buffData.BuffType1,
+									buffData.AddType1,
+									buffData.BuffAmount1
+									);
+
+								if (buff.AddType == E_AddType.Fix)
+									BuffList_Fix.Add(buff);
+								else if (buff.AddType == E_AddType.Percent)
+									BuffList_Percent.Add(buff);
+
+								#region 버프2
+								if (buffData.BuffType2 != 0)
+								{
+									float buffRand2 = Random.Range(0.00001f, 1f);
+									bool buffApply2 = buffRand2 <= buffData.BuffRand2;
+
+									if (buffApply2)
+									{
+										buff = new S_Buff(
+											buffData.Name_KR + "_2",
+											buffData.BuffType2,
+											buffData.AddType2,
+											buffData.BuffAmount2
+											);
+
+										if (buff.AddType == E_AddType.Fix)
+											BuffList_Fix.Add(buff);
+										else if (buff.AddType == E_AddType.Percent)
+											BuffList_Percent.Add(buff);
+
+										#region 버프3
+										if (buffData.BuffType3 != 0)
+										{
+											float buffRand3 = Random.Range(0.00001f, 1f);
+											bool buffApply3 = buffRand3 <= buffData.BuffRand3;
+
+											if (buffApply3)
+											{
+												buff = new S_Buff(
+													buffData.Name_KR + "_3",
+													buffData.BuffType3,
+													buffData.AddType3,
+													buffData.BuffAmount3
+													);
+
+												if (buff.AddType == E_AddType.Fix)
+													BuffList_Fix.Add(buff);
+												else if (buff.AddType == E_AddType.Percent)
+													BuffList_Percent.Add(buff);
+											}
+										}
+										#endregion
+									}
+								}
+								#endregion
+							}
+						}
+						#endregion
+					}
+					break;
+				case E_SynergyEffectType.Berserker:
+					{
+						BuffCC_TableExcel buffData = M_Buff.GetData(item.EffectCode1);
+
+						#region 버프1
+						if (buffData.BuffType1 != 0)
+						{
+							float buffRand1 = Random.Range(0.00001f, 1f);
+							bool buffApply1 = buffRand1 <= buffData.BuffRand1;
+
+							if (buffApply1)
+							{
+								S_Buff buff = new S_Buff(
+									buffData.Name_KR + "_1",
+									buffData.BuffType1,
+									buffData.AddType1,
+									buffData.BuffAmount1 * m_TowerInfo.BerserkerStack
+									);
+
+								if (buff.AddType == E_AddType.Fix)
+									BuffList_Fix.Add(buff);
+								else if (buff.AddType == E_AddType.Percent)
+									BuffList_Percent.Add(buff);
+
+								#region 버프2
+								if (buffData.BuffType2 != 0)
+								{
+									float buffRand2 = Random.Range(0.00001f, 1f);
+									bool buffApply2 = buffRand2 <= buffData.BuffRand2;
+
+									if (buffApply2)
+									{
+										buff = new S_Buff(
+											buffData.Name_KR + "_2",
+											buffData.BuffType2,
+											buffData.AddType2,
+											buffData.BuffAmount2 * m_TowerInfo.BerserkerStack
+											);
+
+										if (buff.AddType == E_AddType.Fix)
+											BuffList_Fix.Add(buff);
+										else if (buff.AddType == E_AddType.Percent)
+											BuffList_Percent.Add(buff);
+
+										#region 버프3
+										if (buffData.BuffType3 != 0)
+										{
+											float buffRand3 = Random.Range(0.00001f, 1f);
+											bool buffApply3 = buffRand3 <= buffData.BuffRand3;
+
+											if (buffApply3)
+											{
+												buff = new S_Buff(
+													buffData.Name_KR + "_3",
+													buffData.BuffType3,
+													buffData.AddType3,
+													buffData.BuffAmount3 * m_TowerInfo.BerserkerStack
+													);
+
+												if (buff.AddType == E_AddType.Fix)
+													BuffList_Fix.Add(buff);
+												else if (buff.AddType == E_AddType.Percent)
+													BuffList_Percent.Add(buff);
+											}
+										}
+										#endregion
+									}
+								}
+								#endregion
+							}
+						}
+						#endregion
+					}
+					break;
+			}
+
+			switch ((E_SynergyEffectType)item.EffectType2)
+			{
+				case E_SynergyEffectType.Buff:
+					{
+						BuffCC_TableExcel buffData = M_Buff.GetData(item.EffectCode2);
+
+						#region 버프1
+						if (buffData.BuffType1 != 0)
+						{
+							float buffRand1 = Random.Range(0.00001f, 1f);
+							bool buffApply1 = buffRand1 <= buffData.BuffRand1;
+
+							if (buffApply1)
+							{
+								S_Buff buff = new S_Buff(
+									buffData.Name_KR + "_1",
+									buffData.BuffType1,
+									buffData.AddType1,
+									buffData.BuffAmount1
+									);
+
+								if (buff.AddType == E_AddType.Fix)
+									BuffList_Fix.Add(buff);
+								else if (buff.AddType == E_AddType.Percent)
+									BuffList_Percent.Add(buff);
+
+								#region 버프2
+								if (buffData.BuffType2 != 0)
+								{
+									float buffRand2 = Random.Range(0.00001f, 1f);
+									bool buffApply2 = buffRand2 <= buffData.BuffRand2;
+
+									if (buffApply2)
+									{
+										buff = new S_Buff(
+											buffData.Name_KR + "_2",
+											buffData.BuffType2,
+											buffData.AddType2,
+											buffData.BuffAmount2
+											);
+
+										if (buff.AddType == E_AddType.Fix)
+											BuffList_Fix.Add(buff);
+										else if (buff.AddType == E_AddType.Percent)
+											BuffList_Percent.Add(buff);
+
+										#region 버프3
+										if (buffData.BuffType3 != 0)
+										{
+											float buffRand3 = Random.Range(0.00001f, 1f);
+											bool buffApply3 = buffRand3 <= buffData.BuffRand3;
+
+											if (buffApply3)
+											{
+												buff = new S_Buff(
+													buffData.Name_KR + "_3",
+													buffData.BuffType3,
+													buffData.AddType3,
+													buffData.BuffAmount3
+													);
+
+												if (buff.AddType == E_AddType.Fix)
+													BuffList_Fix.Add(buff);
+												else if (buff.AddType == E_AddType.Percent)
+													BuffList_Percent.Add(buff);
+											}
+										}
+										#endregion
+									}
+								}
+								#endregion
+							}
+						}
+						#endregion
+					}
+					break;
+				case E_SynergyEffectType.Berserker:
+					{
+						BuffCC_TableExcel buffData = M_Buff.GetData(item.EffectCode2);
+
+						#region 버프1
+						if (buffData.BuffType1 != 0)
+						{
+							float buffRand1 = Random.Range(0.00001f, 1f);
+							bool buffApply1 = buffRand1 <= buffData.BuffRand1;
+
+							if (buffApply1)
+							{
+								S_Buff buff = new S_Buff(
+									buffData.Name_KR + "_1",
+									buffData.BuffType1,
+									buffData.AddType1,
+									buffData.BuffAmount1 * m_TowerInfo.BerserkerStack
+									);
+
+								if (buff.AddType == E_AddType.Fix)
+									BuffList_Fix.Add(buff);
+								else if (buff.AddType == E_AddType.Percent)
+									BuffList_Percent.Add(buff);
+
+								#region 버프2
+								if (buffData.BuffType2 != 0)
+								{
+									float buffRand2 = Random.Range(0.00001f, 1f);
+									bool buffApply2 = buffRand2 <= buffData.BuffRand2;
+
+									if (buffApply2)
+									{
+										buff = new S_Buff(
+											buffData.Name_KR + "_2",
+											buffData.BuffType2,
+											buffData.AddType2,
+											buffData.BuffAmount2 * m_TowerInfo.BerserkerStack
+											);
+
+										if (buff.AddType == E_AddType.Fix)
+											BuffList_Fix.Add(buff);
+										else if (buff.AddType == E_AddType.Percent)
+											BuffList_Percent.Add(buff);
+
+										#region 버프3
+										if (buffData.BuffType3 != 0)
+										{
+											float buffRand3 = Random.Range(0.00001f, 1f);
+											bool buffApply3 = buffRand3 <= buffData.BuffRand3;
+
+											if (buffApply3)
+											{
+												buff = new S_Buff(
+													buffData.Name_KR + "_3",
+													buffData.BuffType3,
+													buffData.AddType3,
+													buffData.BuffAmount3 * m_TowerInfo.BerserkerStack
+													);
+
+												if (buff.AddType == E_AddType.Fix)
+													BuffList_Fix.Add(buff);
+												else if (buff.AddType == E_AddType.Percent)
+													BuffList_Percent.Add(buff);
+											}
+										}
+										#endregion
+									}
+								}
+								#endregion
+							}
+						}
+						#endregion
+					}
+					break;
 			}
 		}
 		#endregion
-		#region 버서커 버프 곱연산
-		if (m_TowerInfo.Berserker)
-		{
-			foreach (var item in m_TowerInfo.BerserkerBuffList_Percent)
-			{
-				float BuffAmount = item.BuffAmount * m_TowerInfo.BerserkerStack;
 
-				switch (item.BuffType)
-				{
-					case E_BuffType.Atk:
-						statData.Dmg_Percent *= BuffAmount;
-						break;
-					case E_BuffType.Crit_rate:
-						Crit_rate_Percent *= BuffAmount;
-						break;
-					case E_BuffType.Crit_Dmg:
-						Crit_Dmg_Percent *= BuffAmount;
-						break;
-				}
+		#region 합연산
+		foreach (var item in BuffList_Fix)
+		{
+			float BuffAmount = item.BuffAmount;
+
+			switch (item.BuffType)
+			{
+				case E_BuffType.Atk:
+					statData.Dmg_Fix += BuffAmount;
+					break;
+				case E_BuffType.Crit_rate:
+					Crit_rate_Fix += BuffAmount;
+					break;
+				case E_BuffType.Crit_Dmg:
+					Crit_Dmg_Fix += BuffAmount;
+					break;
 			}
 		}
 		#endregion
+		#region 곱연산
+		foreach (var item in BuffList_Percent)
+		{
+			float BuffAmount = item.BuffAmount;
 
+			switch (item.BuffType)
+			{
+				case E_BuffType.Atk:
+					statData.Dmg_Percent *= BuffAmount;
+					break;
+				case E_BuffType.Crit_rate:
+					Crit_rate_Percent *= BuffAmount;
+					break;
+				case E_BuffType.Crit_Dmg:
+					Crit_Dmg_Percent *= BuffAmount;
+					break;
+			}
+		}
+		#endregion
+		#endregion
+
+		#region 크리티컬
 		float Crit_rate = (m_TowerInfo_Excel.Crit_rate + Crit_rate_Fix) * Crit_rate_Percent;
 		float Crit_Dmg = (m_TowerInfo_Excel.Crit_Dmg + Crit_Dmg_Fix) * Crit_Dmg_Percent;
 		S_Critical critical = new S_Critical(Crit_rate, Crit_Dmg);
 		#endregion
 
-		// 스킬02 투사체 생성
+		#region 공격
+		// 스킬02 투사체 코드
 		int Skill02Code = conditionData.projectile_prefab;
 
 		void Skill02(Enemy target)
@@ -1731,6 +2396,7 @@ public class Tower : MonoBehaviour
 		{
 			Skill02(m_Target_Skill02);
 		}
+		#endregion
 
 		#region 공격 이펙트
 		Effect atkEffect = M_Effect.SpawnEffect(conditionData.Atk_prefab);
@@ -1832,29 +2498,16 @@ public class Tower : MonoBehaviour
 		public float AttackTimer_Skill02;
 		#endregion
 
-		#region 능력치
-		public float Buff_Atk_Fix;
-		public float Buff_Range_Fix;
-		public float Buff_Atk_spd_Fix;
-		public float Buff_Crit_rate_Fix;
-		public float Buff_Crit_Dmg_Fix;
-
-		public float Buff_Atk_Percent;
-		public float Buff_Range_Percent;
-		public float Buff_Atk_spd_Percent;
-		public float Buff_Crit_rate_Percent;
-		public float Buff_Crit_Dmg_Percent;
-		#endregion
-
 		#region 시너지
+		[Space(10f)]
 		// 시너지 리스트
 		public List<Synergy_TableExcel> SynergyList;
 
-		#region 버프
+		#region 마왕 버프
 		// 합버프 리스트
-		public List<S_Buff> BuffList_Fix;
+		public LinkedList<S_Buff> DevilSkillBuffList_Fix;
 		// 곱버프 리스트
-		public List<S_Buff> BuffList_Percent;
+		public LinkedList<S_Buff> DevilSkillBuffList_Percent;
 		#endregion
 
 		#region 공격 타입 변경
@@ -1862,19 +2515,10 @@ public class Tower : MonoBehaviour
 		public int Target_num;
 		#endregion
 
-		#region 마왕 스킬 쿨타임 변경
-		public bool ReduceCooldown;
-		public float ReduceCooldownSec;
-		#endregion
-
 		#region 버서커
 		public bool Berserker;
 		public int BerserkerStack;
 		public int BerserkerMaxStack;
-		// 합버프 리스트
-		public List<S_Buff> BerserkerBuffList_Fix;
-		// 곱버프 리스트
-		public List<S_Buff> BerserkerBuffList_Percent;
 		#endregion
 		#endregion
 	}

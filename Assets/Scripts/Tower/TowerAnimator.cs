@@ -34,6 +34,10 @@ public class TowerAnimator : MonoBehaviour
 		});
 	}
 
+	public float GetFloat(string name)
+	{
+		return m_Animator.GetFloat(name);
+	}
 	public void SetFloat(string name, float value)
 	{
 		m_Animator.SetFloat(name, value);
