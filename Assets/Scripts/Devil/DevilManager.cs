@@ -42,17 +42,19 @@ public class DevilManager : Singleton<DevilManager>
 		node.m_Direction = E_Direction.None;
 		node.gameObject.layer = LayerMask.NameToLayer("Node");
 
-		BoxCollider collider = node.gameObject.AddComponent<BoxCollider>();
-		collider.isTrigger = true;
-		collider.size.Set(6f, 6f, 6f);
-		collider.center.Set(0f, 3f, 0f);
-
+		// 마왕 툴팁용 콜라이더
+		//BoxCollider collider = node.gameObject.AddComponent<BoxCollider>();
+		//collider.isTrigger = true;
+		//collider.size.Set(6f, 6f, 6f);
+		//collider.center.Set(0f, 3f, 0f);
+		
 		GameObject devil = GameObject.Instantiate(m_PrefabData.GetPrefab(data.Prefab));
 		devil.transform.SetParent(node.transform);
 		devil.transform.position = Vector3.zero;
 		devil.transform.eulerAngles = new Vector3(0f, 180f, 0f);
-		devil.transform.Find("Mesh").localScale = Vector3.one * m_PrefabData.DataList[data.No - 1].Size;
-
+		float size = m_PrefabData.DataList.Find((item) => { return item.Code == data.Prefab; }).Size;
+		devil.transform.Find("Mesh").localScale = Vector3.one * size;
+		
 		switch ((E_Devil)data.No)
 		{
 			case E_Devil.HateQueen:
