@@ -57,16 +57,42 @@ public class Enemy : MonoBehaviour
 	{
 		transform.position = m_WayPoint.transform.position;
 
-		if (m_WayPoint.isLast)
-			return;
-
 		m_WayPoint = m_WayPoint.next;
-		transform.LookAt(m_WayPoint.transform);
+
+		if (null != m_WayPoint)
+			transform.LookAt(m_WayPoint.transform);
+		else
+			transform.LookAt(Vector3.zero);
 	}
 	#endregion
 	#region 외부 함수
 	public void InitializeEnemy(int code, E_Direction dir)
 	{
+		#region 내부 컴포넌트
+		if (null == m_Animator)
+		{
+			m_Animator = transform.Find("Mesh").GetComponent<EnemyAnimator>();
+			m_Animator.Initialize(this);
+		}
+
+		// 공격 사거리
+		if (null == m_RangeCollider)
+		{
+			m_RangeCollider = transform.Find("EnemySkillRange").GetComponent<SphereCollider>();
+			m_RangeCollider.gameObject.layer = LayerMask.NameToLayer("EnemySkillRange");
+			m_RangeCollider.isTrigger = true;
+		}
+
+		// 체력바
+		if (null == m_HPBar)
+		{
+			m_HPBar = M_EnemyHPBar.SpawnHPBar();
+			m_HPBar.fillAmount = 1f;
+			m_HPBar.m_EnemyTransform = transform;
+			m_HPBar.transform.position = M_EnemyHPBar.m_HPBarCanvas.worldCamera.WorldToScreenPoint(transform.position) + M_EnemyHPBar.Distance;
+		}
+		#endregion
+
 		#region 엑셀 데이터
 		m_EnemyInfo_Excel = M_Enemy.GetData(code);
 		#endregion
@@ -102,42 +128,14 @@ public class Enemy : MonoBehaviour
 		}
 
 		#region 기본 스킬
-		// 기본 스킬 엑셀 데이터
-		m_EnemyInfo.Condition_Default_Origin = M_EnemySkill.GetConditionData(m_EnemyInfo_Excel.Atk_Code);
-		m_EnemyInfo.Stat_Default_Origin = M_EnemySkill.GetStatData(m_EnemyInfo.Condition_Default.PassiveCode);
 		// 기본 스킬 데이터
-		m_EnemyInfo.Condition_Default = m_EnemyInfo.Condition_Default_Origin;
-		m_EnemyInfo.Stat_Default = m_EnemyInfo.Stat_Default_Origin;
+		m_EnemyInfo.Condition_Default = M_EnemySkill.GetConditionData(m_EnemyInfo_Excel.Atk_Code);
+		m_EnemyInfo.Stat_Default = M_EnemySkill.GetStatData(m_EnemyInfo.Condition_Default.PassiveCode);
 		// 기본 스킬 공격 속도
-		m_EnemyInfo.AttackSpeed_Default = m_EnemyInfo.Stat_Default_Origin.CoolTime;
+		m_EnemyInfo.AttackSpeed_Default = m_EnemyInfo.Stat_Default.CoolTime;
 		// 기본 스킬 타이머
 		m_EnemyInfo.AttackTimer_Default = 0f;
 		#endregion
-		#endregion
-
-		#region 내부 컴포넌트
-		if (null == m_Animator)
-		{
-			m_Animator = transform.Find("Mesh").GetComponent<EnemyAnimator>();
-			m_Animator.Initialize(this);
-		}
-
-		// 공격 사거리
-		if (null == m_RangeCollider)
-		{
-			m_RangeCollider = transform.Find("EnemySkillRange").GetComponent<SphereCollider>();
-			m_RangeCollider.gameObject.layer = LayerMask.NameToLayer("EnemySkillRange");
-			m_RangeCollider.isTrigger = true;
-		}
-
-		// 체력바
-		if (null == m_HPBar)
-		{
-			m_HPBar = M_EnemyHPBar.SpawnHPBar();
-			m_HPBar.fillAmount = 1f;
-			m_HPBar.m_EnemyTransform = transform;
-			m_HPBar.transform.position = M_EnemyHPBar.m_HPBarCanvas.worldCamera.WorldToScreenPoint(transform.position) + M_EnemyHPBar.Distance;
-		}
 		#endregion
 	}
 	public void FinializeEnemy()
@@ -202,27 +200,19 @@ public class Enemy : MonoBehaviour
 		if (m_EnemyInfo.IsDead)
 			return;
 
-		//마왕만 타겟으로 잡기
-		//벽이나 중간에 장애물이 있다면 바꿔야함
-		if (m_WayPoint.isLast)
+		if (null == m_WayPoint)
 		{
-			transform.LookAt(Vector3.zero);
-
-			float Distance = Vector3.Distance(transform.position, Vector3.zero);
-
-			//거리 안에 있다면
-			if (Distance <= m_EnemyInfo.Stat_Default.Range)
+			if (m_EnemyInfo.AttackTimer_Default >= m_EnemyInfo.Stat_Default.CoolTime)
 			{
-				if (m_EnemyInfo.AttackTimer_Default >= m_EnemyInfo.Stat_Default.CoolTime)
-				{
-					m_Animator.SetTrigger("Attack");
-					m_EnemyInfo.AttackTimer_Default = 0f;
-				}
-				else
-				{
-					m_EnemyInfo.AttackTimer_Default += Time.deltaTime;
-				}
+				m_Animator.SetTrigger("Attack");
+				m_EnemyInfo.AttackTimer_Default = 0f;
 			}
+			else
+			{
+				m_EnemyInfo.AttackTimer_Default += Time.deltaTime;
+			}
+
+			return;
 		}
 
 		Vector3 dir = m_WayPoint.transform.position - transform.position;
@@ -233,19 +223,6 @@ public class Enemy : MonoBehaviour
 		{
 			GetNextWayPoint();
 		}
-
-		#region 그리핀(하늘)로 체인지
-
-		//if (m_EnemyInfo.Name_EN == "Grffin02")
-		//{
-		//	//HP가 반아래가 되었을때
-		//	if (m_EnemyInfo.HP <= m_EnemyInfo_Excel.HP * 0.5f)
-		//	{
-		//		ChangeMode();
-		//	}
-		//}
-
-		#endregion
 	}
 	#endregion
 
@@ -253,7 +230,7 @@ public class Enemy : MonoBehaviour
 	public void CallAttack()
 	{
 		m_EnemyInfo.Atk *= m_EnemyInfo.Stat_Default.Dmg_Percent;
-		M_EnemySkill.SpawnProjectileSkill(m_EnemyInfo.Condition_Default_Origin.projectile_prefab, m_EnemyInfo.Atk, m_EnemyInfo.Condition_Default, m_EnemyInfo.Stat_Default, m_EnemyInfo.AttackPivot);
+		M_EnemySkill.SpawnProjectileSkill(m_EnemyInfo.Condition_Default.projectile_prefab, m_EnemyInfo.Atk, m_EnemyInfo.Condition_Default, m_EnemyInfo.Stat_Default, m_EnemyInfo.AttackPivot);
 	}
 	public void CallSkill()
 	{
@@ -284,9 +261,6 @@ public class Enemy : MonoBehaviour
 		public bool IsDead;
 
 		#region 기본 스킬
-		// 기본 스킬 엑셀 데이터
-		public SkillCondition_TableExcel Condition_Default_Origin;
-		public SkillStat_TableExcel Stat_Default_Origin;
 		// 기본 스킬 데이터
 		public SkillCondition_TableExcel Condition_Default;
 		public SkillStat_TableExcel Stat_Default;
