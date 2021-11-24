@@ -14,6 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   filepath: Assets\00_Data\Txt\Prefab_Table.txt
   DataList:
+  - Code: 900000
+    Size: 1
+    Unity_address: Default
   - Code: 900001
     Size: 2.5
     Unity_address: Devil/Prefabs/HateQueen
@@ -311,9 +314,6 @@ MonoBehaviour:
   - Code: 900099
     Size: 0.5
     Unity_address: Enemy/Prefabs/Creep_Rogue
-  - Code: 900000
-    Size: 1
-    Unity_address: Skill/Default
   - Code: 900100
     Size: 1
     Unity_address: Devil/Effect/Boss_01
@@ -666,8 +666,8 @@ MonoBehaviour:
     Size: 1
     Unity_address: Buff/Effect/Explosion_02
   - Code: 900217
-    Size: 2
-    Unity_address: Buff/Effect/Fusion_01
+    Size: 3
+    Unity_address: Combination/Effect/Healing
   - Code: 900218
     Size: 0.4
     Unity_address: Synergy/Effect/1synergy_01
@@ -719,7 +719,12 @@ MonoBehaviour:
   - Code: 900234
     Size: 0.5
     Unity_address: Synergy/Effect/2synergy_07
+  - Code: 900235
+    Size: 2
+    Unity_address: Combination/Effect/Projectile_12
   PrefabList:
+  - Code: 900000
+    obj: {fileID: 3036307503973806913, guid: 5fb497ded92b3454fa171a4e49a922f4, type: 3}
   - Code: 900001
     obj: {fileID: 1294451033927112, guid: 608fa76a2e195a34ba7399f2349cbc9d, type: 3}
   - Code: 900002
@@ -918,8 +923,6 @@ MonoBehaviour:
     obj: {fileID: 8525777246585927892, guid: 100ab51d4e2aefe44ae8fb405e676bf3, type: 3}
   - Code: 900099
     obj: {fileID: 2604486107980217304, guid: 9114e71e357316c4188f886c40e4e615, type: 3}
-  - Code: 900000
-    obj: {fileID: 3036307503973806913, guid: 5fb497ded92b3454fa171a4e49a922f4, type: 3}
   - Code: 900100
     obj: {fileID: 5472239686391076802, guid: 851a9eb51d383d9409e158e7fc30e687, type: 3}
   - Code: 900101
@@ -1155,7 +1158,7 @@ MonoBehaviour:
   - Code: 900216
     obj: {fileID: 1414779434264708, guid: af28c908434339348b888face2783aab, type: 3}
   - Code: 900217
-    obj: {fileID: 1416074664878166, guid: 821fe74554de0a54c963209d6ea32b26, type: 3}
+    obj: {fileID: 1042361525996828, guid: d062dc011b73242429302f60a47712bc, type: 3}
   - Code: 900218
     obj: {fileID: 7235496322004475637, guid: 19efa1a23dbc87d49a4b5291f2baf921, type: 3}
   - Code: 900219
@@ -1190,3 +1193,5 @@ MonoBehaviour:
     obj: {fileID: 108728, guid: 7e2101db72d49ec4589849de74a8c96d, type: 3}
   - Code: 900234
     obj: {fileID: 108728, guid: 47d91edba51a43b40a7986318661b53e, type: 3}
+  - Code: 900235
+    obj: {fileID: 1985767573034186, guid: 3ed4ca7a23e0c72409bc454b26bd05af, type: 3}
