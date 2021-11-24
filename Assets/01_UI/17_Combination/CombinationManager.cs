@@ -9,8 +9,15 @@ public class CombinationManager : Singleton<CombinationManager>
 	private int MaxStar = 3;    // star maximum
 
 	public event Action OnCombinationDespawnObjEvent;
-
+	protected CombinationEffectManager M_Comeffect => CombinationEffectManager.Instance;
 	bool m_DespawnWorldObjFlag;
+	Vector3 endpos;
+	
+	public Vector3 EffectEndPos
+	{
+		get => endpos;
+		set => endpos = value;
+	}
 
 	private bool IsMaximum(Tower tower)
 	{
@@ -24,7 +31,7 @@ public class CombinationManager : Singleton<CombinationManager>
 	private void CombinationProcess(List<Tower> tower_list)
 	{
 		Debug.Log("Combination process");
-
+		CombinationEffect comeffect;
 		// desapwn only 3 towers         
 		int next_tower_code = tower_list[0].ExcelData.Next_Stat;
 
@@ -32,12 +39,14 @@ public class CombinationManager : Singleton<CombinationManager>
 		for (int i = 0; i < 3; i++)
 		{
 			if (false == tower_list[i].IsOnInventory)
-			{   // Node
+			{
+				// Node
 				TowerManager.Instance.DespawnTower(tower_list[i]);
 				m_DespawnWorldObjFlag = true;
 			}
 			else
 			{   // Inven
+				//startpos = Camera.main.ScreenToWorldPoint(tower_list[i].transform.position);
 				InventoryManager.Instance.RemoveTower(tower_list[i]);
 			}
 		}
@@ -45,10 +54,16 @@ public class CombinationManager : Singleton<CombinationManager>
 		var newTowerData = m_towerLoader.DataList.Find((item)
 			=>
 		{ return item.Code == next_tower_code; });
-
+        
 		// spawn
 		InventoryManager.Instance.AddNewTower(newTowerData);
-
+	
+		comeffect = M_Comeffect.SpawnEffect(CombinationEffectManager.PrefabCode2, endpos);
+		if (null != comeffect)
+		{
+			comeffect.gameObject.SetActive(true);
+			comeffect.Play(true);
+		}
 	}
 
 	private bool CombinationRecurr()
@@ -93,5 +108,9 @@ public class CombinationManager : Singleton<CombinationManager>
 			OnCombinationDespawnObjEvent?.Invoke();
 			m_DespawnWorldObjFlag = false;
 		}
+	}
+	public void PlayComEffect()
+	{
+
 	}
 }

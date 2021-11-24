@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4427333791967724}
   - component: {fileID: 198487867531459058}
   - component: {fileID: 199352014713688920}
-  m_Layer: 0
+  m_Layer: 21
   m_Name: Flares
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4839,8 +4839,8 @@ GameObject:
   - component: {fileID: 199846976914066808}
   - component: {fileID: 54886916964080914}
   - component: {fileID: 135999672022334354}
-  m_Layer: 0
-  m_Name: Projectile 12
+  m_Layer: 21
+  m_Name: Projectile_12
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4877,7 +4877,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 0
