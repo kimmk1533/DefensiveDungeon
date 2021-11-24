@@ -227,7 +227,7 @@ public class SynergyManager : Singleton<SynergyManager>
 
 	private void Start()
 	{
-		M_Node.m_RotateEndEvent += UpdateSynergy;
+		M_Node.OnRotateEndEvent += UpdateSynergy;
 		M_Combination.OnCombinationDespawnObjEvent += UpdateSynergy;
 	}
 	#endregion

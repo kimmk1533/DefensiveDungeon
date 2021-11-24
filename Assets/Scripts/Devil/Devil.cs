@@ -157,7 +157,7 @@ public abstract class Devil : MonoBehaviour
 		{
 			m_AttackRange_Default = transform.Find("AttackRange_Default").AddComponent<AttackRange>();
 			m_AttackRange_Default.gameObject.layer = LayerMask.NameToLayer("TowerAttackRange");
-			m_AttackRange_Default.Initialize();
+			m_AttackRange_Default.InitializeAttackRange();
 		}
 		m_AttackRange_Default.Range = m_DevilInfo.Stat_Default.Range;
 		m_AttackRange_Default.CanFindTarget = true;

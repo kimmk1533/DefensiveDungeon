@@ -45,7 +45,9 @@ public class Node : MonoBehaviour
 
 			m_Tower.IsOnInventory = false;
 			m_Tower.CanAttack_Node = true;
-			m_Tower.CanAttack_Skill = true;
+			m_Tower.CanAttack_Default = true;
+			m_Tower.CanAttack_Skill01 = true;
+			m_Tower.CanAttack_Skill02 = true;
 
 			M_Tower.SpawnTower_Node(m_Direction, m_Tower);
 			M_Synergy.UpdateSynergy();

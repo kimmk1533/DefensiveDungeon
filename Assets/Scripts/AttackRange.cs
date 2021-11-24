@@ -8,6 +8,8 @@ public class AttackRange : MonoBehaviour
 {
 	[SerializeField]
 	protected List<Enemy> m_TargetList;
+	[SerializeField]
+	protected List<Enemy> m_TempList;
 
 	[SerializeField]
 	protected E_Direction m_Direction;
@@ -18,6 +20,9 @@ public class AttackRange : MonoBehaviour
 	protected SphereCollider m_RangeCollider;
 	#endregion
 	#region 내부 프로퍼티
+	#region 매니저
+	protected NodeManager M_Node => NodeManager.Instance;
+	#endregion
 	protected SphereCollider RangeCollider
 	{
 		get
@@ -38,20 +43,55 @@ public class AttackRange : MonoBehaviour
 	public bool CanFindTarget { get => m_CanFindTarget; set => m_CanFindTarget = value; }
 	#endregion
 
-	#region 외부 함수
-	public void Initialize()
+	#region 내부 함수
+	protected void UpdateFromTempList()
 	{
-		m_TargetList = new List<Enemy>();
+		foreach (var item in m_TempList)
+		{
+			if (null == item)
+				continue;
+			if (item.IsDead)
+				continue;
+
+			if (m_Direction == E_Direction.None || item.Direction == m_Direction)
+				m_TargetList.Add(item);
+		}
+
+		m_TempList.Clear();
+	}
+	#endregion
+	#region 외부 함수
+	public void InitializeAttackRange()
+	{
+		if (null == m_TargetList)
+			m_TargetList = new List<Enemy>();
+		else if (m_TargetList.Count > 0)
+			m_TargetList.Clear();
+
+		if (null == m_TempList)
+			m_TempList = new List<Enemy>();
+		else if (m_TempList.Count > 0)
+			m_TempList.Clear();
 
 		m_RangeCollider = GetComponent<SphereCollider>();
 		//m_RangeCollider ??= gameObject.AddComponent<SphereCollider>();
 		if (null == m_RangeCollider)
 			m_RangeCollider = gameObject.AddComponent<SphereCollider>();
 		m_RangeCollider.isTrigger = true;
+
+		M_Node.OnRotateEndEvent += UpdateFromTempList;
 	}
+	public void FinalizeAttackRange()
+	{
+		Clear();
+
+		M_Node.OnRotateEndEvent -= UpdateFromTempList;
+	}
+
 	public void Clear()
 	{
-		m_TargetList?.Clear();
+		m_TargetList.Clear();
+		m_TempList.Clear();
 	}
 	public bool RemoveTarget(Enemy target)
 	{
@@ -113,7 +153,9 @@ public class AttackRange : MonoBehaviour
 		if (enemy.IsDead)
 			return;
 
-		if (m_CanFindTarget && (m_Direction == E_Direction.None || enemy.Direction == m_Direction))
+		if (!m_CanFindTarget)
+			m_TempList.Add(enemy);
+		else if (m_Direction == E_Direction.None || enemy.Direction == m_Direction)
 			m_TargetList.Add(enemy);
 	}
 	private void OnTriggerExit(Collider other)

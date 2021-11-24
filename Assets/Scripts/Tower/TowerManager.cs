@@ -125,7 +125,7 @@ public class TowerManager : Singleton<TowerManager>
 			m_DirTowerList.Add(i, new List<Tower>());
 		}
 
-		M_Node.m_RotateEndEvent += UpdateTowerList;
+		M_Node.OnRotateEndEvent += UpdateTowerList;
 	}
 	#endregion
 }

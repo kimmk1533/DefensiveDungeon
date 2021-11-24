@@ -7,9 +7,9 @@ public class NodeManager : Singleton<NodeManager>
 {
 	public delegate void NodeEventHandler();
 	// 노드 회전 시작시 호출되는 이벤트
-	public event NodeEventHandler m_RotateStartEvent;
+	public event NodeEventHandler OnRotateStartEvent;
 	// 노드 회전 종료시 호출되는 이벤트
-	public event NodeEventHandler m_RotateEndEvent;
+	public event NodeEventHandler OnRotateEndEvent;
 
 	// 회전할 각도
 	[SerializeField]
@@ -107,7 +107,7 @@ public class NodeManager : Singleton<NodeManager>
 		m_LookingDir.SetActive(false);
 
 		// 타워 타겟 업데이트
-		m_RotateStartEvent += UpdateTowerTarget;
+		OnRotateStartEvent += UpdateTowerTarget;
 	}
 
 	private void Update()
@@ -294,7 +294,7 @@ public class NodeManager : Singleton<NodeManager>
 		float angle;
 
 		// 회전 시작 이벤트 호출
-		m_RotateStartEvent?.Invoke();
+		OnRotateStartEvent?.Invoke();
 
 		// 예외 처리 (회전에 걸리는 시간이 0이하인 경우)
 		if (m_Duration <= 0f)
@@ -322,7 +322,7 @@ public class NodeManager : Singleton<NodeManager>
 			m_IsRotating = false;
 
 			// 회전 종료 이벤트 호출
-			m_RotateEndEvent?.Invoke();
+			OnRotateEndEvent?.Invoke();
 
 			// 회전 종료
 			yield break;
@@ -413,7 +413,7 @@ public class NodeManager : Singleton<NodeManager>
 		m_IsRotating = false;
 
 		// 회전 종료 이벤트 호출
-		m_RotateEndEvent?.Invoke();
+		OnRotateEndEvent?.Invoke();
 	}
 	// 노드 업데이트
 	protected void UpdateNode(bool clockwise = true)

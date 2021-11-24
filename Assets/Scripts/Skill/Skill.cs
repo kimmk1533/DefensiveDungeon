@@ -95,7 +95,7 @@ public class Skill : MonoBehaviour
 				break;
 		}
 
-		m_SkillInfo.AttackRange.Clear();
+		m_SkillInfo.AttackRange.FinalizeAttackRange();
 
 		M_Skill.DespawnProjectileSkill(this);
 	}
@@ -459,6 +459,8 @@ public class Skill : MonoBehaviour
 		SkillStat_TableExcel statData,
 		S_Critical critical)
 	{
+		m_SkillInfo.AttackRange.InitializeAttackRange();
+
 		m_Target = target;
 		m_SkillInfo.Critical = critical;
 
