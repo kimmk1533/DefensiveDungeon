@@ -9778,7 +9778,6 @@ GameObject:
   - component: {fileID: 198873890228395622}
   - component: {fileID: 199338360085264476}
   - component: {fileID: 82725133835146028}
-  - component: {fileID: 114571286873278534}
   m_Layer: 0
   m_Name: LightningBolt02
   m_TagString: Untagged
@@ -14798,24 +14797,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &114571286873278534
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1312838344612490}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a79ba5bb0b3780b4a98ce45e779b6441, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Repeating: 1
-  RepeatTime: 2
-  StartTime: 0
-  RandomVolume: 0
-  minVolume: 0.4
-  maxVolume: 1
 --- !u!1 &1325259769939094
 GameObject:
   m_ObjectHideFlags: 0

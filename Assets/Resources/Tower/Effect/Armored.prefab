@@ -4780,8 +4780,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 400886}
-  - component: {fileID: 11463590}
-  - component: {fileID: 11454920}
   m_Layer: 0
   m_Name: Armored
   m_TagString: Untagged
@@ -4797,42 +4795,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 141982}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 15.698138, y: 6.101721e-18, z: -2.7479708}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 476664}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &11463590
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 141982}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad75b45862f224943aec4c32ab63a89b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Offset: {x: 0, y: 0.001, z: 0}
-  Normal: 0
-  Mode: 0
---- !u!114 &11454920
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 141982}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8158ae4eda795d941ac059fec14e160d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  LifeTime: 5
-  SpawnAfterDead: {fileID: 0}
 --- !u!1 &152466
 GameObject:
   m_ObjectHideFlags: 0

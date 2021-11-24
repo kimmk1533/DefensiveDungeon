@@ -45,6 +45,8 @@ public class Effect : MonoBehaviour
         if (m_Timer >= m_Particle.main.duration)
         {
             m_Particle.Stop(true);
+            m_Particle.Clear(true);
+            m_Particle.time = 0f;
             M_Effect.DespawnEffect(this);
         }
     }

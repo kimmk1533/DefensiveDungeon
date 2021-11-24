@@ -19086,8 +19086,6 @@ GameObject:
   - component: {fileID: 473300}
   - component: {fileID: 19822286}
   - component: {fileID: 19951558}
-  - component: {fileID: 11468972}
-  - component: {fileID: 11463120}
   m_Layer: 0
   m_Name: MagicBuff
   m_TagString: Untagged
@@ -23826,35 +23824,6 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
---- !u!114 &11468972
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 163474}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad75b45862f224943aec4c32ab63a89b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Offset: {x: 0, y: 0.001, z: 0}
-  Normal: 0
-  Mode: 0
---- !u!114 &11463120
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 163474}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8158ae4eda795d941ac059fec14e160d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  LifeTime: 3
-  SpawnAfterDead: {fileID: 0}
 --- !u!1 &194066
 GameObject:
   m_ObjectHideFlags: 0
@@ -23865,7 +23834,6 @@ GameObject:
   m_Component:
   - component: {fileID: 481736}
   - component: {fileID: 10852314}
-  - component: {fileID: 11406728}
   m_Layer: 0
   m_Name: Point light
   m_TagString: Untagged
@@ -23949,16 +23917,3 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!114 &11406728
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 194066}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ebe57dd0ab8d8941a19b984006c7e1a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Delay: 0.03
