@@ -18,6 +18,7 @@ public struct SkillCondition_TableExcel
 	public int Atk_prefab;
 	public int projectile_prefab;
 	public int damage_prefab;
+	public int HitSound;
 	public int Skill_icon;
 	public string Skill_text;
 	public string SkillAvility1_Name;
@@ -58,6 +59,7 @@ public class  SkillCondition_TableExcelLoader : ScriptableObject
 		data.Atk_prefab = int.Parse(strs[idx++]);
 		data.projectile_prefab = int.Parse(strs[idx++]);
 		data.damage_prefab = int.Parse(strs[idx++]);
+		data.HitSound = int.Parse(strs[idx++]);
 		data.Skill_icon = int.Parse(strs[idx++]);
 		data.Skill_text = strs[idx++];
 		data.SkillAvility1_Name = strs[idx++];
