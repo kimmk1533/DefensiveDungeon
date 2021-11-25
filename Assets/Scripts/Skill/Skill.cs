@@ -6,7 +6,7 @@ public class Skill : MonoBehaviour
 {
 	// 스킬 정보 (엑셀)
 	public SkillCondition_TableExcel m_ConditionInfo_Excel;
-	public SkillStat_TableExcel m_StatInfo_Excel;
+	public SkillStat_TableExcel m_StatInfo;
 	// 스킬 정보
 	public S_SkillData m_SkillInfo;
 
@@ -24,7 +24,7 @@ public class Skill : MonoBehaviour
 	// 타겟 위치
 	protected Vector3 TargetPos => (m_Target == null ? transform.position : m_Target.transform.position);
 	// 스킬 이동 속도
-	protected float MoveSpeed => m_StatInfo_Excel.Speed * Time.deltaTime;
+	protected float MoveSpeed => m_StatInfo.Speed * Time.deltaTime;
 	// 타겟까지의 방향
 	protected Vector3 TargetDir => TargetPos - transform.position;
 	// 타겟까지의 거리
@@ -32,7 +32,7 @@ public class Skill : MonoBehaviour
 	// 타겟 잃어버림
 	protected bool LostTarget => m_Target == null || m_Target.IsDead;
 	// 타겟에게 도착 여부
-	protected bool ArrivedToTarget => DistanceToTarget <= m_StatInfo_Excel.Size;
+	protected bool ArrivedToTarget => DistanceToTarget <= m_StatInfo.Size;
 	// 생존 시간 소진
 	protected bool DepletedLifeTime => m_SkillInfo.LifeTime <= 0f;
 	// 튕김 카운트 소진
@@ -57,7 +57,7 @@ public class Skill : MonoBehaviour
 	}
 	protected void Despawn()
 	{
-		SkillCondition_TableExcel condition = M_Skill.GetConditionData(m_StatInfo_Excel.LoadCode);
+		SkillCondition_TableExcel condition = M_Skill.GetConditionData(m_StatInfo.LoadCode);
 		SkillStat_TableExcel stat = M_Skill.GetStatData(condition.PassiveCode);
 		Skill skill = M_Skill.SpawnProjectileSkill(condition.projectile_prefab);
 
@@ -76,7 +76,13 @@ public class Skill : MonoBehaviour
 			skill.enabled = true;
 			skill.gameObject.SetActive(true);
 
-			skill.InitializeSkill(m_Target, condition, stat, m_SkillInfo.Critical);
+			stat.Dmg_Fix += m_StatInfo.Dmg_Fix;
+			stat.Dmg_Percent *= m_StatInfo.Dmg_Percent;
+
+			skill.InitializeSkill(
+				m_Target,
+				condition, stat,
+				m_SkillInfo.Critical);
 		}
 
 		m_Target = null;
@@ -99,6 +105,7 @@ public class Skill : MonoBehaviour
 
 		M_Skill.DespawnProjectileSkill(this);
 	}
+
 	protected bool CheckToUpdateTarget()
 	{
 		switch ((E_AttackType)m_ConditionInfo_Excel.Atk_type)
@@ -166,6 +173,7 @@ public class Skill : MonoBehaviour
 				break;
 		}
 	}
+
 	protected void RotateSkill()
 	{
 		if ((E_AttackType)m_ConditionInfo_Excel.Atk_type == E_AttackType.FixedFire)
@@ -227,7 +235,7 @@ public class Skill : MonoBehaviour
 		// 최대 높이
 		float MaxHeight = Mathf.Max(StartPos.y, EndPos.y) + 2.5f;
 		// 최대 높이까지 가는 시간
-		float MaxTime = (MaxHeight - StartPos.y) / m_StatInfo_Excel.Speed;
+		float MaxTime = (MaxHeight - StartPos.y) / m_StatInfo.Speed;
 
 		float EndHeight = EndPos.y - StartPos.y;
 		float Height = MaxHeight - StartPos.y;
@@ -265,6 +273,7 @@ public class Skill : MonoBehaviour
 	{
 		transform.position += GetCurveDir().normalized * MoveSpeed;
 	}
+
 	protected void UpdateInfo()
 	{
 		switch ((E_AttackType)m_ConditionInfo_Excel.Atk_type)
@@ -288,28 +297,24 @@ public class Skill : MonoBehaviour
 	}
 	protected bool CheckToAttack()
 	{
-		if ((E_AttackType)m_ConditionInfo_Excel.Atk_type == E_AttackType.PenetrateFire)
-			return m_SkillInfo.FixedTargetList.Count > 0;
-
-		if (LostTarget)
-			return false;
-
 		switch ((E_AttackType)m_ConditionInfo_Excel.Atk_type)
 		{
 			case E_AttackType.NormalFire:
-				return ArrivedToTarget;
+				return LostTarget || ArrivedToTarget;
 			case E_AttackType.FixedFire:
 				return m_SkillInfo.DotTimer <= 0f;
+			case E_AttackType.PenetrateFire:
+				return m_SkillInfo.FixedTargetList.Count > 0;
 			case E_AttackType.BounceFire:
-				return ArrivedToTarget;
+				return LostTarget || ArrivedToTarget;
 		}
 
 		return ArrivedToTarget;
 	}
 	protected void Attack()
 	{
-		float damage = m_StatInfo_Excel.Dmg_Fix * m_StatInfo_Excel.Dmg_Percent;
-		BuffCC_TableExcel buffData = M_Buff.GetData(m_StatInfo_Excel.Buff_CC);
+		float damage = m_StatInfo.Dmg_Fix * m_StatInfo.Dmg_Percent;
+		BuffCC_TableExcel buffData = M_Buff.GetData(m_StatInfo.Buff_CC);
 
 		switch ((E_AttackType)m_ConditionInfo_Excel.Atk_type)
 		{
@@ -365,7 +370,7 @@ public class Skill : MonoBehaviour
 							damage *= critDmg;
 						}
 
-						m_Target.On_DaMage(damage, isCrit);
+						target.On_DaMage(damage, isCrit);
 
 						// 피격 이펙트 생성
 						Effect hitEffect = M_Effect.SpawnEffect(m_ConditionInfo_Excel.damage_prefab);
@@ -400,7 +405,7 @@ public class Skill : MonoBehaviour
 								damage *= critDmg;
 							}
 
-							m_Target.On_DaMage(damage, isCrit);
+							target.On_DaMage(damage, isCrit);
 
 							m_SkillInfo.PenetrateTargetList.Add(target);
 
@@ -462,34 +467,36 @@ public class Skill : MonoBehaviour
 		m_SkillInfo.AttackRange.InitializeAttackRange();
 
 		m_Target = target;
+		m_SkillInfo.AttackRange.Direction = target.Direction;
+		m_SkillInfo.AttackRange.CanFindTarget = true;
 		m_SkillInfo.Critical = critical;
 
 		m_ConditionInfo_Excel = conditionData;
-		m_StatInfo_Excel = statData;
+		m_StatInfo = statData;
 
 		switch ((E_AttackType)m_ConditionInfo_Excel.Atk_type)
 		{
 			case E_AttackType.NormalFire:
-				m_SkillInfo.AttackRange.Range = m_StatInfo_Excel.Size;
+				m_SkillInfo.AttackRange.Range = m_StatInfo.Size;
 				break;
 			case E_AttackType.FixedFire:
-				m_SkillInfo.AttackRange.Range = m_StatInfo_Excel.Size;
+				m_SkillInfo.AttackRange.Range = m_StatInfo.Size;
 				m_SkillInfo.FixedTargetList = m_SkillInfo.AttackRange.TargetList;
 				break;
 			case E_AttackType.PenetrateFire:
-				m_SkillInfo.AttackRange.Range = m_StatInfo_Excel.Size;
+				m_SkillInfo.AttackRange.Range = m_StatInfo.Size;
 				m_SkillInfo.FixedTargetList = m_SkillInfo.AttackRange.TargetList;
 				break;
 			case E_AttackType.BounceFire:
 				// 다음 타겟 찾는 사거리 = 타워 사거리의 1 / 2
-				m_SkillInfo.AttackRange.Range = m_StatInfo_Excel.Range * 0.5f;
+				m_SkillInfo.AttackRange.Range = m_StatInfo.Range * 0.5f;
 				m_SkillInfo.AttackRange.CanFindTarget = true;
 				m_SkillInfo.AttackRange.Direction = target.Direction;
 				break;
 		}
 
-		m_SkillInfo.BounceCount = m_StatInfo_Excel.Target_num;
-		m_SkillInfo.LifeTime = m_StatInfo_Excel.Life_Time;
+		m_SkillInfo.BounceCount = m_StatInfo.Target_num;
+		m_SkillInfo.LifeTime = m_StatInfo.Life_Time;
 		m_SkillInfo.InitPos = transform.position;
 		m_SkillInfo.TargetInitPos = m_Target.transform.position;
 
