@@ -98,6 +98,7 @@ public class LevelInfoUIController : MonoBehaviour , IPointerClickHandler
         {
             m_exp_image.value = 1f;
             m_exp_textpro.text = "Max";
+            m_gold_image.sprite = null;
             m_gold_textpro.text = null;
             m_purchace_textpro.text = null;
             return;

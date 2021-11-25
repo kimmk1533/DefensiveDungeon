@@ -55,7 +55,7 @@ public class StagePreviewController : MonoBehaviour
 
 			newSlot.gameObject.SetActive(true);
 
-			newSlot.SetSize(cell_size);
+			//newSlot.SetSize(cell_size);
 			newSlot.SetPosition(x_pos);
 			m_slot_positionX.Add(x_pos);
 			x_pos += (cell_size.x + m_padding_width);
