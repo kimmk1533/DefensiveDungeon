@@ -335,21 +335,33 @@ public class Tower : MonoBehaviour
 	protected void AttackTarget()
 	{
 		#region 스킬01
+		void Skill01()
+		{
+			// 내부 데이터 정리
+			m_TowerInfo.AttackTimer_Skill01 -= m_TowerInfo.AttackSpeed_Skill01;
+			m_TowerInfo.CanAttack_Skill01 = false;
+
+			// 스킬01 애니메이션 재생
+			SetSkill01Trigger();
+			return;
+		}
+
 		// 스킬01 공격
 		if (m_TowerInfo_Excel.Skill1Code != 0)
 		{
 			if (CheckAttackTimer_Skill01 &&
 				m_TowerInfo.CanAttack_Node && CanAttack_Skill)
 			{
-				if ((E_TargetType)m_TowerInfo.Condition_Skill01.Target_type == E_TargetType.TileTarget ||
-					!(IsTargetDead_Skill01 || LostTarget_Skill01))
+				if ((E_TargetType)m_TowerInfo.Condition_Skill01.Target_type == E_TargetType.TileTarget &&
+					M_Enemy.GetEnemyList(Direction).Count > 0)
 				{
-					// 내부 데이터 정리
-					m_TowerInfo.AttackTimer_Skill01 -= m_TowerInfo.AttackSpeed_Skill01;
-					m_TowerInfo.CanAttack_Skill01 = false;
+					Skill01();
+					return;
+				}
 
-					// 스킬01 애니메이션 재생
-					SetSkill01Trigger();
+				if (!IsTargetDead_Skill01 && !LostTarget_Skill01)
+				{
+					Skill01();
 					return;
 				}
 			}
@@ -357,21 +369,32 @@ public class Tower : MonoBehaviour
 		#endregion
 
 		#region 스킬02
+		void Skill02()
+		{
+			// 내부 데이터 정리
+			m_TowerInfo.AttackTimer_Skill02 -= m_TowerInfo.AttackSpeed_Skill02;
+			m_TowerInfo.CanAttack_Skill02 = false;
+
+			// 스킬02 애니메이션 재생
+			SetSkill02Trigger();
+		}
+
 		// 스킬02 공격
 		if (m_TowerInfo_Excel.Skill2Code != 0)
 		{
 			if (CheckAttackTimer_Skill02 &&
 				m_TowerInfo.CanAttack_Node && CanAttack_Skill)
 			{
-				if ((E_TargetType)m_TowerInfo.Condition_Skill02.Target_type == E_TargetType.TileTarget ||
-					!(IsTargetDead_Skill02 || LostTarget_Skill02))
+				if ((E_TargetType)m_TowerInfo.Condition_Skill02.Target_type == E_TargetType.TileTarget &&
+					M_Enemy.GetEnemyList(Direction).Count > 0)
 				{
-					// 내부 데이터 정리
-					m_TowerInfo.AttackTimer_Skill02 -= m_TowerInfo.AttackSpeed_Skill02;
-					m_TowerInfo.CanAttack_Skill02 = false;
+					Skill02();
+					return;
+				}
 
-					// 스킬02 애니메이션 재생
-					SetSkill02Trigger();
+				if (!IsTargetDead_Skill02 && !LostTarget_Skill02)
+				{
+					Skill02();
 					return;
 				}
 			}
@@ -379,19 +402,30 @@ public class Tower : MonoBehaviour
 		#endregion
 
 		#region 기본 스킬
+		void Attack()
+		{
+			// 내부 데이터 정리
+			m_TowerInfo.AttackTimer_Default -= m_TowerInfo.AttackSpeed_Default;
+			m_TowerInfo.CanAttack_Default = false;
+
+			// 기본 공격 애니메이션 재생
+			SetAttackTrigger();
+		}
+
 		// 기본 스킬 공격
 		if (CheckAttackTimer_Default &&
 			m_TowerInfo.CanAttack_Node && CanAttack_Skill)
 		{
-			if ((E_TargetType)m_TowerInfo.Condition_Default.Target_type == E_TargetType.TileTarget ||
-				!(IsTargetDead_Default || LostTarget_Default))
+			if ((E_TargetType)m_TowerInfo.Condition_Default.Target_type == E_TargetType.TileTarget &&
+				M_Enemy.GetEnemyList(Direction).Count > 0)
 			{
-				// 내부 데이터 정리
-				m_TowerInfo.AttackTimer_Default -= m_TowerInfo.AttackSpeed_Default;
-				m_TowerInfo.CanAttack_Default = false;
+				Attack();
+				return;
+			}
 
-				// 기본 공격 애니메이션 재생
-				SetAttackTrigger();
+			if (!IsTargetDead_Default && !LostTarget_Default)
+			{
+				Attack();
 				return;
 			}
 		}
