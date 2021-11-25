@@ -71,12 +71,13 @@ public class GatePanelController : MonoBehaviour
 
         // scene load 
         SceneLoader.Instance.LoadProcess(OnSceneLoadComplete);
+
+        SceneLoader.Instance.UnloadScenes();
     }
 
     // scene load complete callback
     public void OnSceneLoadComplete()
     {
-        SceneLoader.Instance.UnloadScenes();
         CreateGatesPanelForOpenProcess();
         DeActivateCloseGates();
 

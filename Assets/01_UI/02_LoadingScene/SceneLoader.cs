@@ -6,22 +6,22 @@ using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using System;
 
-// ÇöÀç ÀÛ¾÷ÁßÀÎ Scene : A
-// ´ÙÀ½¿¡ ÀÛ¾÷ÇØ¾ß ÇÒ Scene : B , C
+// í˜„ì¬ ì‘ì—…ì¤‘ì¸ Scene : A
+// ë‹¤ìŒì— ì‘ì—…í•´ì•¼ í•  Scene : B , C
 
-// A ¿¡¼­ SceneLoader °¡ Æ÷ÇÔµÈ Scene(LoaderScene)À» ºÒ·¯¿À±â
-// SceneLoaderÀÇ ¸â¹öÇÔ¼ö LoadSecen À» È£ÃâÇÏ±â (param À¸·Î B , C ÀÇ ÀÌ¸§)
-// ÁøÇàÀÌ ¿Ï·áµÇ¸é
-// A ¿Í LoaderÀÇ ¾ÀÀ» ´İ°í ³¡
+// A ì—ì„œ SceneLoader ê°€ í¬í•¨ëœ Scene(LoaderScene)ì„ ë¶ˆëŸ¬ì˜¤ê¸°
+// SceneLoaderì˜ ë©¤ë²„í•¨ìˆ˜ LoadSecen ì„ í˜¸ì¶œí•˜ê¸° (param ìœ¼ë¡œ B , C ì˜ ì´ë¦„)
+// ì§„í–‰ì´ ì™„ë£Œë˜ë©´
+// A ì™€ Loaderì˜ ì”¬ì„ ë‹«ê³  ë
 public class SceneLoader : Singleton<SceneLoader>
-{   
+{
 
     [SerializeField] float delay_second = 3f;
     [SerializeField] float timer;
 
     private List<string> m_load_scenes;
     private List<string> m_unload_scenes;
-        
+
 
     public bool IsCompleted { get; private set; }
 
@@ -43,7 +43,7 @@ public class SceneLoader : Singleton<SceneLoader>
         foreach (var item in unload_scenes)
         {
             m_unload_scenes.Add(item);
-        }       
+        }
     }
 
     public void LoadProcess(Action callback)
@@ -53,19 +53,19 @@ public class SceneLoader : Singleton<SceneLoader>
 
     IEnumerator Co_LoadSceneAsync(Action callback)
     {
-        yield return null; // ÇÑ¹ÚÀÚ ½¬°í
+        yield return null; // í•œë°•ì ì‰¬ê³ 
 
         List<AsyncOperation> ops_list = new List<AsyncOperation>();
 
-        // ¾À ÇÏ³ª ¿Ï·á´ç Áõ°¡ÇÒ progressbar ºñÀ²
+        // ì”¬ í•˜ë‚˜ ì™„ë£Œë‹¹ ì¦ê°€í•  progressbar ë¹„ìœ¨
         float rate = 1.0f / m_load_scenes.Count;
 
         foreach (var sceneName in m_load_scenes)
         {
             AsyncOperation op = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
             ops_list.Add(op);
-            op.allowSceneActivation = false;    // ¿Ï·áµÈ ¾ÀÀÌ ¹Ù·Î ·ÎµåµÇÁö ¾Êµµ·Ï ÇÔ
-                     
+            op.allowSceneActivation = false;    // ì™„ë£Œëœ ì”¬ì´ ë°”ë¡œ ë¡œë“œë˜ì§€ ì•Šë„ë¡ í•¨
+
             while (!op.isDone)
             {
                 timer += Time.deltaTime;
@@ -85,13 +85,13 @@ public class SceneLoader : Singleton<SceneLoader>
             item.allowSceneActivation = true;
         }
 
-        if(timer < delay_second)
+        if (timer < delay_second)
             yield return new WaitForSeconds(delay_second);
 
         IsCompleted = true;
-        callback?.Invoke();       
+        callback?.Invoke();
     }
-   
+
     public void OnAllProcessCompleted()
     {
         var objs = GameObject.FindGameObjectsWithTag("SceneStart");
@@ -105,10 +105,10 @@ public class SceneLoader : Singleton<SceneLoader>
     }
 
     public void UnloadScenes()
-    {   
+    {
         foreach (var item in m_unload_scenes)
         {
             SceneManager.UnloadSceneAsync(item);
         }
-    }   
+    }
 }

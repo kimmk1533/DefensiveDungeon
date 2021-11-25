@@ -21,7 +21,7 @@ public class EnemySkillPool : ObjectPool<EnemySkillPool, EnemySkill>
             {
                 GameObject originClone = GameObject.Instantiate(originObj);
                 string key = originClone.name = originObj.name;
-                Debug.Log("Skill_" + PrefabCode + ": " + key);
+                //Debug.Log("Skill_" + PrefabCode + ": " + key);
 
                 EnemySkill origin = originClone.AddComponent<EnemySkill>();
 
