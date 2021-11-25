@@ -58,6 +58,7 @@ public class LevelInfoUIController : MonoBehaviour , IPointerClickHandler
     public void __OnLevelChanged(int cur_level)
     {
         m_info.curr_level = cur_level;
+        m_info.max_exp = UserInfoManager.Instance.MaxEXP;
         m_info.requireGoldForPurchase = UserInfoManager.Instance.RequireGoldForPurchaseEXP;
 
         __OnInfoChanged();
