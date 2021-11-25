@@ -13,6 +13,7 @@ public enum OptionType
 	KeyButton,
 	SoundButton,
 	VideoButton,
+	Exit,
 }
 public enum KeyOptionType
 {
@@ -35,7 +36,7 @@ public class Option : MonoBehaviour
 	ColorBlock color;
 	ColorBlock origincolor;
 	KeyOptionType keyOptionType = KeyOptionType.None;
-	
+	bool ActiveMainCanvas = false;
 	private void Awake()
 	{
 		color = origincolor = buttons[1].colors;
@@ -49,8 +50,17 @@ public class Option : MonoBehaviour
 	}
 	public void EnableStartCanvas()
 	{
-		Canvas[(int)CanvasType.Start].gameObject.SetActive(false);
-		Canvas[(int)CanvasType.Option].gameObject.SetActive(true);
+		if (!ActiveMainCanvas)
+		{
+			Canvas[(int)CanvasType.Start].gameObject.SetActive(false);
+			Canvas[(int)CanvasType.Option].gameObject.SetActive(true);
+		}
+		else
+		{
+			Canvas[(int)CanvasType.Start].gameObject.SetActive(true);
+			Canvas[(int)CanvasType.Option].gameObject.SetActive(false);
+		}
+		ActiveMainCanvas = !ActiveMainCanvas;
 	}
 	//트루면 눌린 색으로 변경 펄스면 안눌린 색으로 변경
 	private void Chage_Color(bool flag, Button obj)
