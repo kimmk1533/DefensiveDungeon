@@ -40,6 +40,9 @@ public class TowerPool : ObjectPool<TowerPool, Tower>
 				origin.gameObject.layer = LayerMask.NameToLayer("Tower");
 				origin.gameObject.SetActive(false);
 
+				BoxCollider boxCollider = origin.gameObject.AddComponent<BoxCollider>();
+				boxCollider.isTrigger = true;
+
 				string key = M_TowerData.DataList[i].Name_EN;
 				if (!AddPool(key, origin, transform))
 				{

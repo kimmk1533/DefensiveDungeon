@@ -20,7 +20,7 @@ MonoBehaviour:
     Rank: 2
     Star: 1
     Tower_Kinds: 1
-    Atk: 50
+    Atk: 67
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300011
@@ -32,13 +32,16 @@ MonoBehaviour:
     Price: 3
     Atk_Speed: 1.5
     Prefab: 900004
+    ATKsound: 920003
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uC624\uD06C\uC804\uC0AC"
     Name_EN: OrkWarrior01
     Code: 120002
     Rank: 2
     Star: 1
     Tower_Kinds: 2
-    Atk: 50
+    Atk: 80
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300019
@@ -50,13 +53,16 @@ MonoBehaviour:
     Price: 3
     Atk_Speed: 1.5
     Prefab: 900005
+    ATKsound: 920020
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uC0AC\uC774\uD074\uB86D\uC2A4"
     Name_EN: Cyclops01
     Code: 120003
     Rank: 4
     Star: 1
     Tower_Kinds: 3
-    Atk: 50
+    Atk: 150
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300004
@@ -68,13 +74,16 @@ MonoBehaviour:
     Price: 7
     Atk_Speed: 1.5
     Prefab: 900006
+    ATKsound: 920002
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uACE0\uBE14\uB9B0"
     Name_EN: Goblin01
     Code: 120004
     Rank: 1
     Star: 1
     Tower_Kinds: 4
-    Atk: 50
+    Atk: 45
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300015
@@ -86,13 +95,16 @@ MonoBehaviour:
     Price: 1
     Atk_Speed: 1.5
     Prefab: 900007
+    ATKsound: 920001
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uB180\uC804\uC0AC"
     Name_EN: NolWarrior01
     Code: 120005
     Rank: 1
     Star: 1
     Tower_Kinds: 5
-    Atk: 50
+    Atk: 53
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300004
@@ -104,13 +116,16 @@ MonoBehaviour:
     Price: 1
     Atk_Speed: 1.5
     Prefab: 900008
+    ATKsound: 920002
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uD2B8\uB864\uC8FC\uC220\uC0AC"
     Name_EN: TrollShamen01
     Code: 120006
     Rank: 4
     Star: 1
     Tower_Kinds: 6
-    Atk: 50
+    Atk: 135
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300016
@@ -122,13 +137,16 @@ MonoBehaviour:
     Price: 7
     Atk_Speed: 1.5
     Prefab: 900009
+    ATKsound: 920008
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uC2A4\uD30C\uD06C\uBAAC"
     Name_EN: Sparkmon01
     Code: 120007
     Rank: 1
     Star: 1
     Tower_Kinds: 7
-    Atk: 50
+    Atk: 43
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300012
@@ -140,13 +158,16 @@ MonoBehaviour:
     Price: 1
     Atk_Speed: 1.5
     Prefab: 900010
+    ATKsound: 920006
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uC0B4\uB77C\uB9E8\uB354"
     Name_EN: Salamander01
     Code: 120008
     Rank: 3
     Star: 1
     Tower_Kinds: 8
-    Atk: 50
+    Atk: 111
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300005
@@ -158,13 +179,16 @@ MonoBehaviour:
     Price: 5
     Atk_Speed: 1.5
     Prefab: 900011
+    ATKsound: 920019
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uB77C\uBC14\uACE8\uB818"
     Name_EN: LavaGolem01
     Code: 120009
     Rank: 3
     Star: 1
     Tower_Kinds: 9
-    Atk: 50
+    Atk: 112
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300008
@@ -176,13 +200,16 @@ MonoBehaviour:
     Price: 5
     Atk_Speed: 1.5
     Prefab: 900012
+    ATKsound: 920012
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uCF00\uB974\uBCA0\uB85C\uC2A4"
     Name_EN: Cerberos01
     Code: 120010
     Rank: 1
     Star: 1
     Tower_Kinds: 10
-    Atk: 50
+    Atk: 53
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300006
@@ -194,13 +221,16 @@ MonoBehaviour:
     Price: 1
     Atk_Speed: 1.5
     Prefab: 900013
+    ATKsound: 920005
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uBC1C\uB85D"
     Name_EN: Balrog01
     Code: 120011
     Rank: 4
     Star: 1
     Tower_Kinds: 11
-    Atk: 50
+    Atk: 135
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300014
@@ -212,13 +242,16 @@ MonoBehaviour:
     Price: 7
     Atk_Speed: 1.5
     Prefab: 900014
+    ATKsound: 920021
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uBBF8\uB178\uD0C0\uC6B0\uB85C\uC2A4"
     Name_EN: Minotaurus01
     Code: 120012
     Rank: 2
     Star: 1
     Tower_Kinds: 12
-    Atk: 50
+    Atk: 82
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300004
@@ -230,13 +263,16 @@ MonoBehaviour:
     Price: 3
     Atk_Speed: 1.5
     Prefab: 900015
+    ATKsound: 920002
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uC0AC\uD2F0\uB85C\uC2A4"
     Name_EN: Satyr01
     Code: 120013
     Rank: 2
     Star: 1
     Tower_Kinds: 13
-    Atk: 50
+    Atk: 70
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300017
@@ -248,13 +284,16 @@ MonoBehaviour:
     Price: 3
     Atk_Speed: 1.5
     Prefab: 900016
+    ATKsound: 920014
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uADF8\uB9BC\uB9AC\uD37C"
     Name_EN: GrimReaper01
     Code: 120014
     Rank: 1
     Star: 1
     Tower_Kinds: 14
-    Atk: 50
+    Atk: 52
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300007
@@ -266,13 +305,16 @@ MonoBehaviour:
     Price: 1
     Atk_Speed: 1.5
     Prefab: 900017
+    ATKsound: 920017
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uB370\uC2A4\uB098\uC774\uD2B8"
     Name_EN: DeathKnight01
     Code: 120015
     Rank: 5
     Star: 1
     Tower_Kinds: 15
-    Atk: 50
+    Atk: 250
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300009
@@ -284,13 +326,16 @@ MonoBehaviour:
     Price: 10
     Atk_Speed: 1.5
     Prefab: 900018
+    ATKsound: 920007
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uB2E4\uD06C\uC18C\uC6B8"
     Name_EN: DarkSoul01
     Code: 120016
     Rank: 3
     Star: 1
     Tower_Kinds: 16
-    Atk: 50
+    Atk: 109
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300007
@@ -302,13 +347,16 @@ MonoBehaviour:
     Price: 5
     Atk_Speed: 1.5
     Prefab: 900019
+    ATKsound: 920018
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uC2A4\uD1A4\uACE8\uB818"
     Name_EN: StoneGolem01
     Code: 120017
     Rank: 2
     Star: 1
     Tower_Kinds: 17
-    Atk: 50
+    Atk: 83
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300008
@@ -320,13 +368,16 @@ MonoBehaviour:
     Price: 3
     Atk_Speed: 1.5
     Prefab: 900020
+    ATKsound: 920011
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uD30C\uC774\uC5B4\uB370\uBAAC"
     Name_EN: FireDemon01
     Code: 120018
     Rank: 3
     Star: 1
     Tower_Kinds: 18
-    Atk: 50
+    Atk: 113
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300006
@@ -338,13 +389,16 @@ MonoBehaviour:
     Price: 5
     Atk_Speed: 1.5
     Prefab: 900021
+    ATKsound: 920012
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uBC15\uC950"
     Name_EN: Bat01
     Code: 120019
     Rank: 1
     Star: 1
     Tower_Kinds: 19
-    Atk: 50
+    Atk: 52
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300006
@@ -356,13 +410,16 @@ MonoBehaviour:
     Price: 1
     Atk_Speed: 1.5
     Prefab: 900022
+    ATKsound: 920005
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uB291\uB300"
     Name_EN: Wolf01
     Code: 120020
     Rank: 2
     Star: 1
     Tower_Kinds: 20
-    Atk: 50
+    Atk: 78
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300006
@@ -374,13 +431,16 @@ MonoBehaviour:
     Price: 3
     Atk_Speed: 1.5
     Prefab: 900023
+    ATKsound: 920005
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uD30C\uC774\uD2B8\uBCA0\uC5B4"
     Name_EN: FightBear01
     Code: 120021
     Rank: 3
     Star: 1
     Tower_Kinds: 21
-    Atk: 50
+    Atk: 110
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300006
@@ -392,13 +452,16 @@ MonoBehaviour:
     Price: 5
     Atk_Speed: 1.5
     Prefab: 900024
+    ATKsound: 920015
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uAD11\uB300"
     Name_EN: Clown01
     Code: 120022
     Rank: 2
     Star: 1
     Tower_Kinds: 22
-    Atk: 50
+    Atk: 68
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300017
@@ -410,13 +473,16 @@ MonoBehaviour:
     Price: 3
     Atk_Speed: 1.5
     Prefab: 900025
+    ATKsound: 920004
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uD0C0\uB77D\uCC9C\uC0AC"
     Name_EN: FallenAngel01
     Code: 120023
     Rank: 3
     Star: 1
     Tower_Kinds: 23
-    Atk: 50
+    Atk: 105
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300021
@@ -428,13 +494,16 @@ MonoBehaviour:
     Price: 5
     Atk_Speed: 1.5
     Prefab: 900026
+    ATKsound: 920016
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uC774\uD504\uB9AC\uC2A4"
     Name_EN: Ipris01
     Code: 120024
     Rank: 4
     Star: 1
     Tower_Kinds: 24
-    Atk: 50
+    Atk: 150
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300021
@@ -446,13 +515,16 @@ MonoBehaviour:
     Price: 7
     Atk_Speed: 1.5
     Prefab: 900027
+    ATKsound: 920009
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uB4DC\uB798\uACE4"
     Name_EN: Dragon02
     Code: 120025
     Rank: 5
     Star: 1
     Tower_Kinds: 25
-    Atk: 50
+    Atk: 350
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300023
@@ -462,15 +534,18 @@ MonoBehaviour:
     Type2: 330017
     Next_Stat: 120052
     Price: 10
-    Atk_Speed: 1.5
+    Atk_Speed: 0.5
     Prefab: 900028
+    ATKsound: 920013
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uB9C8\uB140"
     Name_EN: Witch01
     Code: 120026
     Rank: 1
     Star: 1
     Tower_Kinds: 26
-    Atk: 50
+    Atk: 43
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300013
@@ -482,13 +557,16 @@ MonoBehaviour:
     Price: 1
     Atk_Speed: 1.5
     Prefab: 900029
+    ATKsound: 920010
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uB2E4\uD06C\uC5D8\uD504"
     Name_EN: DarkElf01
     Code: 120027
     Rank: 4
     Star: 1
     Tower_Kinds: 27
-    Atk: 50
+    Atk: 150
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300021
@@ -498,15 +576,18 @@ MonoBehaviour:
     Type2: 330014
     Next_Stat: 120054
     Price: 7
-    Atk_Speed: 1.5
+    Atk_Speed: 2
     Prefab: 900030
+    ATKsound: 920017
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uC624\uD06C\uAC70\uB108"
     Name_EN: OrkGunner02
     Code: 120028
     Rank: 2
     Star: 2
     Tower_Kinds: 1
-    Atk: 100
+    Atk: 107.2
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300011
@@ -518,13 +599,16 @@ MonoBehaviour:
     Price: 6
     Atk_Speed: 1.5
     Prefab: 900031
+    ATKsound: 920003
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uC624\uD06C\uC804\uC0AC"
     Name_EN: OrkWarrior03
     Code: 120029
     Rank: 2
     Star: 2
     Tower_Kinds: 2
-    Atk: 100
+    Atk: 128
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300019
@@ -536,13 +620,16 @@ MonoBehaviour:
     Price: 6
     Atk_Speed: 1.5
     Prefab: 900032
+    ATKsound: 920020
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uC0AC\uC774\uD074\uB86D\uC2A4"
     Name_EN: Cyclops02
     Code: 120030
     Rank: 4
     Star: 2
     Tower_Kinds: 3
-    Atk: 100
+    Atk: 240
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300004
@@ -554,13 +641,16 @@ MonoBehaviour:
     Price: 14
     Atk_Speed: 1.5
     Prefab: 900033
+    ATKsound: 920002
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uACE0\uBE14\uB9B0"
     Name_EN: Goblin02
     Code: 120031
     Rank: 1
     Star: 2
     Tower_Kinds: 4
-    Atk: 100
+    Atk: 72
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300015
@@ -572,13 +662,16 @@ MonoBehaviour:
     Price: 2
     Atk_Speed: 1.5
     Prefab: 900034
+    ATKsound: 920001
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uB180\uC804\uC0AC"
     Name_EN: NolWarrior02
     Code: 120032
     Rank: 1
     Star: 2
     Tower_Kinds: 5
-    Atk: 100
+    Atk: 84.8
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300004
@@ -590,13 +683,16 @@ MonoBehaviour:
     Price: 2
     Atk_Speed: 1.5
     Prefab: 900035
+    ATKsound: 920002
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uD2B8\uB864\uC8FC\uC220\uC0AC"
     Name_EN: TrollShamen03
     Code: 120033
     Rank: 4
     Star: 2
     Tower_Kinds: 6
-    Atk: 100
+    Atk: 216
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300016
@@ -608,13 +704,16 @@ MonoBehaviour:
     Price: 14
     Atk_Speed: 1.5
     Prefab: 900036
+    ATKsound: 920008
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uC2A4\uD30C\uD06C\uBAAC"
     Name_EN: Sparkmon02
     Code: 120034
     Rank: 1
     Star: 2
     Tower_Kinds: 7
-    Atk: 100
+    Atk: 68.8
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300012
@@ -626,13 +725,16 @@ MonoBehaviour:
     Price: 2
     Atk_Speed: 1.5
     Prefab: 900037
+    ATKsound: 920006
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uC0B4\uB77C\uB9E8\uB354"
     Name_EN: Salamander02
     Code: 120035
     Rank: 3
     Star: 2
     Tower_Kinds: 8
-    Atk: 100
+    Atk: 177.6
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300005
@@ -644,13 +746,16 @@ MonoBehaviour:
     Price: 10
     Atk_Speed: 1.5
     Prefab: 900038
+    ATKsound: 920019
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uB77C\uBC14\uACE8\uB818"
     Name_EN: LavaGolem02
     Code: 120036
     Rank: 3
     Star: 2
     Tower_Kinds: 9
-    Atk: 100
+    Atk: 179.2
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300008
@@ -662,13 +767,16 @@ MonoBehaviour:
     Price: 10
     Atk_Speed: 1.5
     Prefab: 900039
+    ATKsound: 920012
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uCF00\uB974\uBCA0\uB85C\uC2A4"
     Name_EN: Cerberos03
     Code: 120037
     Rank: 1
     Star: 2
     Tower_Kinds: 10
-    Atk: 100
+    Atk: 84.8
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300006
@@ -680,13 +788,16 @@ MonoBehaviour:
     Price: 2
     Atk_Speed: 1.5
     Prefab: 900040
+    ATKsound: 920005
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uBC1C\uB85D"
     Name_EN: Balrog03
     Code: 120038
     Rank: 4
     Star: 2
     Tower_Kinds: 11
-    Atk: 100
+    Atk: 216
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300014
@@ -698,13 +809,16 @@ MonoBehaviour:
     Price: 14
     Atk_Speed: 1.5
     Prefab: 900041
+    ATKsound: 920021
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uBBF8\uB178\uD0C0\uC6B0\uB85C\uC2A4"
     Name_EN: Minotaurus03
     Code: 120039
     Rank: 2
     Star: 2
     Tower_Kinds: 12
-    Atk: 100
+    Atk: 131.2
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300004
@@ -716,13 +830,16 @@ MonoBehaviour:
     Price: 6
     Atk_Speed: 1.5
     Prefab: 900042
+    ATKsound: 920002
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uC0AC\uD2F0\uB85C\uC2A4"
     Name_EN: Satyr03
     Code: 120040
     Rank: 2
     Star: 2
     Tower_Kinds: 13
-    Atk: 100
+    Atk: 112
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300017
@@ -734,13 +851,16 @@ MonoBehaviour:
     Price: 6
     Atk_Speed: 1.5
     Prefab: 900043
+    ATKsound: 920014
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uADF8\uB9BC\uB9AC\uD37C"
     Name_EN: GrimReaper02
     Code: 120041
     Rank: 1
     Star: 2
     Tower_Kinds: 14
-    Atk: 100
+    Atk: 83.2
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300007
@@ -752,13 +872,16 @@ MonoBehaviour:
     Price: 2
     Atk_Speed: 1.5
     Prefab: 900044
+    ATKsound: 920017
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uB370\uC2A4\uB098\uC774\uD2B8"
     Name_EN: DeathKnight02
     Code: 120042
     Rank: 5
     Star: 2
     Tower_Kinds: 15
-    Atk: 100
+    Atk: 400
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300009
@@ -770,13 +893,16 @@ MonoBehaviour:
     Price: 20
     Atk_Speed: 1.5
     Prefab: 900045
+    ATKsound: 920007
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uB2E4\uD06C\uC18C\uC6B8"
     Name_EN: DarkSoul03
     Code: 120043
     Rank: 3
     Star: 2
     Tower_Kinds: 16
-    Atk: 100
+    Atk: 174.4
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300007
@@ -788,13 +914,16 @@ MonoBehaviour:
     Price: 10
     Atk_Speed: 1.5
     Prefab: 900046
+    ATKsound: 920018
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uC2A4\uD1A4\uACE8\uB818"
     Name_EN: StoneGolem02
     Code: 120044
     Rank: 2
     Star: 2
     Tower_Kinds: 17
-    Atk: 100
+    Atk: 132.8
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300008
@@ -806,13 +935,16 @@ MonoBehaviour:
     Price: 6
     Atk_Speed: 1.5
     Prefab: 900047
+    ATKsound: 920011
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uD30C\uC774\uC5B4\uB370\uBAAC"
     Name_EN: FireDemon02
     Code: 120045
     Rank: 3
     Star: 2
     Tower_Kinds: 18
-    Atk: 100
+    Atk: 180.8
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300006
@@ -824,13 +956,16 @@ MonoBehaviour:
     Price: 10
     Atk_Speed: 1.5
     Prefab: 900048
+    ATKsound: 920012
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uBC15\uC950"
     Name_EN: Bat02
     Code: 120046
     Rank: 1
     Star: 2
     Tower_Kinds: 19
-    Atk: 100
+    Atk: 83.2
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300006
@@ -842,13 +977,16 @@ MonoBehaviour:
     Price: 2
     Atk_Speed: 1.5
     Prefab: 900049
+    ATKsound: 920005
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uB291\uB300"
     Name_EN: Wolf02
     Code: 120047
     Rank: 2
     Star: 2
     Tower_Kinds: 20
-    Atk: 100
+    Atk: 124.8
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300006
@@ -860,13 +998,16 @@ MonoBehaviour:
     Price: 6
     Atk_Speed: 1.5
     Prefab: 900050
+    ATKsound: 920005
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uD30C\uC774\uD2B8\uBCA0\uC5B4"
     Name_EN: FightBear03
     Code: 120048
     Rank: 3
     Star: 2
     Tower_Kinds: 21
-    Atk: 100
+    Atk: 176
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300006
@@ -878,13 +1019,16 @@ MonoBehaviour:
     Price: 10
     Atk_Speed: 1.5
     Prefab: 900051
+    ATKsound: 920015
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uAD11\uB300"
     Name_EN: Clown03
     Code: 120049
     Rank: 2
     Star: 2
     Tower_Kinds: 22
-    Atk: 100
+    Atk: 108.8
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300017
@@ -896,13 +1040,16 @@ MonoBehaviour:
     Price: 6
     Atk_Speed: 1.5
     Prefab: 900052
+    ATKsound: 920004
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uD0C0\uB77D\uCC9C\uC0AC"
     Name_EN: FallenAngel02
     Code: 120050
     Rank: 3
     Star: 2
     Tower_Kinds: 23
-    Atk: 100
+    Atk: 168
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300021
@@ -914,13 +1061,16 @@ MonoBehaviour:
     Price: 10
     Atk_Speed: 1.5
     Prefab: 900053
+    ATKsound: 920016
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uC774\uD504\uB9AC\uC2A4"
     Name_EN: Ipris03
     Code: 120051
     Rank: 4
     Star: 2
     Tower_Kinds: 24
-    Atk: 100
+    Atk: 240
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300021
@@ -932,13 +1082,16 @@ MonoBehaviour:
     Price: 14
     Atk_Speed: 1.5
     Prefab: 900054
+    ATKsound: 920009
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uB4DC\uB798\uACE4"
     Name_EN: Dragon03
     Code: 120052
     Rank: 5
     Star: 2
     Tower_Kinds: 25
-    Atk: 100
+    Atk: 500
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300023
@@ -948,15 +1101,18 @@ MonoBehaviour:
     Type2: 330017
     Next_Stat: 120079
     Price: 20
-    Atk_Speed: 1.5
+    Atk_Speed: 0.5
     Prefab: 900055
+    ATKsound: 920013
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uB9C8\uB140"
     Name_EN: Witch03
     Code: 120053
     Rank: 1
     Star: 2
     Tower_Kinds: 26
-    Atk: 100
+    Atk: 68.8
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300013
@@ -968,13 +1124,16 @@ MonoBehaviour:
     Price: 2
     Atk_Speed: 1.5
     Prefab: 900056
+    ATKsound: 920010
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uB2E4\uD06C\uC5D8\uD504"
     Name_EN: DarkElf03
     Code: 120054
     Rank: 4
     Star: 2
     Tower_Kinds: 27
-    Atk: 100
+    Atk: 240
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300021
@@ -984,15 +1143,18 @@ MonoBehaviour:
     Type2: 330014
     Next_Stat: 120081
     Price: 14
-    Atk_Speed: 1.5
+    Atk_Speed: 2
     Prefab: 900057
+    ATKsound: 920017
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uC624\uD06C\uAC70\uB108"
     Name_EN: OrkGunner03
     Code: 120055
     Rank: 2
     Star: 3
     Tower_Kinds: 1
-    Atk: 200
+    Atk: 210
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300011
@@ -1004,13 +1166,16 @@ MonoBehaviour:
     Price: 18
     Atk_Speed: 1.5
     Prefab: 900058
+    ATKsound: 920003
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uC624\uD06C\uC804\uC0AC"
     Name_EN: OrkWarrior04
     Code: 120056
     Rank: 2
     Star: 3
     Tower_Kinds: 2
-    Atk: 200
+    Atk: 250
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300019
@@ -1022,13 +1187,16 @@ MonoBehaviour:
     Price: 18
     Atk_Speed: 1.5
     Prefab: 900059
+    ATKsound: 920020
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uC0AC\uC774\uD074\uB86D\uC2A4"
     Name_EN: Cyclops04
     Code: 120057
     Rank: 4
     Star: 3
     Tower_Kinds: 3
-    Atk: 200
+    Atk: 500
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300004
@@ -1040,13 +1208,16 @@ MonoBehaviour:
     Price: 42
     Atk_Speed: 1.5
     Prefab: 900060
+    ATKsound: 920002
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uACE0\uBE14\uB9B0"
     Name_EN: Goblin034
     Code: 120058
     Rank: 1
     Star: 3
     Tower_Kinds: 4
-    Atk: 200
+    Atk: 165
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300015
@@ -1058,13 +1229,16 @@ MonoBehaviour:
     Price: 6
     Atk_Speed: 1.5
     Prefab: 900061
+    ATKsound: 920001
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uB180\uC804\uC0AC"
     Name_EN: NolWarrior03
     Code: 120059
     Rank: 1
     Star: 3
     Tower_Kinds: 5
-    Atk: 200
+    Atk: 190
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300004
@@ -1076,13 +1250,16 @@ MonoBehaviour:
     Price: 6
     Atk_Speed: 1.5
     Prefab: 900062
+    ATKsound: 920002
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uD2B8\uB864\uC8FC\uC220\uC0AC"
     Name_EN: TrollShamen04
     Code: 120060
     Rank: 4
     Star: 3
     Tower_Kinds: 6
-    Atk: 200
+    Atk: 450
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300016
@@ -1094,13 +1271,16 @@ MonoBehaviour:
     Price: 42
     Atk_Speed: 1.5
     Prefab: 900063
+    ATKsound: 920008
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uC2A4\uD30C\uD06C\uBAAC"
     Name_EN: Sparkmon03
     Code: 120061
     Rank: 1
     Star: 3
     Tower_Kinds: 7
-    Atk: 200
+    Atk: 154.8
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300012
@@ -1112,13 +1292,16 @@ MonoBehaviour:
     Price: 6
     Atk_Speed: 1.5
     Prefab: 900064
+    ATKsound: 920006
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uC0B4\uB77C\uB9E8\uB354"
     Name_EN: Salamander04
     Code: 120062
     Rank: 3
     Star: 3
     Tower_Kinds: 8
-    Atk: 200
+    Atk: 390
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300005
@@ -1130,13 +1313,16 @@ MonoBehaviour:
     Price: 30
     Atk_Speed: 1.5
     Prefab: 900065
+    ATKsound: 920019
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uB77C\uBC14\uACE8\uB818"
     Name_EN: LavaGolem03
     Code: 120063
     Rank: 3
     Star: 3
     Tower_Kinds: 9
-    Atk: 200
+    Atk: 390
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300008
@@ -1148,6 +1334,9 @@ MonoBehaviour:
     Price: 30
     Atk_Speed: 1.5
     Prefab: 900066
+    ATKsound: 920012
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uCF00\uB974\uBCA0\uB85C\uC2A4"
     Name_EN: Cerberos04
     Code: 120064
@@ -1166,13 +1355,16 @@ MonoBehaviour:
     Price: 6
     Atk_Speed: 1.5
     Prefab: 900067
+    ATKsound: 920005
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uBC1C\uB85D"
     Name_EN: Balrog04
     Code: 120065
     Rank: 4
     Star: 3
     Tower_Kinds: 11
-    Atk: 200
+    Atk: 450
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300014
@@ -1184,13 +1376,16 @@ MonoBehaviour:
     Price: 42
     Atk_Speed: 1.5
     Prefab: 900068
+    ATKsound: 920021
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uBBF8\uB178\uD0C0\uC6B0\uB85C\uC2A4"
     Name_EN: Minotaurus04
     Code: 120066
     Rank: 2
     Star: 3
     Tower_Kinds: 12
-    Atk: 200
+    Atk: 255
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300004
@@ -1202,13 +1397,16 @@ MonoBehaviour:
     Price: 18
     Atk_Speed: 1.5
     Prefab: 900069
+    ATKsound: 920002
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uC0AC\uD2F0\uB85C\uC2A4"
     Name_EN: Satyr04
     Code: 120067
     Rank: 2
     Star: 3
     Tower_Kinds: 13
-    Atk: 200
+    Atk: 217
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300017
@@ -1220,13 +1418,16 @@ MonoBehaviour:
     Price: 18
     Atk_Speed: 1.5
     Prefab: 900070
+    ATKsound: 920014
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uADF8\uB9BC\uB9AC\uD37C"
     Name_EN: GrimReaper04
     Code: 120068
     Rank: 1
     Star: 3
     Tower_Kinds: 14
-    Atk: 200
+    Atk: 190
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300007
@@ -1238,13 +1439,16 @@ MonoBehaviour:
     Price: 6
     Atk_Speed: 1.5
     Prefab: 900071
+    ATKsound: 920017
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uB370\uC2A4\uB098\uC774\uD2B8"
     Name_EN: DeathKnight03
     Code: 120069
     Rank: 5
     Star: 3
     Tower_Kinds: 15
-    Atk: 200
+    Atk: 800
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300009
@@ -1256,13 +1460,16 @@ MonoBehaviour:
     Price: 60
     Atk_Speed: 1.5
     Prefab: 900072
+    ATKsound: 920007
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uB2E4\uD06C\uC18C\uC6B8"
     Name_EN: DarkSoul04
     Code: 120070
     Rank: 3
     Star: 3
     Tower_Kinds: 16
-    Atk: 200
+    Atk: 380
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300007
@@ -1274,13 +1481,16 @@ MonoBehaviour:
     Price: 30
     Atk_Speed: 1.5
     Prefab: 900073
+    ATKsound: 920018
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uC2A4\uD1A4\uACE8\uB818"
     Name_EN: StoneGolem03
     Code: 120071
     Rank: 2
     Star: 3
     Tower_Kinds: 17
-    Atk: 200
+    Atk: 255
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300008
@@ -1292,13 +1502,16 @@ MonoBehaviour:
     Price: 18
     Atk_Speed: 1.5
     Prefab: 900074
+    ATKsound: 920011
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uD30C\uC774\uC5B4\uB370\uBAAC"
     Name_EN: FireDemon03
     Code: 120072
     Rank: 3
     Star: 3
     Tower_Kinds: 18
-    Atk: 200
+    Atk: 400
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300006
@@ -1310,13 +1523,16 @@ MonoBehaviour:
     Price: 30
     Atk_Speed: 1.5
     Prefab: 900075
+    ATKsound: 920012
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uBC15\uC950"
     Name_EN: Bat04
     Code: 120073
     Rank: 1
     Star: 3
     Tower_Kinds: 19
-    Atk: 200
+    Atk: 190
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300006
@@ -1328,13 +1544,16 @@ MonoBehaviour:
     Price: 6
     Atk_Speed: 1.5
     Prefab: 900076
+    ATKsound: 920005
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uB291\uB300"
     Name_EN: Wolf03
     Code: 120074
     Rank: 2
     Star: 3
     Tower_Kinds: 20
-    Atk: 200
+    Atk: 240
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300006
@@ -1346,13 +1565,16 @@ MonoBehaviour:
     Price: 18
     Atk_Speed: 1.5
     Prefab: 900077
+    ATKsound: 920005
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uD30C\uC774\uD2B8\uBCA0\uC5B4"
     Name_EN: FightBear04
     Code: 120075
     Rank: 3
     Star: 3
     Tower_Kinds: 21
-    Atk: 200
+    Atk: 385
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300006
@@ -1364,13 +1586,16 @@ MonoBehaviour:
     Price: 30
     Atk_Speed: 1.5
     Prefab: 900078
+    ATKsound: 920015
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uAD11\uB300"
     Name_EN: Clown04
     Code: 120076
     Rank: 2
     Star: 3
     Tower_Kinds: 22
-    Atk: 200
+    Atk: 210
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300017
@@ -1382,13 +1607,16 @@ MonoBehaviour:
     Price: 18
     Atk_Speed: 1.5
     Prefab: 900079
+    ATKsound: 920004
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uD0C0\uB77D\uCC9C\uC0AC"
     Name_EN: FallenAngel03
     Code: 120077
     Rank: 3
     Star: 3
     Tower_Kinds: 23
-    Atk: 200
+    Atk: 370
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300021
@@ -1400,13 +1628,16 @@ MonoBehaviour:
     Price: 30
     Atk_Speed: 1.5
     Prefab: 900080
+    ATKsound: 920016
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uC774\uD504\uB9AC\uC2A4"
     Name_EN: Ipris04
     Code: 120078
     Rank: 4
     Star: 3
     Tower_Kinds: 24
-    Atk: 200
+    Atk: 500
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300021
@@ -1418,13 +1649,16 @@ MonoBehaviour:
     Price: 42
     Atk_Speed: 1.5
     Prefab: 900081
+    ATKsound: 920009
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uB4DC\uB798\uACE4"
     Name_EN: Dragon01
     Code: 120079
     Rank: 5
     Star: 3
     Tower_Kinds: 25
-    Atk: 200
+    Atk: 800
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300023
@@ -1434,15 +1668,18 @@ MonoBehaviour:
     Type2: 330017
     Next_Stat: 0
     Price: 60
-    Atk_Speed: 1.5
+    Atk_Speed: 0.5
     Prefab: 900082
+    ATKsound: 920013
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uB9C8\uB140"
     Name_EN: Witch02
     Code: 120080
     Rank: 1
     Star: 3
     Tower_Kinds: 26
-    Atk: 200
+    Atk: 154.8
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300013
@@ -1454,13 +1691,16 @@ MonoBehaviour:
     Price: 6
     Atk_Speed: 1.5
     Prefab: 900083
+    ATKsound: 920010
+    Skill1Sound: 0
+    Skill2Sound: 0
   - Name_KR: "\uB2E4\uD06C\uC5D8\uD504"
     Name_EN: DarkElf04
     Code: 120081
     Rank: 4
     Star: 3
     Tower_Kinds: 27
-    Atk: 200
+    Atk: 495
     Crit_rate: 0.2
     Crit_Dmg: 1.5
     Atk_Code: 300021
@@ -1470,5 +1710,8 @@ MonoBehaviour:
     Type2: 330014
     Next_Stat: 0
     Price: 42
-    Atk_Speed: 1.5
+    Atk_Speed: 2
     Prefab: 900084
+    ATKsound: 920017
+    Skill1Sound: 0
+    Skill2Sound: 0

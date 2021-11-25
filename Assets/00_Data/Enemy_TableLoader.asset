@@ -524,7 +524,7 @@ MonoBehaviour:
     Move_Type: 1
     Atk: 1
     HP: 50
-    Def: 10
+    Def: 0
     Shild: 0
     Move_spd: 2
     CC_Rgs1: 0
@@ -542,7 +542,7 @@ MonoBehaviour:
     Move_Type: 1
     Atk: 1
     HP: 70
-    Def: 10
+    Def: 2
     Shild: 0
     Move_spd: 2
     CC_Rgs1: 0
@@ -554,13 +554,13 @@ MonoBehaviour:
     HPSkillCast: 1
     Atk_Speed: 1
     Prefab: 900094
-  - Name_KR: "\uAE30\uC0AC"
-    Name_EN: Creep1_Knight
+  - Name_KR: "\uB300\uAC80\uC0AC"
+    Name_EN: Creep2_Fighter
     Code: 200031
     Move_Type: 1
     Atk: 1
     HP: 98
-    Def: 10
+    Def: 4
     Shild: 0
     Move_spd: 2
     CC_Rgs1: 0
@@ -571,14 +571,14 @@ MonoBehaviour:
     Skill2Code: 0
     HPSkillCast: 1
     Atk_Speed: 1
-    Prefab: 900094
+    Prefab: 900095
   - Name_KR: "\uAE30\uC0AC"
     Name_EN: Creep1_Knight
     Code: 200032
     Move_Type: 1
     Atk: 1
     HP: 127.4
-    Def: 10
+    Def: 6
     Shild: 0
     Move_spd: 2
     CC_Rgs1: 0
@@ -590,24 +590,24 @@ MonoBehaviour:
     HPSkillCast: 1
     Atk_Speed: 1
     Prefab: 900094
-  - Name_KR: "\uAE30\uC0AC"
-    Name_EN: Creep1_Knight
+  - Name_KR: "\uB514\uD39C\uB35401"
+    Name_EN: Defender01
     Code: 200033
     Move_Type: 1
     Atk: 1
     HP: 152.88
-    Def: 10
+    Def: 8
     Shild: 0
     Move_spd: 2
     CC_Rgs1: 0
     CC_Rgs2: 0
     CC_Rgs3: 0
-    Atk_Code: 300010
-    Skill1Code: 0
+    Atk_Code: 300008
+    Skill1Code: 300149
     Skill2Code: 0
     HPSkillCast: 1
     Atk_Speed: 1
-    Prefab: 900094
+    Prefab: 900085
   - Name_KR: "\uAE30\uC0AC"
     Name_EN: Creep1_Knight
     Code: 200034
@@ -626,31 +626,31 @@ MonoBehaviour:
     HPSkillCast: 1
     Atk_Speed: 1
     Prefab: 900094
-  - Name_KR: "\uAE30\uC0AC"
-    Name_EN: Creep1_Knight
+  - Name_KR: "\uB514\uD39C\uB35402"
+    Name_EN: Defender02
     Code: 200035
     Move_Type: 1
     Atk: 1
     HP: 220.1472
-    Def: 10
+    Def: 12
     Shild: 0
     Move_spd: 2
     CC_Rgs1: 0
     CC_Rgs2: 0
     CC_Rgs3: 0
-    Atk_Code: 300010
-    Skill1Code: 0
+    Atk_Code: 300008
+    Skill1Code: 300149
     Skill2Code: 0
     HPSkillCast: 1
     Atk_Speed: 1
-    Prefab: 900094
+    Prefab: 900086
   - Name_KR: "\uAE30\uC0AC"
     Name_EN: Creep1_Knight
     Code: 200036
     Move_Type: 1
     Atk: 1
     HP: 264.17664
-    Def: 10
+    Def: 12
     Shild: 0
     Move_spd: 2
     CC_Rgs1: 0
@@ -662,24 +662,24 @@ MonoBehaviour:
     HPSkillCast: 1
     Atk_Speed: 1
     Prefab: 900094
-  - Name_KR: "\uAE30\uC0AC"
-    Name_EN: Creep1_Knight
+  - Name_KR: "\uB514\uD39C\uB35403"
+    Name_EN: Defender03
     Code: 200037
     Move_Type: 1
     Atk: 1
     HP: 317.01196
-    Def: 10
+    Def: 12
     Shild: 0
     Move_spd: 2
     CC_Rgs1: 0
     CC_Rgs2: 0
     CC_Rgs3: 0
-    Atk_Code: 300010
-    Skill1Code: 0
+    Atk_Code: 300008
+    Skill1Code: 300149
     Skill2Code: 0
     HPSkillCast: 1
     Atk_Speed: 1
-    Prefab: 900094
+    Prefab: 900087
   - Name_KR: "\uAE30\uC0AC"
     Name_EN: Creep1_Knight
     Code: 200038
@@ -698,8 +698,8 @@ MonoBehaviour:
     HPSkillCast: 1
     Atk_Speed: 1
     Prefab: 900094
-  - Name_KR: "\uAE30\uC0AC"
-    Name_EN: Creep1_Knight
+  - Name_KR: "\uB4DC\uC6CC\uD504 \uC6CC\uB9AC\uC5B401"
+    Name_EN: DwarfWarrior01
     Code: 200039
     Move_Type: 1
     Atk: 1
@@ -710,12 +710,12 @@ MonoBehaviour:
     CC_Rgs1: 0
     CC_Rgs2: 0
     CC_Rgs3: 0
-    Atk_Code: 300010
-    Skill1Code: 0
+    Atk_Code: 300008
+    Skill1Code: 300150
     Skill2Code: 0
     HPSkillCast: 1
     Atk_Speed: 1
-    Prefab: 900094
+    Prefab: 900089
   - Name_KR: "\uAE30\uC0AC"
     Name_EN: Creep1_Knight
     Code: 200040
@@ -734,8 +734,8 @@ MonoBehaviour:
     HPSkillCast: 1
     Atk_Speed: 1
     Prefab: 900094
-  - Name_KR: "\uAE30\uC0AC"
-    Name_EN: Creep1_Knight
+  - Name_KR: "\uB4DC\uC6CC\uD504 \uC6CC\uB9AC\uC5B402"
+    Name_EN: DwarfWarrior02
     Code: 200041
     Move_Type: 1
     Atk: 1
@@ -746,12 +746,12 @@ MonoBehaviour:
     CC_Rgs1: 0
     CC_Rgs2: 0
     CC_Rgs3: 0
-    Atk_Code: 300010
-    Skill1Code: 0
+    Atk_Code: 300008
+    Skill1Code: 300150
     Skill2Code: 0
     HPSkillCast: 1
     Atk_Speed: 1
-    Prefab: 900094
+    Prefab: 900090
   - Name_KR: "\uAE30\uC0AC"
     Name_EN: Creep1_Knight
     Code: 200042
@@ -770,8 +770,8 @@ MonoBehaviour:
     HPSkillCast: 1
     Atk_Speed: 1
     Prefab: 900094
-  - Name_KR: "\uAE30\uC0AC"
-    Name_EN: Creep1_Knight
+  - Name_KR: "\uB4DC\uC6CC\uD504 \uC6CC\uB9AC\uC5B403"
+    Name_EN: DwarfWarrior03
     Code: 200043
     Move_Type: 1
     Atk: 1
@@ -782,12 +782,12 @@ MonoBehaviour:
     CC_Rgs1: 0
     CC_Rgs2: 0
     CC_Rgs3: 0
-    Atk_Code: 300010
-    Skill1Code: 0
+    Atk_Code: 300008
+    Skill1Code: 300150
     Skill2Code: 0
     HPSkillCast: 1
     Atk_Speed: 1
-    Prefab: 900094
+    Prefab: 900091
   - Name_KR: "\uAE30\uC0AC"
     Name_EN: Creep1_Knight
     Code: 200044
@@ -806,8 +806,8 @@ MonoBehaviour:
     HPSkillCast: 1
     Atk_Speed: 1
     Prefab: 900094
-  - Name_KR: "\uAE30\uC0AC"
-    Name_EN: Creep1_Knight
+  - Name_KR: "\uB4DC\uC6CC\uD504 \uC6CC\uB9AC\uC5B404"
+    Name_EN: DwarfWarrior04
     Code: 200045
     Move_Type: 1
     Atk: 1
@@ -818,12 +818,12 @@ MonoBehaviour:
     CC_Rgs1: 0
     CC_Rgs2: 0
     CC_Rgs3: 0
-    Atk_Code: 300010
-    Skill1Code: 0
+    Atk_Code: 300008
+    Skill1Code: 300150
     Skill2Code: 0
     HPSkillCast: 1
     Atk_Speed: 1
-    Prefab: 900094
+    Prefab: 900092
   - Name_KR: "\uAE30\uC0AC"
     Name_EN: Creep1_Knight
     Code: 200046
@@ -842,8 +842,8 @@ MonoBehaviour:
     HPSkillCast: 1
     Atk_Speed: 1
     Prefab: 900094
-  - Name_KR: "\uAE30\uC0AC"
-    Name_EN: Creep1_Knight
+  - Name_KR: "\uB300\uAC80\uC0AC"
+    Name_EN: Creep2_Fighter
     Code: 200047
     Move_Type: 1
     Atk: 1
@@ -859,7 +859,7 @@ MonoBehaviour:
     Skill2Code: 0
     HPSkillCast: 1
     Atk_Speed: 1
-    Prefab: 900094
+    Prefab: 900095
   - Name_KR: "\uAE30\uC0AC"
     Name_EN: Creep1_Knight
     Code: 200048
@@ -896,8 +896,8 @@ MonoBehaviour:
     HPSkillCast: 1
     Atk_Speed: 1
     Prefab: 900094
-  - Name_KR: "\uAE30\uC0AC"
-    Name_EN: Creep1_Knight
+  - Name_KR: "\uB514\uD39C\uB35404"
+    Name_EN: Defender04
     Code: 200050
     Move_Type: 1
     Atk: 1
@@ -908,9 +908,9 @@ MonoBehaviour:
     CC_Rgs1: 0
     CC_Rgs2: 0
     CC_Rgs3: 0
-    Atk_Code: 300010
-    Skill1Code: 0
+    Atk_Code: 300008
+    Skill1Code: 300149
     Skill2Code: 0
     HPSkillCast: 1
     Atk_Speed: 1
-    Prefab: 900094
+    Prefab: 900088

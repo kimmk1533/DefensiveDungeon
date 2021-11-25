@@ -104,6 +104,8 @@ public class UserInfoManager : Singleton<UserInfoManager>
 			return;
 
 		m_info.level += val;
+
+		m_info.max_exp = m_levelLadoer.DataList[Level - 1].LvUP_Exp;
 		OnLevelChanged?.Invoke(m_info.level);
 
 		if (Level >= 10)
@@ -147,6 +149,7 @@ public class UserInfoManager : Singleton<UserInfoManager>
 			AddLevel(1);
 			//OnLevelChanged?.Invoke(Level);
 		}
+
 		OnExpChangedEvent?.Invoke(MaxEXP, EXP);
 	}
 }

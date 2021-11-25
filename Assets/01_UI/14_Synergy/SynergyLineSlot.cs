@@ -207,6 +207,7 @@ public class SynergyLineSlot : MonoBehaviour
 
     [Space(30)]
     [SerializeField] Image m_synergy_root_paenl;
+    [SerializeField] Vector2 m_extend_root_pos;
     float margin = 30.0f;
 
     // 확장 버튼을 클릭 했을 경우
@@ -224,23 +225,14 @@ public class SynergyLineSlot : MonoBehaviour
             {
                 case E_Direction.North:                    
                 case E_Direction.East:
-                    m_extend_root_panel.transform.position =
-                        m_synergy_root_paenl.transform.position;
-
-                    m_extend_root_panel.rectTransform.anchoredPosition +=
-                        new Vector2(m_extend_root_panel.rectTransform.sizeDelta.x + margin, 0);
-                       
-                    break;
-
                 case E_Direction.South:                    
                 case E_Direction.West:
-                    m_extend_root_panel.transform.position =
-                        m_synergy_root_paenl.transform.position;
+                    m_extend_root_panel.rectTransform.anchoredPosition = m_extend_root_pos;
+                    //m_extend_root_panel.transform.position =
+                    //    m_synergy_root_paenl.transform.position;
 
-
-                    m_extend_root_panel.rectTransform.anchoredPosition +=
-                        new Vector2(m_extend_root_panel.rectTransform.sizeDelta.x + margin, 0);
-
+                    //m_extend_root_panel.rectTransform.anchoredPosition +=
+                    //    new Vector2(m_extend_root_panel.rectTransform.sizeDelta.x + margin, 0);
                     break;
             }
 

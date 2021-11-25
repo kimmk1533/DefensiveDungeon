@@ -58,6 +58,7 @@ public class LevelInfoUIController : MonoBehaviour , IPointerClickHandler
     public void __OnLevelChanged(int cur_level)
     {
         m_info.curr_level = cur_level;
+        m_info.max_exp = UserInfoManager.Instance.MaxEXP;
         m_info.requireGoldForPurchase = UserInfoManager.Instance.RequireGoldForPurchaseEXP;
 
         __OnInfoChanged();
@@ -96,14 +97,14 @@ public class LevelInfoUIController : MonoBehaviour , IPointerClickHandler
         if (m_max_level)
         {
             m_exp_image.value = 1f;
-            m_exp_textpro.text = "EXP Max";
+            m_exp_textpro.text = "Max";
             m_gold_textpro.text = null;
             m_purchace_textpro.text = null;
             return;
         }
 
-        m_level_textpro.text = "Level " + m_info.curr_level;
-        m_exp_textpro.text = "EXP " + m_info.curr_exp.ToString() + "/" + m_info.max_exp.ToString();
+        m_level_textpro.text = "Lv " + m_info.curr_level;
+        m_exp_textpro.text = m_info.curr_exp.ToString() + "/" + m_info.max_exp.ToString();
         m_gold_textpro.text = m_info.requireGoldForPurchase.ToString();
 
         float rate = (float)m_info.curr_exp / m_info.max_exp;
