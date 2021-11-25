@@ -32,12 +32,12 @@ public class SkillUI : MonoBehaviour
 	{  
 		activebtn = !M_Devil.UseSkill;
 		M_Devil.UseSkill = activebtn;
-		M_Devil.skillnumber = (int)Devil.E_SkillNumber.Skill1;
+		M_Devil.SkillNumber = (int)Devil.E_SkillNumber.Skill1;
 	}
 	void Skill2()
 	{
 		activebtn = !M_Devil.UseSkill;
 		M_Devil.UseSkill = activebtn;
-		M_Devil.skillnumber = (int)Devil.E_SkillNumber.Skill2;
+		M_Devil.SkillNumber = (int)Devil.E_SkillNumber.Skill2;
 	}
 }

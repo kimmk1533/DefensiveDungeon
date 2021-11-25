@@ -352,21 +352,11 @@ public abstract class Devil : MonoBehaviour
 				M_Devil.Is_GizmoDraw = true;
 				if (Input.GetMouseButtonDown(0))
 				{
-					switch (hit.transform.tag)
+					if (!Enum.TryParse<E_Direction>(hit.transform.tag, out skillarg.dir))
 					{
-						case "East":
-							skillarg.dir = E_Direction.East;
-							break;
-						case "West":
-							skillarg.dir = E_Direction.West;
-							break;
-						case "North":
-							skillarg.dir = E_Direction.North;
-							break;
-						case "South":
-							skillarg.dir = E_Direction.South;
-							break;
+						skillarg.dir = E_Direction.None;
 					}
+
 					m_DevilInfo.m_Skill01.mousepos = hit.point;
 					OnSkill01(skillarg);
 					M_Devil.Is_GizmoDraw = false;

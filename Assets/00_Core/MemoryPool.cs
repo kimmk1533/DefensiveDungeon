@@ -82,7 +82,7 @@ public class MemoryPool<T> : System.IDisposable where T : MonoBehaviour
     // 절반만큼 증가
     void ExpandPoolSize()
     {
-        int newSize = poolSize + (int)(poolSize * 0.5f);
+        int newSize = poolSize + Mathf.RoundToInt(poolSize * 0.5f);
         for (int i = poolSize; i < newSize; i++)
         {
             T newItem = GameObject.Instantiate<T>(original);
@@ -110,7 +110,7 @@ public class MemoryPool<T> : System.IDisposable where T : MonoBehaviour
             return item;
         }
 
-        Debug.LogWarning("Pool Size Over");
+        Debug.LogError("Pool Size Over");
         return null;
     }
 

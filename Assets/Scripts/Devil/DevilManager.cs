@@ -28,6 +28,7 @@ public class DevilManager : Singleton<DevilManager>
 
 	#region 외부 프로퍼티
 	public Devil Devil => m_Devil;
+	public int SkillNumber { get => skillnumber; set => skillnumber = value; }
 	#endregion
 
 	#region 외부 함수
@@ -94,8 +95,8 @@ public class DevilManager : Singleton<DevilManager>
 		get => is_gizmodraw;
 		set => is_gizmodraw = value;
 	}
-	public int skillnumber = 0;
-	public void Doskill1()
+	int skillnumber = 0;
+	public void Doskill()
 	{
 		if(use_skill)
 		{
@@ -117,7 +118,7 @@ public class DevilManager : Singleton<DevilManager>
 	}
 	private void Update()
 	{
-		Doskill1();
+		Doskill();
 	}
 	#endregion
 

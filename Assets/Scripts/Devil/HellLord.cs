@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class HellLord : Devil
 {
-	bool useskill = false;
-
 	#region 내부 함수
 	protected override void DoSkill01(DevilSkillArg arg)
 	{
