@@ -1741,6 +1741,15 @@ public class Tower : MonoBehaviour
 						}
 						#endregion
 					}
+
+					#region 공격 이펙트
+					Effect atkEffect = M_Effect.SpawnEffect(m_TowerInfo.Condition_Skill01.Atk_prefab);
+					if (null != atkEffect)
+					{
+						atkEffect.transform.position = m_TowerInfo.AttackPivot.position;
+						atkEffect.gameObject.SetActive(true);
+					}
+					#endregion
 				}
 				break;
 			case 2:
@@ -2263,6 +2272,15 @@ public class Tower : MonoBehaviour
 						}
 					}
 					#endregion
+
+					#region 공격 이펙트
+					Effect atkEffect = M_Effect.SpawnEffect(m_TowerInfo.Condition_Skill01.Atk_prefab);
+					if (null != atkEffect)
+					{
+						atkEffect.transform.position = m_TowerInfo.AttackPivot.position;
+						atkEffect.gameObject.SetActive(true);
+					}
+					#endregion
 				}
 				break;
 			default:
@@ -2364,6 +2382,15 @@ public class Tower : MonoBehaviour
 						}
 						#endregion
 					}
+
+					#region 공격 이펙트
+					Effect atkEffect = M_Effect.SpawnEffect(m_TowerInfo.Condition_Skill02.Atk_prefab);
+					if (null != atkEffect)
+					{
+						atkEffect.transform.position = m_TowerInfo.AttackPivot.position;
+						atkEffect.gameObject.SetActive(true);
+					}
+					#endregion
 				}
 				break;
 			case 2:
@@ -2885,6 +2912,15 @@ public class Tower : MonoBehaviour
 							}
 							#endregion
 						}
+					}
+					#endregion
+
+					#region 공격 이펙트
+					Effect atkEffect = M_Effect.SpawnEffect(m_TowerInfo.Condition_Skill02.Atk_prefab);
+					if (null != atkEffect)
+					{
+						atkEffect.transform.position = m_TowerInfo.AttackPivot.position;
+						atkEffect.gameObject.SetActive(true);
 					}
 					#endregion
 				}
