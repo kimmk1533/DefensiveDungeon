@@ -24,7 +24,7 @@ MonoBehaviour:
     Range: 3.5
     Speed: 10
     Target_num: 1
-    Size: 0.1
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 0
     LoadCode: 0
@@ -38,7 +38,7 @@ MonoBehaviour:
     Range: 6
     Speed: 10
     Target_num: 1
-    Size: 0.1
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 0
     LoadCode: 0
@@ -52,7 +52,7 @@ MonoBehaviour:
     Range: 3.5
     Speed: 10
     Target_num: 1
-    Size: 0.1
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 0
     LoadCode: 300020
@@ -66,7 +66,7 @@ MonoBehaviour:
     Range: 3.5
     Speed: 10
     Target_num: 1
-    Size: 0.1
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 0
     LoadCode: 300022
@@ -80,7 +80,7 @@ MonoBehaviour:
     Range: 6
     Speed: 10
     Target_num: 1
-    Size: 0.1
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 0
     LoadCode: 0
@@ -89,12 +89,12 @@ MonoBehaviour:
     Code: 310006
     Max_Charge: 1
     CoolTime: 0
-    Dmg_Percent: 0
+    Dmg_Percent: 1
     Dmg_Fix: 0
     Range: 6
     Speed: 10
     Target_num: 1
-    Size: 0.1
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 0
     LoadCode: 300024
@@ -103,12 +103,12 @@ MonoBehaviour:
     Code: 310007
     Max_Charge: 1
     CoolTime: 0
-    Dmg_Percent: 1
+    Dmg_Percent: 2
     Dmg_Fix: 0
     Range: 6
     Speed: 10
     Target_num: 100
-    Size: 1
+    Size: 10
     Life_Time: 10
     Buff_CC: 0
     LoadCode: 0
@@ -122,7 +122,7 @@ MonoBehaviour:
     Range: 100
     Speed: 0
     Target_num: 100
-    Size: 0.1
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 320026
     LoadCode: 0
@@ -136,7 +136,7 @@ MonoBehaviour:
     Range: 100
     Speed: 0
     Target_num: 100
-    Size: 0.1
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 320027
     LoadCode: 0
@@ -159,7 +159,7 @@ MonoBehaviour:
     Code: 310011
     Max_Charge: 2
     CoolTime: 15
-    Dmg_Percent: 0.4
+    Dmg_Percent: 1
     Dmg_Fix: 0
     Range: 100
     Speed: 0
@@ -173,7 +173,7 @@ MonoBehaviour:
     Code: 310012
     Max_Charge: 1
     CoolTime: 45
-    Dmg_Percent: 0.3
+    Dmg_Percent: 1
     Dmg_Fix: 0
     Range: 100
     Speed: 0
@@ -186,13 +186,13 @@ MonoBehaviour:
     Name_EN: SkillStat013
     Code: 310013
     Max_Charge: 1
-    CoolTime: 30
-    Dmg_Percent: 0
+    CoolTime: 20
+    Dmg_Percent: 1
     Dmg_Fix: 0
-    Range: 5
+    Range: 6
     Speed: 10
     Target_num: 1
-    Size: 0.1
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 0
     LoadCode: 300035
@@ -201,12 +201,12 @@ MonoBehaviour:
     Code: 310014
     Max_Charge: 1
     CoolTime: 0
-    Dmg_Percent: 1
+    Dmg_Percent: 1.5
     Dmg_Fix: 0
-    Range: 5
+    Range: 6
     Speed: 10
     Target_num: 100
-    Size: 1
+    Size: 3
     Life_Time: 1
     Buff_CC: 0
     LoadCode: 0
@@ -214,13 +214,13 @@ MonoBehaviour:
     Name_EN: SkillStat015
     Code: 310015
     Max_Charge: 1
-    CoolTime: 30
-    Dmg_Percent: 0
+    CoolTime: 20
+    Dmg_Percent: 1
     Dmg_Fix: 0
-    Range: 5
+    Range: 6
     Speed: 10
     Target_num: 1
-    Size: 0.1
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 0
     LoadCode: 300037
@@ -229,12 +229,12 @@ MonoBehaviour:
     Code: 310016
     Max_Charge: 1
     CoolTime: 0
-    Dmg_Percent: 1
+    Dmg_Percent: 2
     Dmg_Fix: 0
-    Range: 5
+    Range: 6
     Speed: 10
     Target_num: 100
-    Size: 1
+    Size: 3
     Life_Time: 1
     Buff_CC: 0
     LoadCode: 0
@@ -242,13 +242,13 @@ MonoBehaviour:
     Name_EN: SkillStat017
     Code: 310017
     Max_Charge: 1
-    CoolTime: 30
-    Dmg_Percent: 0
+    CoolTime: 20
+    Dmg_Percent: 1
     Dmg_Fix: 0
-    Range: 5
+    Range: 6
     Speed: 10
     Target_num: 1
-    Size: 0.1
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 0
     LoadCode: 300039
@@ -257,12 +257,12 @@ MonoBehaviour:
     Code: 310018
     Max_Charge: 1
     CoolTime: 0
-    Dmg_Percent: 1
+    Dmg_Percent: 3
     Dmg_Fix: 0
-    Range: 5
+    Range: 6
     Speed: 10
     Target_num: 100
-    Size: 1
+    Size: 3
     Life_Time: 1
     Buff_CC: 0
     LoadCode: 0
@@ -270,13 +270,13 @@ MonoBehaviour:
     Name_EN: SkillStat019
     Code: 310019
     Max_Charge: 1
-    CoolTime: 30
+    CoolTime: 25
     Dmg_Percent: 0
     Dmg_Fix: 0
     Range: 100
     Speed: 10
     Target_num: 100
-    Size: 0.1
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 320030
     LoadCode: 0
@@ -284,13 +284,13 @@ MonoBehaviour:
     Name_EN: SkillStat020
     Code: 310020
     Max_Charge: 1
-    CoolTime: 30
+    CoolTime: 25
     Dmg_Percent: 0
     Dmg_Fix: 0
     Range: 100
     Speed: 10
     Target_num: 100
-    Size: 0.1
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 320047
     LoadCode: 0
@@ -298,13 +298,13 @@ MonoBehaviour:
     Name_EN: SkillStat021
     Code: 310021
     Max_Charge: 1
-    CoolTime: 30
+    CoolTime: 25
     Dmg_Percent: 0
     Dmg_Fix: 0
     Range: 100
     Speed: 10
     Target_num: 100
-    Size: 0.1
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 320064
     LoadCode: 0
@@ -312,13 +312,13 @@ MonoBehaviour:
     Name_EN: SkillStat022
     Code: 310022
     Max_Charge: 1
-    CoolTime: 30
-    Dmg_Percent: 1
+    CoolTime: 20
+    Dmg_Percent: 1.5
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 100
-    Size: 5
+    Size: 8
     Life_Time: 1
     Buff_CC: 0
     LoadCode: 0
@@ -326,13 +326,13 @@ MonoBehaviour:
     Name_EN: SkillStat023
     Code: 310023
     Max_Charge: 1
-    CoolTime: 30
-    Dmg_Percent: 1
+    CoolTime: 20
+    Dmg_Percent: 2
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 100
-    Size: 5
+    Size: 8
     Life_Time: 1
     Buff_CC: 0
     LoadCode: 0
@@ -340,13 +340,13 @@ MonoBehaviour:
     Name_EN: SkillStat024
     Code: 310024
     Max_Charge: 1
-    CoolTime: 30
-    Dmg_Percent: 1
+    CoolTime: 20
+    Dmg_Percent: 3
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 100
-    Size: 5
+    Size: 8
     Life_Time: 1
     Buff_CC: 0
     LoadCode: 0
@@ -354,13 +354,13 @@ MonoBehaviour:
     Name_EN: SkillStat025
     Code: 310025
     Max_Charge: 1
-    CoolTime: 10
-    Dmg_Percent: 2
+    CoolTime: 20
+    Dmg_Percent: 1.5
     Dmg_Fix: 0
-    Range: 5
+    Range: 6
     Speed: 10
     Target_num: 1
-    Size: 0.1
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 0
     LoadCode: 0
@@ -368,13 +368,13 @@ MonoBehaviour:
     Name_EN: SkillStat026
     Code: 310026
     Max_Charge: 1
-    CoolTime: 10
+    CoolTime: 20
     Dmg_Percent: 2
     Dmg_Fix: 0
-    Range: 5
+    Range: 6
     Speed: 10
     Target_num: 1
-    Size: 0.1
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 0
     LoadCode: 0
@@ -382,13 +382,13 @@ MonoBehaviour:
     Name_EN: SkillStat027
     Code: 310027
     Max_Charge: 1
-    CoolTime: 10
-    Dmg_Percent: 2
+    CoolTime: 20
+    Dmg_Percent: 3
     Dmg_Fix: 0
-    Range: 5
+    Range: 6
     Speed: 10
     Target_num: 1
-    Size: 0.1
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 0
     LoadCode: 0
@@ -396,13 +396,13 @@ MonoBehaviour:
     Name_EN: SkillStat028
     Code: 310028
     Max_Charge: 1
-    CoolTime: 30
-    Dmg_Percent: 1
+    CoolTime: 20
+    Dmg_Percent: 1.5
     Dmg_Fix: 0
     Range: 0
     Speed: 10
     Target_num: 100
-    Size: 5
+    Size: 8
     Life_Time: 1
     Buff_CC: 0
     LoadCode: 0
@@ -410,13 +410,13 @@ MonoBehaviour:
     Name_EN: SkillStat029
     Code: 310029
     Max_Charge: 1
-    CoolTime: 30
-    Dmg_Percent: 1
+    CoolTime: 20
+    Dmg_Percent: 2
     Dmg_Fix: 0
     Range: 0
     Speed: 10
     Target_num: 100
-    Size: 5
+    Size: 8
     Life_Time: 1
     Buff_CC: 0
     LoadCode: 0
@@ -424,13 +424,13 @@ MonoBehaviour:
     Name_EN: SkillStat030
     Code: 310030
     Max_Charge: 1
-    CoolTime: 30
-    Dmg_Percent: 1
+    CoolTime: 20
+    Dmg_Percent: 3
     Dmg_Fix: 0
     Range: 0
     Speed: 10
     Target_num: 100
-    Size: 5
+    Size: 8
     Life_Time: 1
     Buff_CC: 0
     LoadCode: 0
@@ -444,7 +444,7 @@ MonoBehaviour:
     Range: 100
     Speed: 10
     Target_num: 100
-    Size: 0.1
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 320031
     LoadCode: 0
@@ -458,7 +458,7 @@ MonoBehaviour:
     Range: 100
     Speed: 10
     Target_num: 100
-    Size: 0.1
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 320048
     LoadCode: 0
@@ -472,7 +472,7 @@ MonoBehaviour:
     Range: 100
     Speed: 10
     Target_num: 100
-    Size: 0.1
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 320065
     LoadCode: 0
@@ -480,13 +480,13 @@ MonoBehaviour:
     Name_EN: SkillStat034
     Code: 310034
     Max_Charge: 1
-    CoolTime: 30
-    Dmg_Percent: 1
+    CoolTime: 20
+    Dmg_Percent: 1.5
     Dmg_Fix: 0
     Range: 0
     Speed: 10
     Target_num: 100
-    Size: 5
+    Size: 8
     Life_Time: 1
     Buff_CC: 320032
     LoadCode: 0
@@ -494,13 +494,13 @@ MonoBehaviour:
     Name_EN: SkillStat035
     Code: 310035
     Max_Charge: 1
-    CoolTime: 30
-    Dmg_Percent: 1
+    CoolTime: 20
+    Dmg_Percent: 2
     Dmg_Fix: 0
     Range: 0
     Speed: 10
     Target_num: 100
-    Size: 5
+    Size: 8
     Life_Time: 1
     Buff_CC: 320049
     LoadCode: 0
@@ -508,13 +508,13 @@ MonoBehaviour:
     Name_EN: SkillStat036
     Code: 310036
     Max_Charge: 1
-    CoolTime: 30
-    Dmg_Percent: 1
+    CoolTime: 20
+    Dmg_Percent: 3
     Dmg_Fix: 0
     Range: 0
     Speed: 10
     Target_num: 100
-    Size: 5
+    Size: 8
     Life_Time: 1
     Buff_CC: 320066
     LoadCode: 0
@@ -525,10 +525,10 @@ MonoBehaviour:
     CoolTime: 20
     Dmg_Percent: 1.5
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 1
-    Size: 0.1
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 320033
     LoadCode: 0
@@ -537,12 +537,12 @@ MonoBehaviour:
     Code: 310038
     Max_Charge: 1
     CoolTime: 20
-    Dmg_Percent: 1.5
+    Dmg_Percent: 2
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 1
-    Size: 0.1
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 320050
     LoadCode: 0
@@ -551,12 +551,12 @@ MonoBehaviour:
     Code: 310039
     Max_Charge: 1
     CoolTime: 20
-    Dmg_Percent: 1.5
+    Dmg_Percent: 3
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 1
-    Size: 0.1
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 320067
     LoadCode: 0
@@ -564,13 +564,13 @@ MonoBehaviour:
     Name_EN: SkillStat040
     Code: 310040
     Max_Charge: 1
-    CoolTime: 30
-    Dmg_Percent: 0.5
+    CoolTime: 20
+    Dmg_Percent: 1.5
     Dmg_Fix: 0
-    Range: 3
+    Range: 3.5
     Speed: 10
     Target_num: 100
-    Size: 1
+    Size: 3
     Life_Time: 1
     Buff_CC: 320034
     LoadCode: 0
@@ -578,13 +578,13 @@ MonoBehaviour:
     Name_EN: SkillStat041
     Code: 310041
     Max_Charge: 1
-    CoolTime: 30
-    Dmg_Percent: 0.5
+    CoolTime: 20
+    Dmg_Percent: 2
     Dmg_Fix: 0
-    Range: 3
+    Range: 3.5
     Speed: 10
     Target_num: 100
-    Size: 1
+    Size: 3
     Life_Time: 1
     Buff_CC: 320051
     LoadCode: 0
@@ -592,13 +592,13 @@ MonoBehaviour:
     Name_EN: SkillStat042
     Code: 310042
     Max_Charge: 1
-    CoolTime: 30
-    Dmg_Percent: 0.5
+    CoolTime: 20
+    Dmg_Percent: 3
     Dmg_Fix: 0
-    Range: 3
+    Range: 3.5
     Speed: 10
     Target_num: 100
-    Size: 1
+    Size: 3
     Life_Time: 1
     Buff_CC: 320068
     LoadCode: 0
@@ -612,7 +612,7 @@ MonoBehaviour:
     Range: 0
     Speed: 10
     Target_num: 100
-    Size: 3
+    Size: 6
     Life_Time: 1
     Buff_CC: 320035
     LoadCode: 0
@@ -626,7 +626,7 @@ MonoBehaviour:
     Range: 0
     Speed: 10
     Target_num: 100
-    Size: 3
+    Size: 6
     Life_Time: 1
     Buff_CC: 320052
     LoadCode: 0
@@ -640,7 +640,7 @@ MonoBehaviour:
     Range: 0
     Speed: 10
     Target_num: 100
-    Size: 3
+    Size: 6
     Life_Time: 1
     Buff_CC: 320069
     LoadCode: 0
@@ -648,13 +648,13 @@ MonoBehaviour:
     Name_EN: SkillStat046
     Code: 310046
     Max_Charge: 1
-    CoolTime: 30
+    CoolTime: 20
     Dmg_Percent: 0
     Dmg_Fix: 0
     Range: 100
     Speed: 10
     Target_num: 100
-    Size: 0.1
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 320036
     LoadCode: 0
@@ -662,13 +662,13 @@ MonoBehaviour:
     Name_EN: SkillStat047
     Code: 310047
     Max_Charge: 1
-    CoolTime: 30
+    CoolTime: 20
     Dmg_Percent: 0
     Dmg_Fix: 0
     Range: 100
     Speed: 10
     Target_num: 100
-    Size: 0.1
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 320053
     LoadCode: 0
@@ -676,13 +676,13 @@ MonoBehaviour:
     Name_EN: SkillStat048
     Code: 310048
     Max_Charge: 1
-    CoolTime: 30
+    CoolTime: 20
     Dmg_Percent: 0
     Dmg_Fix: 0
     Range: 100
     Speed: 10
     Target_num: 100
-    Size: 0.1
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 320070
     LoadCode: 0
@@ -690,13 +690,13 @@ MonoBehaviour:
     Name_EN: SkillStat049
     Code: 310049
     Max_Charge: 1
-    CoolTime: 30
+    CoolTime: 20
     Dmg_Percent: 1
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 1
-    Size: 0.1
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 320037
     LoadCode: 300071
@@ -705,12 +705,12 @@ MonoBehaviour:
     Code: 310050
     Max_Charge: 1
     CoolTime: 0
-    Dmg_Percent: 1
+    Dmg_Percent: 1.5
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 100
-    Size: 5
+    Size: 8
     Life_Time: 1
     Buff_CC: 0
     LoadCode: 0
@@ -718,13 +718,13 @@ MonoBehaviour:
     Name_EN: SkillStat051
     Code: 310051
     Max_Charge: 1
-    CoolTime: 30
-    Dmg_Percent: 3
+    CoolTime: 20
+    Dmg_Percent: 1
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 1
-    Size: 0.1
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 320054
     LoadCode: 300073
@@ -733,12 +733,12 @@ MonoBehaviour:
     Code: 310052
     Max_Charge: 1
     CoolTime: 0
-    Dmg_Percent: 3
+    Dmg_Percent: 2
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 100
-    Size: 5
+    Size: 8
     Life_Time: 1
     Buff_CC: 0
     LoadCode: 0
@@ -746,13 +746,13 @@ MonoBehaviour:
     Name_EN: SkillStat053
     Code: 310053
     Max_Charge: 1
-    CoolTime: 30
-    Dmg_Percent: 5
+    CoolTime: 20
+    Dmg_Percent: 1
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 1
-    Size: 0.1
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 320071
     LoadCode: 300075
@@ -761,12 +761,12 @@ MonoBehaviour:
     Code: 310054
     Max_Charge: 1
     CoolTime: 0
-    Dmg_Percent: 5
+    Dmg_Percent: 3
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 100
-    Size: 5
+    Size: 8
     Life_Time: 1
     Buff_CC: 0
     LoadCode: 0
@@ -774,13 +774,13 @@ MonoBehaviour:
     Name_EN: SkillStat055
     Code: 310055
     Max_Charge: 1
-    CoolTime: 30
-    Dmg_Percent: 1
+    CoolTime: 20
+    Dmg_Percent: 1.5
     Dmg_Fix: 0
-    Range: 5
+    Range: 6
     Speed: 10
     Target_num: 100
-    Size: 5
+    Size: 8
     Life_Time: 1
     Buff_CC: 320038
     LoadCode: 300079
@@ -788,13 +788,13 @@ MonoBehaviour:
     Name_EN: SkillStat056
     Code: 310056
     Max_Charge: 1
-    CoolTime: 30
-    Dmg_Percent: 1
+    CoolTime: 20
+    Dmg_Percent: 2
     Dmg_Fix: 0
-    Range: 5
+    Range: 6
     Speed: 10
     Target_num: 100
-    Size: 5
+    Size: 8
     Life_Time: 1
     Buff_CC: 320055
     LoadCode: 300079
@@ -802,13 +802,13 @@ MonoBehaviour:
     Name_EN: SkillStat057
     Code: 310057
     Max_Charge: 1
-    CoolTime: 30
-    Dmg_Percent: 1
+    CoolTime: 20
+    Dmg_Percent: 3
     Dmg_Fix: 0
-    Range: 5
+    Range: 6
     Speed: 10
     Target_num: 100
-    Size: 5
+    Size: 8
     Life_Time: 1
     Buff_CC: 320072
     LoadCode: 300079
@@ -816,13 +816,13 @@ MonoBehaviour:
     Name_EN: SkillStat058
     Code: 310058
     Max_Charge: 1
-    CoolTime: 30
-    Dmg_Percent: 1
+    CoolTime: 20
+    Dmg_Percent: 1.5
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 100
-    Size: 4
+    Size: 10
     Life_Time: 1
     Buff_CC: 0
     LoadCode: 0
@@ -830,13 +830,13 @@ MonoBehaviour:
     Name_EN: SkillStat059
     Code: 310059
     Max_Charge: 1
-    CoolTime: 30
-    Dmg_Percent: 1
+    CoolTime: 20
+    Dmg_Percent: 2
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 100
-    Size: 4
+    Size: 10
     Life_Time: 1
     Buff_CC: 0
     LoadCode: 0
@@ -844,13 +844,13 @@ MonoBehaviour:
     Name_EN: SkillStat060
     Code: 310060
     Max_Charge: 1
-    CoolTime: 30
-    Dmg_Percent: 1
+    CoolTime: 20
+    Dmg_Percent: 3
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 100
-    Size: 4
+    Size: 10
     Life_Time: 1
     Buff_CC: 0
     LoadCode: 0
@@ -858,13 +858,13 @@ MonoBehaviour:
     Name_EN: SkillStat061
     Code: 310061
     Max_Charge: 1
-    CoolTime: 30
-    Dmg_Percent: 2
+    CoolTime: 20
+    Dmg_Percent: 1.5
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 1
-    Size: 0.1
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 0
     LoadCode: 300084
@@ -873,12 +873,12 @@ MonoBehaviour:
     Code: 310062
     Max_Charge: 1
     CoolTime: 0
-    Dmg_Percent: 2
+    Dmg_Percent: 1
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 1
-    Size: 0.1
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 0
     LoadCode: 300085
@@ -887,12 +887,12 @@ MonoBehaviour:
     Code: 310063
     Max_Charge: 1
     CoolTime: 0
-    Dmg_Percent: 2
+    Dmg_Percent: 1
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 1
-    Size: 0.1
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 0
     LoadCode: 300086
@@ -901,12 +901,12 @@ MonoBehaviour:
     Code: 310064
     Max_Charge: 1
     CoolTime: 0
-    Dmg_Percent: 2
+    Dmg_Percent: 1
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 1
-    Size: 0.1
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 0
     LoadCode: 0
@@ -914,13 +914,13 @@ MonoBehaviour:
     Name_EN: SkillStat065
     Code: 310065
     Max_Charge: 1
-    CoolTime: 30
+    CoolTime: 20
     Dmg_Percent: 2
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 1
-    Size: 0.1
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 0
     LoadCode: 300088
@@ -929,12 +929,12 @@ MonoBehaviour:
     Code: 310066
     Max_Charge: 1
     CoolTime: 0
-    Dmg_Percent: 2
+    Dmg_Percent: 1
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 1
-    Size: 0.1
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 0
     LoadCode: 300089
@@ -943,12 +943,12 @@ MonoBehaviour:
     Code: 310067
     Max_Charge: 1
     CoolTime: 0
-    Dmg_Percent: 2
+    Dmg_Percent: 1
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 1
-    Size: 0.1
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 0
     LoadCode: 300090
@@ -957,12 +957,12 @@ MonoBehaviour:
     Code: 310068
     Max_Charge: 1
     CoolTime: 0
-    Dmg_Percent: 2
+    Dmg_Percent: 1
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 1
-    Size: 0.1
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 0
     LoadCode: 0
@@ -970,13 +970,13 @@ MonoBehaviour:
     Name_EN: SkillStat069
     Code: 310069
     Max_Charge: 1
-    CoolTime: 30
-    Dmg_Percent: 2
+    CoolTime: 20
+    Dmg_Percent: 3
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 1
-    Size: 0.1
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 0
     LoadCode: 300092
@@ -985,12 +985,12 @@ MonoBehaviour:
     Code: 310070
     Max_Charge: 1
     CoolTime: 0
-    Dmg_Percent: 2
+    Dmg_Percent: 1
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 1
-    Size: 0.1
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 0
     LoadCode: 300093
@@ -999,12 +999,12 @@ MonoBehaviour:
     Code: 310071
     Max_Charge: 1
     CoolTime: 0
-    Dmg_Percent: 2
+    Dmg_Percent: 1
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 1
-    Size: 0.1
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 0
     LoadCode: 300094
@@ -1013,12 +1013,12 @@ MonoBehaviour:
     Code: 310072
     Max_Charge: 1
     CoolTime: 0
-    Dmg_Percent: 2
+    Dmg_Percent: 1
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 1
-    Size: 0.1
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 0
     LoadCode: 0
@@ -1026,13 +1026,13 @@ MonoBehaviour:
     Name_EN: SkillStat073
     Code: 310073
     Max_Charge: 1
-    CoolTime: 30
-    Dmg_Percent: 1
+    CoolTime: 20
+    Dmg_Percent: 1.5
     Dmg_Fix: 0
-    Range: 7
+    Range: 6
     Speed: 10
     Target_num: 100
-    Size: 1
+    Size: 3
     Life_Time: 1
     Buff_CC: 0
     LoadCode: 0
@@ -1040,13 +1040,13 @@ MonoBehaviour:
     Name_EN: SkillStat074
     Code: 310074
     Max_Charge: 1
-    CoolTime: 30
-    Dmg_Percent: 1
+    CoolTime: 20
+    Dmg_Percent: 2
     Dmg_Fix: 0
-    Range: 7
+    Range: 6
     Speed: 10
     Target_num: 100
-    Size: 1
+    Size: 3
     Life_Time: 1
     Buff_CC: 0
     LoadCode: 0
@@ -1054,13 +1054,13 @@ MonoBehaviour:
     Name_EN: SkillStat075
     Code: 310075
     Max_Charge: 1
-    CoolTime: 30
-    Dmg_Percent: 1
+    CoolTime: 20
+    Dmg_Percent: 3
     Dmg_Fix: 0
-    Range: 7
+    Range: 6
     Speed: 10
     Target_num: 100
-    Size: 1
+    Size: 3
     Life_Time: 1
     Buff_CC: 0
     LoadCode: 0
@@ -1068,13 +1068,13 @@ MonoBehaviour:
     Name_EN: SkillStat076
     Code: 310076
     Max_Charge: 1
-    CoolTime: 30
-    Dmg_Percent: 1
+    CoolTime: 20
+    Dmg_Percent: 1.5
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 100
-    Size: 5
+    Size: 8
     Life_Time: 1
     Buff_CC: 320039
     LoadCode: 0
@@ -1082,13 +1082,13 @@ MonoBehaviour:
     Name_EN: SkillStat077
     Code: 310077
     Max_Charge: 1
-    CoolTime: 30
-    Dmg_Percent: 1
+    CoolTime: 20
+    Dmg_Percent: 2
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 100
-    Size: 5
+    Size: 8
     Life_Time: 1
     Buff_CC: 320056
     LoadCode: 0
@@ -1096,13 +1096,13 @@ MonoBehaviour:
     Name_EN: SkillStat078
     Code: 310078
     Max_Charge: 1
-    CoolTime: 30
-    Dmg_Percent: 1
+    CoolTime: 20
+    Dmg_Percent: 3
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 100
-    Size: 5
+    Size: 8
     Life_Time: 1
     Buff_CC: 320073
     LoadCode: 0
@@ -1110,13 +1110,13 @@ MonoBehaviour:
     Name_EN: SkillStat079
     Code: 310079
     Max_Charge: 1
-    CoolTime: 30
+    CoolTime: 20
     Dmg_Percent: 0
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 100
-    Size: 5
+    Size: 8
     Life_Time: 3
     Buff_CC: 320040
     LoadCode: 0
@@ -1124,13 +1124,13 @@ MonoBehaviour:
     Name_EN: SkillStat080
     Code: 310080
     Max_Charge: 1
-    CoolTime: 30
+    CoolTime: 20
     Dmg_Percent: 0
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 100
-    Size: 5
+    Size: 8
     Life_Time: 3
     Buff_CC: 320057
     LoadCode: 0
@@ -1138,13 +1138,13 @@ MonoBehaviour:
     Name_EN: SkillStat081
     Code: 310081
     Max_Charge: 1
-    CoolTime: 30
+    CoolTime: 20
     Dmg_Percent: 0
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 100
-    Size: 5
+    Size: 8
     Life_Time: 3
     Buff_CC: 320074
     LoadCode: 0
@@ -1152,13 +1152,13 @@ MonoBehaviour:
     Name_EN: SkillStat082
     Code: 310082
     Max_Charge: 1
-    CoolTime: 30
+    CoolTime: 20
     Dmg_Percent: 0
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 100
-    Size: 5
+    Size: 8
     Life_Time: 1
     Buff_CC: 320041
     LoadCode: 0
@@ -1166,13 +1166,13 @@ MonoBehaviour:
     Name_EN: SkillStat083
     Code: 310083
     Max_Charge: 1
-    CoolTime: 30
+    CoolTime: 20
     Dmg_Percent: 0
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 100
-    Size: 5
+    Size: 8
     Life_Time: 1
     Buff_CC: 320058
     LoadCode: 0
@@ -1180,13 +1180,13 @@ MonoBehaviour:
     Name_EN: SkillStat084
     Code: 310084
     Max_Charge: 1
-    CoolTime: 30
+    CoolTime: 20
     Dmg_Percent: 0
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 100
-    Size: 5
+    Size: 8
     Life_Time: 1
     Buff_CC: 320075
     LoadCode: 0
@@ -1194,13 +1194,13 @@ MonoBehaviour:
     Name_EN: SkillStat085
     Code: 310085
     Max_Charge: 1
-    CoolTime: 30
+    CoolTime: 20
     Dmg_Percent: 1.5
     Dmg_Fix: 0
-    Range: 3
+    Range: 3.5
     Speed: 10
     Target_num: 100
-    Size: 1
+    Size: 3
     Life_Time: 2
     Buff_CC: 320042
     LoadCode: 0
@@ -1208,13 +1208,13 @@ MonoBehaviour:
     Name_EN: SkillStat086
     Code: 310086
     Max_Charge: 1
-    CoolTime: 30
-    Dmg_Percent: 1.5
+    CoolTime: 20
+    Dmg_Percent: 2
     Dmg_Fix: 0
-    Range: 3
+    Range: 3.5
     Speed: 10
     Target_num: 100
-    Size: 1
+    Size: 3
     Life_Time: 2
     Buff_CC: 320059
     LoadCode: 0
@@ -1222,13 +1222,13 @@ MonoBehaviour:
     Name_EN: SkillStat087
     Code: 310087
     Max_Charge: 1
-    CoolTime: 30
-    Dmg_Percent: 1.5
+    CoolTime: 20
+    Dmg_Percent: 3
     Dmg_Fix: 0
-    Range: 3
+    Range: 3.5
     Speed: 10
     Target_num: 100
-    Size: 1
+    Size: 3
     Life_Time: 2
     Buff_CC: 320076
     LoadCode: 0
@@ -1236,13 +1236,13 @@ MonoBehaviour:
     Name_EN: SkillStat088
     Code: 310088
     Max_Charge: 1
-    CoolTime: 5
+    CoolTime: 20
     Dmg_Percent: 1.5
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 1
-    Size: 0.1
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 0
     LoadCode: 0
@@ -1250,13 +1250,13 @@ MonoBehaviour:
     Name_EN: SkillStat089
     Code: 310089
     Max_Charge: 1
-    CoolTime: 5
-    Dmg_Percent: 1.5
+    CoolTime: 20
+    Dmg_Percent: 2
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 1
-    Size: 0.1
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 0
     LoadCode: 0
@@ -1264,13 +1264,13 @@ MonoBehaviour:
     Name_EN: SkillStat090
     Code: 310090
     Max_Charge: 1
-    CoolTime: 5
-    Dmg_Percent: 1.5
+    CoolTime: 20
+    Dmg_Percent: 3
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 1
-    Size: 0.1
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 0
     LoadCode: 0
@@ -1278,13 +1278,13 @@ MonoBehaviour:
     Name_EN: SkillStat091
     Code: 310091
     Max_Charge: 1
-    CoolTime: 30
-    Dmg_Percent: 1
+    CoolTime: 20
+    Dmg_Percent: 1.5
     Dmg_Fix: 0
-    Range: 5
+    Range: 6
     Speed: 10
-    Target_num: 5
-    Size: 0.1
+    Target_num: 3
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 0
     LoadCode: 0
@@ -1292,13 +1292,13 @@ MonoBehaviour:
     Name_EN: SkillStat092
     Code: 310092
     Max_Charge: 1
-    CoolTime: 30
-    Dmg_Percent: 1
+    CoolTime: 20
+    Dmg_Percent: 2
     Dmg_Fix: 0
-    Range: 5
+    Range: 6
     Speed: 10
-    Target_num: 5
-    Size: 0.1
+    Target_num: 3
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 0
     LoadCode: 0
@@ -1306,13 +1306,13 @@ MonoBehaviour:
     Name_EN: SkillStat093
     Code: 310093
     Max_Charge: 1
-    CoolTime: 30
-    Dmg_Percent: 1
+    CoolTime: 20
+    Dmg_Percent: 3
     Dmg_Fix: 0
-    Range: 5
+    Range: 6
     Speed: 10
-    Target_num: 5
-    Size: 0.1
+    Target_num: 3
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 0
     LoadCode: 0
@@ -1320,13 +1320,13 @@ MonoBehaviour:
     Name_EN: SkillStat094
     Code: 310094
     Max_Charge: 1
-    CoolTime: 30
-    Dmg_Percent: 1
+    CoolTime: 20
+    Dmg_Percent: 1.5
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 100
-    Size: 5
+    Size: 8
     Life_Time: 1
     Buff_CC: 320043
     LoadCode: 0
@@ -1334,13 +1334,13 @@ MonoBehaviour:
     Name_EN: SkillStat095
     Code: 310095
     Max_Charge: 1
-    CoolTime: 30
-    Dmg_Percent: 1
+    CoolTime: 20
+    Dmg_Percent: 2
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 100
-    Size: 5
+    Size: 8
     Life_Time: 1
     Buff_CC: 320060
     LoadCode: 0
@@ -1348,13 +1348,13 @@ MonoBehaviour:
     Name_EN: SkillStat096
     Code: 310096
     Max_Charge: 1
-    CoolTime: 30
-    Dmg_Percent: 1
+    CoolTime: 20
+    Dmg_Percent: 3
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 100
-    Size: 5
+    Size: 8
     Life_Time: 1
     Buff_CC: 320077
     LoadCode: 0
@@ -1362,13 +1362,13 @@ MonoBehaviour:
     Name_EN: SkillStat097
     Code: 310097
     Max_Charge: 1
-    CoolTime: 30
-    Dmg_Percent: 1
+    CoolTime: 20
+    Dmg_Percent: 1.5
     Dmg_Fix: 0
-    Range: 5
+    Range: 6
     Speed: 10
     Target_num: 100
-    Size: 1
+    Size: 3
     Life_Time: 2
     Buff_CC: 320044
     LoadCode: 0
@@ -1376,13 +1376,13 @@ MonoBehaviour:
     Name_EN: SkillStat098
     Code: 310098
     Max_Charge: 1
-    CoolTime: 30
-    Dmg_Percent: 1
+    CoolTime: 20
+    Dmg_Percent: 2
     Dmg_Fix: 0
-    Range: 5
+    Range: 6
     Speed: 10
     Target_num: 100
-    Size: 1
+    Size: 3
     Life_Time: 2
     Buff_CC: 320061
     LoadCode: 0
@@ -1390,13 +1390,13 @@ MonoBehaviour:
     Name_EN: SkillStat099
     Code: 310099
     Max_Charge: 1
-    CoolTime: 30
-    Dmg_Percent: 1
+    CoolTime: 20
+    Dmg_Percent: 3
     Dmg_Fix: 0
-    Range: 5
+    Range: 6
     Speed: 10
     Target_num: 100
-    Size: 1
+    Size: 3
     Life_Time: 2
     Buff_CC: 320078
     LoadCode: 0
@@ -1404,13 +1404,13 @@ MonoBehaviour:
     Name_EN: SkillStat100
     Code: 310100
     Max_Charge: 1
-    CoolTime: 30
+    CoolTime: 20
     Dmg_Percent: 0
     Dmg_Fix: 0
     Range: 100
     Speed: 10
     Target_num: 100
-    Size: 0.1
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 320045
     LoadCode: 0
@@ -1418,13 +1418,13 @@ MonoBehaviour:
     Name_EN: SkillStat101
     Code: 310101
     Max_Charge: 1
-    CoolTime: 30
+    CoolTime: 20
     Dmg_Percent: 0
     Dmg_Fix: 0
     Range: 100
     Speed: 10
     Target_num: 100
-    Size: 0.1
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 320062
     LoadCode: 0
@@ -1432,13 +1432,13 @@ MonoBehaviour:
     Name_EN: SkillStat102
     Code: 310102
     Max_Charge: 1
-    CoolTime: 30
+    CoolTime: 20
     Dmg_Percent: 0
     Dmg_Fix: 0
     Range: 100
     Speed: 10
     Target_num: 100
-    Size: 0.1
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 320079
     LoadCode: 0
@@ -1446,13 +1446,13 @@ MonoBehaviour:
     Name_EN: SkillStat103
     Code: 310103
     Max_Charge: 1
-    CoolTime: 30
-    Dmg_Percent: 0.2
+    CoolTime: 20
+    Dmg_Percent: 1.5
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 100
-    Size: 5
+    Size: 8
     Life_Time: 1
     Buff_CC: 320046
     LoadCode: 300126
@@ -1461,12 +1461,12 @@ MonoBehaviour:
     Code: 310104
     Max_Charge: 1
     CoolTime: 0
-    Dmg_Percent: 0.2
+    Dmg_Percent: 1
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 100
-    Size: 5
+    Size: 8
     Life_Time: 1
     Buff_CC: 320046
     LoadCode: 300127
@@ -1475,12 +1475,12 @@ MonoBehaviour:
     Code: 310105
     Max_Charge: 1
     CoolTime: 0
-    Dmg_Percent: 0.2
+    Dmg_Percent: 1
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 100
-    Size: 5
+    Size: 8
     Life_Time: 1
     Buff_CC: 320046
     LoadCode: 300128
@@ -1489,12 +1489,12 @@ MonoBehaviour:
     Code: 310106
     Max_Charge: 1
     CoolTime: 0
-    Dmg_Percent: 0.2
+    Dmg_Percent: 1
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 100
-    Size: 5
+    Size: 8
     Life_Time: 1
     Buff_CC: 320046
     LoadCode: 300129
@@ -1503,12 +1503,12 @@ MonoBehaviour:
     Code: 310107
     Max_Charge: 1
     CoolTime: 0
-    Dmg_Percent: 0.2
+    Dmg_Percent: 1
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 100
-    Size: 5
+    Size: 8
     Life_Time: 1
     Buff_CC: 320046
     LoadCode: 0
@@ -1516,13 +1516,13 @@ MonoBehaviour:
     Name_EN: SkillStat108
     Code: 310108
     Max_Charge: 1
-    CoolTime: 30
-    Dmg_Percent: 0.2
+    CoolTime: 20
+    Dmg_Percent: 2
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 100
-    Size: 5
+    Size: 8
     Life_Time: 1
     Buff_CC: 320063
     LoadCode: 300131
@@ -1531,12 +1531,12 @@ MonoBehaviour:
     Code: 310109
     Max_Charge: 1
     CoolTime: 0
-    Dmg_Percent: 0.2
+    Dmg_Percent: 1
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 100
-    Size: 5
+    Size: 8
     Life_Time: 1
     Buff_CC: 320063
     LoadCode: 300132
@@ -1545,12 +1545,12 @@ MonoBehaviour:
     Code: 310110
     Max_Charge: 1
     CoolTime: 0
-    Dmg_Percent: 0.2
+    Dmg_Percent: 1
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 100
-    Size: 5
+    Size: 8
     Life_Time: 1
     Buff_CC: 320063
     LoadCode: 300133
@@ -1559,12 +1559,12 @@ MonoBehaviour:
     Code: 310111
     Max_Charge: 1
     CoolTime: 0
-    Dmg_Percent: 0.2
+    Dmg_Percent: 1
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 100
-    Size: 5
+    Size: 8
     Life_Time: 1
     Buff_CC: 320063
     LoadCode: 300134
@@ -1573,12 +1573,12 @@ MonoBehaviour:
     Code: 310112
     Max_Charge: 1
     CoolTime: 0
-    Dmg_Percent: 0.2
+    Dmg_Percent: 1
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 100
-    Size: 5
+    Size: 8
     Life_Time: 1
     Buff_CC: 320063
     LoadCode: 0
@@ -1586,13 +1586,13 @@ MonoBehaviour:
     Name_EN: SkillStat113
     Code: 310113
     Max_Charge: 1
-    CoolTime: 30
-    Dmg_Percent: 0.2
+    CoolTime: 20
+    Dmg_Percent: 3
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 100
-    Size: 5
+    Size: 8
     Life_Time: 1
     Buff_CC: 320080
     LoadCode: 300136
@@ -1601,12 +1601,12 @@ MonoBehaviour:
     Code: 310114
     Max_Charge: 1
     CoolTime: 0
-    Dmg_Percent: 0.2
+    Dmg_Percent: 1
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 100
-    Size: 5
+    Size: 8
     Life_Time: 1
     Buff_CC: 320080
     LoadCode: 300137
@@ -1615,12 +1615,12 @@ MonoBehaviour:
     Code: 310115
     Max_Charge: 1
     CoolTime: 0
-    Dmg_Percent: 0.2
+    Dmg_Percent: 1
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 100
-    Size: 5
+    Size: 8
     Life_Time: 1
     Buff_CC: 320080
     LoadCode: 300138
@@ -1629,12 +1629,12 @@ MonoBehaviour:
     Code: 310116
     Max_Charge: 1
     CoolTime: 0
-    Dmg_Percent: 0.2
+    Dmg_Percent: 1
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 100
-    Size: 5
+    Size: 8
     Life_Time: 1
     Buff_CC: 320080
     LoadCode: 300139
@@ -1643,12 +1643,12 @@ MonoBehaviour:
     Code: 310117
     Max_Charge: 1
     CoolTime: 0
-    Dmg_Percent: 0.2
+    Dmg_Percent: 1
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 100
-    Size: 5
+    Size: 8
     Life_Time: 1
     Buff_CC: 320080
     LoadCode: 0
@@ -1656,13 +1656,13 @@ MonoBehaviour:
     Name_EN: SkillStat118
     Code: 310118
     Max_Charge: 1
-    CoolTime: 30
-    Dmg_Percent: 0.4
+    CoolTime: 20
+    Dmg_Percent: 1.5
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 100
-    Size: 6
+    Size: 12
     Life_Time: 3
     Buff_CC: 0
     LoadCode: 300141
@@ -1671,12 +1671,12 @@ MonoBehaviour:
     Code: 310119
     Max_Charge: 1
     CoolTime: 0
-    Dmg_Percent: 0.4
+    Dmg_Percent: 1
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 100
-    Size: 6
+    Size: 12
     Life_Time: 3
     Buff_CC: 0
     LoadCode: 300142
@@ -1685,12 +1685,12 @@ MonoBehaviour:
     Code: 310120
     Max_Charge: 1
     CoolTime: 0
-    Dmg_Percent: 0.4
+    Dmg_Percent: 1
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 100
-    Size: 6
+    Size: 12
     Life_Time: 3
     Buff_CC: 0
     LoadCode: 0
@@ -1698,13 +1698,13 @@ MonoBehaviour:
     Name_EN: SkillStat121
     Code: 310121
     Max_Charge: 1
-    CoolTime: 30
-    Dmg_Percent: 0.4
+    CoolTime: 20
+    Dmg_Percent: 2
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 100
-    Size: 6
+    Size: 12
     Life_Time: 3
     Buff_CC: 0
     LoadCode: 300144
@@ -1713,12 +1713,12 @@ MonoBehaviour:
     Code: 310122
     Max_Charge: 1
     CoolTime: 0
-    Dmg_Percent: 0.4
+    Dmg_Percent: 1
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 100
-    Size: 6
+    Size: 12
     Life_Time: 3
     Buff_CC: 0
     LoadCode: 300145
@@ -1727,12 +1727,12 @@ MonoBehaviour:
     Code: 310123
     Max_Charge: 1
     CoolTime: 0
-    Dmg_Percent: 0.4
+    Dmg_Percent: 1
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 100
-    Size: 6
+    Size: 12
     Life_Time: 3
     Buff_CC: 0
     LoadCode: 0
@@ -1740,13 +1740,13 @@ MonoBehaviour:
     Name_EN: SkillStat124
     Code: 310124
     Max_Charge: 1
-    CoolTime: 30
-    Dmg_Percent: 0.4
+    CoolTime: 20
+    Dmg_Percent: 3
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 100
-    Size: 6
+    Size: 12
     Life_Time: 3
     Buff_CC: 0
     LoadCode: 300147
@@ -1755,12 +1755,12 @@ MonoBehaviour:
     Code: 310125
     Max_Charge: 1
     CoolTime: 0
-    Dmg_Percent: 0.4
+    Dmg_Percent: 1
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 100
-    Size: 6
+    Size: 12
     Life_Time: 3
     Buff_CC: 0
     LoadCode: 300148
@@ -1769,12 +1769,12 @@ MonoBehaviour:
     Code: 310126
     Max_Charge: 1
     CoolTime: 0
-    Dmg_Percent: 0.4
+    Dmg_Percent: 1
     Dmg_Fix: 0
-    Range: 2
+    Range: 3.5
     Speed: 10
     Target_num: 100
-    Size: 6
+    Size: 12
     Life_Time: 3
     Buff_CC: 0
     LoadCode: 0
@@ -1788,7 +1788,7 @@ MonoBehaviour:
     Range: 3
     Speed: 10
     Target_num: 10
-    Size: 0.1
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 320081
     LoadCode: 0
@@ -1802,7 +1802,7 @@ MonoBehaviour:
     Range: 3
     Speed: 10
     Target_num: 10
-    Size: 0.1
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 320082
     LoadCode: 0
@@ -1816,7 +1816,7 @@ MonoBehaviour:
     Range: 0.5
     Speed: 10
     Target_num: 1
-    Size: 0.1
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 0
     LoadCode: 0
@@ -1830,7 +1830,7 @@ MonoBehaviour:
     Range: 0.5
     Speed: 10
     Target_num: 1
-    Size: 0.1
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 0
     LoadCode: 300153
@@ -1844,7 +1844,7 @@ MonoBehaviour:
     Range: 1
     Speed: 10
     Target_num: 1
-    Size: 0.1
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 0
     LoadCode: 0
@@ -1858,7 +1858,7 @@ MonoBehaviour:
     Range: 0
     Speed: 10
     Target_num: 1
-    Size: 0.1
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 320084
     LoadCode: 0
@@ -1872,7 +1872,7 @@ MonoBehaviour:
     Range: 1
     Speed: 10
     Target_num: 1
-    Size: 0.1
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 320085
     LoadCode: 0
@@ -1886,7 +1886,7 @@ MonoBehaviour:
     Range: 1
     Speed: 5
     Target_num: 1
-    Size: 0.1
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 320086
     LoadCode: 0
@@ -1900,7 +1900,7 @@ MonoBehaviour:
     Range: 1
     Speed: 5
     Target_num: 1
-    Size: 0.1
+    Size: 0.5
     Life_Time: 1
     Buff_CC: 320087
     LoadCode: 0
