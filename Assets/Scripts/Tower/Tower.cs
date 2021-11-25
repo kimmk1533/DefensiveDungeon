@@ -2547,13 +2547,12 @@ public class Tower : MonoBehaviour
 		m_Target_Skill02 = null;
 		m_AttackRange_Skill02.Clear();
 	}
-	public void AddDevilSkillBuff_Fix(S_Buff buff, float time)
+	public void AddDevilSkillBuff(S_Buff buff, float time)
 	{
-		StartCoroutine(Co_DevilSkillBuff_Fix(buff, time));
-	}
-	public void AddDevilSkillBuff_Percent(S_Buff buff, float time)
-	{
-		StartCoroutine(Co_DevilSkillBuff_Percent(buff, time));
+		if (buff.AddType == E_AddType.Fix)
+			StartCoroutine(Co_DevilSkillBuff_Fix(buff, time));
+		else if (buff.AddType == E_AddType.Percent)
+			StartCoroutine(Co_DevilSkillBuff_Percent(buff, time));
 	}
 	#endregion
 	#region 유니티 콜백 함수
