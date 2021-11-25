@@ -28,7 +28,7 @@ public class HateQueen : Devil
 
 			for (int i = 0; i < dir_towerlist.Count; ++i)
 			{
-				dir_towerlist[i].AddDevilSkillBuff(buff, buffdata.Duration);
+				dir_towerlist[i].AddSkillBuff(buff, buffdata.Duration);
 			}
 		}
 		yield break;
@@ -46,7 +46,7 @@ public class HateQueen : Devil
 
 			for (int i = 0; i < towerlist.Count; ++i)
 			{
-				towerlist[i].AddDevilSkillBuff(buff, buffdata.Duration);
+				towerlist[i].AddSkillBuff(buff, buffdata.Duration);
 			}
 		}
 		yield break;
