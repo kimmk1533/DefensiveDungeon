@@ -6,16 +6,10 @@ using UnityEngine.UI;
 [DefaultExecutionOrder(-1)]
 public class SynergyUIManager : Singleton<SynergyUIManager>
 {
-    [SerializeField] Image m_root_panel;
-    CellSizeFitter m_fitter;
+    [SerializeField] GridLayoutGroup m_root_panel;
 
     [SerializeField] SynergyLineSlot m_origin;
     [SerializeField] List<SynergyLineSlot> m_lineSlots;
-
-    private void Awake()
-    {
-        m_fitter = m_root_panel.GetComponent<CellSizeFitter>();
-    }
 
     private void Start()
     {
@@ -26,7 +20,7 @@ public class SynergyUIManager : Singleton<SynergyUIManager>
     {
         // synergy manager 에서 이벤트로 연결할것
 
-        int cellcount = m_fitter.CellCount.y;
+        int cellcount = m_root_panel.constraintCount;
 
         m_origin.gameObject.SetActive(false);
 

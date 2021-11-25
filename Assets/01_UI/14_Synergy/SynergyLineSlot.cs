@@ -10,6 +10,7 @@ using System.Linq;
 // synergy manager 로부터 이벤트를 받아 실제 UI 를 띄움
 public class SynergyLineSlot : MonoBehaviour
 {
+    [System.Serializable]
     private class SynergyData : System.IEquatable<SynergyData>
     {
         public int Code;
@@ -32,13 +33,12 @@ public class SynergyLineSlot : MonoBehaviour
     [Space(20)]
     [SerializeField] SynergySlot m_slot_origin;
     [SerializeField] List<SynergySlot> m_slot_list; // 관리할 하위 슬롯들
+    [SerializeField] List<SynergySlotInfo> m_slot_info_list; // 슬롯에 들어갈 데이터
 
     [Space(20)]
-    [SerializeField] Image m_panel;             // 메인 슬롯
+    [SerializeField] RectTransform m_panel;             // 메인 슬롯
     private List<SynergySlot> m_main_slot_list;
-    [SerializeField] Image m_extend_root_panel;
-    [SerializeField] Image m_extend_panel;      // 확장 슬롯 (위 패널에서 보여주지 못하는 나머지)
-    private List<SynergySlot> m_extend_slot_list;
+    [SerializeField] SynergySubContentPanel m_extend_root_panel; // 확장 슬롯 (위 패널에서 보여주지 못하는 나머지)
 
     [Space(20)]
     [SerializeField] int m_showCount;           // m_panel 보여줄 슬롯 개수 (나머지는 추가 버튼으로 확인)
@@ -48,10 +48,12 @@ public class SynergyLineSlot : MonoBehaviour
     [Space(20)]
     [SerializeField] List<SynergyData> m_synergy_list;
 
+    [Space(30)]
+    [SerializeField] Vector2 m_extend_root_pos;
+
     private void Awake()
     {
         m_main_slot_list = new List<SynergySlot>();
-        m_extend_slot_list = new List<SynergySlot>();
 
         if (m_showCount <= 0)
             m_showCount = 3;
@@ -76,6 +78,8 @@ public class SynergyLineSlot : MonoBehaviour
         m_slot_origin.gameObject.SetActive(false);
 
         m_synergy_list = new List<SynergyData>();
+        m_slot_info_list = new List<SynergySlotInfo>();
+
         foreach (var item in m_synergy_loader.DataList)
         {
             var data = m_synergy_list.Find((inner) => { return item.Code == inner.Code; });
@@ -94,32 +98,11 @@ public class SynergyLineSlot : MonoBehaviour
         }
         int total_synergy_count = m_synergy_list.Count;
 
-        // create slots as much as total count
-        for (int i = 0; i < total_synergy_count; i++)
-        {
-            SynergySlot newSlot = GameObject.Instantiate<SynergySlot>(m_slot_origin);
-            m_slot_list.Add(newSlot);
-            newSlot.gameObject.SetActive(true);
-        }
-
-        for (int i = 0; i < m_showCount; i++)
-        {   // add slots as much as show count
-            m_main_slot_list.Add(m_slot_list[i]);
-            m_slot_list[i].transform.SetParent(m_panel.transform);
-        }
-        for (int i = m_showCount; i < total_synergy_count; i++)
-        {   // add slots the others
-            m_extend_slot_list.Add(m_slot_list[i]);
-            m_slot_list[i].transform.SetParent(m_extend_panel.transform);
-        }
-
-        // 모든 시너지 정보를 slot 에 셋팅
-        // 모두 비활성화 상태
-        for (int i = 0; i < total_synergy_count; i++)
+        for (int i = 0; i < total_synergy_count; ++i)
         {
             var data = m_synergy_list[i].data_list[0];  // rank 1
 
-            m_slot_list[i].SetInfo(new SynergySlotInfo
+            m_slot_info_list.Add(new SynergySlotInfo
             {
                 isActivated = false,
                 name = data.Name_KR,
@@ -128,6 +111,34 @@ public class SynergyLineSlot : MonoBehaviour
                 sprite_code = data.Synergy_icon
             });
         }
+
+        // create slots as much as total count
+        for (int i = 0; i < m_showCount; i++)
+        {
+            SynergySlot newSlot = GameObject.Instantiate<SynergySlot>(m_slot_origin);
+            m_slot_list.Add(newSlot);
+            newSlot.gameObject.SetActive(true);
+            m_main_slot_list.Add(m_slot_list[i]);
+            m_slot_list[i].transform.SetParent(m_panel);
+
+            m_slot_list[i].SetInfo(m_slot_info_list[i]);
+        }
+
+        // 모든 시너지 정보를 slot 에 셋팅
+        // 모두 비활성화 상태
+        //for (int i = 0; i < total_synergy_count; i++)
+        //{
+        //    var data = m_synergy_list[i].data_list[0];  // rank 1
+
+        //    m_slot_list[i].SetInfo(new SynergySlotInfo
+        //    {
+        //        isActivated = false,
+        //        name = data.Name_KR,
+        //        synergy_text = data.Synergy_text,
+        //        synergy_ability = data.Synergy_Avility,
+        //        sprite_code = data.Synergy_icon
+        //    });
+        //}
         UIUpdate();
     }
     public void __Indexing(int index)
@@ -170,7 +181,7 @@ public class SynergyLineSlot : MonoBehaviour
         //시너지 랭크 내림차순 ※ (높은 숫자 먼저)
         //시너지의 인원 수 / 적용 x
         //시너지 코드 오름차순 ※ (낮은 숫자 먼저)
-        m_synergy_list = m_synergy_list.            
+        m_synergy_list = m_synergy_list.
             OrderBy(item => item.Code).
             OrderByDescending((item) => item.cur_data.Rank).
             OrderByDescending(item => item.IsActivated).
@@ -190,28 +201,29 @@ public class SynergyLineSlot : MonoBehaviour
 
     void UIUpdate()
     {
-        // synergy ui update
-        for (int i = 0; i < m_synergy_list.Count; i++)
+        for (int i = 0; i < m_synergy_list.Count; ++i)
         {
             var cur_data = m_synergy_list[i];
-            m_slot_list[i].SetInfo(new SynergySlotInfo()
+
+            m_slot_info_list[i] = new SynergySlotInfo()
             {
                 isActivated = cur_data.IsActivated,
                 name = cur_data.cur_data.Name_KR,
                 synergy_text = cur_data.cur_data.Synergy_text,
                 synergy_ability = cur_data.cur_data.Synergy_Avility,
                 sprite_code = cur_data.cur_data.Synergy_icon
-            });
+            };
+        }
+
+        // synergy ui update
+        for (int i = 0; i < m_showCount; i++)
+        {
+            m_slot_list[i].SetInfo(m_slot_info_list[i]);
         }
     }
 
-    [Space(30)]
-    [SerializeField] Image m_synergy_root_paenl;
-    [SerializeField] Vector2 m_extend_root_pos;
-    float margin = 30.0f;
-
     // 확장 버튼을 클릭 했을 경우
-    public void __OnExtednButtonClicked()  
+    public void __OnExtednButtonClicked()
     {
         // 활성화 되어 있는 경우 
         if (IsShowExtendPanel)
@@ -219,24 +231,27 @@ public class SynergyLineSlot : MonoBehaviour
             DeActivateExtendPanel();
         }
         else
-        {            
-            // 라인에 따라 패널 위치를 조정
-            switch (m_dir)
-            {
-                case E_Direction.North:                    
-                case E_Direction.East:
-                case E_Direction.South:                    
-                case E_Direction.West:
-                    m_extend_root_panel.rectTransform.anchoredPosition = m_extend_root_pos;
-                    //m_extend_root_panel.transform.position =
-                    //    m_synergy_root_paenl.transform.position;
+        {
+            //// 라인에 따라 패널 위치를 조정
+            //switch (m_dir)
+            //{
+            //    case E_Direction.North:                    
+            //    case E_Direction.East:
+            //    case E_Direction.South:                    
+            //    case E_Direction.West:
+            //        m_extend_root_panel.rectTransform.anchoredPosition = m_extend_root_pos;
+            //        //m_extend_root_panel.transform.position =
+            //        //    m_synergy_root_paenl.transform.position;
 
-                    //m_extend_root_panel.rectTransform.anchoredPosition +=
-                    //    new Vector2(m_extend_root_panel.rectTransform.sizeDelta.x + margin, 0);
-                    break;
-            }
+            //        //m_extend_root_panel.rectTransform.anchoredPosition +=
+            //        //    new Vector2(m_extend_root_panel.rectTransform.sizeDelta.x + margin, 0);
+            //        break;
+            //}
+
+            UIUpdate();
 
             // 확장 창을 열기
+            m_extend_root_panel.SetSlots(m_slot_info_list.GetRange(m_showCount, m_slot_info_list.Count - m_showCount));
             m_extend_root_panel.gameObject.SetActive(true);
             IsShowExtendPanel = true;
         }
