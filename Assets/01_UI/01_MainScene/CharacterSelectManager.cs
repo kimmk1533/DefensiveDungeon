@@ -27,6 +27,9 @@ public class CharacterSelectManager : Singleton<CharacterSelectManager>
 	[SerializeField] SkillInfoSlotController m_skillslot_controll;
 	[SerializeField] CharacterInfoController m_charslot_controll;
 
+	Button m_current_button;
+	[SerializeField] List<Button> m_select_buttons;
+
 	private void Start()
 	{
 		for (E_Devil i = E_Devil.None + 1; i < E_Devil.Max; ++i)
@@ -43,6 +46,9 @@ public class CharacterSelectManager : Singleton<CharacterSelectManager>
 		// 첫번째 마왕 오브젝트 활성화 (렌더 텍스쳐 용)
 		m_showObj = m_showObj_list[0].obj.gameObject;
 		m_showObj.SetActive(true);
+
+		m_current_button = m_select_buttons[0];
+		m_current_button.targetGraphic.color = m_current_button.colors.selectedColor;
 
 		OnCharacterChanged();
 	}
@@ -62,7 +68,7 @@ public class CharacterSelectManager : Singleton<CharacterSelectManager>
 	{
 		int layer = LayerMask.NameToLayer("MainSceneCharUI");
 
-		m_renderTexture = new RenderTexture(256, 256, 16);
+		m_renderTexture = new RenderTexture(1024, 1024, 32);
 		m_renderTexture.Create();
 
 
@@ -70,6 +76,8 @@ public class CharacterSelectManager : Singleton<CharacterSelectManager>
 		m_renderCamera = GameObject.Instantiate<Camera>(cam_origin);
 		m_renderCamera.cullingMask = 1 << layer;
 		m_renderCamera.clearFlags = CameraClearFlags.SolidColor;
+		m_renderCamera.orthographic = true;
+		m_renderCamera.orthographicSize = 2.8f;
 		m_renderCamera.backgroundColor = new Color(0, 0, 0, 0);
 
 		m_renderCamera.targetTexture = m_renderTexture;
@@ -134,8 +142,10 @@ public class CharacterSelectManager : Singleton<CharacterSelectManager>
 	{
 		SetRenderTexture(index);
 		m_current_data = m_character_dataList[index];
+		m_current_button.targetGraphic.color = m_current_button.colors.normalColor;
+		m_current_button = m_select_buttons[index];
+		m_current_button.targetGraphic.color = m_current_button.colors.selectedColor;
 		UserInfoManager.Instance.SetDevilCode(m_current_data.Code);
 		OnCharacterChanged();
 	}
-
 }
