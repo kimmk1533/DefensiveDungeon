@@ -41,6 +41,6 @@ public class ShopStatusUIController : MonoBehaviour
 
     public void SetLevel(int level)
     {
-        m_level_text.text = "Level " + level.ToString();
+        m_level_text.text = "Lv " + level.ToString();
     }
 }
