@@ -66,7 +66,6 @@ public class Sound_TableExcelLoader : ScriptableObject
 			});
 		}
 	}
-
 	public AudioClip GetAudio(int clipCode)
 	{
 		var info = SoundList.Find((item) => { return item.Code == clipCode; });

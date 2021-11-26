@@ -477,7 +477,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &102011660
 GameObject:
@@ -596,7 +596,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -535.9568, y: -30.40503}
+  m_AnchoredPosition: {x: -535.95667, y: -30.404922}
   m_SizeDelta: {x: -1652.0867, y: -650.8098}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &104657234
@@ -3083,50 +3083,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 488398197}
   m_CullTransparentMesh: 1
---- !u!1 &511952109
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 511952111}
-  - component: {fileID: 511952110}
-  m_Layer: 0
-  m_Name: FPS
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &511952110
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 511952109}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bac12c8b46849f04d8c99e77987da4b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Show: 1
---- !u!4 &511952111
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 511952109}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 12
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &540310108
 GameObject:
   m_ObjectHideFlags: 0
@@ -3155,7 +3111,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &554145680
 GameObject:
@@ -3591,28 +3547,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 691097782}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bc3859b7d1966246908167fd535338c, type: 3}
+  m_Script: {fileID: 11500000, guid: dd8df46b9b2a02f4f9abd1a8f6db5063, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Canvas:
-  - {fileID: 1357662193}
-  - {fileID: 1807941861}
-  buttons:
-  - {fileID: 755223365}
-  - {fileID: 948328490}
-  - {fileID: 847019923}
-  - {fileID: 2019381681}
-  options:
-  - {fileID: 554145680}
-  - {fileID: 269834753}
-  - {fileID: 273127658}
-  KeySetting:
-  - {fileID: 2112002295}
-  - {fileID: 1122180828}
-  texts:
-  - {fileID: 991538861}
-  - {fileID: 1189885594}
-  keyCode: 
+  flag: 1
+  backVolume: {fileID: 726559478}
+  volumeText: {fileID: 1618114028}
 --- !u!4 &691097784
 Transform:
   m_ObjectHideFlags: 0
@@ -3625,7 +3565,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &726559476
 GameObject:
@@ -3875,7 +3815,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 691097783}
+      - m_Target: {fileID: 1455136746}
         m_TargetAssemblyTypeName: Option, Assembly-CSharp
         m_MethodName: SettingView
         m_Mode: 3
@@ -4252,7 +4192,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -593.489, y: -14.331787}
+  m_AnchoredPosition: {x: -593.48926, y: -14.331909}
   m_SizeDelta: {x: -1537.0216, y: -683.6638}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &835350397
@@ -4420,7 +4360,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 691097783}
+      - m_Target: {fileID: 1455136746}
         m_TargetAssemblyTypeName: Option, Assembly-CSharp
         m_MethodName: SettingView
         m_Mode: 3
@@ -4896,7 +4836,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 691097783}
+      - m_Target: {fileID: 1455136746}
         m_TargetAssemblyTypeName: Option, Assembly-CSharp
         m_MethodName: SettingView
         m_Mode: 3
@@ -5232,7 +5172,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1094490333
 GameObject:
@@ -5467,7 +5407,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 691097783}
+      - m_Target: {fileID: 1455136746}
         m_TargetAssemblyTypeName: Option, Assembly-CSharp
         m_MethodName: ChangeKey
         m_Mode: 3
@@ -6072,7 +6012,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 191.48926, y: -46.722656}
+  m_AnchoredPosition: {x: 191.4892, y: -46.7227}
   m_SizeDelta: {x: 380.9784, y: 91.4454}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1208446172
@@ -6849,7 +6789,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1325324351
 GameObject:
@@ -7608,7 +7548,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1403983066
 MonoBehaviour:
@@ -7772,6 +7712,68 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1449793092}
   m_CullTransparentMesh: 1
+--- !u!1 &1455136745
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1455136747}
+  - component: {fileID: 1455136746}
+  m_Layer: 0
+  m_Name: OptionEvent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1455136746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1455136745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bc3859b7d1966246908167fd535338c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Canvas:
+  - {fileID: 1357662193}
+  - {fileID: 1807941861}
+  buttons:
+  - {fileID: 755223365}
+  - {fileID: 948328490}
+  - {fileID: 847019923}
+  - {fileID: 2019381681}
+  options:
+  - {fileID: 554145680}
+  - {fileID: 269834753}
+  - {fileID: 273127658}
+  KeySetting:
+  - {fileID: 2112002295}
+  - {fileID: 1122180828}
+  texts:
+  - {fileID: 991538861}
+  - {fileID: 1189885594}
+  keyCode: 
+--- !u!4 &1455136747
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1455136745}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1503222900
 GameObject:
   m_ObjectHideFlags: 0
@@ -8844,7 +8846,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 691097783}
+      - m_Target: {fileID: 1455136746}
         m_TargetAssemblyTypeName: Option, Assembly-CSharp
         m_MethodName: EnableStartCanvas
         m_Mode: 1
@@ -9640,7 +9642,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 691097783}
+      - m_Target: {fileID: 1455136746}
         m_TargetAssemblyTypeName: Option, Assembly-CSharp
         m_MethodName: EnableStartCanvas
         m_Mode: 1
@@ -10132,7 +10134,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 691097783}
+      - m_Target: {fileID: 1455136746}
         m_TargetAssemblyTypeName: Option, Assembly-CSharp
         m_MethodName: ChangeKey
         m_Mode: 3
@@ -10414,10 +10416,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c87ea9c2cdb0cf645a5729381e5ac90d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flag: 0
-  backVolume: {fileID: 726559478}
+  flag: 1
   audio: {fileID: 2138037642}
-  volumeText: {fileID: 1618114028}
+  optionVolume: 1
 --- !u!4 &2138037641
 Transform:
   m_ObjectHideFlags: 0
@@ -10430,7 +10431,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &2138037642
 AudioSource:
@@ -10443,7 +10444,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 1

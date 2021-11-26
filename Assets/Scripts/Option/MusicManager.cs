@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 using UnityEngine.UI;
+using UnityEngine.Events;
+
 public class MusicManager : Singleton<MusicManager>
 {
-	public Slider backVolume;
 	public AudioSource audio;
-	public Text volumeText;
-	float volume = 1f;
+
+	[SerializeField, ReadOnly]
+	float optionVolume = 1f;
 	int MainBGM = 920049;
 	int ArcaneTrailerBGM = 920044;
 	int CombatPercussionLoopBGM = 920045;
@@ -16,16 +19,26 @@ public class MusicManager : Singleton<MusicManager>
 	bool play_delay;
 	float time;
 	float delayTime = 5f;
-	enum E_BGMType
+	E_BGMType current_BGM = E_BGMType.None;
+	Dictionary<E_BGMType, int> excel_code_list;
+	Dictionary<E_BGMType, float> excel_volume_list;
+	Sound_TableExcel m_sound_excel;
+	public enum E_BGMType
 	{
+		None = -1,
+
 		MAINBGM,
 		ARCANEBGM,
 		COMBATBGM,
 		TRIUM,
-		DEATH
+		DEATH,
+
+		Max
 	}
 	protected DataTableManager M_DataTable => DataTableManager.Instance;
+	protected OptionManager M_Option => OptionManager.Instance;
 	protected Sound_TableExcelLoader m_SoundData;
+
 	protected Sound_TableExcelLoader SoundData
 	{
 		get
@@ -41,8 +54,9 @@ public class MusicManager : Singleton<MusicManager>
 
 	public void SetSelectViewMusic(int type)
 	{
-		int bgm=MainBGM;
+		int bgm = MainBGM;
 		play_delay = false;
+		current_BGM = (E_BGMType)type + 1;
 		switch (type)
 		{
 			case 0:
@@ -53,7 +67,7 @@ public class MusicManager : Singleton<MusicManager>
 				break;
 			case 2:
 				play_delay = true;
-				bgm=CombatPercussionLoopBGM;
+				bgm = CombatPercussionLoopBGM;
 				break;
 			case 3:
 				bgm = TriumphantVictory;
@@ -62,34 +76,58 @@ public class MusicManager : Singleton<MusicManager>
 				bgm = DeathBrassBGM;
 				break;
 		}
+
+		audio.volume = excel_volume_list[current_BGM] * optionVolume;
+
 		audio.clip = SoundData.GetAudio(bgm);
 		if (play_delay) return;
 		audio.Play();
 	}
-	public void PlaySound(SoundInfo soundinfo)
+	public Sound_TableExcel GetData(int code)
 	{
-		soundinfo.clip= m_SoundData.GetAudio(soundinfo.Code);
-		audio.Play();
+		Sound_TableExcel result = m_SoundData.DataList.Where(item => item.Code == code).SingleOrDefault();
+
+		return result;
 	}
-	void VolumeSetText()
+	public void PlaySound(int soundcode)
 	{
-		volumeText.text = "º¼·ý:" + ((int)(volume * 100f)).ToString();
+		m_sound_excel = GetData(soundcode);
+		AudioClip audioClip = m_SoundData.GetAudio(soundcode);
+		audio.PlayOneShot(audioClip, m_sound_excel.Volume * optionVolume);
 	}
+
 	void Start()
 	{
 		DontDestroyOnLoad(this.gameObject);
-		VolumeSetText();
-		backVolume.value = 1f;
-		backVolume.onValueChanged.AddListener((value) =>
+
+		excel_code_list = new Dictionary<E_BGMType, int>();
+		excel_volume_list = new Dictionary<E_BGMType, float>();
+
+		excel_code_list.Add(E_BGMType.MAINBGM, MainBGM);
+		excel_code_list.Add(E_BGMType.ARCANEBGM, ArcaneTrailerBGM);
+		excel_code_list.Add(E_BGMType.COMBATBGM, CombatPercussionLoopBGM);
+		excel_code_list.Add(E_BGMType.TRIUM, TriumphantVictory);
+		excel_code_list.Add(E_BGMType.DEATH, DeathBrassBGM);
+
+		for (E_BGMType i = E_BGMType.None + 1; i < E_BGMType.Max; ++i)
 		{
-			volume = value;
-			VolumeSetText();
+			excel_volume_list.Add
+					(i, audio.volume = SoundData.DataList.Find((excel) =>
+					{
+						return excel.Code == excel_code_list[i];
+					}).Volume);
+		}
+
+		current_BGM = E_BGMType.MAINBGM;
+
+		M_Option.UpdateVolume.AddListener((value) =>
+		{
+			optionVolume = value;
+			audio.volume = optionVolume * excel_volume_list[current_BGM];
 		});
+
 		audio.clip = SoundData.GetAudio(MainBGM);
-		audio.volume = SoundData.DataList.Find((excel) =>
-		{
-			return excel.Code == MainBGM;
-		}).Volume;
+		audio.volume = SoundData.DataList.Find((excel) => { return excel.Code == MainBGM; }).Volume * optionVolume;
 		audio.Play();
 	}
 	void Update()
