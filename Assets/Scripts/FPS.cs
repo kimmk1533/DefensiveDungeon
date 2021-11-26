@@ -32,11 +32,11 @@ public class FPS : MonoBehaviour
 	}
 
 
-	IEnumerator worstReset() //코루틴으로 15초 간격으로 최저 프레임 리셋해줌.
+	IEnumerator worstReset() //코루틴으로 1초 간격으로 최저 프레임 리셋해줌.
 	{
 		while (true)
 		{
-			yield return new WaitForSeconds(15f);
+			yield return new WaitForSeconds(1f);
 			worstFps = 100f;
 		}
 	}
