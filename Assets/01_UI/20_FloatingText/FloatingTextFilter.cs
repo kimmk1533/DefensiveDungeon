@@ -11,8 +11,12 @@ public struct FloatingTextFilter
 	Color m_Color;
 	Color32 m_OutlineColor;
 	float m_OutlineWidth;
+	float m_Width;
+	float m_Height;
 
 	public E_PostionType postionType { get => m_PositionType; set => m_PositionType = value; }
+	public float width { get => m_Width; set => m_Width = value; }
+	public float height { get => m_Height; set => m_Height = value; }
 	public Vector3 position { get => m_Position; set => m_Position = value; }
 	public float time { get => m_Time; set => m_Time = value; }
 	public Color color { get => m_Color; set => m_Color = value; }

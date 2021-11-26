@@ -50,6 +50,11 @@ public class FloatingTextManager : Singleton<FloatingTextManager>
 				floatingText.transform.position = Camera.main.WorldToViewportPoint(filter.position);
 				break;
 		}
+		// 크기 설정
+		Vector3 scale = floatingText.transform.localScale;
+		scale.x *= filter.width;
+		scale.y *= filter.height;
+		floatingText.transform.localScale = scale;
 		// 활성화 설정
 		floatingText.gameObject.SetActive(true);
 		// 관리 리스트에 추가
