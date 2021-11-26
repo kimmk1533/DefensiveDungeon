@@ -10,10 +10,14 @@ public enum CanvasType
 }
 public enum OptionType
 {
+	None = -1,
+
 	KeyButton,
 	SoundButton,
 	VideoButton,
 	Exit,
+
+	Max
 }
 public enum KeyOptionType
 {
@@ -21,6 +25,17 @@ public enum KeyOptionType
 
 	Qkey,
 	Ekey,
+	Skill1,
+	Skill2,
+	ActiveShop,
+	ReShop,
+	LevelUp,
+	Synerge_North,
+	Synerge_East,
+	Synerge_South,
+	Synerge_West,
+
+	Max
 }
 public class Option : MonoBehaviour
 {
@@ -33,7 +48,7 @@ public class Option : MonoBehaviour
 	//방향전환 키세팅
 	public List<Button> KeySetting;
 	public List<Text> texts;
-	public List<KeyCode> keyCode;
+	protected List<KeyCode> keyCode;
 	protected OptionManager M_Option => OptionManager.Instance;
 
 	ColorBlock color;
@@ -53,8 +68,17 @@ public class Option : MonoBehaviour
 		options[(int)OptionType.SoundButton].gameObject.SetActive(false);
 		options[(int)OptionType.VideoButton].gameObject.SetActive(false);
 
-		M_Option.SetKeyCode(KeyOptionType.Qkey,KeyCode.Q);
+		M_Option.SetKeyCode(KeyOptionType.Qkey, KeyCode.Q);
 		M_Option.SetKeyCode(KeyOptionType.Ekey, KeyCode.E);
+		M_Option.SetKeyCode(KeyOptionType.Skill1, KeyCode.Z);
+		M_Option.SetKeyCode(KeyOptionType.Skill2, KeyCode.X);
+		M_Option.SetKeyCode(KeyOptionType.LevelUp, KeyCode.F);
+		M_Option.SetKeyCode(KeyOptionType.ReShop, KeyCode.D);
+		M_Option.SetKeyCode(KeyOptionType.Synerge_North, KeyCode.Alpha1);
+		M_Option.SetKeyCode(KeyOptionType.Synerge_East, KeyCode.Alpha2);
+		M_Option.SetKeyCode(KeyOptionType.Synerge_South, KeyCode.Alpha3);
+		M_Option.SetKeyCode(KeyOptionType.Synerge_West, KeyCode.Alpha4);
+		M_Option.SetKeyCode(KeyOptionType.ActiveShop, KeyCode.Space);
 	}
 	public void EnableStartCanvas()
 	{
@@ -154,13 +178,17 @@ public class Option : MonoBehaviour
 					texts[(int)keyOptionType].text = texts[i].text;
 					texts[i].text = text;
 
+					M_Option.ClearKeyCode(keyOptionType);
 					M_Option.SetKeyCode(keyOptionType, M_Option.GetKeyCode((KeyOptionType)i));
+
+					M_Option.ClearKeyCode((KeyOptionType)i);
 					M_Option.SetKeyCode((KeyOptionType)i, keycode);
 					return;
 				}
 			}
 
 			texts[(int)keyOptionType].text = e.keyCode.ToString();
+			M_Option.ClearKeyCode(keyOptionType);
 			M_Option.SetKeyCode(keyOptionType, e.keyCode);
 		}
 	}
@@ -170,4 +198,8 @@ public class Option : MonoBehaviour
 		keyOptionType = (KeyOptionType)type;
 	}
 
+	public void ConnectSkill()
+	{
+
+	}
 }

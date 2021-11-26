@@ -13,6 +13,10 @@ public class OptionManager : Singleton<OptionManager>
 	{
 		return _KeyCode[key];
 	}
+	public void ClearKeyCode(KeyOptionType key)
+	{
+		_KeyCode.Remove(key);
+	}
 	public void SetKeyCode(KeyOptionType key,KeyCode code)
 	{
 		_KeyCode[key] = code;

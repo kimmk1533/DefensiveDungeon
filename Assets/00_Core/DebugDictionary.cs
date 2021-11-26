@@ -90,6 +90,7 @@ public class DebugDictionary<TKey, TValue>
 
         int index = m_Keys.IndexOf(key);
 
+        m_Keys.RemoveAt(index);
         m_Values.RemoveAt(index);
 
         return true;
