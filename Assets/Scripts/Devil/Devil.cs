@@ -27,6 +27,9 @@ public abstract class Devil : MonoBehaviour
 
 	public event GameOverHandler OnGameEndEvent;
 
+	public event Action OnSkillCountChangedEvent;
+	public event Action OnUseSkillEvent;
+
 	#region 내부 컴포넌트
 	[SerializeField, ReadOnly]
 	protected DevilAnimator m_DevilAnimator;
@@ -65,9 +68,10 @@ public abstract class Devil : MonoBehaviour
 	public bool IsDead => m_DevilInfo.IsDead;
 
 	public Devil_TableExcel ExcelData => m_DevilInfo_Excel;
+	public S_DevilSkillData Skill01 => m_DevilInfo.m_Skill01;
+	public S_DevilSkillData Skill02 => m_DevilInfo.m_Skill02;
 	public Transform HitPivot => m_DevilInfo.HitPivot;
 	public E_Devil GetBossType => m_DevilInfo.Boss_type;
-
 	#endregion
 
 	#region 내부 함수
@@ -130,7 +134,7 @@ public abstract class Devil : MonoBehaviour
 		m_DevilInfo.m_Size = m_DevilInfo.m_Skill01.m_StatData.Size;
 
 		//스킬 2
-		m_DevilInfo.m_Skill02.m_ConditionData = M_Skill.GetConditionData(m_DevilInfo_Excel.Skill1Code);
+		m_DevilInfo.m_Skill02.m_ConditionData = M_Skill.GetConditionData(m_DevilInfo_Excel.Skill2Code);
 		m_DevilInfo.m_Skill02.m_StatData = M_Skill.GetStatData(m_DevilInfo.m_Skill02.m_ConditionData.PassiveCode);
 		skill_codition = m_DevilInfo.m_Skill02.m_ConditionData;
 		skill_stat = m_DevilInfo.m_Skill02.m_StatData;
@@ -306,6 +310,8 @@ public abstract class Devil : MonoBehaviour
 				m_DevilInfo.m_Skill01.m_CooltimeTimer += m_DevilInfo.m_Skill01.m_Cooltime;
 
 				++m_DevilInfo.m_Skill01.m_CurrentCharge;
+
+				OnSkillCountChangedEvent?.Invoke();
 			}
 		}
 	}
@@ -321,6 +327,8 @@ public abstract class Devil : MonoBehaviour
 				m_DevilInfo.m_Skill02.m_CooltimeTimer += m_DevilInfo.m_Skill02.m_Cooltime;
 
 				++m_DevilInfo.m_Skill02.m_CurrentCharge;
+
+				OnSkillCountChangedEvent?.Invoke();
 			}
 		}
 	}
@@ -395,6 +403,8 @@ public abstract class Devil : MonoBehaviour
 
 			m_DevilAnimator.SetTrigger("Skill01");
 			Skill01Event?.Invoke(arg);
+
+			OnUseSkillEvent?.Invoke();
 		}
 	}
 	public void OnSkill02(DevilSkillArg arg)
@@ -406,6 +416,8 @@ public abstract class Devil : MonoBehaviour
 
 			m_DevilAnimator.SetTrigger("Skill02");
 			Skill02Event?.Invoke(arg);
+
+			OnUseSkillEvent?.Invoke();
 		}
 	}
 	public DevilSkillArg GetDevilSkillArg(E_SkillNumber number)

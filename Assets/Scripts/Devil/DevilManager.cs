@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,40 @@ public class DevilManager : Singleton<DevilManager>
 	#region 외부 프로퍼티
 	public Devil Devil => m_Devil;
 	public int SkillNumber { get => skillnumber; set => skillnumber = value; }
+
+	public event Action OnUseSkillEvent
+	{
+		add
+		{
+			m_Devil.OnUseSkillEvent += value;
+		}
+		remove
+		{
+			m_Devil.OnUseSkillEvent -= value;
+		}
+	}
+	public event Action OnSkillCountChangedEvent
+	{ 
+		add
+		{
+			m_Devil.OnSkillCountChangedEvent += value;
+		}
+		remove
+		{
+			m_Devil.OnSkillCountChangedEvent -= value;
+		}
+	}
+
+	public int Skill01_ChargeCount { get => m_Devil.Skill01.m_CurrentCharge; }
+	public int Skill01_MaxChargeCount { get => m_Devil.Skill01.m_MaxCharge; }
+	public int Skill02_ChargeCount { get => m_Devil.Skill02.m_CurrentCharge; }
+	public int Skill02_MaxChargeCount { get => m_Devil.Skill02.m_MaxCharge; }
+	public float Skill01_CoolTime { get => m_Devil.Skill01.m_Cooltime; }
+	public float Skill01_CoolTimeTimer { get => m_Devil.Skill01.m_CooltimeTimer; }
+	public float Skill02_CoolTime { get => m_Devil.Skill02.m_Cooltime; }
+	public float Skill02_CoolTimeTimer { get => m_Devil.Skill02.m_CooltimeTimer; }
+	public int Skill01_Icon { get => m_Devil.Skill01.m_ConditionData.Skill_icon; }
+	public int Skill02_Icon { get => m_Devil.Skill02.m_ConditionData.Skill_icon; }
 	#endregion
 
 	#region 외부 함수
