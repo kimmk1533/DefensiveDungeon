@@ -17,7 +17,7 @@ public class GameOverUIController : MonoBehaviour
 	[SerializeField] GameOverDataLine m_line2;
 	[SerializeField] GameOverDataLine m_line3;
 	[SerializeField] GameOverProgressBar m_progressBar;
-
+	protected MusicManager M_MusicAudio => MusicManager.Instance;
 	private void Start()
 	{
 		StageInfoManager.Instance.OnGameEndEvent += SetUI;
@@ -30,6 +30,7 @@ public class GameOverUIController : MonoBehaviour
 
 		if (data.IsWin)
 		{
+			M_MusicAudio.SetSelectViewMusic(3);
 			m_win_lose_textpro.text = "승리";
 			m_textTextpro.text = "긴 전투 끝에 용사들을 막아내고 마왕군이 승리했습니다.";
 			m_line1.SetUI("승리 보너스", 300);
@@ -39,6 +40,7 @@ public class GameOverUIController : MonoBehaviour
 		}
 		else
 		{
+			M_MusicAudio.SetSelectViewMusic(4);
 			m_win_lose_textpro.text = "패배";
 			m_textTextpro.text = "마왕군은 결국 용사들을 막아내지 못했습니다.";
 			m_line1.SetUI("승리 보너스", 0);

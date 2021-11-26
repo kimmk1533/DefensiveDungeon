@@ -19,6 +19,8 @@ public struct Devil_TableExcel
 	public int Skill1Code;
 	public int Skill2Code;
 	public int Prefab;
+	public int AtkSoundCode;
+	public int DeathSoundCode;
 }
 
 
@@ -54,7 +56,8 @@ public class  Devil_TableExcelLoader : ScriptableObject
 		data.Skill1Code = int.Parse(strs[idx++]);
 		data.Skill2Code = int.Parse(strs[idx++]);
 		data.Prefab = int.Parse(strs[idx++]);
-
+		data.AtkSoundCode = int.Parse(strs[idx++]);
+		data.DeathSoundCode = int.Parse(strs[idx++]);
 		return data;
 	}
 	[ContextMenu("파일 읽기")]
