@@ -483,7 +483,8 @@ public abstract class Devil : MonoBehaviour
 				new S_Critical(
 					m_DevilInfo_Excel.Crit_rate,
 					m_DevilInfo_Excel.Crit_Dmg
-					)
+					),
+				null
 				);
 		}
 

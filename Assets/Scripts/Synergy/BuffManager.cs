@@ -65,12 +65,18 @@ public struct S_Buff
 	public E_BuffType BuffType;
 	public E_AddType AddType;
 	public float BuffAmount;
+	public float BuffRand;
+	public float Duration;
+	public int Prefab;
 
-	public S_Buff(string buffName, int buffType, int addType, float buffAmount)
+	public S_Buff(string buffName, int buffType, int addType, float buffAmount, float buffRand, float duration, int prefab)
 	{
 		BuffName = buffName;
 		BuffType = (E_BuffType)buffType;
 		AddType = (E_AddType)addType;
 		BuffAmount = buffAmount;
+		BuffRand = buffRand;
+		Duration = duration;
+		Prefab = prefab;
 	}
 }

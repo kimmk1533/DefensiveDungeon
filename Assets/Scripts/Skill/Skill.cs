@@ -82,7 +82,8 @@ public class Skill : MonoBehaviour
 			skill.InitializeSkill(
 				m_Target,
 				condition, stat,
-				m_SkillInfo.Critical);
+				m_SkillInfo.Critical,
+				m_SkillInfo.DebuffList);
 		}
 
 		m_Target = null;
@@ -322,7 +323,39 @@ public class Skill : MonoBehaviour
 				{
 					if (buffData.Code != 0)
 					{
-						//m_Target.BuffList.Add(buffData);
+						List<S_Buff> debuffList = new List<S_Buff>(m_SkillInfo.DebuffList);
+
+						debuffList.Add(new S_Buff(
+							buffData.Name_KR + "_1",
+							buffData.BuffType1,
+							buffData.AddType1,
+							buffData.BuffAmount1,
+							buffData.BuffRand1,
+							buffData.Duration,
+							buffData.Prefab));
+						
+						debuffList.Add(new S_Buff(
+							buffData.Name_KR + "_2",
+							buffData.BuffType2,
+							buffData.AddType2,
+							buffData.BuffAmount2,
+							buffData.BuffRand2,
+							buffData.Duration,
+							buffData.Prefab));
+						
+						debuffList.Add(new S_Buff(
+							buffData.Name_KR + "_3",
+							buffData.BuffType3,
+							buffData.AddType3,
+							buffData.BuffAmount3,
+							buffData.BuffRand3,
+							buffData.Duration,
+							buffData.Prefab));
+
+						foreach (var item in debuffList)
+						{
+							m_Target.AddDebuff(item);
+						}
 					}
 
 					float critRate = m_SkillInfo.Critical.critRate;
@@ -335,7 +368,7 @@ public class Skill : MonoBehaviour
 						damage *= critDmg;
 					}
 
-					m_Target.On_DaMage(damage, isCrit);
+					m_Target.On_Damage(damage, isCrit);
 
 					// 피격 이펙트 생성
 					Effect hitEffect = M_Effect.SpawnEffect(m_ConditionInfo_Excel.damage_prefab);
@@ -357,7 +390,39 @@ public class Skill : MonoBehaviour
 
 						if (buffData.Code != 0)
 						{
-							//target.BuffList.Add(buffData);
+							List<S_Buff> debuffList = new List<S_Buff>(m_SkillInfo.DebuffList);
+
+							debuffList.Add(new S_Buff(
+								buffData.Name_KR + "_1",
+								buffData.BuffType1,
+								buffData.AddType1,
+								buffData.BuffAmount1,
+								buffData.BuffRand1,
+								buffData.Duration,
+								buffData.Prefab));
+
+							debuffList.Add(new S_Buff(
+								buffData.Name_KR + "_2",
+								buffData.BuffType2,
+								buffData.AddType2,
+								buffData.BuffAmount2,
+								buffData.BuffRand2,
+								buffData.Duration,
+								buffData.Prefab));
+
+							debuffList.Add(new S_Buff(
+								buffData.Name_KR + "_3",
+								buffData.BuffType3,
+								buffData.AddType3,
+								buffData.BuffAmount3,
+								buffData.BuffRand3,
+								buffData.Duration,
+								buffData.Prefab));
+
+							foreach (var item in debuffList)
+							{
+								target.AddDebuff(item);
+							}
 						}
 
 						float critRate = m_SkillInfo.Critical.critRate;
@@ -370,7 +435,7 @@ public class Skill : MonoBehaviour
 							damage *= critDmg;
 						}
 
-						target.On_DaMage(damage, isCrit);
+						target.On_Damage(damage, isCrit);
 
 						// 피격 이펙트 생성
 						Effect hitEffect = M_Effect.SpawnEffect(m_ConditionInfo_Excel.damage_prefab);
@@ -392,7 +457,39 @@ public class Skill : MonoBehaviour
 						{
 							if (buffData.Code != 0)
 							{
-								//target.BuffList.Add(buffData);
+								List<S_Buff> debuffList = new List<S_Buff>(m_SkillInfo.DebuffList);
+
+								debuffList.Add(new S_Buff(
+									buffData.Name_KR + "_1",
+									buffData.BuffType1,
+									buffData.AddType1,
+									buffData.BuffAmount1,
+									buffData.BuffRand1,
+									buffData.Duration,
+									buffData.Prefab));
+
+								debuffList.Add(new S_Buff(
+									buffData.Name_KR + "_2",
+									buffData.BuffType2,
+									buffData.AddType2,
+									buffData.BuffAmount2,
+									buffData.BuffRand2,
+									buffData.Duration,
+									buffData.Prefab));
+
+								debuffList.Add(new S_Buff(
+									buffData.Name_KR + "_3",
+									buffData.BuffType3,
+									buffData.AddType3,
+									buffData.BuffAmount3,
+									buffData.BuffRand3,
+									buffData.Duration,
+									buffData.Prefab));
+
+								foreach (var item in debuffList)
+								{
+									target.AddDebuff(item);
+								}
 							}
 
 							float critRate = m_SkillInfo.Critical.critRate;
@@ -405,7 +502,7 @@ public class Skill : MonoBehaviour
 								damage *= critDmg;
 							}
 
-							target.On_DaMage(damage, isCrit);
+							target.On_Damage(damage, isCrit);
 
 							m_SkillInfo.PenetrateTargetList.Add(target);
 
@@ -424,7 +521,39 @@ public class Skill : MonoBehaviour
 				{
 					if (buffData.Code != 0)
 					{
-						//m_Target.BuffList.Add(buffData);
+						List<S_Buff> debuffList = new List<S_Buff>(m_SkillInfo.DebuffList);
+
+						debuffList.Add(new S_Buff(
+							buffData.Name_KR + "_1",
+							buffData.BuffType1,
+							buffData.AddType1,
+							buffData.BuffAmount1,
+							buffData.BuffRand1,
+							buffData.Duration,
+							buffData.Prefab));
+
+						debuffList.Add(new S_Buff(
+							buffData.Name_KR + "_2",
+							buffData.BuffType2,
+							buffData.AddType2,
+							buffData.BuffAmount2,
+							buffData.BuffRand2,
+							buffData.Duration,
+							buffData.Prefab));
+
+						debuffList.Add(new S_Buff(
+							buffData.Name_KR + "_3",
+							buffData.BuffType3,
+							buffData.AddType3,
+							buffData.BuffAmount3,
+							buffData.BuffRand3,
+							buffData.Duration,
+							buffData.Prefab));
+
+						foreach (var item in debuffList)
+						{
+							m_Target.AddDebuff(item);
+						}
 					}
 
 					float critRate = m_SkillInfo.Critical.critRate;
@@ -437,7 +566,7 @@ public class Skill : MonoBehaviour
 						damage *= critDmg;
 					}
 
-					m_Target.On_DaMage(damage, isCrit);
+					m_Target.On_Damage(damage, isCrit);
 
 					if (m_Target.IsDead)
 					{
@@ -462,7 +591,8 @@ public class Skill : MonoBehaviour
 	public void InitializeSkill(Enemy target,
 		SkillCondition_TableExcel conditionData,
 		SkillStat_TableExcel statData,
-		S_Critical critical)
+		S_Critical critical,
+		List<S_Buff> debuffList)
 	{
 		m_SkillInfo.AttackRange.InitializeAttackRange();
 
@@ -470,6 +600,7 @@ public class Skill : MonoBehaviour
 		m_SkillInfo.AttackRange.Direction = target.Direction;
 		m_SkillInfo.AttackRange.CanFindTarget = true;
 		m_SkillInfo.Critical = critical;
+		m_SkillInfo.DebuffList = debuffList;
 
 		m_ConditionInfo_Excel = conditionData;
 		m_StatInfo = statData;
@@ -545,7 +676,6 @@ public class Skill : MonoBehaviour
 	[System.Serializable]
 	public struct S_SkillData
 	{
-		public List<S_Buff> DebuffList;
 		public bool CanOverlapBounce;
 		public int BounceCount;
 		public List<Enemy> FixedTargetList;
@@ -558,6 +688,8 @@ public class Skill : MonoBehaviour
 		public Vector3 TargetInitPos;
 
 		public S_Critical Critical;
+
+		public List<S_Buff> DebuffList;
 	}
 }
 

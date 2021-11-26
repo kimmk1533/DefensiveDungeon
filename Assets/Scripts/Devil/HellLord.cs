@@ -73,7 +73,13 @@ public class HellLord : Devil
 			skill.gameObject.SetActive(true);
 			S_Critical critical = new S_Critical(CritRate, CritDmg);
 			// 기본 스킬 데이터 설정
-			skill.InitializeSkill(target, conditionData, statData, critical);
+			skill.InitializeSkill(
+				target,
+				conditionData,
+				statData,
+				critical,
+				null
+				);
 		}
 
 		if ((E_TargetType)m_DevilInfo.Condition_Default.Target_type == E_TargetType.TileTarget)

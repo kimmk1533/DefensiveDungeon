@@ -527,6 +527,7 @@ public class Tower : MonoBehaviour
 									buffData.AddType1,
 									buffData.BuffAmount1,
 									buffData.BuffRand1,
+									buffData.Duration,
 									buffData.Prefab
 									);
 
@@ -549,6 +550,7 @@ public class Tower : MonoBehaviour
 											buffData.AddType2,
 											buffData.BuffAmount2,
 											buffData.BuffRand2,
+											buffData.Duration,
 											buffData.Prefab
 											);
 
@@ -571,6 +573,7 @@ public class Tower : MonoBehaviour
 													buffData.AddType3,
 													buffData.BuffAmount3,
 													buffData.BuffRand3,
+													buffData.Duration,
 													buffData.Prefab
 													);
 
@@ -620,6 +623,7 @@ public class Tower : MonoBehaviour
 									buffData.AddType1,
 									buffData.BuffAmount1 * m_TowerInfo.BerserkerStack,
 									buffData.BuffRand1,
+									buffData.Duration,
 									buffData.Prefab
 									);
 
@@ -645,6 +649,7 @@ public class Tower : MonoBehaviour
 											buffData.AddType2,
 											buffData.BuffAmount2 * m_TowerInfo.BerserkerStack,
 											buffData.BuffRand2,
+											buffData.Duration,
 											buffData.Prefab
 											);
 
@@ -670,6 +675,7 @@ public class Tower : MonoBehaviour
 													buffData.AddType3,
 													buffData.BuffAmount3 * m_TowerInfo.BerserkerStack,
 													buffData.BuffRand3,
+													buffData.Duration,
 													buffData.Prefab
 													);
 
@@ -713,6 +719,7 @@ public class Tower : MonoBehaviour
 									buffData.AddType1,
 									buffData.BuffAmount1,
 									buffData.BuffRand1,
+									buffData.Duration,
 									buffData.Prefab
 									);
 
@@ -735,6 +742,7 @@ public class Tower : MonoBehaviour
 											buffData.AddType2,
 											buffData.BuffAmount2,
 											buffData.BuffRand2,
+											buffData.Duration,
 											buffData.Prefab
 											);
 
@@ -757,6 +765,7 @@ public class Tower : MonoBehaviour
 													buffData.AddType3,
 													buffData.BuffAmount3,
 													buffData.BuffRand3,
+													buffData.Duration,
 													buffData.Prefab
 													);
 
@@ -806,6 +815,7 @@ public class Tower : MonoBehaviour
 									buffData.AddType1,
 									buffData.BuffAmount1 * m_TowerInfo.BerserkerStack,
 									buffData.BuffRand1,
+									buffData.Duration,
 									buffData.Prefab
 									);
 
@@ -831,6 +841,7 @@ public class Tower : MonoBehaviour
 											buffData.AddType2,
 											buffData.BuffAmount2 * m_TowerInfo.BerserkerStack,
 											buffData.BuffRand2,
+											buffData.Duration,
 											buffData.Prefab
 											);
 
@@ -856,6 +867,7 @@ public class Tower : MonoBehaviour
 													buffData.AddType3,
 													buffData.BuffAmount3 * m_TowerInfo.BerserkerStack,
 													buffData.BuffRand3,
+													buffData.Duration,
 													buffData.Prefab
 													);
 
@@ -1199,6 +1211,10 @@ public class Tower : MonoBehaviour
 					List<S_Buff> BuffList_Fix = new List<S_Buff>(m_TowerInfo.SkillBuffList_Fix);
 					List<S_Buff> BuffList_Percent = new List<S_Buff>(m_TowerInfo.SkillBuffList_Percent);
 
+					// 적 디버프 리스트
+					List<S_Buff> debuffList = new List<S_Buff>(m_TowerInfo.SkillBuffList_Fix);
+					debuffList.AddRange(m_TowerInfo.SkillBuffList_Percent);
+
 					float Range_Fix = 0f;
 					float Range_Percent = 1f;
 					float Atk_spd_Fix = 0f;
@@ -1231,6 +1247,7 @@ public class Tower : MonoBehaviour
 												buffData.AddType1,
 												buffData.BuffAmount1,
 												buffData.BuffRand1,
+												buffData.Duration,
 												buffData.Prefab
 												);
 
@@ -1253,6 +1270,7 @@ public class Tower : MonoBehaviour
 														buffData.AddType2,
 														buffData.BuffAmount2,
 														buffData.BuffRand2,
+														buffData.Duration,
 														buffData.Prefab
 														);
 
@@ -1275,6 +1293,7 @@ public class Tower : MonoBehaviour
 																buffData.AddType3,
 																buffData.BuffAmount3,
 																buffData.BuffRand3,
+																buffData.Duration,
 																buffData.Prefab
 																);
 
@@ -1311,6 +1330,7 @@ public class Tower : MonoBehaviour
 												buffData.AddType1,
 												buffData.BuffAmount1 * m_TowerInfo.BerserkerStack,
 												buffData.BuffRand1,
+												buffData.Duration,
 												buffData.Prefab
 												);
 
@@ -1336,6 +1356,7 @@ public class Tower : MonoBehaviour
 														buffData.AddType2,
 														buffData.BuffAmount2 * m_TowerInfo.BerserkerStack,
 														buffData.BuffRand2,
+														buffData.Duration,
 														buffData.Prefab
 														);
 
@@ -1361,6 +1382,7 @@ public class Tower : MonoBehaviour
 																buffData.AddType3,
 																buffData.BuffAmount3 * m_TowerInfo.BerserkerStack,
 																buffData.BuffRand3,
+																buffData.Duration,
 																buffData.Prefab
 																);
 
@@ -1404,6 +1426,7 @@ public class Tower : MonoBehaviour
 												buffData.AddType1,
 												buffData.BuffAmount1,
 												buffData.BuffRand1,
+												buffData.Duration,
 												buffData.Prefab
 												);
 
@@ -1426,6 +1449,7 @@ public class Tower : MonoBehaviour
 														buffData.AddType2,
 														buffData.BuffAmount2,
 														buffData.BuffRand2,
+														buffData.Duration,
 														buffData.Prefab
 														);
 
@@ -1448,6 +1472,7 @@ public class Tower : MonoBehaviour
 																buffData.AddType3,
 																buffData.BuffAmount3,
 																buffData.BuffRand3,
+																buffData.Duration,
 																buffData.Prefab
 																);
 
@@ -1484,6 +1509,7 @@ public class Tower : MonoBehaviour
 												buffData.AddType1,
 												buffData.BuffAmount1 * m_TowerInfo.BerserkerStack,
 												buffData.BuffRand1,
+												buffData.Duration,
 												buffData.Prefab
 												);
 
@@ -1509,6 +1535,7 @@ public class Tower : MonoBehaviour
 														buffData.AddType2,
 														buffData.BuffAmount2 * m_TowerInfo.BerserkerStack,
 														buffData.BuffRand2,
+														buffData.Duration,
 														buffData.Prefab
 														);
 
@@ -1534,6 +1561,7 @@ public class Tower : MonoBehaviour
 																buffData.AddType3,
 																buffData.BuffAmount3 * m_TowerInfo.BerserkerStack,
 																buffData.BuffRand3,
+																buffData.Duration,
 																buffData.Prefab
 																);
 
@@ -1656,7 +1684,8 @@ public class Tower : MonoBehaviour
 							target,
 							conditionData,
 							statData,
-							critical
+							critical,
+							debuffList
 							);
 					}
 
@@ -1743,6 +1772,7 @@ public class Tower : MonoBehaviour
 									buffData.AddType1,
 									buffData.BuffAmount1,
 									buffData.BuffRand1,
+									buffData.Duration,
 									buffData.Prefab
 									);
 
@@ -1762,6 +1792,7 @@ public class Tower : MonoBehaviour
 											buffData.AddType2,
 											buffData.BuffAmount2,
 											buffData.BuffRand2,
+											buffData.Duration,
 											buffData.Prefab
 											);
 
@@ -1781,6 +1812,7 @@ public class Tower : MonoBehaviour
 													buffData.AddType3,
 													buffData.BuffAmount3,
 													buffData.BuffRand3,
+													buffData.Duration,
 													buffData.Prefab
 													);
 
@@ -1826,6 +1858,10 @@ public class Tower : MonoBehaviour
 					List<S_Buff> BuffList_Fix = new List<S_Buff>(m_TowerInfo.SkillBuffList_Fix);
 					List<S_Buff> BuffList_Percent = new List<S_Buff>(m_TowerInfo.SkillBuffList_Percent);
 
+					// 적 디버프 리스트
+					List<S_Buff> debuffList = new List<S_Buff>(m_TowerInfo.SkillBuffList_Fix);
+					debuffList.AddRange(m_TowerInfo.SkillBuffList_Percent);
+
 					float Crit_rate_Fix = 0f;
 					float Crit_rate_Percent = 1f;
 					float Crit_Dmg_Fix = 0f;
@@ -1854,6 +1890,7 @@ public class Tower : MonoBehaviour
 												buffData.AddType1,
 												buffData.BuffAmount1,
 												buffData.BuffRand1,
+												buffData.Duration,
 												buffData.Prefab
 												);
 
@@ -1876,6 +1913,7 @@ public class Tower : MonoBehaviour
 														buffData.AddType2,
 														buffData.BuffAmount2,
 														buffData.BuffRand2,
+														buffData.Duration,
 														buffData.Prefab
 														);
 
@@ -1898,6 +1936,7 @@ public class Tower : MonoBehaviour
 																buffData.AddType3,
 																buffData.BuffAmount3,
 																buffData.BuffRand3,
+																buffData.Duration,
 																buffData.Prefab
 																);
 
@@ -1934,6 +1973,7 @@ public class Tower : MonoBehaviour
 												buffData.AddType1,
 												buffData.BuffAmount1 * m_TowerInfo.BerserkerStack,
 												buffData.BuffRand1,
+												buffData.Duration,
 												buffData.Prefab
 												);
 
@@ -1959,6 +1999,7 @@ public class Tower : MonoBehaviour
 														buffData.AddType2,
 														buffData.BuffAmount2 * m_TowerInfo.BerserkerStack,
 														buffData.BuffRand2,
+														buffData.Duration,
 														buffData.Prefab
 														);
 
@@ -1984,6 +2025,7 @@ public class Tower : MonoBehaviour
 																buffData.AddType3,
 																buffData.BuffAmount3 * m_TowerInfo.BerserkerStack,
 																buffData.BuffRand3,
+																buffData.Duration,
 																buffData.Prefab
 																);
 
@@ -2027,6 +2069,7 @@ public class Tower : MonoBehaviour
 												buffData.AddType1,
 												buffData.BuffAmount1,
 												buffData.BuffRand1,
+												buffData.Duration,
 												buffData.Prefab
 												);
 
@@ -2049,6 +2092,7 @@ public class Tower : MonoBehaviour
 														buffData.AddType2,
 														buffData.BuffAmount2,
 														buffData.BuffRand2,
+														buffData.Duration,
 														buffData.Prefab
 														);
 
@@ -2071,6 +2115,7 @@ public class Tower : MonoBehaviour
 																buffData.AddType3,
 																buffData.BuffAmount3,
 																buffData.BuffRand3,
+																buffData.Duration,
 																buffData.Prefab
 																);
 
@@ -2107,6 +2152,7 @@ public class Tower : MonoBehaviour
 												buffData.AddType1,
 												buffData.BuffAmount1 * m_TowerInfo.BerserkerStack,
 												buffData.BuffRand1,
+												buffData.Duration,
 												buffData.Prefab
 												);
 
@@ -2132,6 +2178,7 @@ public class Tower : MonoBehaviour
 														buffData.AddType2,
 														buffData.BuffAmount2 * m_TowerInfo.BerserkerStack,
 														buffData.BuffRand2,
+														buffData.Duration,
 														buffData.Prefab
 														);
 
@@ -2157,6 +2204,7 @@ public class Tower : MonoBehaviour
 																buffData.AddType3,
 																buffData.BuffAmount3 * m_TowerInfo.BerserkerStack,
 																buffData.BuffRand3,
+																buffData.Duration,
 																buffData.Prefab
 																);
 
@@ -2256,7 +2304,8 @@ public class Tower : MonoBehaviour
 							target,
 							conditionData,
 							statData,
-							critical
+							critical,
+							debuffList
 							);
 					}
 
@@ -2305,6 +2354,7 @@ public class Tower : MonoBehaviour
 								buffData.AddType1,
 								buffData.BuffAmount1,
 								buffData.BuffRand1,
+								buffData.Duration,
 								buffData.Prefab
 								);
 
@@ -2324,6 +2374,7 @@ public class Tower : MonoBehaviour
 										buffData.AddType2,
 										buffData.BuffAmount2,
 										buffData.BuffRand2,
+										buffData.Duration,
 										buffData.Prefab
 										);
 
@@ -2343,6 +2394,7 @@ public class Tower : MonoBehaviour
 												buffData.AddType3,
 												buffData.BuffAmount3,
 												buffData.BuffRand3,
+												buffData.Duration,
 												buffData.Prefab
 												);
 
@@ -2420,6 +2472,7 @@ public class Tower : MonoBehaviour
 									buffData.AddType1,
 									buffData.BuffAmount1,
 									buffData.BuffRand1,
+									buffData.Duration,
 									buffData.Prefab
 									);
 
@@ -2439,6 +2492,7 @@ public class Tower : MonoBehaviour
 											buffData.AddType2,
 											buffData.BuffAmount2,
 											buffData.BuffRand2,
+											buffData.Duration,
 											buffData.Prefab
 											);
 
@@ -2458,6 +2512,7 @@ public class Tower : MonoBehaviour
 													buffData.AddType3,
 													buffData.BuffAmount3,
 													buffData.BuffRand3,
+													buffData.Duration,
 													buffData.Prefab
 													);
 
@@ -2504,6 +2559,10 @@ public class Tower : MonoBehaviour
 					List<S_Buff> BuffList_Fix = new List<S_Buff>(m_TowerInfo.SkillBuffList_Fix);
 					List<S_Buff> BuffList_Percent = new List<S_Buff>(m_TowerInfo.SkillBuffList_Percent);
 
+					// 적 디버프 리스트
+					List<S_Buff> debuffList = new List<S_Buff>(m_TowerInfo.SkillBuffList_Fix);
+					debuffList.AddRange(m_TowerInfo.SkillBuffList_Percent);
+
 					float Crit_rate_Fix = 0f;
 					float Crit_rate_Percent = 1f;
 					float Crit_Dmg_Fix = 0f;
@@ -2532,6 +2591,7 @@ public class Tower : MonoBehaviour
 												buffData.AddType1,
 												buffData.BuffAmount1,
 												buffData.BuffRand1,
+												buffData.Duration,
 												buffData.Prefab
 												);
 
@@ -2554,6 +2614,7 @@ public class Tower : MonoBehaviour
 														buffData.AddType2,
 														buffData.BuffAmount2,
 														buffData.BuffRand2,
+														buffData.Duration,
 														buffData.Prefab
 														);
 
@@ -2576,6 +2637,7 @@ public class Tower : MonoBehaviour
 																buffData.AddType3,
 																buffData.BuffAmount3,
 																buffData.BuffRand3,
+																buffData.Duration,
 																buffData.Prefab
 																);
 
@@ -2612,6 +2674,7 @@ public class Tower : MonoBehaviour
 												buffData.AddType1,
 												buffData.BuffAmount1 * m_TowerInfo.BerserkerStack,
 												buffData.BuffRand1,
+												buffData.Duration,
 												buffData.Prefab
 												);
 
@@ -2637,6 +2700,7 @@ public class Tower : MonoBehaviour
 														buffData.AddType2,
 														buffData.BuffAmount2 * m_TowerInfo.BerserkerStack,
 														buffData.BuffRand2,
+														buffData.Duration,
 														buffData.Prefab
 														);
 
@@ -2662,6 +2726,7 @@ public class Tower : MonoBehaviour
 																buffData.AddType3,
 																buffData.BuffAmount3 * m_TowerInfo.BerserkerStack,
 																buffData.BuffRand3,
+																buffData.Duration,
 																buffData.Prefab
 																);
 
@@ -2705,6 +2770,7 @@ public class Tower : MonoBehaviour
 												buffData.AddType1,
 												buffData.BuffAmount1,
 												buffData.BuffRand1,
+												buffData.Duration,
 												buffData.Prefab
 												);
 
@@ -2727,6 +2793,7 @@ public class Tower : MonoBehaviour
 														buffData.AddType2,
 														buffData.BuffAmount2,
 														buffData.BuffRand2,
+														buffData.Duration,
 														buffData.Prefab
 														);
 
@@ -2749,6 +2816,7 @@ public class Tower : MonoBehaviour
 																buffData.AddType3,
 																buffData.BuffAmount3,
 																buffData.BuffRand3,
+																buffData.Duration,
 																buffData.Prefab
 																);
 
@@ -2785,6 +2853,7 @@ public class Tower : MonoBehaviour
 												buffData.AddType1,
 												buffData.BuffAmount1 * m_TowerInfo.BerserkerStack,
 												buffData.BuffRand1,
+												buffData.Duration,
 												buffData.Prefab
 												);
 
@@ -2810,6 +2879,7 @@ public class Tower : MonoBehaviour
 														buffData.AddType2,
 														buffData.BuffAmount2 * m_TowerInfo.BerserkerStack,
 														buffData.BuffRand2,
+														buffData.Duration,
 														buffData.Prefab
 														);
 
@@ -2835,6 +2905,7 @@ public class Tower : MonoBehaviour
 																buffData.AddType3,
 																buffData.BuffAmount3 * m_TowerInfo.BerserkerStack,
 																buffData.BuffRand3,
+																buffData.Duration,
 																buffData.Prefab
 																);
 
@@ -2934,7 +3005,8 @@ public class Tower : MonoBehaviour
 							target,
 							conditionData,
 							statData,
-							critical
+							critical,
+							debuffList
 							);
 					}
 
@@ -2983,6 +3055,7 @@ public class Tower : MonoBehaviour
 								buffData.AddType1,
 								buffData.BuffAmount1,
 								buffData.BuffRand1,
+								buffData.Duration,
 								buffData.Prefab
 								);
 
@@ -3002,6 +3075,7 @@ public class Tower : MonoBehaviour
 										buffData.AddType2,
 										buffData.BuffAmount2,
 										buffData.BuffRand2,
+										buffData.Duration,
 										buffData.Prefab
 										);
 
@@ -3021,6 +3095,7 @@ public class Tower : MonoBehaviour
 												buffData.AddType3,
 												buffData.BuffAmount3,
 												buffData.BuffRand3,
+												buffData.Duration,
 												buffData.Prefab
 												);
 
