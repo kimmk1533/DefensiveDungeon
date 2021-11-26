@@ -14,7 +14,6 @@ public class SceneStartEventReciever : MonoBehaviour
 
     public void __Start()
     {
-        Debug.Log("asdfasdf");
         m_scene_start_event?.Invoke();
     }
 }

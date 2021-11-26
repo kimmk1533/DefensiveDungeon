@@ -41,21 +41,20 @@ public class DevilToolTipUIController : MonoBehaviour, IPointerEnterHandler, IPo
 
         // tower data (atk critical etc)
         // -atk
-        m_stat_data1.SetUI("°ø°Ý·Â", data.Atk.ToString());
+        m_stat_data1.SetUI("ê³µê²©ë ¥", data.Atk.ToString());
         // -atk speed
         float atk_speed = m_skillstat_loader.DataList.Find((item) => { return item.Code == data.Atk_Code; }).CoolTime;
         float calc_atk_speed = (atk_speed == 0) ? 1 : ((int)(1f / atk_speed * 100));
         m_stat_data2.SetUI(
-            "°ø°Ý¼Óµµ",
+            "ê³µê²©ì†ë„",
             calc_atk_speed.ToString() + "%");
-        Debug.Log($"atk speed : {atk_speed}");
-        Debug.Log($"caculated atk speed : {(int)(1f / atk_speed * 100)}");
+
         // -critical rate
-        m_stat_data3.SetUI("Ä¡¸íÅ¸ È®·ü", (data.Crit_rate * 100).ToString() + "%");
+        m_stat_data3.SetUI("ì¹˜ëª…íƒ€ í™•ë¥ ", (data.Crit_rate * 100).ToString() + "%");
         // -critical damage
-        m_stat_data4.SetUI("Ä¡¸íÅ¸ ÇÇÇØ", (data.Crit_Dmg * 100).ToString() + "%");
-        m_stat_data5.SetUI("Ã¼·Â", (data.HP * 100).ToString());
-        m_stat_data6.SetUI("¹æ¾î·Â", (data.Def * 100).ToString());
+        m_stat_data4.SetUI("ì¹˜ëª…íƒ€ í”¼í•´", (data.Crit_Dmg * 100).ToString() + "%");
+        m_stat_data5.SetUI("ì²´ë ¥", (data.HP * 100).ToString());
+        m_stat_data6.SetUI("ë°©ì–´ë ¥", (data.Def * 100).ToString());
 
         // skill
         var skill_data1 = m_skill_loader.DataList.Find((item) =>

@@ -30,7 +30,6 @@ public class CombinationManager : Singleton<CombinationManager>
 	// param : all towers in list need same code 
 	private void CombinationProcess(List<Tower> tower_list)
 	{
-		Debug.Log("Combination process");
 		CombinationEffect comeffect;
 		// desapwn only 3 towers         
 		int next_tower_code = tower_list[0].ExcelData.Next_Stat;
@@ -104,7 +103,6 @@ public class CombinationManager : Singleton<CombinationManager>
 
 		if (m_DespawnWorldObjFlag)
 		{
-			Debug.Log($"Combinatnion Complete Event : {m_DespawnWorldObjFlag}");
 			OnCombinationDespawnObjEvent?.Invoke();
 			m_DespawnWorldObjFlag = false;
 		}

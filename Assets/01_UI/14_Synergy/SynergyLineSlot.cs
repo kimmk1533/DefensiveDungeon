@@ -150,8 +150,6 @@ public class SynergyLineSlot : MonoBehaviour
     // synergy 정보가 업데이트 된 경우
     public void __OnSynergyUpdated()
     {
-        Debug.Log("SynergyLineSlot : Event is Called");
-
         // get activated synergy from manager
         var synergy_list = SynergyManager.Instance.GetSynergyList(m_dir);
 

@@ -237,8 +237,6 @@ public class ShopSlot : MonoBehaviour, IPointerClickHandler
 
 	public void OnPointerClick(PointerEventData eventData)
 	{
-		Debug.Log($"Shop Slot ({m_info.index})");
-
 		// 이 슬롯이 활성화 된 경우
 		if (IsOccupied)
 		{

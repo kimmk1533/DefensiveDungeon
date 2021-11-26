@@ -39,7 +39,6 @@ public class StageInfoManager : Singleton<StageInfoManager>
 	// this function must be called by Scene start evnet reciever    
 	public void __StartTimer()
 	{
-		Debug.Log("Stage Timer Start");
 		current_stage = 0;
 		m_startFlag = true;
 		m_timer = 0.0f;

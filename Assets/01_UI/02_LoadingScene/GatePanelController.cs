@@ -169,7 +169,6 @@ public class GatePanelController : MonoBehaviour
 
     private void OnOpenGatesEnd()
     {
-        Debug.Log("Gate Process Complete!!");
         SceneLoader.Instance.OnAllProcessCompleted();
     }
 

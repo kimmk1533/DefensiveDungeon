@@ -185,8 +185,6 @@ public class SynergyManager : Singleton<SynergyManager>
 
 	public void UpdateSynergy()
 	{
-		Debug.Log("시너지 업데이트");
-
 		// 시너지 관리 리스트 초기화
 		for (E_Direction i = 0; i < E_Direction.Max; ++i)
 		{

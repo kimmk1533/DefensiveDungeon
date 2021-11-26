@@ -194,8 +194,6 @@ public class ShopManager : Singleton<ShopManager>
 			var info = slot.GetInfo();
 
 			InventoryManager.Instance.AddNewTower(info.excel_data.Value);
-
-			Debug.Log("Puchase!!");
 			return true;
 		}
 		else

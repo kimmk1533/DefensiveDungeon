@@ -525,7 +525,9 @@ public class Tower : MonoBehaviour
 									buffData.Name_KR + "_1",
 									buffData.BuffType1,
 									buffData.AddType1,
-									buffData.BuffAmount1
+									buffData.BuffAmount1,
+									buffData.BuffRand1,
+									buffData.Prefab
 									);
 
 								if (buff.AddType == E_AddType.Fix)
@@ -545,7 +547,9 @@ public class Tower : MonoBehaviour
 											buffData.Name_KR + "_2",
 											buffData.BuffType2,
 											buffData.AddType2,
-											buffData.BuffAmount2
+											buffData.BuffAmount2,
+											buffData.BuffRand2,
+											buffData.Prefab
 											);
 
 										if (buff.AddType == E_AddType.Fix)
@@ -565,7 +569,9 @@ public class Tower : MonoBehaviour
 													buffData.Name_KR + "_3",
 													buffData.BuffType3,
 													buffData.AddType3,
-													buffData.BuffAmount3
+													buffData.BuffAmount3,
+													buffData.BuffRand3,
+													buffData.Prefab
 													);
 
 												if (buff.AddType == E_AddType.Fix)
@@ -612,7 +618,9 @@ public class Tower : MonoBehaviour
 									buffData.Name_KR + "_1",
 									buffData.BuffType1,
 									buffData.AddType1,
-									buffData.BuffAmount1 * m_TowerInfo.BerserkerStack
+									buffData.BuffAmount1 * m_TowerInfo.BerserkerStack,
+									buffData.BuffRand1,
+									buffData.Prefab
 									);
 
 								if (buff.AddType == E_AddType.Fix)
@@ -635,7 +643,9 @@ public class Tower : MonoBehaviour
 											buffData.Name_KR + "_2",
 											buffData.BuffType2,
 											buffData.AddType2,
-											buffData.BuffAmount2 * m_TowerInfo.BerserkerStack
+											buffData.BuffAmount2 * m_TowerInfo.BerserkerStack,
+											buffData.BuffRand2,
+											buffData.Prefab
 											);
 
 										if (buff.AddType == E_AddType.Fix)
@@ -658,7 +668,9 @@ public class Tower : MonoBehaviour
 													buffData.Name_KR + "_3",
 													buffData.BuffType3,
 													buffData.AddType3,
-													buffData.BuffAmount3 * m_TowerInfo.BerserkerStack
+													buffData.BuffAmount3 * m_TowerInfo.BerserkerStack,
+													buffData.BuffRand3,
+													buffData.Prefab
 													);
 
 												if (buff.AddType == E_AddType.Fix)
@@ -699,7 +711,9 @@ public class Tower : MonoBehaviour
 									buffData.Name_KR + "_1",
 									buffData.BuffType1,
 									buffData.AddType1,
-									buffData.BuffAmount1
+									buffData.BuffAmount1,
+									buffData.BuffRand1,
+									buffData.Prefab
 									);
 
 								if (buff.AddType == E_AddType.Fix)
@@ -719,7 +733,9 @@ public class Tower : MonoBehaviour
 											buffData.Name_KR + "_2",
 											buffData.BuffType2,
 											buffData.AddType2,
-											buffData.BuffAmount2
+											buffData.BuffAmount2,
+											buffData.BuffRand2,
+											buffData.Prefab
 											);
 
 										if (buff.AddType == E_AddType.Fix)
@@ -739,7 +755,9 @@ public class Tower : MonoBehaviour
 													buffData.Name_KR + "_3",
 													buffData.BuffType3,
 													buffData.AddType3,
-													buffData.BuffAmount3
+													buffData.BuffAmount3,
+													buffData.BuffRand3,
+													buffData.Prefab
 													);
 
 												if (buff.AddType == E_AddType.Fix)
@@ -786,7 +804,9 @@ public class Tower : MonoBehaviour
 									buffData.Name_KR + "_1",
 									buffData.BuffType1,
 									buffData.AddType1,
-									buffData.BuffAmount1 * m_TowerInfo.BerserkerStack
+									buffData.BuffAmount1 * m_TowerInfo.BerserkerStack,
+									buffData.BuffRand1,
+									buffData.Prefab
 									);
 
 								if (buff.AddType == E_AddType.Fix)
@@ -809,7 +829,9 @@ public class Tower : MonoBehaviour
 											buffData.Name_KR + "_2",
 											buffData.BuffType2,
 											buffData.AddType2,
-											buffData.BuffAmount2 * m_TowerInfo.BerserkerStack
+											buffData.BuffAmount2 * m_TowerInfo.BerserkerStack,
+											buffData.BuffRand2,
+											buffData.Prefab
 											);
 
 										if (buff.AddType == E_AddType.Fix)
@@ -832,7 +854,9 @@ public class Tower : MonoBehaviour
 													buffData.Name_KR + "_3",
 													buffData.BuffType3,
 													buffData.AddType3,
-													buffData.BuffAmount3 * m_TowerInfo.BerserkerStack
+													buffData.BuffAmount3 * m_TowerInfo.BerserkerStack,
+													buffData.BuffRand3,
+													buffData.Prefab
 													);
 
 												if (buff.AddType == E_AddType.Fix)
@@ -1205,7 +1229,9 @@ public class Tower : MonoBehaviour
 												buffData.Name_KR + "_1",
 												buffData.BuffType1,
 												buffData.AddType1,
-												buffData.BuffAmount1
+												buffData.BuffAmount1,
+												buffData.BuffRand1,
+												buffData.Prefab
 												);
 
 											if (buff.AddType == E_AddType.Fix)
@@ -1225,7 +1251,9 @@ public class Tower : MonoBehaviour
 														buffData.Name_KR + "_2",
 														buffData.BuffType2,
 														buffData.AddType2,
-														buffData.BuffAmount2
+														buffData.BuffAmount2,
+														buffData.BuffRand2,
+														buffData.Prefab
 														);
 
 													if (buff.AddType == E_AddType.Fix)
@@ -1245,7 +1273,9 @@ public class Tower : MonoBehaviour
 																buffData.Name_KR + "_3",
 																buffData.BuffType3,
 																buffData.AddType3,
-																buffData.BuffAmount3
+																buffData.BuffAmount3,
+																buffData.BuffRand3,
+																buffData.Prefab
 																);
 
 															if (buff.AddType == E_AddType.Fix)
@@ -1279,7 +1309,9 @@ public class Tower : MonoBehaviour
 												buffData.Name_KR + "_1",
 												buffData.BuffType1,
 												buffData.AddType1,
-												buffData.BuffAmount1 * m_TowerInfo.BerserkerStack
+												buffData.BuffAmount1 * m_TowerInfo.BerserkerStack,
+												buffData.BuffRand1,
+												buffData.Prefab
 												);
 
 											if (buff.AddType == E_AddType.Fix)
@@ -1302,7 +1334,9 @@ public class Tower : MonoBehaviour
 														buffData.Name_KR + "_2",
 														buffData.BuffType2,
 														buffData.AddType2,
-														buffData.BuffAmount2 * m_TowerInfo.BerserkerStack
+														buffData.BuffAmount2 * m_TowerInfo.BerserkerStack,
+														buffData.BuffRand2,
+														buffData.Prefab
 														);
 
 													if (buff.AddType == E_AddType.Fix)
@@ -1325,7 +1359,9 @@ public class Tower : MonoBehaviour
 																buffData.Name_KR + "_3",
 																buffData.BuffType3,
 																buffData.AddType3,
-																buffData.BuffAmount3 * m_TowerInfo.BerserkerStack
+																buffData.BuffAmount3 * m_TowerInfo.BerserkerStack,
+																buffData.BuffRand3,
+																buffData.Prefab
 																);
 
 															if (buff.AddType == E_AddType.Fix)
@@ -1366,7 +1402,9 @@ public class Tower : MonoBehaviour
 												buffData.Name_KR + "_1",
 												buffData.BuffType1,
 												buffData.AddType1,
-												buffData.BuffAmount1
+												buffData.BuffAmount1,
+												buffData.BuffRand1,
+												buffData.Prefab
 												);
 
 											if (buff.AddType == E_AddType.Fix)
@@ -1386,7 +1424,9 @@ public class Tower : MonoBehaviour
 														buffData.Name_KR + "_2",
 														buffData.BuffType2,
 														buffData.AddType2,
-														buffData.BuffAmount2
+														buffData.BuffAmount2,
+														buffData.BuffRand2,
+														buffData.Prefab
 														);
 
 													if (buff.AddType == E_AddType.Fix)
@@ -1406,7 +1446,9 @@ public class Tower : MonoBehaviour
 																buffData.Name_KR + "_3",
 																buffData.BuffType3,
 																buffData.AddType3,
-																buffData.BuffAmount3
+																buffData.BuffAmount3,
+																buffData.BuffRand3,
+																buffData.Prefab
 																);
 
 															if (buff.AddType == E_AddType.Fix)
@@ -1440,7 +1482,9 @@ public class Tower : MonoBehaviour
 												buffData.Name_KR + "_1",
 												buffData.BuffType1,
 												buffData.AddType1,
-												buffData.BuffAmount1 * m_TowerInfo.BerserkerStack
+												buffData.BuffAmount1 * m_TowerInfo.BerserkerStack,
+												buffData.BuffRand1,
+												buffData.Prefab
 												);
 
 											if (buff.AddType == E_AddType.Fix)
@@ -1463,7 +1507,9 @@ public class Tower : MonoBehaviour
 														buffData.Name_KR + "_2",
 														buffData.BuffType2,
 														buffData.AddType2,
-														buffData.BuffAmount2 * m_TowerInfo.BerserkerStack
+														buffData.BuffAmount2 * m_TowerInfo.BerserkerStack,
+														buffData.BuffRand2,
+														buffData.Prefab
 														);
 
 													if (buff.AddType == E_AddType.Fix)
@@ -1486,7 +1532,9 @@ public class Tower : MonoBehaviour
 																buffData.Name_KR + "_3",
 																buffData.BuffType3,
 																buffData.AddType3,
-																buffData.BuffAmount3 * m_TowerInfo.BerserkerStack
+																buffData.BuffAmount3 * m_TowerInfo.BerserkerStack,
+																buffData.BuffRand3,
+																buffData.Prefab
 																);
 
 															if (buff.AddType == E_AddType.Fix)
@@ -1693,7 +1741,9 @@ public class Tower : MonoBehaviour
 									buffData.Name_KR + "_1",
 									buffData.BuffType1,
 									buffData.AddType1,
-									buffData.BuffAmount1
+									buffData.BuffAmount1,
+									buffData.BuffRand1,
+									buffData.Prefab
 									);
 
 								tower.AddSkillBuff(buff, buffDuration);
@@ -1710,7 +1760,9 @@ public class Tower : MonoBehaviour
 											buffData.Name_KR + "_2",
 											buffData.BuffType2,
 											buffData.AddType2,
-											buffData.BuffAmount2
+											buffData.BuffAmount2,
+											buffData.BuffRand2,
+											buffData.Prefab
 											);
 
 										tower.AddSkillBuff(buff, buffDuration);
@@ -1727,7 +1779,9 @@ public class Tower : MonoBehaviour
 													buffData.Name_KR + "_3",
 													buffData.BuffType3,
 													buffData.AddType3,
-													buffData.BuffAmount3
+													buffData.BuffAmount3,
+													buffData.BuffRand3,
+													buffData.Prefab
 													);
 
 												tower.AddSkillBuff(buff, buffDuration);
@@ -1798,7 +1852,9 @@ public class Tower : MonoBehaviour
 												buffData.Name_KR + "_1",
 												buffData.BuffType1,
 												buffData.AddType1,
-												buffData.BuffAmount1
+												buffData.BuffAmount1,
+												buffData.BuffRand1,
+												buffData.Prefab
 												);
 
 											if (buff.AddType == E_AddType.Fix)
@@ -1818,7 +1874,9 @@ public class Tower : MonoBehaviour
 														buffData.Name_KR + "_2",
 														buffData.BuffType2,
 														buffData.AddType2,
-														buffData.BuffAmount2
+														buffData.BuffAmount2,
+														buffData.BuffRand2,
+														buffData.Prefab
 														);
 
 													if (buff.AddType == E_AddType.Fix)
@@ -1838,7 +1896,9 @@ public class Tower : MonoBehaviour
 																buffData.Name_KR + "_3",
 																buffData.BuffType3,
 																buffData.AddType3,
-																buffData.BuffAmount3
+																buffData.BuffAmount3,
+																buffData.BuffRand3,
+																buffData.Prefab
 																);
 
 															if (buff.AddType == E_AddType.Fix)
@@ -1872,7 +1932,9 @@ public class Tower : MonoBehaviour
 												buffData.Name_KR + "_1",
 												buffData.BuffType1,
 												buffData.AddType1,
-												buffData.BuffAmount1 * m_TowerInfo.BerserkerStack
+												buffData.BuffAmount1 * m_TowerInfo.BerserkerStack,
+												buffData.BuffRand1,
+												buffData.Prefab
 												);
 
 											if (buff.AddType == E_AddType.Fix)
@@ -1895,7 +1957,9 @@ public class Tower : MonoBehaviour
 														buffData.Name_KR + "_2",
 														buffData.BuffType2,
 														buffData.AddType2,
-														buffData.BuffAmount2 * m_TowerInfo.BerserkerStack
+														buffData.BuffAmount2 * m_TowerInfo.BerserkerStack,
+														buffData.BuffRand2,
+														buffData.Prefab
 														);
 
 													if (buff.AddType == E_AddType.Fix)
@@ -1918,7 +1982,9 @@ public class Tower : MonoBehaviour
 																buffData.Name_KR + "_3",
 																buffData.BuffType3,
 																buffData.AddType3,
-																buffData.BuffAmount3 * m_TowerInfo.BerserkerStack
+																buffData.BuffAmount3 * m_TowerInfo.BerserkerStack,
+																buffData.BuffRand3,
+																buffData.Prefab
 																);
 
 															if (buff.AddType == E_AddType.Fix)
@@ -1959,7 +2025,9 @@ public class Tower : MonoBehaviour
 												buffData.Name_KR + "_1",
 												buffData.BuffType1,
 												buffData.AddType1,
-												buffData.BuffAmount1
+												buffData.BuffAmount1,
+												buffData.BuffRand1,
+												buffData.Prefab
 												);
 
 											if (buff.AddType == E_AddType.Fix)
@@ -1979,7 +2047,9 @@ public class Tower : MonoBehaviour
 														buffData.Name_KR + "_2",
 														buffData.BuffType2,
 														buffData.AddType2,
-														buffData.BuffAmount2
+														buffData.BuffAmount2,
+														buffData.BuffRand2,
+														buffData.Prefab
 														);
 
 													if (buff.AddType == E_AddType.Fix)
@@ -1999,7 +2069,9 @@ public class Tower : MonoBehaviour
 																buffData.Name_KR + "_3",
 																buffData.BuffType3,
 																buffData.AddType3,
-																buffData.BuffAmount3
+																buffData.BuffAmount3,
+																buffData.BuffRand3,
+																buffData.Prefab
 																);
 
 															if (buff.AddType == E_AddType.Fix)
@@ -2033,7 +2105,9 @@ public class Tower : MonoBehaviour
 												buffData.Name_KR + "_1",
 												buffData.BuffType1,
 												buffData.AddType1,
-												buffData.BuffAmount1 * m_TowerInfo.BerserkerStack
+												buffData.BuffAmount1 * m_TowerInfo.BerserkerStack,
+												buffData.BuffRand1,
+												buffData.Prefab
 												);
 
 											if (buff.AddType == E_AddType.Fix)
@@ -2056,7 +2130,9 @@ public class Tower : MonoBehaviour
 														buffData.Name_KR + "_2",
 														buffData.BuffType2,
 														buffData.AddType2,
-														buffData.BuffAmount2 * m_TowerInfo.BerserkerStack
+														buffData.BuffAmount2 * m_TowerInfo.BerserkerStack,
+														buffData.BuffRand2,
+														buffData.Prefab
 														);
 
 													if (buff.AddType == E_AddType.Fix)
@@ -2079,7 +2155,9 @@ public class Tower : MonoBehaviour
 																buffData.Name_KR + "_3",
 																buffData.BuffType3,
 																buffData.AddType3,
-																buffData.BuffAmount3 * m_TowerInfo.BerserkerStack
+																buffData.BuffAmount3 * m_TowerInfo.BerserkerStack,
+																buffData.BuffRand3,
+																buffData.Prefab
 																);
 
 															if (buff.AddType == E_AddType.Fix)
@@ -2225,7 +2303,9 @@ public class Tower : MonoBehaviour
 								buffData.Name_KR + "_1",
 								buffData.BuffType1,
 								buffData.AddType1,
-								buffData.BuffAmount1
+								buffData.BuffAmount1,
+								buffData.BuffRand1,
+								buffData.Prefab
 								);
 
 							AddSkillBuff(buff, buffDuration);
@@ -2242,7 +2322,9 @@ public class Tower : MonoBehaviour
 										buffData.Name_KR + "_2",
 										buffData.BuffType2,
 										buffData.AddType2,
-										buffData.BuffAmount2
+										buffData.BuffAmount2,
+										buffData.BuffRand2,
+										buffData.Prefab
 										);
 
 									AddSkillBuff(buff, buffDuration);
@@ -2259,7 +2341,9 @@ public class Tower : MonoBehaviour
 												buffData.Name_KR + "_3",
 												buffData.BuffType3,
 												buffData.AddType3,
-												buffData.BuffAmount3
+												buffData.BuffAmount3,
+												buffData.BuffRand3,
+												buffData.Prefab
 												);
 
 											AddSkillBuff(buff, buffDuration);
@@ -2334,7 +2418,9 @@ public class Tower : MonoBehaviour
 									buffData.Name_KR + "_1",
 									buffData.BuffType1,
 									buffData.AddType1,
-									buffData.BuffAmount1
+									buffData.BuffAmount1,
+									buffData.BuffRand1,
+									buffData.Prefab
 									);
 
 								tower.AddSkillBuff(buff, buffDuration);
@@ -2351,7 +2437,9 @@ public class Tower : MonoBehaviour
 											buffData.Name_KR + "_2",
 											buffData.BuffType2,
 											buffData.AddType2,
-											buffData.BuffAmount2
+											buffData.BuffAmount2,
+											buffData.BuffRand2,
+											buffData.Prefab
 											);
 
 										tower.AddSkillBuff(buff, buffDuration);
@@ -2368,7 +2456,9 @@ public class Tower : MonoBehaviour
 													buffData.Name_KR + "_3",
 													buffData.BuffType3,
 													buffData.AddType3,
-													buffData.BuffAmount3
+													buffData.BuffAmount3,
+													buffData.BuffRand3,
+													buffData.Prefab
 													);
 
 												tower.AddSkillBuff(buff, buffDuration);
@@ -2440,7 +2530,9 @@ public class Tower : MonoBehaviour
 												buffData.Name_KR + "_1",
 												buffData.BuffType1,
 												buffData.AddType1,
-												buffData.BuffAmount1
+												buffData.BuffAmount1,
+												buffData.BuffRand1,
+												buffData.Prefab
 												);
 
 											if (buff.AddType == E_AddType.Fix)
@@ -2460,7 +2552,9 @@ public class Tower : MonoBehaviour
 														buffData.Name_KR + "_2",
 														buffData.BuffType2,
 														buffData.AddType2,
-														buffData.BuffAmount2
+														buffData.BuffAmount2,
+														buffData.BuffRand2,
+														buffData.Prefab
 														);
 
 													if (buff.AddType == E_AddType.Fix)
@@ -2480,7 +2574,9 @@ public class Tower : MonoBehaviour
 																buffData.Name_KR + "_3",
 																buffData.BuffType3,
 																buffData.AddType3,
-																buffData.BuffAmount3
+																buffData.BuffAmount3,
+																buffData.BuffRand3,
+																buffData.Prefab
 																);
 
 															if (buff.AddType == E_AddType.Fix)
@@ -2514,7 +2610,9 @@ public class Tower : MonoBehaviour
 												buffData.Name_KR + "_1",
 												buffData.BuffType1,
 												buffData.AddType1,
-												buffData.BuffAmount1 * m_TowerInfo.BerserkerStack
+												buffData.BuffAmount1 * m_TowerInfo.BerserkerStack,
+												buffData.BuffRand1,
+												buffData.Prefab
 												);
 
 											if (buff.AddType == E_AddType.Fix)
@@ -2537,7 +2635,9 @@ public class Tower : MonoBehaviour
 														buffData.Name_KR + "_2",
 														buffData.BuffType2,
 														buffData.AddType2,
-														buffData.BuffAmount2 * m_TowerInfo.BerserkerStack
+														buffData.BuffAmount2 * m_TowerInfo.BerserkerStack,
+														buffData.BuffRand2,
+														buffData.Prefab
 														);
 
 													if (buff.AddType == E_AddType.Fix)
@@ -2560,7 +2660,9 @@ public class Tower : MonoBehaviour
 																buffData.Name_KR + "_3",
 																buffData.BuffType3,
 																buffData.AddType3,
-																buffData.BuffAmount3 * m_TowerInfo.BerserkerStack
+																buffData.BuffAmount3 * m_TowerInfo.BerserkerStack,
+																buffData.BuffRand3,
+																buffData.Prefab
 																);
 
 															if (buff.AddType == E_AddType.Fix)
@@ -2601,7 +2703,9 @@ public class Tower : MonoBehaviour
 												buffData.Name_KR + "_1",
 												buffData.BuffType1,
 												buffData.AddType1,
-												buffData.BuffAmount1
+												buffData.BuffAmount1,
+												buffData.BuffRand1,
+												buffData.Prefab
 												);
 
 											if (buff.AddType == E_AddType.Fix)
@@ -2621,7 +2725,9 @@ public class Tower : MonoBehaviour
 														buffData.Name_KR + "_2",
 														buffData.BuffType2,
 														buffData.AddType2,
-														buffData.BuffAmount2
+														buffData.BuffAmount2,
+														buffData.BuffRand2,
+														buffData.Prefab
 														);
 
 													if (buff.AddType == E_AddType.Fix)
@@ -2641,7 +2747,9 @@ public class Tower : MonoBehaviour
 																buffData.Name_KR + "_3",
 																buffData.BuffType3,
 																buffData.AddType3,
-																buffData.BuffAmount3
+																buffData.BuffAmount3,
+																buffData.BuffRand3,
+																buffData.Prefab
 																);
 
 															if (buff.AddType == E_AddType.Fix)
@@ -2675,7 +2783,9 @@ public class Tower : MonoBehaviour
 												buffData.Name_KR + "_1",
 												buffData.BuffType1,
 												buffData.AddType1,
-												buffData.BuffAmount1 * m_TowerInfo.BerserkerStack
+												buffData.BuffAmount1 * m_TowerInfo.BerserkerStack,
+												buffData.BuffRand1,
+												buffData.Prefab
 												);
 
 											if (buff.AddType == E_AddType.Fix)
@@ -2698,7 +2808,9 @@ public class Tower : MonoBehaviour
 														buffData.Name_KR + "_2",
 														buffData.BuffType2,
 														buffData.AddType2,
-														buffData.BuffAmount2 * m_TowerInfo.BerserkerStack
+														buffData.BuffAmount2 * m_TowerInfo.BerserkerStack,
+														buffData.BuffRand2,
+														buffData.Prefab
 														);
 
 													if (buff.AddType == E_AddType.Fix)
@@ -2721,7 +2833,9 @@ public class Tower : MonoBehaviour
 																buffData.Name_KR + "_3",
 																buffData.BuffType3,
 																buffData.AddType3,
-																buffData.BuffAmount3 * m_TowerInfo.BerserkerStack
+																buffData.BuffAmount3 * m_TowerInfo.BerserkerStack,
+																buffData.BuffRand3,
+																buffData.Prefab
 																);
 
 															if (buff.AddType == E_AddType.Fix)
@@ -2867,7 +2981,9 @@ public class Tower : MonoBehaviour
 								buffData.Name_KR + "_1",
 								buffData.BuffType1,
 								buffData.AddType1,
-								buffData.BuffAmount1
+								buffData.BuffAmount1,
+								buffData.BuffRand1,
+								buffData.Prefab
 								);
 
 							AddSkillBuff(buff, buffDuration);
@@ -2884,7 +3000,9 @@ public class Tower : MonoBehaviour
 										buffData.Name_KR + "_2",
 										buffData.BuffType2,
 										buffData.AddType2,
-										buffData.BuffAmount2
+										buffData.BuffAmount2,
+										buffData.BuffRand2,
+										buffData.Prefab
 										);
 
 									AddSkillBuff(buff, buffDuration);
@@ -2901,7 +3019,9 @@ public class Tower : MonoBehaviour
 												buffData.Name_KR + "_3",
 												buffData.BuffType3,
 												buffData.AddType3,
-												buffData.BuffAmount3
+												buffData.BuffAmount3,
+												buffData.BuffRand3,
+												buffData.Prefab
 												);
 
 											AddSkillBuff(buff, buffDuration);

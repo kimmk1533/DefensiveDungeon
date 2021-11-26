@@ -29,9 +29,6 @@ public class CKeyValue : System.IEquatable<CKeyValue>
 
 public class InventorySlotGUI : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerClickHandler//IPointerEnterHandler,IPointerExitHandler
 {
-	public delegate void SummonTowerHandler(Tower tower);
-	public event SummonTowerHandler OnTowerSummonEvent;
-
 	public delegate void InfoChangeHandler();
 	public event InfoChangeHandler OnInfoChangedEvent;
 	protected CombinationManager M_COM => CombinationManager.Instance;
@@ -229,7 +226,6 @@ public class InventorySlotGUI : MonoBehaviour, IDragHandler, IBeginDragHandler, 
 		// 2. set tower infomation to UI
 		int code = m_info.tower_data.Code;
 		m_showObj = m_showObj_list.Find((item) => { return item.Code == code; }).obj;
-		Debug.Log(m_showObj.transform.position);
 
 		m_showObj.gameObject.SetActive(true);
 		//m_textPro.text = m_info.tower_data.Name_EN;
@@ -316,7 +312,6 @@ public class InventorySlotGUI : MonoBehaviour, IDragHandler, IBeginDragHandler, 
 					Node hit_node = hitinfo.collider.gameObject.GetComponent<Node>();
 					if (hit_node.m_Tower == null)
 					{
-						Debug.Log("Summon!");
 						hit_node.SetTower(m_info.tower);
 						ClearInven();
 					}

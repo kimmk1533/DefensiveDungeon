@@ -57,6 +57,6 @@ public class GameOverUIController : MonoBehaviour
 		// TODO...
 		// TODO : call all finalize first
 
-		Debug.Log("---------------------------GAME END---------------------------");
+		// Debug.Log("---------------------------GAME END---------------------------");
 	}
 }

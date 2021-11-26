@@ -63,7 +63,8 @@ public class Icon_TableExcelLoader : ScriptableObject
 
 	public Sprite GetIcon(int iconCode)
 	{
-		//Debug.Log(spriteCode);
+		//
+		//(spriteCode);
 		var info = IconList.Find((item) => { return item.Code == iconCode; });
 		return info.obj;
 	}

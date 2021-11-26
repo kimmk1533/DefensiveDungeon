@@ -80,13 +80,11 @@ public class LevelInfoUIController : MonoBehaviour , IPointerClickHandler
         if (false == UserInfoManager.Instance.UseGold(require_gold))
         {
             // not enough gold
-            Debug.Log("not enough gold to purchase exp");
         }
         else
         {
             int increase_exp = UserInfoManager.Instance.IncrementOfPurchasingEXP;
             UserInfoManager.Instance.AddExp(increase_exp);
-            Debug.Log($"Purchase EXP complete {increase_exp}");
         }
 
         __OnInfoChanged();
