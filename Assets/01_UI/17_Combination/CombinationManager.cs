@@ -107,8 +107,4 @@ public class CombinationManager : Singleton<CombinationManager>
 			m_DespawnWorldObjFlag = false;
 		}
 	}
-	public void PlayComEffect()
-	{
-
-	}
 }

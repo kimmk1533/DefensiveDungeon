@@ -70,5 +70,6 @@ public class TowerToolTipManager : Singleton<TowerToolTipManager>
         UserInfoManager.Instance.AddGold(price);
 
         DeActivateTooltip();
+        SynergyManager.Instance.UpdateSynergy();
     }
 }
