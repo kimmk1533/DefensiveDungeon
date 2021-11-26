@@ -15,7 +15,19 @@ public class SkillUI : MonoBehaviour
 	[SerializeField]
 	protected TMPro.TextMeshProUGUI m_SkillKeyText;
 
-	public string skillCountText { get => m_SkillCountText.text; set => m_SkillCountText.text = value; }
+	public string skillCountText
+	{
+		get => m_SkillCountText.text;
+		set
+		{
+			m_SkillCountText.text = value;
+
+			if (value == "0")
+				m_SkillCountText.gameObject.SetActive(false);
+			else
+				m_SkillCountText.gameObject.SetActive(true);
+		}
+	}
 	public string skillKeyText { get => m_SkillKeyText.text; set => m_SkillKeyText.text = value; }
 	public float skillFillAmount { get => m_SkillIcon_FG.fillAmount; set => m_SkillIcon_FG.fillAmount = value; }
 
