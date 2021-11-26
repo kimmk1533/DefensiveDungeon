@@ -31,7 +31,7 @@ public class HellLord : Devil
 		statData.Dmg_Fix += m_DevilInfo_Excel.Atk;
 
 		#region 크리티컬
-		float dmg_percent = m_DevilInfo.m_Skill02.m_Dmg_Percent;
+		float dmg_percent = m_DevilInfo.Stat_Default.Dmg_Percent;
 		// 크리티컬 확률
 		float CritRate = m_DevilInfo_Excel.Crit_rate;
 		// 크리티컬 배율
@@ -44,9 +44,11 @@ public class HellLord : Devil
 		{
 			dmg_percent *= CritDmg;
 		}
+		#endregion
+
+		// 패시브 스킬
 		m_DevilInfo.m_Skill02.m_total_Dmg = m_DevilInfo.m_Skill02.m_Dmg_Fix * dmg_percent;
 		OnSkill02(GetDevilSkillArg(Devil.E_SkillNumber.Skill2));
-		#endregion
 
 		// 기본 스킬 투사체 생성
 		int DefaultSkillCode = conditionData.projectile_prefab;
@@ -69,9 +71,9 @@ public class HellLord : Devil
 
 			skill.enabled = true;
 			skill.gameObject.SetActive(true);
-			S_Critical critical=new S_Critical(CritRate,CritDmg);
+			S_Critical critical = new S_Critical(CritRate, CritDmg);
 			// 기본 스킬 데이터 설정
-			skill.InitializeSkill(target, conditionData, statData,critical);
+			skill.InitializeSkill(target, conditionData, statData, critical);
 		}
 
 		if ((E_TargetType)m_DevilInfo.Condition_Default.Target_type == E_TargetType.TileTarget)
@@ -105,30 +107,23 @@ public class HellLord : Devil
 
 		for (int i = 0; i < enemyhit.Length; ++i)
 		{
-			#region 크리티컬
-			float dmg_percent = m_DevilInfo.m_Skill01.m_Dmg_Percent;
+			//최종 데미지
+			arg.skillData.m_total_Dmg = m_DevilInfo.m_Skill01.m_Dmg_Fix * m_DevilInfo.m_Skill01.m_Dmg_Percent;
+
 			// 크리티컬 확률
 			float CritRate = m_DevilInfo_Excel.Crit_rate;
 			// 크리티컬 배율
 			float CritDmg = m_DevilInfo_Excel.Crit_Dmg;
 
-			// 크리티컬 대미지 설정
-			float CritRand = Random.Range(0.00001f, 1f);
-			bool CritApply = CritRand <= CritRate;
-			if (CritApply)
-			{
-				dmg_percent *= CritDmg;
-			}
+			S_Critical critical = new S_Critical(CritRate, CritDmg);
 
-			//최종 데미지
-			arg.skillData.m_total_Dmg = m_DevilInfo.m_Skill01.m_Dmg_Fix * dmg_percent;
+			enemyhit[i].transform.GetComponent<Enemy>().On_Damage(
+				arg.skillData.m_total_Dmg,
+				critical
+				);
 
-			#endregion
-
-			enemyhit[i].transform.GetComponent<Enemy>().On_DaMage(arg.skillData.m_total_Dmg,CritApply);
 			total_dmg += arg.skillData.m_total_Dmg;
 		}
-
 
 		float SelfHeal = total_dmg * 0.2f;
 		if (m_DevilInfo.m_HP <= m_DevilInfo.m_halfHP)

@@ -31,7 +31,7 @@ public class EnemyPool : ObjectPool<EnemyPool, Enemy>
 
 				Enemy origin = originClone.AddComponent<Enemy>();
 
-				float size = M_PrefabData.DataList[i].Size;
+				float size = M_PrefabData.DataList.Find((item) => { return item.Code == PrefabCode; }).Size;
 
 				origin.transform.Find("Mesh").localScale = Vector3.one * size;
 				origin.gameObject.layer = LayerMask.NameToLayer("Enemy");

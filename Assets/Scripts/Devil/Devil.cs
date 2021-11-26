@@ -74,24 +74,6 @@ public abstract class Devil : MonoBehaviour
 	// 마왕 초기화
 	protected void InitializeDevil(E_Devil no)
 	{
-		#region 내부 컴포넌트
-		if (null == m_DevilAnimator)
-		{
-			m_DevilAnimator = GetComponentInChildren<DevilAnimator>(true);
-			m_DevilAnimator.Initialize(this);
-		}
-
-		if (null == m_AttackRange_Default)
-		{
-			m_AttackRange_Default = transform.Find("AttackRange_Default").AddComponent<AttackRange>();
-			m_AttackRange_Default.gameObject.layer = LayerMask.NameToLayer("TowerAttackRange");
-			m_AttackRange_Default.InitializeAttackRange();
-		}
-		m_AttackRange_Default.Range = m_DevilInfo.Stat_Default.Range;
-		m_AttackRange_Default.Direction = E_Direction.None;
-		m_AttackRange_Default.CanFindTarget = true;
-		#endregion
-
 		#region 엑셀 데이터 정리
 		m_DevilInfo_Excel = M_Devil.GetData(no);
 		#endregion
@@ -162,6 +144,24 @@ public abstract class Devil : MonoBehaviour
 		m_DevilInfo.m_Skill02.m_Dmg_Fix += m_DevilInfo.m_Skill02.m_StatData.Dmg_Fix;
 		m_DevilInfo.m_Skill01.m_Dmg_Percent = m_DevilInfo.m_Skill02.m_StatData.Dmg_Percent;
 		m_DevilInfo.m_Size = m_DevilInfo.m_Skill02.m_StatData.Size;
+		#endregion
+
+		#region 내부 컴포넌트
+		if (null == m_DevilAnimator)
+		{
+			m_DevilAnimator = GetComponentInChildren<DevilAnimator>(true);
+			m_DevilAnimator.Initialize(this);
+		}
+
+		if (null == m_AttackRange_Default)
+		{
+			m_AttackRange_Default = transform.Find("AttackRange_Default").AddComponent<AttackRange>();
+			m_AttackRange_Default.gameObject.layer = LayerMask.NameToLayer("TowerAttackRange");
+			m_AttackRange_Default.InitializeAttackRange();
+		}
+		m_AttackRange_Default.Range = m_DevilInfo.Stat_Default.Range;
+		m_AttackRange_Default.Direction = E_Direction.None;
+		m_AttackRange_Default.CanFindTarget = true;
 		#endregion
 
 		#region 마왕 스킬 정리
@@ -406,7 +406,6 @@ public abstract class Devil : MonoBehaviour
 
 			m_DevilAnimator.SetTrigger("Skill02");
 			Skill02Event?.Invoke(arg);
-			Debug.Log("링크 잘됨");
 		}
 	}
 	public DevilSkillArg GetDevilSkillArg(E_SkillNumber number)

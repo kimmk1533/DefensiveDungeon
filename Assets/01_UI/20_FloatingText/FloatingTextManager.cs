@@ -26,13 +26,9 @@ public class FloatingTextManager : Singleton<FloatingTextManager>
 		// 텍스트 설정
 		floatingText.textMeshPro.text = text;
 		// 색 설정
-		if (filter.color != default(Color) &&
-			floatingText.textMeshPro.color != filter.color)
-			floatingText.textMeshPro.color = filter.color;
+		floatingText.textMeshPro.color = filter.color;
 		// 아웃라인 색 설정
-		if (filter.outlineColor != default(Color32) &&
-			floatingText.textMeshPro.outlineColor != filter.outlineColor)
-			floatingText.textMeshPro.outlineColor = filter.outlineColor;
+		floatingText.textMeshPro.outlineColor = filter.outlineColor;
 		// 아웃라인 두께 설정
 		floatingText.textMeshPro.outlineWidth = filter.outlineWidth;
 		// 부모 설정
@@ -52,8 +48,8 @@ public class FloatingTextManager : Singleton<FloatingTextManager>
 		}
 		// 크기 설정
 		Vector3 scale = floatingText.transform.localScale;
-		scale.x *= filter.width;
-		scale.y *= filter.height;
+		scale.x = filter.width;
+		scale.y = filter.height;
 		floatingText.transform.localScale = scale;
 		// 활성화 설정
 		floatingText.gameObject.SetActive(true);
