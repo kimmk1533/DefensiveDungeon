@@ -489,7 +489,8 @@ public class Enemy : MonoBehaviour
 	// 사망
 	public void SetAnimation_Death()
 	{
-		m_Animator.SetBool("Die", true);
+		m_Animator.SetBool("IsDead", true);
+		m_Animator.SetTrigger("Die");
 		m_HPBar.gameObject.SetActive(false);
 	}
 	// 공격
@@ -546,7 +547,7 @@ public class Enemy : MonoBehaviour
 	public void CallDie()
 	{
 		M_Enemy.Despawn(this);
-		m_Animator.SetBool("Die", false);
+		m_Animator.SetBool("IsDead", false);
 	}
 	#endregion
 
