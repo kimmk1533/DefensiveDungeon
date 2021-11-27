@@ -22,14 +22,15 @@ public class DevilManager : Singleton<DevilManager>
 
 	protected Devil m_Devil;
 
+	bool m_IsDrawGizmo = false;
+
 	#region 내부 프로퍼티
 	protected DataTableManager M_DataTable => DataTableManager.Instance;
 	protected UserInfoManager M_UserInfo => UserInfoManager.Instance;
+	protected DevilSkillUIManager M_DevilSkillUI => DevilSkillUIManager.Instance;
 	#endregion
-
 	#region 외부 프로퍼티
 	public Devil Devil => m_Devil;
-	public int SkillNumber { get => skillnumber; set => skillnumber = value; }
 
 	public event Action OnUseSkillEvent
 	{
@@ -43,7 +44,7 @@ public class DevilManager : Singleton<DevilManager>
 		}
 	}
 	public event Action OnSkillCountChangedEvent
-	{ 
+	{
 		add
 		{
 			m_Devil.OnSkillCountChangedEvent += value;
@@ -53,6 +54,8 @@ public class DevilManager : Singleton<DevilManager>
 			m_Devil.OnSkillCountChangedEvent -= value;
 		}
 	}
+
+	public bool IsDrawGizmo { get => m_IsDrawGizmo; set => m_IsDrawGizmo = value; }
 
 	public int Skill01_ChargeCount { get => m_Devil.Skill01.m_CurrentCharge; }
 	public int Skill01_MaxChargeCount { get => m_Devil.Skill01.m_MaxCharge; }
@@ -83,14 +86,14 @@ public class DevilManager : Singleton<DevilManager>
 		//collider.isTrigger = true;
 		//collider.size.Set(6f, 6f, 6f);
 		//collider.center.Set(0f, 3f, 0f);
-		
+
 		GameObject devil = GameObject.Instantiate(m_PrefabData.GetPrefab(data.Prefab));
 		devil.transform.SetParent(node.transform);
 		devil.transform.position = Vector3.zero;
 		devil.transform.eulerAngles = new Vector3(0f, 180f, 0f);
 		float size = m_PrefabData.DataList.Find((item) => { return item.Code == data.Prefab; }).Size;
 		devil.transform.Find("Mesh").localScale = Vector3.one * size;
-		
+
 		switch ((E_Devil)data.No)
 		{
 			case E_Devil.HateQueen:
@@ -118,26 +121,6 @@ public class DevilManager : Singleton<DevilManager>
 
 		return result;
 	}
-	bool use_skill = false;
-	bool is_gizmodraw = false;
-	public bool UseSkill
-	{
-		get => use_skill;
-		set => use_skill = value;
-	}
-	public bool Is_GizmoDraw
-	{
-		get => is_gizmodraw;
-		set => is_gizmodraw = value;
-	}
-	int skillnumber = 0;
-	public void Doskill()
-	{
-		if(use_skill)
-		{
-			m_Devil.ActiveRange((Devil.E_SkillNumber)skillnumber);
-		}
-	}
 	#endregion
 
 	#region 유니티 콜백 함수
@@ -146,15 +129,84 @@ public class DevilManager : Singleton<DevilManager>
 		m_DevilData = M_DataTable.GetDataTable<Devil_TableExcelLoader>();
 		m_PrefabData = M_DataTable.GetDataTable<Prefab_TableExcelLoader>();
 	}
-
 	private void Start()
 	{
 		SelectDevil(M_UserInfo.DevilCode);
 	}
 	private void Update()
 	{
-		Doskill();
+		if (m_Devil.IsCastingSkill01)
+		{
+			m_Devil.DevilSkillCasting(Devil.E_SkillNumber.Skill1);
+		}
+		if (m_Devil.IsCastingSkill02)
+		{
+			m_Devil.DevilSkillCasting(Devil.E_SkillNumber.Skill2);
+		}
 	}
 	#endregion
+	#region My Callback Func
+	public void _Start()
+	{
+		switch (m_Devil.GetBossType)
+		{
+			case E_Devil.HellLord:
+				{
+					// 스킬01
+					M_DevilSkillUI.OnSkill01ButtonClickedEvent.AddListener(() =>
+					{
+						m_Devil.IsCastingSkill02 = false;
 
+						if (Skill01_ChargeCount > 0)
+						{
+							m_Devil.IsCastingSkill01 = !m_Devil.IsCastingSkill01;
+						}
+						else
+						{
+							m_Devil.IsCastingSkill01 = false;
+						}
+					});
+				}
+				break;
+			default:
+				{
+					// 스킬01
+					M_DevilSkillUI.OnSkill01ButtonClickedEvent.AddListener(() =>
+					{
+						if (Skill01_ChargeCount > 0)
+						{
+							m_Devil.IsCastingSkill02 = false;
+
+							if (Skill01_ChargeCount > 0)
+							{
+								m_Devil.IsCastingSkill01 = !m_Devil.IsCastingSkill01;
+							}
+							else
+							{
+								m_Devil.IsCastingSkill01 = false;
+							}
+						}
+					});
+					// 스킬02
+					M_DevilSkillUI.OnSkill02ButtonClickedEvent.AddListener(() =>
+					{
+						if (Skill02_ChargeCount > 0)
+						{
+							m_Devil.IsCastingSkill01 = false;
+
+							if (Skill02_ChargeCount > 0)
+							{
+								m_Devil.IsCastingSkill02 = !m_Devil.IsCastingSkill02;
+							}
+							else
+							{
+								m_Devil.IsCastingSkill02 = false;
+							}
+						}
+					});
+				}
+				break;
+		}
+	}
+	#endregion
 }

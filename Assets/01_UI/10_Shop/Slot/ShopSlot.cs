@@ -54,7 +54,7 @@ public class ShopSlot : MonoBehaviour, IPointerClickHandler
 	public bool IsOccupied { get { return m_info.isOccupied; } }
 	public int Price { get { return m_info.cost; } }
 
-	private void Awake()
+	public void Initialize()
 	{
 		m_rankToColor_dic = new Dictionary<int, Color>();
 		m_rankToColor_dic.Add(1, Color.white);
@@ -62,8 +62,6 @@ public class ShopSlot : MonoBehaviour, IPointerClickHandler
 		m_rankToColor_dic.Add(3, Color.blue);
 		m_rankToColor_dic.Add(4, new Color(0.7f, 0f, 1f));
 		m_rankToColor_dic.Add(5, Color.yellow);
-
-
 
 		OnInfoChangedCallback += OnInfoChanged;
 		SetRenderTexture();

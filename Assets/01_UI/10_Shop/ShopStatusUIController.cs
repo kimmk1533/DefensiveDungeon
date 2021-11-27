@@ -7,34 +7,39 @@ public class ShopStatusUIController : MonoBehaviour
 {
     [SerializeField] TMPro.TextMeshProUGUI m_level_text;
 
-    // È®·ü Ç¥±âÇÒ root panel 
+    // í™•ë¥  í‘œê¸°í•  root panel 
     [SerializeField] Image m_percentage_root_panel;
     List<RankRateUIController> m_rankRateUIs = null;
-    private void Awake()
+
+    public void Initialize()
     {
         m_rankRateUIs = new List<RankRateUIController>();
-        // È®·ü Ç¥±âÇÒ child panel °¡Á®¿À±â
-        // ÁÂÃøºÎÅÍ ¿Àµµ·Ï Á¤·Ä
+        // í™•ë¥  í‘œê¸°í•  child panel ê°€ì ¸ì˜¤ê¸°
+        // ì¢Œì¸¡ë¶€í„° ì˜¤ë„ë¡ ì •ë ¬
         m_rankRateUIs.AddRange(m_percentage_root_panel.GetComponentsInChildren<RankRateUIController>());
         m_rankRateUIs.Sort(
             (item1, item2) =>
-        { return item1.transform.position.x.CompareTo(item2.transform.position.x); }
+            { return item1.transform.position.x.CompareTo(item2.transform.position.x); }
         );
+		foreach (var item in m_rankRateUIs)
+		{
+            item.Initialize();
+		}
     }
 
-    // index ´Â 0ºÎÅÍ
+    // index ëŠ” 0ë¶€í„°
     public void SetRates(float[] rates)
     {
         try
         {
             for (int i = 0; i < rates.Length; i++)
             {
-                m_rankRateUIs[i].SetUI("¡Ü " + (rates[i] * 100).ToString() + "%");
+                m_rankRateUIs[i].SetUI("â— " + (rates[i] * 100).ToString() + "%");
             }
         }
         catch (System.Exception)
         {
-            Debug.LogError("SHOP Percentage Panel : µ¥ÀÌÅÍ Å×ÀÌºí °³¼ö¿Í Ç¥±âÇÒ ÅØ½ºÆ® °³¼ö°¡ ºÒÀÏÄ¡ÇÔ");
+            Debug.LogError("SHOP Percentage Panel : ë°ì´í„° í…Œì´ë¸” ê°œìˆ˜ì™€ í‘œê¸°í•  í…ìŠ¤íŠ¸ ê°œìˆ˜ê°€ ë¶ˆì¼ì¹˜í•¨");
             throw;
         }        
     }

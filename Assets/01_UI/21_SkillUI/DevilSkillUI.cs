@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-public class SkillUI : MonoBehaviour
+
+public class DevilSkillUI : MonoBehaviour
 {
-	protected Button m_SkillButton;
+	protected Button m_SkillButton_Root;
 
 	[SerializeField]
 	protected Image m_SkillIcon_BG;
@@ -35,10 +36,10 @@ public class SkillUI : MonoBehaviour
 	{
 		get
 		{
-			if (null == m_SkillButton)
-				m_SkillButton = GetComponent<Button>();
+			if (null == m_SkillButton_Root)
+				m_SkillButton_Root = GetComponent<Button>();
 
-			return m_SkillButton;
+			return m_SkillButton_Root;
 		}
 	}
 
@@ -46,8 +47,10 @@ public class SkillUI : MonoBehaviour
 
 	public void SetOnOff(bool onoff)
 	{
-		m_SkillButton.gameObject.SetActive(onoff);
-		//m_SkillButton.enabled = onoff;
+		SkillButton.enabled = onoff;
+
+		m_SkillCountText.gameObject.SetActive(onoff);
+		m_SkillKeyText.gameObject.SetActive(onoff);
 	}
 	public void SetSkillImage(Sprite sprite)
 	{
@@ -57,6 +60,6 @@ public class SkillUI : MonoBehaviour
 
 	void Start()
 	{
-		m_SkillButton = this.gameObject.GetComponent<Button>();
+		m_SkillButton_Root = this.gameObject.GetComponent<Button>();
 	}
 }

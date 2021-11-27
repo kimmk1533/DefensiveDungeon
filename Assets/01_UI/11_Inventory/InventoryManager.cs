@@ -3,24 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-// mouse input À» À§ÇÑ gui ¿Í
-// ½ÇÁ¦ ¸ó½ºÅÍ¸¦ À§Ä¡½ÃÅ³ slot ÀÎ object ¸¦ »ç¿ë
+// mouse input ì„ ìœ„í•œ gui ì™€
+// ì‹¤ì œ ëª¬ìŠ¤í„°ë¥¼ ìœ„ì¹˜ì‹œí‚¬ slot ì¸ object ë¥¼ ì‚¬ìš©
 public class InventoryManager : Singleton<InventoryManager>
 {
 	// gui
 	[Space(10)]
-	[SerializeField] Image m_root_panel;    // ÀÌ Panel ÀÇ ÁÂÃøÀ» ±âÁØÀ¸·Î
-	CellSizeFitter m_root_sizeFitter;       // ÀÌÇÏ slot count ¿¡ ¬Ãç size ¸¦ Á¶Á¤ÇÑ´Ù
+	[SerializeField] RawImage m_root_panel;    // ì´ Panel ì˜ ì¢Œì¸¡ì„ ê¸°ì¤€ìœ¼ë¡œ
+	GridLayoutGroup m_root_gridLayoutGroup;       // ì´í•˜ slot count ì— ë§Ÿì¶° size ë¥¼ ì¡°ì •í•œë‹¤
 	[SerializeField] InventorySlotGUI m_originGUI;
 
-	// °ü¸® list
+	// ê´€ë¦¬ list
 	[Space(10)]
-	[SerializeField] List<InventorySlotGUI> m_slotGUI_list;      // Å¬¸¯
+	[SerializeField] List<InventorySlotGUI> m_slotGUI_list;      // í´ë¦­
 	protected CombinationManager M_COM => CombinationManager.Instance;
 	protected CombinationEffectManager M_ComEffect => CombinationEffectManager.Instance;
 	private void Awake()
 	{
-		m_root_sizeFitter = m_root_panel.GetComponent<CellSizeFitter>();
+		m_root_gridLayoutGroup = m_root_panel.GetComponent<GridLayoutGroup>();
 	}
 
 	private void Start()
@@ -30,12 +30,12 @@ public class InventoryManager : Singleton<InventoryManager>
 
 	public void __Initialize()
 	{
-		Vector2Int _cellsize = m_root_sizeFitter.CellCount;
+		int _cellcount = m_root_gridLayoutGroup.constraintCount;
 
-		// origin ²ô±â
+		// origin ë„ê¸°
 		m_originGUI.gameObject.SetActive(false);
 
-		for (int i = 0; i < _cellsize.x; i++)
+		for (int i = 0; i < _cellcount; i++)
 		{
 			// gui instantiate
 			InventorySlotGUI newSlotGUI = GameObject.Instantiate<InventorySlotGUI>(m_originGUI);
@@ -48,7 +48,7 @@ public class InventoryManager : Singleton<InventoryManager>
 
 
 
-	// °¡Àå ºñ¾îÀÖ´Â ÁÂÃø ½½·Ô
+	// ê°€ì¥ ë¹„ì–´ìˆëŠ” ì¢Œì¸¡ ìŠ¬ë¡¯
 	InventorySlotGUI GetAvailableSlot()
 	{
 		foreach (var item in m_slotGUI_list)

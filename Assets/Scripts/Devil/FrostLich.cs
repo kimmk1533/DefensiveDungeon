@@ -5,11 +5,11 @@ using UnityEngine;
 public class FrostLich : Devil
 {
 	#region 내부 함수
-	protected override void DoSkill01(DevilSkillArg arg)
+	protected override void DoSkill01()
 	{
 
 	}
-	protected override void DoSkill02(DevilSkillArg arg)
+	protected override void DoSkill02()
 	{
 
 	}

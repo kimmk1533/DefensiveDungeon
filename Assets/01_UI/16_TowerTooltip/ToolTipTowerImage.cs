@@ -20,12 +20,7 @@ public class ToolTipTowerImage : MonoBehaviour
     [SerializeField] RawImage m_rawImage;
     RenderTexture m_renderTexture;
 
-    private void Awake()
-    {
-        __InitializeTexture();
-    }
-
-    void __InitializeTexture()
+    public void __InitializeTexture()
     {
         int layer = LayerMask.NameToLayer("Tower");
 

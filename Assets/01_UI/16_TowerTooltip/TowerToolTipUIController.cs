@@ -32,6 +32,11 @@ public class TowerToolTipUIController : MonoBehaviour ,IPointerEnterHandler, IPo
     [SerializeField] SkillCondition_TableExcelLoader m_skill_loader; // for skill info overall
     [SerializeField] SkillStat_TableExcelLoader m_skillstat_loader; // for atk speed
 
+    public void Initialize()
+	{
+        m_image.__InitializeTexture();
+	}
+
     public void SetUIInfo(Tower_TableExcel data)
     {
         // name

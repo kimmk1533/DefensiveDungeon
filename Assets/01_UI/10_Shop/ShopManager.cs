@@ -55,6 +55,8 @@ public class ShopManager : Singleton<ShopManager>
 		m_rates = new List<float>();
 		m_costs = new List<int>();
 
+		m_status_controller.Initialize();
+
 		// setting
 		m_origin.gameObject.SetActive(false);
 
@@ -65,6 +67,7 @@ public class ShopManager : Singleton<ShopManager>
 		for (int i = 0; i < total_alloc_count; i++)
 		{
 			ShopSlot newSlot = GameObject.Instantiate<ShopSlot>(m_origin);
+			newSlot.Initialize();
 			m_slot_list.Add(newSlot);
 			newSlot.__Indexing(i);
 			newSlot.transform.SetParent(m_root_panel.transform);

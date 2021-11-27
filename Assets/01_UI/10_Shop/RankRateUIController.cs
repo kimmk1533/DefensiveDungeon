@@ -8,7 +8,7 @@ public class RankRateUIController : MonoBehaviour
     [SerializeField] Color m_color;
     TMPro.TextMeshProUGUI m_textPro;
 
-    private void Awake()
+    public void Initialize()
     {
         m_textPro = this.GetComponentInChildren<TMPro.TextMeshProUGUI>();
     }

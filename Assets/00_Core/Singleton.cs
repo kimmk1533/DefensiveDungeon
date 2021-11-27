@@ -14,7 +14,7 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
         {
             if (instance == null)
             {
-                Singleton<T>[] objs = FindObjectsOfType<Singleton<T>>();
+                Singleton<T>[] objs = FindObjectsOfType<Singleton<T>>(true);
 
                 GameObject obj = objs.Where(item => item.flag == true).FirstOrDefault()?.gameObject; //GameObject.Find(typeof(T).Name);
                 if (obj == null)

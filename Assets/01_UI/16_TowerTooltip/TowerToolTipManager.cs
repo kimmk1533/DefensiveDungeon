@@ -13,7 +13,12 @@ public class TowerToolTipManager : Singleton<TowerToolTipManager>
     bool m_invenFlag;        // before summoned tower on inventorySlot
     InventorySlotGUI m_slot; // for ui
 
-    private void Start()
+	private void Awake()
+	{
+        m_tooltip.Initialize();
+	}
+
+	private void Start()
     {
         DeActivateTooltip();
     }

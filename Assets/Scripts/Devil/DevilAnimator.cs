@@ -38,6 +38,10 @@ public class DevilAnimator : MonoBehaviour
 	{
 		animator.SetTrigger(name);
 	}
+	public void SetBool(string name, bool value)
+	{
+		m_Animator.SetBool(name, value);
+	}
 	public void CallAttack()
 	{
 		m_Devil.CallAttack();

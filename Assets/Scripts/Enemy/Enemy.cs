@@ -45,6 +45,7 @@ public class Enemy : MonoBehaviour
 	#endregion
 	#region 외부 프로퍼티
 	public string Get_EnemyName_EN => m_EnemyInfo_Excel.Name_EN;
+	public float Get_EnemyDef => (m_EnemyInfo.Def - m_EnemyInfo.Debuff_Def_Fix) * m_EnemyInfo.Debuff_Def_Percent;
 
 	public E_Direction Direction { get => m_EnemyInfo.Direction; set => m_EnemyInfo.Direction = value; }
 	public Transform HitPivot => m_EnemyInfo.HitPivot;
