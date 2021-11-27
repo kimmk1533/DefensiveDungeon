@@ -81,7 +81,7 @@ public class InventorySlotGUI : MonoBehaviour, IDragHandler, IBeginDragHandler, 
 		int layer = LayerMask.GetMask("Tower", "CombinationEffect");
 
 		// create render texture
-		m_renderTexture = new RenderTexture(256, 256, 16);
+		m_renderTexture = new RenderTexture(512, 512, 32);
 		m_renderTexture.Create();
 
 		/// camera setting

@@ -30,7 +30,7 @@ public class ToolTipTowerImage : MonoBehaviour
         int layer = LayerMask.NameToLayer("Tower");
 
         // create render texture
-        m_renderTexture = new RenderTexture(256, 256, 16);
+        m_renderTexture = new RenderTexture(512, 512, 32);
         m_renderTexture.Create();
 
         // set camera option for render texture
