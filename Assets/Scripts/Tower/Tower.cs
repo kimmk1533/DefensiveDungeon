@@ -1182,7 +1182,7 @@ public class Tower : MonoBehaviour
 						if (M_Enemy.GetEnemyList(Direction).Count <= 0)
 							return;
 					}
-					else if (IsTargetDead_Default || LostTarget_Default)
+					else if (IsTargetDead_Default)
 						return;
 
 					SkillCondition_TableExcel conditionData = m_TowerInfo.Condition_Default;
@@ -1845,7 +1845,7 @@ public class Tower : MonoBehaviour
 						if (M_Enemy.GetEnemyList(Direction).Count <= 0)
 							return;
 					}
-					else if (IsTargetDead_Skill01 || LostTarget_Skill01)
+					else if (IsTargetDead_Skill01)
 						return;
 
 					// 스킬01 데이터 불러오기
@@ -2545,8 +2545,7 @@ public class Tower : MonoBehaviour
 						if (M_Enemy.GetEnemyList(Direction).Count <= 0)
 							return;
 					}
-
-					if (null == m_Target_Skill02)
+					else if (IsTargetDead_Skill02)
 						return;
 
 					// 스킬02 데이터 불러오기
