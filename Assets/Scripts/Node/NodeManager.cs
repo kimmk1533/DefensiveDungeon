@@ -40,6 +40,8 @@ public class NodeManager : Singleton<NodeManager>
 	protected Camera m_Camera;
 
 	#region 내부 프로퍼티
+	protected OptionManager M_Option => OptionManager.Instance;
+
 	// 선택 노드의 타입
 	protected E_NodeType SelectedNodeType => m_SelectedNode.m_NodeType;
 	protected E_Direction SelectedNodeDir => m_SelectedNode.m_Direction;
@@ -59,11 +61,7 @@ public class NodeManager : Singleton<NodeManager>
 	}
 	#endregion
 
-	private void Awake()
-	{
-		Initialize();
-	}
-
+	#region 내부 함수
 	protected void Initialize()
 	{
 		// 회전 중심점 설정
@@ -108,15 +106,6 @@ public class NodeManager : Singleton<NodeManager>
 
 		// 타워 타겟 업데이트
 		OnRotateStartEvent += UpdateTowerTarget;
-	}
-
-	private void Update()
-	{
-		// 선택 노드 검색
-		MouseProcess();
-
-		// 회전
-		RotateProcess();
 	}
 
 	// 선택 노드 검색
@@ -260,7 +249,7 @@ public class NodeManager : Singleton<NodeManager>
 			return;
 
 		// Q키를 누른 경우
-		if (Input.GetKeyDown(KeyCode.Q))
+		if (Input.GetKeyDown(M_Option.GetKeyCode(KeyOptionType.Qkey)))
 		{
 			// 반시계 방향 회전
 			CCWRotate();
@@ -268,15 +257,143 @@ public class NodeManager : Singleton<NodeManager>
 		}
 
 		// E키를 누른 경우
-		if (Input.GetKeyDown(KeyCode.E))
+		if (Input.GetKeyDown(M_Option.GetKeyCode(KeyOptionType.Ekey)))
 		{
 			// 시계 방향 회전
 			CWRotate();
 		}
 	}
+	// 노드 업데이트
+	protected void UpdateNode(bool clockwise = true)
+	{
+		// 시계 방향
+		if (clockwise)
+		{
+			SwapList(E_Direction.North, E_Direction.East);
+			SwapList(E_Direction.South, E_Direction.West);
+			SwapList(E_Direction.North, E_Direction.South);
+		}
+		// 반시계 방향
+		else
+		{
+			SwapList(E_Direction.North, E_Direction.West);
+			SwapList(E_Direction.South, E_Direction.East);
+			SwapList(E_Direction.North, E_Direction.South);
+		}
+	}
+	// 리스트 교환
+	protected void SwapList(E_Direction first, E_Direction second)
+	{
+		List<Node> FirstList = m_NodeList[StandardNodeType][first];
+		List<Node> SecondList = m_NodeList[StandardNodeType][second];
+		List<Node> TempList = new List<Node>(FirstList);
+
+		Transform First_T = m_NodeParentList[StandardNodeType][first];
+		Transform Second_T = m_NodeParentList[StandardNodeType][second];
+		List<Transform> Temp_T = new List<Transform>();
+
+		int FirstCount = First_T.childCount;
+		int SecondCount = Second_T.childCount;
+
+		// 1 -> Temp
+		for (int i = 0; i < FirstCount; ++i)
+		{
+			Temp_T.Add(First_T.GetChild(i));
+		}
+		// 2 -> 1
+		FirstList.Clear();
+		FirstList.AddRange(SecondList);
+		for (int i = 0; i < SecondCount; ++i)
+		{
+			Second_T.GetChild(0).SetParent(First_T);
+		}
+		// Temp -> 2
+		SecondList.Clear();
+		SecondList.AddRange(TempList);
+		for (int i = 0; i < FirstCount; ++i)
+		{
+			Temp_T[i].SetParent(Second_T);
+		}
+
+		// 정보 업데이트
+		foreach (var item in FirstList)
+		{
+			// 노드 방향 업데이트
+			item.m_Direction = first;
+
+			// 타워 방향 업데이트
+			if (null != item.m_Tower)
+				item.m_Tower.Direction = first;
+		}
+		foreach (var item in SecondList)
+		{
+			// 노드 방향 업데이트
+			item.m_Direction = second;
+
+			// 타워 방향 업데이트
+			if (null != item.m_Tower)
+				item.m_Tower.Direction = second;
+		}
+	}
+	// 타워 바라볼 방향 업데이트
+	protected void UpdateTowerLookingDir(float angle)
+	{
+		// 타워 바라볼 방향 업데이트
+		for (E_Direction i = 0; i < E_Direction.Max; ++i)
+		{
+			foreach (var item in m_NodeList[StandardNodeType][i])
+			{
+				if (null != item.m_Tower)
+				{
+					m_LookingDir.transform.position = item.m_Tower.LookingDir;
+					m_LookingDir.transform.RotateAround(m_Center.transform.position, Vector3.up, angle);
+					item.m_Tower.LookingDir = m_LookingDir.transform.position;
+				}
+			}
+		}
+	}
+	// 타워 타겟 업데이트
+	protected void UpdateTowerTarget()
+	{
+		for (E_Direction i = 0; i < E_Direction.Max; ++i)
+		{
+			foreach (var item in m_NodeList[StandardNodeType][i])
+			{
+				item.m_Tower?.ClearTarget();
+			}
+		}
+	}
+	// 타워 공격 가능 여부 업데이트
+	protected void UpdateTowerAttack(bool flag)
+	{
+		// 타워 공격 가능 여부 업데이트
+		for (E_Direction i = 0; i < E_Direction.Max; ++i)
+		{
+			foreach (var item in m_NodeList[StandardNodeType][i])
+			{
+				if (null != item.m_Tower)
+				{
+					item.m_Tower.CanAttack_Node = flag;
+				}
+			}
+		}
+	}
+	#endregion
+
+	// 시계 방향 회전
+	protected void CWRotate()
+	{
+		StartCoroutine(Co_RotateNode());
+	}
+	// 반시계 방향 회전
+	protected void CCWRotate()
+	{
+		StartCoroutine(Co_RotateNode(false));
+	}
+
 	// 매 프레임 회전
 	// 참고 출처: http://devkorea.co.kr/bbs/board.php?bo_table=m03_qna&wr_id=95809
-	protected IEnumerator RotateNode(bool clockwise = true)
+	protected IEnumerator Co_RotateNode(bool clockwise = true)
 	{
 		// 회전 여부 설정
 		m_IsRotating = true;
@@ -415,123 +532,8 @@ public class NodeManager : Singleton<NodeManager>
 		// 회전 종료 이벤트 호출
 		OnRotateEndEvent?.Invoke();
 	}
-	// 노드 업데이트
-	protected void UpdateNode(bool clockwise = true)
-	{
-		// 시계 방향
-		if (clockwise)
-		{
-			SwapList(E_Direction.North, E_Direction.East);
-			SwapList(E_Direction.South, E_Direction.West);
-			SwapList(E_Direction.North, E_Direction.South);
-		}
-		// 반시계 방향
-		else
-		{
-			SwapList(E_Direction.North, E_Direction.West);
-			SwapList(E_Direction.South, E_Direction.East);
-			SwapList(E_Direction.North, E_Direction.South);
-		}
-	}
-	// 리스트 교환
-	protected void SwapList(E_Direction first, E_Direction second)
-	{
-		List<Node> FirstList = m_NodeList[StandardNodeType][first];
-		List<Node> SecondList = m_NodeList[StandardNodeType][second];
-		List<Node> TempList = new List<Node>(FirstList);
-
-		Transform First_T = m_NodeParentList[StandardNodeType][first];
-		Transform Second_T = m_NodeParentList[StandardNodeType][second];
-		List<Transform> Temp_T = new List<Transform>();
-
-		int FirstCount = First_T.childCount;
-		int SecondCount = Second_T.childCount;
-
-		// 1 -> Temp
-		for (int i = 0; i < FirstCount; ++i)
-		{
-			Temp_T.Add(First_T.GetChild(i));
-		}
-		// 2 -> 1
-		FirstList.Clear();
-		FirstList.AddRange(SecondList);
-		for (int i = 0; i < SecondCount; ++i)
-		{
-			Second_T.GetChild(0).SetParent(First_T);
-		}
-		// Temp -> 2
-		SecondList.Clear();
-		SecondList.AddRange(TempList);
-		for (int i = 0; i < FirstCount; ++i)
-		{
-			Temp_T[i].SetParent(Second_T);
-		}
-
-		// 정보 업데이트
-		foreach (var item in FirstList)
-		{
-			// 노드 방향 업데이트
-			item.m_Direction = first;
-
-			// 타워 방향 업데이트
-			if (null != item.m_Tower)
-				item.m_Tower.Direction = first;
-		}
-		foreach (var item in SecondList)
-		{
-			// 노드 방향 업데이트
-			item.m_Direction = second;
-
-			// 타워 방향 업데이트
-			if (null != item.m_Tower)
-				item.m_Tower.Direction = second;
-		}
-	}
-	// 타워 바라볼 방향 업데이트
-	protected void UpdateTowerLookingDir(float angle)
-	{
-		// 타워 바라볼 방향 업데이트
-		for (E_Direction i = 0; i < E_Direction.Max; ++i)
-		{
-			foreach (var item in m_NodeList[StandardNodeType][i])
-			{
-				if (null != item.m_Tower)
-				{
-					m_LookingDir.transform.position = item.m_Tower.LookingDir;
-					m_LookingDir.transform.RotateAround(m_Center.transform.position, Vector3.up, angle);
-					item.m_Tower.LookingDir = m_LookingDir.transform.position;
-				}
-			}
-		}
-	}
-	// 타워 타겟 업데이트
-	protected void UpdateTowerTarget()
-	{
-		for (E_Direction i = 0; i < E_Direction.Max; ++i)
-		{
-			foreach (var item in m_NodeList[StandardNodeType][i])
-			{
-				item.m_Tower?.ClearTarget();
-			}
-		}
-	}
-	// 타워 공격 가능 여부 업데이트
-	protected void UpdateTowerAttack(bool flag)
-	{
-		// 타워 공격 가능 여부 업데이트
-		for (E_Direction i = 0; i < E_Direction.Max; ++i)
-		{
-			foreach (var item in m_NodeList[StandardNodeType][i])
-			{
-				if (null != item.m_Tower)
-				{
-					item.m_Tower.CanAttack_Node = flag;
-				}
-			}
-		}
-	}
 	#endregion
-
+	#region 외부 함수
 	public List<Node> GetNodeList(E_Direction dir)
 	{
 		List<Node> result = new List<Node>();
@@ -539,17 +541,21 @@ public class NodeManager : Singleton<NodeManager>
 		result.AddRange(m_NodeList[E_NodeType.Outer][dir]);
 		return result;
 	}
+	#endregion
+	#region 유니티 콜백 함수
+	private void Awake()
+	{
+		Initialize();
+	}
+	private void Update()
+	{
+		// 선택 노드 검색
+		MouseProcess();
 
-	// 시계 방향 회전
-	protected void CWRotate()
-	{
-		StartCoroutine(RotateNode());
+		// 회전
+		RotateProcess();
 	}
-	// 반시계 방향 회전
-	protected void CCWRotate()
-	{
-		StartCoroutine(RotateNode(false));
-	}
+	#endregion
 }
 
 public enum E_NodeType
