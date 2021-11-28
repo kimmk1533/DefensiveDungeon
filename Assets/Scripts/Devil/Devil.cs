@@ -17,7 +17,8 @@ public abstract class Devil : MonoBehaviour
 	public Enemy m_Target_Default;
 
 	protected Vector3 m_DrawGizmoPoint;
-
+	protected Vector3 m_SkillRangePoint;
+	protected Vector3 m_SkillSize;
 	public event Action OnLostDefaultTargetEvent;
 
 	protected delegate void DevilSkillHandler();
@@ -196,6 +197,7 @@ public abstract class Devil : MonoBehaviour
 		Skill01Event += DoSkill01;
 		Skill02Event += DoSkill02;
 		#endregion
+		m_SkillSize = M_Devil.SkillRangeObj.transform.localScale * m_DevilInfo.m_Skill01.m_Size;
 	}
 	// 마왕 회전
 	protected void RotateToTarget()
@@ -404,8 +406,9 @@ public abstract class Devil : MonoBehaviour
 								{
 									// 기즈모 그리기 시작
 									M_Devil.IsDrawGizmo = true;
+									M_Devil.ActiveSkillRange = true;
 									m_DrawGizmoPoint = hit.point;
-
+									m_SkillRangePoint = hit.point;
 									if (Input.GetMouseButtonDown(0))
 									{
 										if (!Enum.TryParse<E_Direction>(hit.transform.tag, out m_DevilInfo.m_Skill01.m_Direction))
@@ -417,10 +420,14 @@ public abstract class Devil : MonoBehaviour
 										m_DevilInfo.m_Skill01.m_IsCasting = false;
 
 										OnSkill01();
-
+										M_Devil.ActiveSkillRange = false;
 										// 기즈모 그리기 끝
 										M_Devil.IsDrawGizmo = false;
 									}
+								}
+								else
+								{
+									M_Devil.ActiveSkillRange = false;
 								}
 							}
 							break;
@@ -433,8 +440,9 @@ public abstract class Devil : MonoBehaviour
 								{
 									// 기즈모 그리기 시작
 									M_Devil.IsDrawGizmo = true;
+									M_Devil.ActiveSkillRange = true;
 									m_DrawGizmoPoint = hit.point;
-
+									m_SkillRangePoint = hit.point;
 									if (Input.GetMouseButtonDown(0))
 									{
 										if (!Enum.TryParse<E_Direction>(hit.transform.tag, out m_DevilInfo.m_Skill01.m_Direction))
@@ -449,7 +457,12 @@ public abstract class Devil : MonoBehaviour
 
 										// 기즈모 그리기 끝
 										M_Devil.IsDrawGizmo = false;
+										M_Devil.ActiveSkillRange = false;
 									}
+								}
+								else
+								{
+									M_Devil.ActiveSkillRange = false;
 								}
 							}
 							break;
@@ -489,7 +502,7 @@ public abstract class Devil : MonoBehaviour
 								{
 									// 기즈모 그리기 시작
 									M_Devil.IsDrawGizmo = true;
-
+									M_Devil.ActiveSkillRange = true;
 									if (Input.GetMouseButton(0))
 									{
 										m_DevilInfo.m_Skill02.m_MousePos = hit.point;
@@ -499,7 +512,12 @@ public abstract class Devil : MonoBehaviour
 
 										// 기즈모 그리기 끝
 										M_Devil.IsDrawGizmo = false;
+										M_Devil.ActiveSkillRange = false;
 									}
+								}
+								else
+								{
+									M_Devil.ActiveSkillRange = false;
 								}
 							}
 							break;
@@ -627,7 +645,6 @@ public abstract class Devil : MonoBehaviour
 			IsWin = false
 		});
 	}
-
 	#endregion
 	#region 유니티 콜백 함수
 	protected void Update()
@@ -639,6 +656,20 @@ public abstract class Devil : MonoBehaviour
 		RotateToTarget();
 		AttackTarget();
 		ReduceSkillCooldown();
+		DrawSkillRange();
+	}
+	private void DrawSkillRange()
+	{
+		if(M_Devil.ActiveSkillRange)
+		{
+			M_Devil.SkillRangeObj.transform.position = m_SkillRangePoint;
+			M_Devil.SkillRangeObj.transform.localScale = m_SkillSize;
+			M_Devil.SkillRangeObj.SetActive(true);
+		}
+		else
+		{
+			M_Devil.SkillRangeObj.SetActive(false);
+		}
 	}
 	private void OnDrawGizmos()
 	{

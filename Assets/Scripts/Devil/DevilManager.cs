@@ -14,7 +14,6 @@ public enum E_Devil
 
 	Max
 }
-
 public class DevilManager : Singleton<DevilManager>
 {
 	protected Devil_TableExcelLoader m_DevilData;
@@ -23,7 +22,8 @@ public class DevilManager : Singleton<DevilManager>
 	protected Devil m_Devil;
 
 	bool m_IsDrawGizmo = false;
-
+	bool m_IsSkillRange = false;
+	public GameObject skillRange;
 	#region 내부 프로퍼티
 	protected DataTableManager M_DataTable => DataTableManager.Instance;
 	protected UserInfoManager M_UserInfo => UserInfoManager.Instance;
@@ -31,7 +31,17 @@ public class DevilManager : Singleton<DevilManager>
 	#endregion
 	#region 외부 프로퍼티
 	public Devil Devil => m_Devil;
-
+	public bool ActiveSkillRange
+	{
+		get => m_IsSkillRange;
+		set => m_IsSkillRange = value;
+	}
+	public GameObject SkillRangeObj
+	{
+		get => skillRange;
+		set => skillRange = value;
+	}
+	//public 
 	public event Action OnUseSkillEvent
 	{
 		add
@@ -143,6 +153,11 @@ public class DevilManager : Singleton<DevilManager>
 		{
 			m_Devil.DevilSkillCasting(Devil.E_SkillNumber.Skill2);
 		}
+		//if (m_IsSkillRange)
+		//{
+		//	skillRange.SetActive(true);
+		//}
+		//else skillRange.SetActive(false);
 	}
 	#endregion
 	#region My Callback Func
