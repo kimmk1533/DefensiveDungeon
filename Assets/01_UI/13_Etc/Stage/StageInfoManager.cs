@@ -35,6 +35,8 @@ public class StageInfoManager : Singleton<StageInfoManager>
 		}
 	}
 
+	EnemyManager M_Enemy => EnemyManager.Instance;
+
 	// when scene loaded complete
 	// this function must be called by Scene start evnet reciever    
 	public void __StartTimer()
@@ -65,6 +67,16 @@ public class StageInfoManager : Singleton<StageInfoManager>
 
 	public void GoNextStage()
 	{
+		// 게임 승리 (모든 스테이지 클리어)
+		if (current_stage >= m_excel_loader.DataList.Count)
+		{
+			OnGameEndEvent?.Invoke(new GameEndData
+			{
+				IsWin = M_Enemy.GetEnemyList().Count <= 0
+			});
+			return;
+		}
+
 		m_current_stageInfo = m_excel_loader.DataList[current_stage];
 		++current_stage;
 
@@ -98,14 +110,5 @@ public class StageInfoManager : Singleton<StageInfoManager>
 				stage_type = m_current_stageInfo.StageType,
 				stage_time = m_current_stageInfo.StageTime,
 			});
-
-		// 게임 승리 (모든 스테이지 클리어)
-		if (m_current_stageInfo.Stage_Num >= m_excel_loader.DataList.Count)
-		{
-			OnGameEndEvent?.Invoke(new GameEndData
-			{
-				IsWin = true
-			});
-		}
 	}
 }

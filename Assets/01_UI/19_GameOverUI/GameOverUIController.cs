@@ -26,7 +26,7 @@ public class GameOverUIController : MonoBehaviour
 
 	public void SetUI(GameEndData data)
 	{
-		GetComponent<RectTransform>().anchoredPosition3D = Vector3.zero; //Camera.main.ScreenToWorldPoint(new Vector2(Screen.width * 0.5f, Screen.height * 0.5f));
+		GetComponent<RectTransform>().anchoredPosition3D = Vector3.zero;
 
 		if (data.IsWin)
 		{

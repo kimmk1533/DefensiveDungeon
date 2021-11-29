@@ -52,7 +52,7 @@ public class Stage_EnemyManager : Singleton<Stage_EnemyManager>
 		m_Now_StageData.stage_time = args.stage_time;
 		m_Now_StageData.stage_type = args.stage_type;
 
-		if (args.stage_type == 2)
+		if (args.stage_type != 1)
 		{
 			List<StageEnemy_TableExcel> stageEnemy = m_StageEnemyInfo_Excel[m_Now_StageData.stage_num - 1];
 

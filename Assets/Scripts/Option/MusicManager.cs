@@ -56,7 +56,7 @@ public class MusicManager : Singleton<MusicManager>
 	{
 		int bgm = MainBGM;
 		play_delay = false;
-		current_BGM = (E_BGMType)type + 1;
+		current_BGM = (E_BGMType)type;
 		switch (type)
 		{
 			case 0:
