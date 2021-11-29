@@ -9,7 +9,9 @@ public class MainScene_CharacterPanelButtonController : MonoBehaviour
 {
     [SerializeField] Image m_main_button_panel;
 
-    // ¼±ÅÃ ¹öÆ° °ü·ÃµÈ °ÍÀº character select manager ¸¦ ÂüÁ¶
+    // ì„ íƒ ë²„íŠ¼ ê´€ë ¨ëœ ê²ƒì€ character select manager ë¥¼ ì°¸ì¡°
+    UserInfoManager M_UserInfo => UserInfoManager.Instance;
+    FloatingTextManager M_FloatingText => FloatingTextManager.Instance;
 
     public void __OnBackButton()
     {        
@@ -19,6 +21,19 @@ public class MainScene_CharacterPanelButtonController : MonoBehaviour
 
     public void __OnSelectCompleteButton(Button button)
     {
+        if (M_UserInfo.DevilCode == 110003)
+		{
+            M_FloatingText.SpawnDamageText("ì¤€ë¹„ì¤‘ì…ë‹ˆë‹¤", new FloatingTextFilter()
+            {
+                postionType = FloatingTextFilter.E_PostionType.ViewToScreen,
+                position = Vector3.one * 0.5f,
+                color = Color.white,
+                sizeDelta = new Vector2(200f, 50f),
+                scale = Vector3.one,
+            });
+            return;
+		}
+
         EventSystem.current.SetSelectedGameObject(null);
         button.enabled = false;
         StartCoroutine(LoadLoadingScene());
@@ -27,7 +42,7 @@ public class MainScene_CharacterPanelButtonController : MonoBehaviour
     IEnumerator LoadLoadingScene()
     {
         AsyncOperation op = SceneManager.LoadSceneAsync("LoaderScene", LoadSceneMode.Additive);
-        //op.allowSceneActivation = false;    // ¿Ï·áµÈ ¾ÀÀÌ ¹Ù·Î ·ÎµåµÇÁö ¾Êµµ·Ï ÇÔ
+        //op.allowSceneActivation = false;    // ì™„ë£Œëœ ì”¬ì´ ë°”ë¡œ ë¡œë“œë˜ì§€ ì•Šë„ë¡ í•¨
 
         float beforeProgress = 0.0f;
         while (!op.isDone)
@@ -45,7 +60,7 @@ public class MainScene_CharacterPanelButtonController : MonoBehaviour
         }
 
 
-        // ´ÙÀ½ ¾ÀÀ¸·Î ÀÌµ¿ ÇÒ °Í (·Îµù ¾À ºÎ¸£±â)
+        // ë‹¤ìŒ ì”¬ìœ¼ë¡œ ì´ë™ í•  ê²ƒ (ë¡œë”© ì”¬ ë¶€ë¥´ê¸°)
         List<string> loadScenes = new List<string>();
         List<string> unloadScenes = new List<string>();
 

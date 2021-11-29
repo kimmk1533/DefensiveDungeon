@@ -12,13 +12,8 @@ public class FloatingTextManager : Singleton<FloatingTextManager>
 	#endregion
 
 	#region 내부 함수
-	IEnumerator Co_SpawnDamageText(string text, FloatingTextFilter filter)
+	protected void Spawn(string text, FloatingTextFilter filter)
 	{
-		if (filter.time > 0f)
-		{
-			yield return new WaitForSeconds(filter.time);
-		}
-
 		// 스폰
 		FloatingText floatingText = M_FloatingTextPool.GetPool("DamageText").Spawn();
 		// 초기화
@@ -39,28 +34,38 @@ public class FloatingTextManager : Singleton<FloatingTextManager>
 			case FloatingTextFilter.E_PostionType.World:
 				floatingText.transform.position = filter.position;
 				break;
-			case FloatingTextFilter.E_PostionType.Screen:
+			case FloatingTextFilter.E_PostionType.WorldToScreen:
 				floatingText.transform.position = Camera.main.WorldToScreenPoint(filter.position);
 				break;
-			case FloatingTextFilter.E_PostionType.View:
-				floatingText.transform.position = Camera.main.WorldToViewportPoint(filter.position);
+			case FloatingTextFilter.E_PostionType.ViewToScreen:
+				floatingText.transform.position = Camera.main.ViewportToScreenPoint(filter.position);
 				break;
 		}
 		// 크기 설정
-		Vector3 scale = floatingText.transform.localScale;
-		scale.x = filter.width;
-		scale.y = filter.height;
-		floatingText.transform.localScale = scale;
+		floatingText.GetComponent<RectTransform>().sizeDelta = filter.sizeDelta;
+		floatingText.transform.localScale = filter.scale;
 		// 활성화 설정
 		floatingText.gameObject.SetActive(true);
 		// 관리 리스트에 추가
 		m_FloatingTextList.Add(floatingText);
 	}
+	IEnumerator Co_SpawnDamageText(string text, FloatingTextFilter filter)
+	{
+		yield return new WaitForSeconds(filter.time);
+
+		Spawn(text, filter);
+	}
 	#endregion
 	#region 외부 함수
 	public void SpawnDamageText(string text, FloatingTextFilter filter)
 	{
-		StartCoroutine(Co_SpawnDamageText(text, filter));
+		if (filter.time > 0f)
+		{
+			StartCoroutine(Co_SpawnDamageText(text, filter));
+			return;
+		}
+
+		Spawn(text, filter);
 	}
 	public void DespawnDamageText(FloatingText floatingText)
 	{

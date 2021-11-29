@@ -11,12 +11,12 @@ public struct FloatingTextFilter
 	Color m_Color;
 	Color32 m_OutlineColor;
 	float m_OutlineWidth;
-	float m_Width;
-	float m_Height;
+	Vector2 m_SizeDelta;
+	Vector3 m_Scale;
 
 	public E_PostionType postionType { get => m_PositionType; set => m_PositionType = value; }
-	public float width { get => m_Width; set => m_Width = value; }
-	public float height { get => m_Height; set => m_Height = value; }
+	public Vector2 sizeDelta { get => m_SizeDelta; set => m_SizeDelta = value; }
+	public Vector3 scale { get => m_Scale; set => m_Scale = value; }
 	public Vector3 position { get => m_Position; set => m_Position = value; }
 	public float time { get => m_Time; set => m_Time = value; }
 	public Color color { get => m_Color; set => m_Color = value; }
@@ -26,7 +26,7 @@ public struct FloatingTextFilter
 	public enum E_PostionType
 	{
 		World,
-		Screen,
-		View
+		WorldToScreen,
+		ViewToScreen,
 	}
 }

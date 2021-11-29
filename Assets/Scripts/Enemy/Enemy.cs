@@ -79,11 +79,11 @@ public class Enemy : MonoBehaviour
 		M_DamageText.SpawnDamageText(((int)damage).ToString(), new FloatingTextFilter()
 		{
 			position = text_position,
-			postionType = FloatingTextFilter.E_PostionType.Screen,
+			postionType = FloatingTextFilter.E_PostionType.WorldToScreen,
 			outlineColor = isCrit ? M_Enemy.criticalDamageColor : M_Enemy.normalDamageColor,
 			outlineWidth = 0.3f,
-			width = isCrit ? 0.9f : 0.7f,
-			height = isCrit ? 0.9f : 0.7f,
+			sizeDelta = new Vector2(100f, 50f),
+			scale = isCrit ? new Vector3(0.9f, 0.9f, 1f) : new Vector3(0.7f, 0.7f, 1f),
 		});
 
 		// 체력바 UI
@@ -113,11 +113,11 @@ public class Enemy : MonoBehaviour
 		M_DamageText.SpawnDamageText("Death", new FloatingTextFilter()
 		{
 			position = text_position,
-			postionType = FloatingTextFilter.E_PostionType.Screen,
+			postionType = FloatingTextFilter.E_PostionType.WorldToScreen,
 			outlineColor = M_Enemy.criticalDamageColor,
 			outlineWidth = 0.3f,
-			width = 0.9f,
-			height = 0.9f,
+			sizeDelta = new Vector2(100f, 50f),
+			scale = new Vector3(0.9f, 0.9f, 1f),
 		});
 
 		// 사망
