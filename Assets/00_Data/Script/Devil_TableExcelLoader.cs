@@ -8,8 +8,6 @@ public struct Devil_TableExcel
 	public string Name_KR;
 	public string Name_EN;
 	public int Code;
-	public int Rank;
-	public int Star;
 	public float Atk;
 	public float HP;
 	public float Def;
@@ -18,9 +16,10 @@ public struct Devil_TableExcel
 	public int Atk_Code;
 	public int Skill1Code;
 	public int Skill2Code;
+	public float Atk_Speed;
 	public int Prefab;
-	public int AtkSoundCode;
-	public int DeathSoundCode;
+	public int AtkSound;
+	public int DeathSound;
 }
 
 
@@ -45,8 +44,6 @@ public class  Devil_TableExcelLoader : ScriptableObject
 		data.Name_KR = strs[idx++];
 		data.Name_EN = strs[idx++];
 		data.Code = int.Parse(strs[idx++]);
-		data.Rank = int.Parse(strs[idx++]);
-		data.Star = int.Parse(strs[idx++]);
 		data.Atk = float.Parse(strs[idx++]);
 		data.HP = float.Parse(strs[idx++]);
 		data.Def = float.Parse(strs[idx++]);
@@ -55,9 +52,11 @@ public class  Devil_TableExcelLoader : ScriptableObject
 		data.Atk_Code = int.Parse(strs[idx++]);
 		data.Skill1Code = int.Parse(strs[idx++]);
 		data.Skill2Code = int.Parse(strs[idx++]);
+		data.Atk_Speed = float.Parse(strs[idx++]);
 		data.Prefab = int.Parse(strs[idx++]);
-		data.AtkSoundCode = int.Parse(strs[idx++]);
-		data.DeathSoundCode = int.Parse(strs[idx++]);
+		data.AtkSound = int.Parse(strs[idx++]);
+		data.DeathSound = int.Parse(strs[idx++]);
+
 		return data;
 	}
 	[ContextMenu("파일 읽기")]

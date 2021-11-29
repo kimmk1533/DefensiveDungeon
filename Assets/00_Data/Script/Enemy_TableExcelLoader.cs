@@ -20,6 +20,8 @@ public struct Enemy_TableExcel
 	public int Skill1Code;
 	public int Skill2Code;
 	public float HPSkillCast;
+	public int AtkSound;
+	public int DeathSound;
 	public float Atk_Speed;
 	public int Prefab;
 }
@@ -58,6 +60,8 @@ public class  Enemy_TableExcelLoader : ScriptableObject
 		data.Skill1Code = int.Parse(strs[idx++]);
 		data.Skill2Code = int.Parse(strs[idx++]);
 		data.HPSkillCast = float.Parse(strs[idx++]);
+		data.AtkSound = int.Parse(strs[idx++]);
+		data.DeathSound = int.Parse(strs[idx++]);
 		data.Atk_Speed = float.Parse(strs[idx++]);
 		data.Prefab = int.Parse(strs[idx++]);
 

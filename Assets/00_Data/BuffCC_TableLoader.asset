@@ -1657,11 +1657,11 @@ MonoBehaviour:
   - Name_KR: "\uC2A4\uD0AC \uADF8\uB9AC\uD540(\uD558\uB298)"
     Name_EN: Buff083
     Code: 320083
-    BuffType1: 14
-    AddType1: 1
+    BuffType1: 1
+    AddType1: 2
     BuffAmount1: 1
     BuffRand1: 1
-    Summon1: 200009
+    Summon1: 0
     BuffType2: 0
     AddType2: 0
     BuffAmount2: 0
@@ -1677,11 +1677,11 @@ MonoBehaviour:
   - Name_KR: "\uC18C\uD658"
     Name_EN: Buff084
     Code: 320084
-    BuffType1: 14
-    AddType1: 1
+    BuffType1: 1
+    AddType1: 2
     BuffAmount1: 1
     BuffRand1: 1
-    Summon1: 1000
+    Summon1: 0
     BuffType2: 0
     AddType2: 0
     BuffAmount2: 0
@@ -1741,6 +1741,46 @@ MonoBehaviour:
     AddType1: 2
     BuffAmount1: 0.15
     BuffRand1: 1
+    Summon1: 0
+    BuffType2: 0
+    AddType2: 0
+    BuffAmount2: 0
+    BuffRand2: 0
+    Summon2: 0
+    BuffType3: 0
+    AddType3: 0
+    BuffAmount3: 0
+    BuffRand3: 0
+    Summon3: 0
+    Duration: 1
+    Prefab: 0
+  - Name_KR: "\uB9C8\uC655 \uBC84\uD504\uD6A8\uACFC(\uB9C8\uC6551)"
+    Name_EN: Buff088
+    Code: 320088
+    BuffType1: 14
+    AddType1: 1
+    BuffAmount1: 1
+    BuffRand1: 0.2
+    Summon1: 0
+    BuffType2: 0
+    AddType2: 0
+    BuffAmount2: 0
+    BuffRand2: 0
+    Summon2: 0
+    BuffType3: 0
+    AddType3: 0
+    BuffAmount3: 0
+    BuffRand3: 0
+    Summon3: 0
+    Duration: 1
+    Prefab: 0
+  - Name_KR: "\uB9C8\uC655 \uBC84\uD504\uD6A8\uACFC(\uB9C8\uC6552)"
+    Name_EN: Buff089
+    Code: 320089
+    BuffType1: 14
+    AddType1: 1
+    BuffAmount1: 1
+    BuffRand1: 0.4
     Summon1: 0
     BuffType2: 0
     AddType2: 0

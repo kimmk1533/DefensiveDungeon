@@ -22,7 +22,7 @@ public struct Tower_TableExcel
 	public float Price;
 	public float Atk_Speed;
 	public int Prefab;
-	public int ATKsound;
+	public int AtkSound;
 	public int Skill1Sound;
 	public int Skill2Sound;
 }
@@ -63,7 +63,7 @@ public class  Tower_TableExcelLoader : ScriptableObject
 		data.Price = float.Parse(strs[idx++]);
 		data.Atk_Speed = float.Parse(strs[idx++]);
 		data.Prefab = int.Parse(strs[idx++]);
-		data.ATKsound = int.Parse(strs[idx++]);
+		data.AtkSound = int.Parse(strs[idx++]);
 		data.Skill1Sound = int.Parse(strs[idx++]);
 		data.Skill2Sound = int.Parse(strs[idx++]);
 

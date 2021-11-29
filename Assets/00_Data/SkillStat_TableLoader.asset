@@ -144,7 +144,7 @@ MonoBehaviour:
     Name_EN: SkillStat010
     Code: 310010
     Max_Charge: 3
-    CoolTime: 10
+    CoolTime: 30
     Dmg_Percent: 2
     Dmg_Fix: 0
     Range: 100
@@ -1911,7 +1911,21 @@ MonoBehaviour:
     CoolTime: 0
     Dmg_Percent: 1
     Dmg_Fix: 0
-    Range: 4
+    Range: 5
+    Speed: 10
+    Target_num: 1
+    Size: 0.5
+    Life_Time: 1
+    Buff_CC: 0
+    LoadCode: 0
+  - Name_KR: "\uC99D\uC624\uC758 \uC5EC\uC655(\uB9C8\uC655) \uAE30\uBCF8 \uACF5\uACA9"
+    Name_EN: SkillStat137
+    Code: 310137
+    Max_Charge: 1
+    CoolTime: 0
+    Dmg_Percent: 1
+    Dmg_Fix: 0
+    Range: 8
     Speed: 10
     Target_num: 1
     Size: 0.5
