@@ -15,6 +15,8 @@ public class StagePreviewController : MonoBehaviour
 	[SerializeField] float m_padding_width = 10f;
 	[SerializeField] float m_padding_height = 10f;
 
+	[SerializeField] float m_move_speed = 5f;
+
 	[Space(20)]
 	[SerializeField] Image m_root_panel;
 	[SerializeField] StageIconSlot m_origin_slot;
@@ -90,6 +92,7 @@ public class StagePreviewController : MonoBehaviour
 	public void __OnStageChanged(StageChangedEventArgs args)
 	{
 		m_current_stageInfo = args;
+		StageInfoManager.Instance.ChangeSkipButtonActive(false);
 		MoveSlotsAnimation();
 	}
 
@@ -108,7 +111,7 @@ public class StagePreviewController : MonoBehaviour
 				Vector2 move_pos = Vector2.Lerp(
 					new Vector2(m_slots[i].GetAnckorX(), 0),
 					new Vector2(m_slot_positionX[i - 1], 0),
-					Time.deltaTime
+					m_move_speed * Time.deltaTime
 					);
 
 				m_slots[i].SetPosition(move_pos.x);
@@ -122,7 +125,7 @@ public class StagePreviewController : MonoBehaviour
 
 					Color color = Color.Lerp(m_slots[i].GetImageColor(),
 						target_color,
-						Time.deltaTime
+						m_move_speed * Time.deltaTime
 						);
 					m_slots[i].SetImageColor(color);
 				}
@@ -167,6 +170,7 @@ public class StagePreviewController : MonoBehaviour
 			}
 		}
 
-		StageInfoManager.Instance.ChangeSkipButtonActive(m_current_stageInfo.stage_type == 1);
+		if (m_current_stageInfo.stage_type == 1)
+			StageInfoManager.Instance.ChangeSkipButtonActive(true);
 	}
 }
