@@ -1344,10 +1344,7 @@ public class Tower : MonoBehaviour
 											if (buff.AddType == E_AddType.Fix)
 												BuffList_Fix.Add(buff);
 											else if (buff.AddType == E_AddType.Percent)
-											{
-												buff.BuffAmount += buffData.BuffAmount1;
 												BuffList_Percent.Add(buff);
-											}
 
 											#region 버프2
 											if (buffData.BuffType2 != 0)
@@ -1370,10 +1367,7 @@ public class Tower : MonoBehaviour
 													if (buff.AddType == E_AddType.Fix)
 														BuffList_Fix.Add(buff);
 													else if (buff.AddType == E_AddType.Percent)
-													{
-														buff.BuffAmount += buffData.BuffAmount2;
 														BuffList_Percent.Add(buff);
-													}
 
 													#region 버프3
 													if (buffData.BuffType3 != 0)
@@ -1396,10 +1390,7 @@ public class Tower : MonoBehaviour
 															if (buff.AddType == E_AddType.Fix)
 																BuffList_Fix.Add(buff);
 															else if (buff.AddType == E_AddType.Percent)
-															{
-																buff.BuffAmount += buffData.BuffAmount3;
 																BuffList_Percent.Add(buff);
-															}
 														}
 													}
 													#endregion
@@ -1523,10 +1514,7 @@ public class Tower : MonoBehaviour
 											if (buff.AddType == E_AddType.Fix)
 												BuffList_Fix.Add(buff);
 											else if (buff.AddType == E_AddType.Percent)
-											{
-												buff.BuffAmount += buffData.BuffAmount1;
 												BuffList_Percent.Add(buff);
-											}
 
 											#region 버프2
 											if (buffData.BuffType2 != 0)
@@ -1549,10 +1537,7 @@ public class Tower : MonoBehaviour
 													if (buff.AddType == E_AddType.Fix)
 														BuffList_Fix.Add(buff);
 													else if (buff.AddType == E_AddType.Percent)
-													{
-														buff.BuffAmount += buffData.BuffAmount2;
 														BuffList_Percent.Add(buff);
-													}
 
 													#region 버프3
 													if (buffData.BuffType3 != 0)
@@ -1575,10 +1560,7 @@ public class Tower : MonoBehaviour
 															if (buff.AddType == E_AddType.Fix)
 																BuffList_Fix.Add(buff);
 															else if (buff.AddType == E_AddType.Percent)
-															{
-																buff.BuffAmount += buffData.BuffAmount3;
 																BuffList_Percent.Add(buff);
-															}
 														}
 													}
 													#endregion
@@ -1987,10 +1969,7 @@ public class Tower : MonoBehaviour
 											if (buff.AddType == E_AddType.Fix)
 												BuffList_Fix.Add(buff);
 											else if (buff.AddType == E_AddType.Percent)
-											{
-												buff.BuffAmount += buffData.BuffAmount1;
 												BuffList_Percent.Add(buff);
-											}
 
 											#region 버프2
 											if (buffData.BuffType2 != 0)
@@ -2013,10 +1992,7 @@ public class Tower : MonoBehaviour
 													if (buff.AddType == E_AddType.Fix)
 														BuffList_Fix.Add(buff);
 													else if (buff.AddType == E_AddType.Percent)
-													{
-														buff.BuffAmount += buffData.BuffAmount2;
 														BuffList_Percent.Add(buff);
-													}
 
 													#region 버프3
 													if (buffData.BuffType3 != 0)
@@ -2039,10 +2015,7 @@ public class Tower : MonoBehaviour
 															if (buff.AddType == E_AddType.Fix)
 																BuffList_Fix.Add(buff);
 															else if (buff.AddType == E_AddType.Percent)
-															{
-																buff.BuffAmount += buffData.BuffAmount3;
 																BuffList_Percent.Add(buff);
-															}
 														}
 													}
 													#endregion
@@ -2166,10 +2139,7 @@ public class Tower : MonoBehaviour
 											if (buff.AddType == E_AddType.Fix)
 												BuffList_Fix.Add(buff);
 											else if (buff.AddType == E_AddType.Percent)
-											{
-												buff.BuffAmount += buffData.BuffAmount1;
 												BuffList_Percent.Add(buff);
-											}
 
 											#region 버프2
 											if (buffData.BuffType2 != 0)
@@ -2192,10 +2162,7 @@ public class Tower : MonoBehaviour
 													if (buff.AddType == E_AddType.Fix)
 														BuffList_Fix.Add(buff);
 													else if (buff.AddType == E_AddType.Percent)
-													{
-														buff.BuffAmount += buffData.BuffAmount2;
 														BuffList_Percent.Add(buff);
-													}
 
 													#region 버프3
 													if (buffData.BuffType3 != 0)
@@ -2218,10 +2185,7 @@ public class Tower : MonoBehaviour
 															if (buff.AddType == E_AddType.Fix)
 																BuffList_Fix.Add(buff);
 															else if (buff.AddType == E_AddType.Percent)
-															{
-																buff.BuffAmount += buffData.BuffAmount3;
 																BuffList_Percent.Add(buff);
-															}
 														}
 													}
 													#endregion
@@ -2687,10 +2651,7 @@ public class Tower : MonoBehaviour
 											if (buff.AddType == E_AddType.Fix)
 												BuffList_Fix.Add(buff);
 											else if (buff.AddType == E_AddType.Percent)
-											{
-												buff.BuffAmount += buffData.BuffAmount1;
 												BuffList_Percent.Add(buff);
-											}
 
 											#region 버프2
 											if (buffData.BuffType2 != 0)
@@ -2713,10 +2674,7 @@ public class Tower : MonoBehaviour
 													if (buff.AddType == E_AddType.Fix)
 														BuffList_Fix.Add(buff);
 													else if (buff.AddType == E_AddType.Percent)
-													{
-														buff.BuffAmount += buffData.BuffAmount2;
 														BuffList_Percent.Add(buff);
-													}
 
 													#region 버프3
 													if (buffData.BuffType3 != 0)
@@ -2739,10 +2697,7 @@ public class Tower : MonoBehaviour
 															if (buff.AddType == E_AddType.Fix)
 																BuffList_Fix.Add(buff);
 															else if (buff.AddType == E_AddType.Percent)
-															{
-																buff.BuffAmount += buffData.BuffAmount3;
 																BuffList_Percent.Add(buff);
-															}
 														}
 													}
 													#endregion
@@ -2866,10 +2821,7 @@ public class Tower : MonoBehaviour
 											if (buff.AddType == E_AddType.Fix)
 												BuffList_Fix.Add(buff);
 											else if (buff.AddType == E_AddType.Percent)
-											{
-												buff.BuffAmount += buffData.BuffAmount1;
 												BuffList_Percent.Add(buff);
-											}
 
 											#region 버프2
 											if (buffData.BuffType2 != 0)
@@ -2892,10 +2844,7 @@ public class Tower : MonoBehaviour
 													if (buff.AddType == E_AddType.Fix)
 														BuffList_Fix.Add(buff);
 													else if (buff.AddType == E_AddType.Percent)
-													{
-														buff.BuffAmount += buffData.BuffAmount2;
 														BuffList_Percent.Add(buff);
-													}
 
 													#region 버프3
 													if (buffData.BuffType3 != 0)
@@ -2918,10 +2867,7 @@ public class Tower : MonoBehaviour
 															if (buff.AddType == E_AddType.Fix)
 																BuffList_Fix.Add(buff);
 															else if (buff.AddType == E_AddType.Percent)
-															{
-																buff.BuffAmount += buffData.BuffAmount3;
 																BuffList_Percent.Add(buff);
-															}
 														}
 													}
 													#endregion
