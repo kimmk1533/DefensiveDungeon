@@ -43,7 +43,7 @@ public class HellLord : Devil
 		// 스킬02 (패시브)
 		if (m_DevilInfo.m_HP <= m_DevilInfo.m_halfHP)
 		{
-			float SelfHeal = (damage - m_Target_Default.Get_EnemyDef) * 1f;
+			float SelfHeal = (damage - m_Target_Default.Get_EnemyDef) * 0.3f;
 
 			if (m_DevilInfo.m_HP + SelfHeal > m_DevilInfo.m_originalHP)
 				SelfHeal = m_DevilInfo.m_originalHP - m_DevilInfo.m_HP;
@@ -141,7 +141,7 @@ public class HellLord : Devil
 
 		if (m_DevilInfo.m_HP <= m_DevilInfo.m_halfHP)
 		{
-			float SelfHeal = total_dmg * 0.2f;
+			float SelfHeal = total_dmg * 0.05f;
 
 			if (m_DevilInfo.m_HP + SelfHeal > m_DevilInfo.m_originalHP)
 				SelfHeal = m_DevilInfo.m_originalHP - m_DevilInfo.m_HP;
