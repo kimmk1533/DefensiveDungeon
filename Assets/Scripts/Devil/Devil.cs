@@ -50,6 +50,8 @@ public abstract class Devil : MonoBehaviour
 	protected EffectManager M_Effect => EffectManager.Instance;
 	// 버프 매니져
 	protected BuffManager M_Buff => BuffManager.Instance;
+	// 음향 매니저
+	protected MusicManager M_Music => MusicManager.Instance;
 	#endregion
 
 	// 마왕 회전 속도
@@ -271,7 +273,6 @@ public abstract class Devil : MonoBehaviour
 	// 마왕 공격
 	protected void AttackTarget()
 	{
-		#region 기본 스킬
 		// 기본 스킬 타이머
 		if (m_DevilInfo.AttackTimer_Default < m_DevilInfo.AttackSpeed_Default)
 		{
@@ -284,8 +285,8 @@ public abstract class Devil : MonoBehaviour
 			m_DevilInfo.AttackTimer_Default -= m_DevilInfo.AttackSpeed_Default;
 
 			SetAttackTrigger();
+			M_Music.PlaySound(m_DevilInfo_Excel.AtkSound);
 		}
-		#endregion
 	}
 	// 마왕 스킬 쿨타임 감소
 	protected void ReduceSkillCooldown()
@@ -312,6 +313,7 @@ public abstract class Devil : MonoBehaviour
 			#endregion
 
 			SetSkill01Trigger();
+
 			if (GetBossType == E_Devil.HellLord)
 			{
 				// 이펙트 생성
@@ -570,6 +572,7 @@ public abstract class Devil : MonoBehaviour
 		{
 			m_DevilInfo.IsDead = true;
 			SetDieTrigger();
+			M_Music.PlaySound(m_DevilInfo_Excel.DeathSound);
 		}
 	}
 

@@ -53,6 +53,8 @@ public class Tower : MonoBehaviour
 	protected BuffManager M_Buff => BuffManager.Instance;
 	// 노드 매니저
 	protected NodeManager M_Node => NodeManager.Instance;
+	// 음향 매니저
+	protected MusicManager M_Music => MusicManager.Instance;
 	#endregion
 
 	// 공격 가능 여부
@@ -343,7 +345,8 @@ public class Tower : MonoBehaviour
 
 			// 스킬01 애니메이션 재생
 			SetSkill01Trigger();
-			return;
+
+			M_Music.PlaySound(m_TowerInfo_Excel.Skill1Sound);
 		}
 
 		// 스킬01 공격
@@ -377,6 +380,8 @@ public class Tower : MonoBehaviour
 
 			// 스킬02 애니메이션 재생
 			SetSkill02Trigger();
+
+			M_Music.PlaySound(m_TowerInfo_Excel.Skill2Sound);
 		}
 
 		// 스킬02 공격
@@ -410,6 +415,8 @@ public class Tower : MonoBehaviour
 
 			// 기본 공격 애니메이션 재생
 			SetAttackTrigger();
+
+			M_Music.PlaySound(m_TowerInfo_Excel.AtkSound);
 		}
 
 		// 기본 스킬 공격

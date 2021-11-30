@@ -32,6 +32,7 @@ public class Enemy : MonoBehaviour
 	protected EnemyHPBarManager M_EnemyHPBar => EnemyHPBarManager.Instance;
 
 	protected FloatingTextManager M_DamageText => FloatingTextManager.Instance;
+	protected MusicManager M_Music => MusicManager.Instance;
 	#endregion
 
 	protected float MoveSpeed
@@ -97,6 +98,7 @@ public class Enemy : MonoBehaviour
 		if (m_EnemyInfo.HP <= 0)
 		{
 			SetAnimation_Death();
+			M_Music.PlaySound(m_EnemyInfo_Excel.DeathSound);
 			m_EnemyInfo.IsDead = true;
 			return true;
 		}
@@ -122,6 +124,7 @@ public class Enemy : MonoBehaviour
 
 		// 사망
 		SetAnimation_Death();
+		M_Music.PlaySound(m_EnemyInfo_Excel.DeathSound);
 		m_EnemyInfo.IsDead = true;
 	}
 
@@ -511,6 +514,7 @@ public class Enemy : MonoBehaviour
 			if (m_EnemyInfo.AttackTimer_Default >= m_EnemyInfo.Stat_Default.CoolTime)
 			{
 				m_Animator.SetTrigger("Attack");
+				M_Music.PlaySound(m_EnemyInfo_Excel.AtkSound);
 				m_EnemyInfo.AttackTimer_Default = 0f;
 			}
 			else
