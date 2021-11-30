@@ -21,10 +21,6 @@ public abstract class Devil : MonoBehaviour
 	protected Vector3 m_SkillSize;
 	public event Action OnLostDefaultTargetEvent;
 
-	protected delegate void DevilSkillHandler();
-	protected event DevilSkillHandler Skill01Event;
-	protected event DevilSkillHandler Skill02Event;
-
 	public delegate void DevilUpdateHPHandler(float max, float current);
 	public event DevilUpdateHPHandler UpdateHPEvent;
 
@@ -192,11 +188,6 @@ public abstract class Devil : MonoBehaviour
 		m_AttackRange_Default.Direction = E_Direction.None;
 		m_AttackRange_Default.CanFindTarget = true;
 		#endregion
-
-		#region 마왕 스킬 정리
-		Skill01Event += DoSkill01;
-		Skill02Event += DoSkill02;
-		#endregion
 		m_SkillSize = M_Devil.SkillRangeObj.transform.localScale * m_DevilInfo.m_Skill01.m_Size;
 	}
 	// 마왕 회전
@@ -308,8 +299,29 @@ public abstract class Devil : MonoBehaviour
 		{
 			--m_DevilInfo.m_Skill01.m_CurrentCharge;
 
-			m_DevilAnimator.SetTrigger("Skill01");
-			Skill01Event?.Invoke();
+			#region 회전
+			m_DevilInfo.RotateSpeed = 0f;
+			// 바라볼 방향
+			Vector3 lookingDir = m_DevilInfo.m_Skill01.m_MousePos - transform.position;
+			// 바라볼 방향의 각도
+			Vector3 angle = Quaternion.LookRotation(lookingDir).eulerAngles;
+			// y축 회전만 하도록 초기화
+			angle.x = 0f; angle.z = 0f;
+			// 회전
+			transform.eulerAngles = angle;
+			#endregion
+
+			SetSkill01Trigger();
+			if (GetBossType == E_Devil.HellLord)
+			{
+				// 이펙트 생성
+				Effect skillEffect = M_Effect.SpawnEffect(Skill01.m_ConditionData.Atk_prefab);
+				if (null != skillEffect)
+				{
+					skillEffect.transform.position = m_DevilInfo.m_Skill01.m_MousePos;
+					skillEffect.gameObject.SetActive(true);
+				}
+			}
 
 			OnUseSkillEvent?.Invoke();
 		}
@@ -320,15 +332,11 @@ public abstract class Devil : MonoBehaviour
 		{
 			--m_DevilInfo.m_Skill02.m_CurrentCharge;
 
-			m_DevilAnimator.SetTrigger("Skill02");
-			Skill02Event?.Invoke();
+			SetSkill02Trigger();
 
 			OnUseSkillEvent?.Invoke();
 		}
 	}
-
-	protected abstract void DoSkill01();
-	protected abstract void DoSkill02();
 
 	protected void SetAttackTrigger()
 	{
@@ -638,6 +646,8 @@ public abstract class Devil : MonoBehaviour
 			atkEffect.gameObject.SetActive(true);
 		}
 	}
+	public abstract void CallSkill01();
+	public abstract void CallSkill02();
 	public void CallDie()
 	{
 		OnGameEndEvent?.Invoke(new GameEndData()

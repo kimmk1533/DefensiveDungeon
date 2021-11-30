@@ -5,58 +5,6 @@ using UnityEngine;
 public class HellLord : Devil
 {
 	#region 내부 함수
-	protected override void DoSkill01()
-	{
-		float total_dmg = 0;
-		float size = Skill01.m_StatData.Size;
-		int mask = 1 << LayerMask.NameToLayer("Enemy");
-		Collider[] enemyhit = Physics.OverlapSphere(m_DevilInfo.m_Skill01.m_MousePos, size, mask);
-
-		for (int i = 0; i < enemyhit.Length; ++i)
-		{
-			#region 크리티컬
-			float dmg_percent = m_DevilInfo.m_Skill01.m_Dmg_Percent;
-			// 크리티컬 확률
-			float CritRate = m_DevilInfo_Excel.Crit_rate;
-			// 크리티컬 배율
-			float CritDmg = m_DevilInfo_Excel.Crit_Dmg;
-
-			// 크리티컬 대미지 설정
-			float CritRand = Random.Range(0.00001f, 1f);
-			bool CritApply = CritRand <= CritRate;
-			if (CritApply)
-			{
-				dmg_percent *= CritDmg;
-			}
-			#endregion
-
-			//최종 데미지
-			float damage = m_DevilInfo.m_Skill01.m_Dmg_Fix * dmg_percent;
-
-			enemyhit[i].transform.GetComponent<Enemy>().On_Damage(
-				damage,
-				CritApply
-				);
-
-			total_dmg += damage;
-		}
-
-		if (m_DevilInfo.m_HP <= m_DevilInfo.m_halfHP)
-		{
-			float SelfHeal = total_dmg * 0.2f;
-
-			if (m_DevilInfo.m_HP + SelfHeal > m_DevilInfo.m_originalHP)
-				SelfHeal = m_DevilInfo.m_originalHP - m_DevilInfo.m_HP;
-
-			m_DevilInfo.m_HP += SelfHeal;
-		}
-	}
-	protected override void DoSkill02()
-	{
-		return;
-		//StartCoroutine(SK002());
-	}
-
 	//패시브 스킬 적용.
 	public override void CallAttack()
 	{
@@ -154,6 +102,58 @@ public class HellLord : Devil
 			atkEffect.transform.position = m_DevilInfo.AttackPivot.position;
 			atkEffect.gameObject.SetActive(true);
 		}
+	}
+	public override void CallSkill01()
+	{
+		float total_dmg = 0;
+		float size = Skill01.m_StatData.Size;
+		int mask = 1 << LayerMask.NameToLayer("Enemy");
+		Collider[] enemyhit = Physics.OverlapSphere(m_DevilInfo.m_Skill01.m_MousePos, size, mask);
+
+		for (int i = 0; i < enemyhit.Length; ++i)
+		{
+			#region 크리티컬
+			float dmg_percent = m_DevilInfo.m_Skill01.m_Dmg_Percent;
+			// 크리티컬 확률
+			float CritRate = m_DevilInfo_Excel.Crit_rate;
+			// 크리티컬 배율
+			float CritDmg = m_DevilInfo_Excel.Crit_Dmg;
+
+			// 크리티컬 대미지 설정
+			float CritRand = Random.Range(0.00001f, 1f);
+			bool CritApply = CritRand <= CritRate;
+			if (CritApply)
+			{
+				dmg_percent *= CritDmg;
+			}
+			#endregion
+
+			//최종 데미지
+			float damage = m_DevilInfo.m_Skill01.m_Dmg_Fix * dmg_percent;
+
+			enemyhit[i].transform.GetComponent<Enemy>().On_Damage(
+				damage,
+				CritApply
+				);
+
+			total_dmg += damage;
+		}
+
+		if (m_DevilInfo.m_HP <= m_DevilInfo.m_halfHP)
+		{
+			float SelfHeal = total_dmg * 0.2f;
+
+			if (m_DevilInfo.m_HP + SelfHeal > m_DevilInfo.m_originalHP)
+				SelfHeal = m_DevilInfo.m_originalHP - m_DevilInfo.m_HP;
+
+			m_DevilInfo.m_HP += SelfHeal;
+		}
+
+		m_DevilInfo.RotateSpeed = 5f;
+	}
+	public override void CallSkill02()
+	{
+		return;
 	}
 	//protected IEnumerator SK002()
 	//{

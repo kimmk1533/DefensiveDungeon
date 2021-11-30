@@ -9788,7 +9788,6 @@ GameObject:
   - component: {fileID: 6283308950712339273}
   - component: {fileID: 6283308950712339272}
   - component: {fileID: 6283308950712339275}
-  - component: {fileID: 6283308950712339274}
   m_Layer: 0
   m_Name: Boss_09
   m_TagString: Untagged
@@ -14806,24 +14805,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &6283308950712339274
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6283308950712339277}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a79ba5bb0b3780b4a98ce45e779b6441, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Repeating: 1
-  RepeatTime: 4
-  StartTime: 0
-  RandomVolume: 0
-  minVolume: 0.4
-  maxVolume: 1
 --- !u!1 &6283308950736601561
 GameObject:
   m_ObjectHideFlags: 0

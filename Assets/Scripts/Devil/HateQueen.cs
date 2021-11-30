@@ -5,7 +5,7 @@ using UnityEngine;
 public class HateQueen : Devil
 {
 	#region 내부 함수
-	protected override void DoSkill01()
+	public override void CallSkill01()
 	{
 		BuffCC_TableExcel buffData = M_Buff.GetData(m_DevilInfo.m_Skill01.m_StatData.Buff_CC);
 
@@ -29,10 +29,28 @@ public class HateQueen : Devil
 			for (int i = 0; i < dir_towerlist.Count; ++i)
 			{
 				dir_towerlist[i].AddSkillBuff(buff, buffData.Duration);
+
+				// 이펙트 생성
+				Effect towerEffect = M_Effect.SpawnEffect(Skill01.m_ConditionData.damage_prefab);
+				if (null != towerEffect)
+				{
+					towerEffect.transform.position = dir_towerlist[i].transform.position;
+					towerEffect.gameObject.SetActive(true);
+				}
 			}
 		}
+
+		// 이펙트 생성
+		Effect skillEffect = M_Effect.SpawnEffect(Skill01.m_ConditionData.Atk_prefab);
+		if (null != skillEffect)
+		{
+			skillEffect.transform.position = transform.position;
+			skillEffect.gameObject.SetActive(true);
+		}
+
+		m_DevilInfo.RotateSpeed = 5f;
 	}
-	protected override void DoSkill02()
+	public override void CallSkill02()
 	{
 		BuffCC_TableExcel buffData = M_Buff.GetData(m_DevilInfo.m_Skill02.m_StatData.Buff_CC);
 
@@ -57,9 +75,27 @@ public class HateQueen : Devil
 				if (!towerlist[i].IsOnInventory)
 				{
 					towerlist[i].AddSkillBuff(buff, buffData.Duration);
+
+					// 이펙트 생성
+					Effect towerEffect = M_Effect.SpawnEffect(Skill01.m_ConditionData.damage_prefab);
+					if (null != towerEffect)
+					{
+						towerEffect.transform.position = towerlist[i].transform.position;
+						towerEffect.gameObject.SetActive(true);
+					}
 				}
 			}
 		}
+
+		// 이펙트 생성
+		Effect skillEffect = M_Effect.SpawnEffect(Skill02.m_ConditionData.Atk_prefab);
+		if (null != skillEffect)
+		{
+			skillEffect.transform.position = transform.position;
+			skillEffect.gameObject.SetActive(true);
+		}
+
+		m_DevilInfo.RotateSpeed = 5f;
 	}
 	#endregion
 

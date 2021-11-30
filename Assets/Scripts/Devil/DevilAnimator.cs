@@ -42,6 +42,7 @@ public class DevilAnimator : MonoBehaviour
 	{
 		m_Animator.SetBool(name, value);
 	}
+
 	public void CallAttack()
 	{
 		m_Devil.CallAttack();
@@ -49,12 +50,12 @@ public class DevilAnimator : MonoBehaviour
 	public void CallSkill01()
 	{
 		// 마왕 스킬1 투사체 발사
-		//m_Devil.CallSkill01();
+		m_Devil.CallSkill01();
 	}
 	public void CallSkill02()
 	{
 		// 마왕 스킬2 투사체 발사
-		//m_Devil.CallSkill02();
+		m_Devil.CallSkill02();
 	}
 	public void CallDie()
 	{
