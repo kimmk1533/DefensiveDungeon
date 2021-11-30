@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public struct StageChangedEventArgs
 {
@@ -25,6 +26,8 @@ public class StageInfoManager : Singleton<StageInfoManager>
 
 	[SerializeField] bool m_startFlag;
 	[SerializeField] float m_timer;
+
+	[SerializeField] Button m_skipButton;
 
 	// ( 0.0f ~ 1.0f )
 	public float Progress
@@ -62,6 +65,19 @@ public class StageInfoManager : Singleton<StageInfoManager>
 				m_timer = 0.0f;
 				GoNextStage();
 			}
+		}
+	}
+
+	public void ChangeSkipButtonActive(bool active)
+	{
+		m_skipButton.gameObject.SetActive(active);
+	}
+	public void SkipStage()
+	{
+		if (m_timer < m_current_stageInfo.StageTime - 1f)
+		{
+			m_timer = m_current_stageInfo.StageTime - 1f;
+			m_skipButton.gameObject.SetActive(false);
 		}
 	}
 

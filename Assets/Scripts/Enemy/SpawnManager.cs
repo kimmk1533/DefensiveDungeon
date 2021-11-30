@@ -18,13 +18,13 @@ public class SpawnManager : Singleton<SpawnManager>
 		{
 			E_Direction dir = (E_Direction)stageEnemyData[i].SponPosition - 1;
 
-			StartCoroutine(Spawn(dir, stageEnemyData[i]));
+			StartCoroutine(Spawn(dir, stageEnemyData[i], i == stageEnemyData.Count - 1));
 		}
 	}
 	#endregion
 
 	#region 코루틴
-	IEnumerator Spawn(E_Direction dir, SpawnData data)
+	IEnumerator Spawn(E_Direction dir, SpawnData data, bool isLast)
 	{
 		if (data.AppearSpeed > 0)
 			yield return new WaitForSeconds(data.AppearSpeed);
@@ -42,6 +42,9 @@ public class SpawnManager : Singleton<SpawnManager>
 
 		enemy = M_Enemy.SpawnEnemy(dir, code);
 		enemy.gameObject.SetActive(true);
+
+		if (isLast)
+			StageInfoManager.Instance.ChangeSkipButtonActive(true);
 	}
 	#endregion
 

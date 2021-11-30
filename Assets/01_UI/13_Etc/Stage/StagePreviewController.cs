@@ -166,5 +166,7 @@ public class StagePreviewController : MonoBehaviour
 				// TODO : end of stage
 			}
 		}
+
+		StageInfoManager.Instance.ChangeSkipButtonActive(m_current_stageInfo.stage_type == 1);
 	}
 }
