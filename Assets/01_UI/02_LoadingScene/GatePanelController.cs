@@ -35,6 +35,8 @@ public class GatePanelController : MonoBehaviour
 
     private void Start()
     {
+        MusicManager.Instance.SetBackGroundMusic(-1);
+
         // start gate open
         StartCoroutine(Co_CloseGates(OnCloseGateEnd));
     }
@@ -80,6 +82,7 @@ public class GatePanelController : MonoBehaviour
     {
         CreateGatesPanelForOpenProcess();
         DeActivateCloseGates();
+        MusicManager.Instance.SetBackGroundMusic(2);
 
         // gate open process
         StartCoroutine(Co_OpenGates(OnOpenGatesEnd));

@@ -31,9 +31,6 @@ public class FloatingTextManager : Singleton<FloatingTextManager>
 		// 위치 설정
 		switch (filter.postionType)
 		{
-			case FloatingTextFilter.E_PostionType.World:
-				floatingText.transform.position = filter.position;
-				break;
 			case FloatingTextFilter.E_PostionType.WorldToScreen:
 				floatingText.transform.position = Camera.main.WorldToScreenPoint(filter.position);
 				break;

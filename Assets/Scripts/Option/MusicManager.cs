@@ -7,7 +7,11 @@ using UnityEngine.Events;
 
 public class MusicManager : Singleton<MusicManager>
 {
-	public AudioSource audio;
+	[SerializeField]
+	private AudioSource m_Audio;
+
+	[SerializeField]
+	private float m_FadeSpeed = 2.5f;
 
 	[SerializeField, ReadOnly]
 	float optionVolume = 1f;
@@ -16,9 +20,7 @@ public class MusicManager : Singleton<MusicManager>
 	int CombatPercussionLoopBGM = 920045;
 	int TriumphantVictory = 920051;
 	int DeathBrassBGM = 920046;
-	bool play_delay;
-	float time;
-	float delayTime = 5f;
+
 	E_BGMType current_BGM = E_BGMType.None;
 	Dictionary<E_BGMType, int> excel_code_list;
 	Dictionary<E_BGMType, float> excel_volume_list;
@@ -37,8 +39,8 @@ public class MusicManager : Singleton<MusicManager>
 	}
 	protected DataTableManager M_DataTable => DataTableManager.Instance;
 	protected OptionManager M_Option => OptionManager.Instance;
-	protected Sound_TableExcelLoader m_SoundData;
 
+	protected Sound_TableExcelLoader m_SoundData;
 	protected Sound_TableExcelLoader SoundData
 	{
 		get
@@ -52,11 +54,48 @@ public class MusicManager : Singleton<MusicManager>
 		}
 	}
 
-	public void SetSelectViewMusic(int type)
+	private Coroutine m_Co_FadeVolume;
+	private Coroutine m_Co_BGM;
+	private IEnumerator Co_FadeVolume(float volume)
 	{
-		int bgm = MainBGM;
-		play_delay = false;
-		current_BGM = (E_BGMType)type;
+		while (true)
+		{
+			m_Audio.volume = Mathf.Lerp(m_Audio.volume, volume, m_FadeSpeed * Time.deltaTime);
+
+			if (Mathf.Abs(m_Audio.volume - volume) < 0.1f)
+				break;
+
+			yield return null;
+		}
+
+		m_Audio.volume = volume;
+		m_Co_FadeVolume = null;
+	}
+	private IEnumerator Co_SetBGM(int bgm)
+	{
+		if (null != m_Co_FadeVolume)
+			StopCoroutine(m_Co_FadeVolume);
+
+		if (m_Audio.volume != 0f)
+			m_Co_FadeVolume = StartCoroutine(Co_FadeVolume(0f));
+
+		while (true)
+		{
+			if (null == m_Co_FadeVolume)
+				break;
+
+			yield return null;
+		}
+
+		m_Audio.clip = SoundData.GetAudio(bgm);
+		m_Audio.Play();
+
+		m_Co_FadeVolume = StartCoroutine(Co_FadeVolume(excel_volume_list[current_BGM] * optionVolume));
+	}
+	public void SetBackGroundMusic(int type)
+	{
+		int bgm = -1;
+
 		switch (type)
 		{
 			case 0:
@@ -66,22 +105,34 @@ public class MusicManager : Singleton<MusicManager>
 				bgm = ArcaneTrailerBGM;
 				break;
 			case 2:
-				play_delay = true;
 				bgm = CombatPercussionLoopBGM;
 				break;
 			case 3:
 				bgm = TriumphantVictory;
-				break;
+				m_Audio.loop = false;
+
+				m_Audio.clip = SoundData.GetAudio(bgm);
+				m_Audio.Play();
+				return;
 			case 4:
 				bgm = DeathBrassBGM;
-				break;
+				m_Audio.loop = false;
+
+				m_Audio.clip = SoundData.GetAudio(bgm);
+				m_Audio.Play();
+				return;
+			default:
+				if (null != m_Co_FadeVolume)
+					StopCoroutine(m_Co_FadeVolume);
+				m_Co_FadeVolume = StartCoroutine(Co_FadeVolume(0f));
+				return;
 		}
 
-		audio.volume = excel_volume_list[current_BGM] * optionVolume;
+		current_BGM = (E_BGMType)type;
 
-		audio.clip = SoundData.GetAudio(bgm);
-		if (play_delay) return;
-		audio.Play();
+		if (null != m_Co_BGM)
+			StopCoroutine(m_Co_BGM);
+		m_Co_BGM = StartCoroutine(Co_SetBGM(bgm));
 	}
 	public Sound_TableExcel GetData(int code)
 	{
@@ -93,7 +144,7 @@ public class MusicManager : Singleton<MusicManager>
 	{
 		m_sound_excel = GetData(soundcode);
 		AudioClip audioClip = m_SoundData.GetAudio(soundcode);
-		audio.PlayOneShot(audioClip, m_sound_excel.Volume * optionVolume);
+		m_Audio.PlayOneShot(audioClip, m_sound_excel.Volume * optionVolume);
 	}
 
 	void Start()
@@ -112,7 +163,7 @@ public class MusicManager : Singleton<MusicManager>
 		for (E_BGMType i = E_BGMType.None + 1; i < E_BGMType.Max; ++i)
 		{
 			excel_volume_list.Add
-					(i, audio.volume = SoundData.DataList.Find((excel) =>
+					(i, SoundData.DataList.Find((excel) =>
 					{
 						return excel.Code == excel_code_list[i];
 					}).Volume);
@@ -123,24 +174,11 @@ public class MusicManager : Singleton<MusicManager>
 		M_Option.UpdateVolume.AddListener((value) =>
 		{
 			optionVolume = value;
-			audio.volume = optionVolume * excel_volume_list[current_BGM];
+			m_Audio.volume = excel_volume_list[current_BGM] * optionVolume;
 		});
 
-		audio.clip = SoundData.GetAudio(MainBGM);
-		audio.volume = SoundData.DataList.Find((excel) => { return excel.Code == MainBGM; }).Volume * optionVolume;
-		audio.Play();
-	}
-	void Update()
-	{
-		if (play_delay)
-		{
-			if (time >= delayTime)
-			{
-				audio.Play();
-				time = 0f;
-				return;
-			}
-			time += Time.deltaTime;
-		}
+		m_Audio.clip = SoundData.GetAudio(MainBGM);
+		m_Co_FadeVolume = StartCoroutine(Co_FadeVolume(excel_volume_list[current_BGM] * optionVolume));
+		m_Audio.Play();
 	}
 }

@@ -25,7 +25,6 @@ public struct FloatingTextFilter
 
 	public enum E_PostionType
 	{
-		World,
 		WorldToScreen,
 		ViewToScreen,
 	}

@@ -7,16 +7,74 @@ using UnityEngine.UI;
 
 public class MainScene_CharacterPanelButtonController : MonoBehaviour
 {
-    [SerializeField] Image m_main_button_panel;
+    [SerializeField] CanvasGroup m_Title;
+    [SerializeField] CanvasGroup m_Canvas;
+    [SerializeField] CanvasGroup m_main_button_panel;
+    [SerializeField] float m_FadeSpeed = 5f;
+
+    private IEnumerator Co_FadeTitleAlpha(float alpha, System.Action action)
+    {
+        while (true)
+        {
+            m_Title.alpha = Mathf.Lerp(m_Title.alpha, alpha, m_FadeSpeed * Time.deltaTime);
+
+            if (Mathf.Abs(m_Title.alpha - alpha) <= 0.1f)
+                break;
+
+            yield return null;
+        }
+
+        m_Title.alpha = alpha;
+        action?.Invoke();
+    }
+    private IEnumerator Co_FadeCanvasAlpha(float alpha, System.Action action)
+    {
+        while (true)
+        {
+            m_Canvas.alpha = Mathf.Lerp(m_Canvas.alpha, alpha, m_FadeSpeed * Time.deltaTime);
+
+            if (Mathf.Abs(m_Canvas.alpha - alpha) <= 0.1f)
+                break;
+
+            yield return null;
+        }
+
+        m_Canvas.alpha = alpha;
+        action?.Invoke();
+    }
+    private IEnumerator Co_FadeMainAlpha(float alpha, System.Action action)
+    {
+        while (true)
+        {
+            m_main_button_panel.alpha = Mathf.Lerp(m_main_button_panel.alpha, alpha, m_FadeSpeed * Time.deltaTime);
+
+            if (Mathf.Abs(m_main_button_panel.alpha - alpha) <= 0.1f)
+                break;
+
+            yield return null;
+        }
+
+        m_main_button_panel.alpha = alpha;
+        action?.Invoke();
+    }
 
     // 선택 버튼 관련된 것은 character select manager 를 참조
     UserInfoManager M_UserInfo => UserInfoManager.Instance;
     FloatingTextManager M_FloatingText => FloatingTextManager.Instance;
 
     public void __OnBackButton()
-    {        
-        m_main_button_panel.gameObject.SetActive(true);
-        this.gameObject.SetActive(false);
+    {
+        //m_main_button_panel.gameObject.SetActive(true);
+        //this.gameObject.SetActive(false);
+
+        m_Canvas.blocksRaycasts = false;
+        StartCoroutine(Co_FadeCanvasAlpha(0f, () =>
+        {
+            CharacterSelectManager.Instance.OnStart();
+
+            StartCoroutine(Co_FadeTitleAlpha(1f, null));
+            StartCoroutine(Co_FadeMainAlpha(1f, () => m_main_button_panel.blocksRaycasts = true));
+        }));
     }
 
     public void __OnSelectCompleteButton(Button button)

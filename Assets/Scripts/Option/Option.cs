@@ -39,8 +39,6 @@ public enum KeyOptionType
 }
 public class Option : MonoBehaviour
 {
-    //캔버스
-    public List<GameObject> Canvas;
     //옵션버튼
     public List<Button> buttons;
     //옵션그룹
@@ -53,10 +51,7 @@ public class Option : MonoBehaviour
 
     Button m_current_button;
 
-    ColorBlock color;
-    ColorBlock origincolor;
     KeyOptionType keyOptionType = KeyOptionType.None;
-    bool ActiveMainCanvas = false;
     bool RecordInput = false;
 
     private void Awake()
@@ -69,7 +64,6 @@ public class Option : MonoBehaviour
         m_current_button = buttons[0];
         __OnSelectButton(0);
 
-        Canvas[(int)CanvasType.Option].gameObject.SetActive(false);
         options[(int)OptionType.SoundButton].gameObject.SetActive(false);
         options[(int)OptionType.VideoButton].gameObject.SetActive(false);
 
@@ -84,20 +78,6 @@ public class Option : MonoBehaviour
         M_Option.SetKeyCode(KeyOptionType.Synerge_South, KeyCode.Alpha3);
         M_Option.SetKeyCode(KeyOptionType.Synerge_West, KeyCode.Alpha4);
         M_Option.SetKeyCode(KeyOptionType.ActiveShop, KeyCode.Space);
-    }
-    public void EnableStartCanvas()
-    {
-        if (!ActiveMainCanvas)
-        {
-            Canvas[(int)CanvasType.Start].gameObject.SetActive(false);
-            Canvas[(int)CanvasType.Option].gameObject.SetActive(true);
-        }
-        else
-        {
-            Canvas[(int)CanvasType.Start].gameObject.SetActive(true);
-            Canvas[(int)CanvasType.Option].gameObject.SetActive(false);
-        }
-        ActiveMainCanvas = !ActiveMainCanvas;
     }
 
     public void SettingView(int type)
