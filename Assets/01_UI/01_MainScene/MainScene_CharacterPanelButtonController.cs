@@ -72,7 +72,7 @@ public class MainScene_CharacterPanelButtonController : MonoBehaviour
         {
             CharacterSelectManager.Instance.OnStart();
 
-            StartCoroutine(Co_FadeTitleAlpha(1f, null));
+            //StartCoroutine(Co_FadeTitleAlpha(1f, null));
             StartCoroutine(Co_FadeMainAlpha(1f, () => m_main_button_panel.blocksRaycasts = true));
         }));
     }

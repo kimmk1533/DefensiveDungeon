@@ -63,7 +63,7 @@ public class MainScene_MainPanelButtonController : MonoBehaviour
 		//m_character_panel.gameObject.SetActive(true);
 
 		m_Canvas.blocksRaycasts = false;
-		StartCoroutine(Co_FadeTitleAlpha(0f, null));
+		//StartCoroutine(Co_FadeTitleAlpha(0f, null));
 		StartCoroutine(Co_FadeCanvasAlpha(0f, () =>
 		{
 			CharacterSelectManager.Instance.OnStart();
