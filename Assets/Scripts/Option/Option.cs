@@ -49,18 +49,11 @@ public class Option : MonoBehaviour
     protected List<KeyCode> keyCode;
     protected OptionManager M_Option => OptionManager.Instance;
 
-    [SerializeField] Slider backVolume;
-    [SerializeField] Text volumeText;
-
     Button m_current_button;
 
     KeyOptionType keyOptionType = KeyOptionType.None;
     bool RecordInput = false;
 
-    public Slider.SliderEvent UpdateVolume
-    {
-        get => backVolume.onValueChanged;
-    }
     private void Awake()
     {
         m_current_button = buttons[0];
@@ -68,13 +61,6 @@ public class Option : MonoBehaviour
 
         options[(int)OptionType.SoundButton].gameObject.SetActive(false);
         options[(int)OptionType.VideoButton].gameObject.SetActive(false);
-
-        backVolume.value = 1f;
-        volumeText.text = "볼륨:" + ((int)(backVolume.value * 100f)).ToString();
-        backVolume.onValueChanged.AddListener((value) =>
-        {
-            volumeText.text = "볼륨:" + (value * 100f).ToString("F2");
-        });
     }
 
     public void SettingView(int type)

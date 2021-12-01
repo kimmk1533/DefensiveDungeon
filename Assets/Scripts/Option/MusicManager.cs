@@ -56,8 +56,11 @@ public class MusicManager : Singleton<MusicManager>
 
 	private Coroutine m_Co_FadeVolume;
 	private Coroutine m_Co_BGM;
-	private IEnumerator Co_FadeVolume(float volume)
+	private IEnumerator Co_FadeVolume(float volume, float delay)
 	{
+		if (delay > 0f)
+			yield return new WaitForSeconds(delay);
+
 		while (true)
 		{
 			m_Audio.volume = Mathf.Lerp(m_Audio.volume, volume, m_FadeSpeed * Time.deltaTime);
@@ -77,7 +80,7 @@ public class MusicManager : Singleton<MusicManager>
 			StopCoroutine(m_Co_FadeVolume);
 
 		if (m_Audio.volume != 0f)
-			m_Co_FadeVolume = StartCoroutine(Co_FadeVolume(0f));
+			m_Co_FadeVolume = StartCoroutine(Co_FadeVolume(0f, 0f));
 
 		while (true)
 		{
@@ -90,7 +93,11 @@ public class MusicManager : Singleton<MusicManager>
 		m_Audio.clip = SoundData.GetAudio(bgm);
 		m_Audio.Play();
 
-		m_Co_FadeVolume = StartCoroutine(Co_FadeVolume(excel_volume_list[current_BGM] * optionVolume));
+		m_Co_FadeVolume = StartCoroutine(Co_FadeVolume(excel_volume_list[current_BGM] * optionVolume, 0f));
+	}
+	public void FadeVolume(float volume, float delay = 0f)
+	{
+		StartCoroutine(Co_FadeVolume(volume, delay));
 	}
 	public void SetBackGroundMusic(int type)
 	{
@@ -124,7 +131,7 @@ public class MusicManager : Singleton<MusicManager>
 			default:
 				if (null != m_Co_FadeVolume)
 					StopCoroutine(m_Co_FadeVolume);
-				m_Co_FadeVolume = StartCoroutine(Co_FadeVolume(0f));
+				m_Co_FadeVolume = StartCoroutine(Co_FadeVolume(0f, 0f));
 				return;
 		}
 
@@ -171,14 +178,18 @@ public class MusicManager : Singleton<MusicManager>
 
 		current_BGM = E_BGMType.MAINBGM;
 
-		//M_Option.UpdateVolume.AddListener((value) =>
-		//{
-		//	optionVolume = value;
-		//	m_Audio.volume = excel_volume_list[current_BGM] * optionVolume;
-		//});
+		MainSceneLoader.Instance.OnMainStartSceneLoadedEvent += () =>
+		{
+			M_Option.UpdateVolume.AddListener((value) =>
+			{
+				optionVolume = value;
+				m_Audio.volume = excel_volume_list[current_BGM] * optionVolume;
+			});
+		};
 
 		m_Audio.clip = SoundData.GetAudio(MainBGM);
-		m_Co_FadeVolume = StartCoroutine(Co_FadeVolume(excel_volume_list[current_BGM] * optionVolume));
-		m_Audio.Play();
+		m_Audio.volume = 0.2f;
+		m_Co_FadeVolume = StartCoroutine(Co_FadeVolume(excel_volume_list[current_BGM] * optionVolume, MainSceneLoader.Instance.delay));
+		m_Audio.PlayDelayed(MainSceneLoader.Instance.delay);
 	}
 }

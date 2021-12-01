@@ -94,7 +94,14 @@ public class ShopManager : Singleton<ShopManager>
 
 	public void OnStageChanged(StageChangedEventArgs args)
 	{
-		ShopReset();
+		if (!m_isLocked)
+		{
+			ShopReset();
+		}
+		else
+		{
+			__OnLockButtonClicked();
+		}
 	}
 
 	/*************************** UI Control ******************************/
@@ -246,12 +253,10 @@ public class ShopManager : Singleton<ShopManager>
 		if (m_isLocked)
 		{
 			ShopLock();
-			Debug.Log("ShopLock");
 		}
 		else
 		{
 			ShopUnLock();
-			Debug.Log("ShopUnLock");
 		}
 	}
 

@@ -6,6 +6,13 @@ public class OptionManager : Singleton<OptionManager>
 {
 	Dictionary<KeyOptionType, KeyCode> _KeyCode;
 
+	[SerializeField] Slider backVolume;
+	[SerializeField] Text volumeText;
+
+	public Slider.SliderEvent UpdateVolume
+	{
+		get => backVolume.onValueChanged;
+	}
 	public KeyCode GetKeyCode(KeyOptionType key)
 	{
 		return _KeyCode[key];
@@ -18,6 +25,21 @@ public class OptionManager : Singleton<OptionManager>
 	{
 		_KeyCode[key] = code;
 	}
+
+	public void InitAudioOption(Slider slider, Text text)
+	{
+		backVolume = slider;
+		volumeText = text;
+
+		backVolume.value = 1f;
+		volumeText.text = "º¼·ý:" + ((int)(backVolume.value * 100f)).ToString();
+		backVolume.onValueChanged.RemoveAllListeners();
+		backVolume.onValueChanged.AddListener((value) =>
+		{
+			volumeText.text = "º¼·ý:" + (value * 100f).ToString("F2");
+		});
+	}
+
 	private void Awake()
 	{
 		DontDestroyOnLoad(this.gameObject);
@@ -35,6 +57,4 @@ public class OptionManager : Singleton<OptionManager>
 		SetKeyCode(KeyOptionType.Synerge_West, KeyCode.Alpha4);
 		SetKeyCode(KeyOptionType.ActiveShop, KeyCode.Space);
 	}
-	
-
 }
