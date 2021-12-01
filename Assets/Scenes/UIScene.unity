@@ -4049,7 +4049,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_slot_origin: {fileID: 952547433}
   m_contents_panel: {fileID: 1109865044}
-  OnThisPanel: 0
 --- !u!1 &336269425
 GameObject:
   m_ObjectHideFlags: 0
@@ -17317,6 +17316,7 @@ MonoBehaviour:
   m_cell_count: 6
   m_padding_width: 10
   m_padding_height: 10
+  m_move_speed: 5
   m_root_panel: {fileID: 1191766220}
   m_origin_slot: {fileID: 819315107}
   m_slots: []
@@ -21867,6 +21867,7 @@ MonoBehaviour:
   m_root_panel: {fileID: 1422242840}
   m_origin: {fileID: 2121214198}
   m_lineSlots: []
+  m_extendPanel: {fileID: 331818963}
 --- !u!1 &1499199358
 GameObject:
   m_ObjectHideFlags: 0
@@ -23586,6 +23587,7 @@ GameObject:
   - component: {fileID: 1654310939}
   - component: {fileID: 1654310938}
   - component: {fileID: 1654310937}
+  - component: {fileID: 1654310940}
   m_Layer: 5
   m_Name: ExtensionButton
   m_TagString: Untagged
@@ -23656,21 +23658,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1495764685}
-        m_TargetAssemblyTypeName: SynergyUIManager, Assembly-CSharp
-        m_MethodName: DeActivateAllExtendSynergyPanel
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 2121214198}
         m_TargetAssemblyTypeName: SynergyLineSlot, Assembly-CSharp
-        m_MethodName: __OnExtednButtonClicked
+        m_MethodName: __OnExtendButtonClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -23718,6 +23708,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1654310935}
   m_CullTransparentMesh: 1
+--- !u!114 &1654310940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1654310935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a18ea6a76bef0174284452737a109de3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1654979912
 GameObject:
   m_ObjectHideFlags: 0
@@ -29532,10 +29534,8 @@ MonoBehaviour:
   m_slot_list: []
   m_slot_info_list: []
   m_panel: {fileID: 1078261195}
-  m_extend_root_panel: {fileID: 331818963}
   m_showCount: 3
   m_showMaxCount: 10
-  IsShowExtendPanel: 0
   m_synergy_list: []
   m_extend_root_pos: {x: -98.104, y: -595}
 --- !u!1 &2130244004

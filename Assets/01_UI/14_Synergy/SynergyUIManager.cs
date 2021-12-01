@@ -10,13 +10,41 @@ public class SynergyUIManager : Singleton<SynergyUIManager>
 
     [SerializeField] SynergyLineSlot m_origin;
     [SerializeField] List<SynergyLineSlot> m_lineSlots;
+    [SerializeField] SynergySubContentPanel m_extendPanel;
+
+    OptionManager M_Option => OptionManager.Instance;
+
+    public SynergySubContentPanel extendPanel => m_extendPanel;
+    public bool IsShowExtendPanel => m_extendPanel.gameObject.activeSelf;
+    public bool ChangeExtendActive { get; set; }
+    public E_Direction LastLineDir { get; set; }
 
     private void Start()
     {
         __Initialize();        
     }
 
-    void __Initialize()
+	private void Update()
+	{
+		if (Input.GetKeyDown(M_Option.GetKeyCode(KeyOptionType.Synerge_North)))
+		{
+            m_lineSlots[0].__OnExtendButtonClicked();
+        }
+        if (Input.GetKeyDown(M_Option.GetKeyCode(KeyOptionType.Synerge_East)))
+        {
+            m_lineSlots[1].__OnExtendButtonClicked();
+        }
+        if (Input.GetKeyDown(M_Option.GetKeyCode(KeyOptionType.Synerge_South)))
+        {
+            m_lineSlots[2].__OnExtendButtonClicked();
+        }
+        if (Input.GetKeyDown(M_Option.GetKeyCode(KeyOptionType.Synerge_West)))
+        {
+            m_lineSlots[3].__OnExtendButtonClicked();
+        }
+    }
+
+	void __Initialize()
     {
         // synergy manager 에서 이벤트로 연결할것
 
@@ -34,13 +62,7 @@ public class SynergyUIManager : Singleton<SynergyUIManager>
             newSlot.transform.SetParent(m_root_panel.transform);
             m_lineSlots.Add(newSlot);
         }
-    }
 
-    public void DeActivateAllExtendSynergyPanel()
-    {
-        foreach (var item in m_lineSlots)
-        {
-            item.DeActivateExtendPanel();
-        }
+        LastLineDir = E_Direction.None;
     }
 }

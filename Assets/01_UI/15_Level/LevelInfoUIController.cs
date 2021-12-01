@@ -47,7 +47,15 @@ public class LevelInfoUIController : MonoBehaviour , IPointerClickHandler
         };
     }
 
-    public void OnPointerClick(PointerEventData eventData)
+	private void Update()
+	{
+		if (Input.GetKeyDown(OptionManager.Instance.GetKeyCode(KeyOptionType.LevelUp)))
+		{
+            __OnEXPPurchaseProcess();
+		}
+	}
+
+	public void OnPointerClick(PointerEventData eventData)
     {
         if (m_max_level)
             return;

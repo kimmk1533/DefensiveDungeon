@@ -9,16 +9,17 @@ public class SynergySubContentPanel : MonoBehaviour, IPointerEnterHandler, IPoin
     [SerializeField] SynergySlot m_slot_origin;
     [SerializeField] GridLayoutGroup m_contents_panel;
     private List<SynergySlot> m_extend_slot_list;
-    [SerializeField] bool OnThisPanel = false;  // mouse
+
+    SynergyUIManager M_SynergyUI => SynergyUIManager.Instance;
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        OnThisPanel = true;
+        M_SynergyUI.ChangeExtendActive = true;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        OnThisPanel = false;
+        M_SynergyUI.ChangeExtendActive = false;
     }
 
     public void SetSlots(List<SynergySlotInfo> slotList)
@@ -52,6 +53,8 @@ public class SynergySubContentPanel : MonoBehaviour, IPointerEnterHandler, IPoin
         m_slot_origin.gameObject.SetActive(false);
 
         m_extend_slot_list = new List<SynergySlot>();
+
+        gameObject.SetActive(false);
     }
 
     private void Update()
@@ -61,13 +64,12 @@ public class SynergySubContentPanel : MonoBehaviour, IPointerEnterHandler, IPoin
         // 
         if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
         {
-            if (OnThisPanel)
+            if (M_SynergyUI.ChangeExtendActive)
                 return;
 
             // out of panel
-            SynergyUIManager.Instance.DeActivateAllExtendSynergyPanel();
+            gameObject.SetActive(false);
+            //SynergyUIManager.Instance.DeActivateExtendSynergyPanel();
         }
     }
-
-
 }

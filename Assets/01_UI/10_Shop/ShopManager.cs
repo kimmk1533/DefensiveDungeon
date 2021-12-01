@@ -27,6 +27,8 @@ public class ShopManager : Singleton<ShopManager>
 	[SerializeField] ShopSlot m_origin;
 	[SerializeField] List<ShopSlot> m_slot_list;
 
+	OptionManager M_Option => OptionManager.Instance;
+
 	private void Awake()
 	{
 		__Initialize();
@@ -46,6 +48,19 @@ public class ShopManager : Singleton<ShopManager>
 		// link callback
 		UserInfoManager.Instance.OnLevelChanged += OnLevelChanged;
 		StageInfoManager.Instance.OnRestStageChangedEvent += OnStageChanged;
+	}
+
+	private void Update()
+	{
+		if (Input.GetKeyDown(M_Option.GetKeyCode(KeyOptionType.ActiveShop)))
+		{
+			__OnShopButtonClicked();
+		}
+		if (Input.GetKeyDown(M_Option.GetKeyCode(KeyOptionType.ReShop)) &&
+			m_shop_panel.gameObject.activeSelf)
+		{
+			__OnResetButtonClicked();
+		}
 	}
 
 	public void __Initialize()
