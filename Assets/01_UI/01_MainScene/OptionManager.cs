@@ -4,9 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 public class OptionManager : Singleton<OptionManager>
 {
-	public Slider backVolume;
-
-	public Text volumeText;
 	Dictionary<KeyOptionType, KeyCode> _KeyCode;
 
 	public KeyCode GetKeyCode(KeyOptionType key)
@@ -21,20 +18,22 @@ public class OptionManager : Singleton<OptionManager>
 	{
 		_KeyCode[key] = code;
 	}
-	public Slider.SliderEvent UpdateVolume
-	{
-		get => backVolume.onValueChanged;
-	}
 	private void Awake()
 	{
 		DontDestroyOnLoad(this.gameObject);
 		_KeyCode = new Dictionary<KeyOptionType, KeyCode>();
-		backVolume.value = 1f;
-		volumeText.text = "º¼·ý:" + ((int)(backVolume.value * 100f)).ToString();
-		backVolume.onValueChanged.AddListener((value) =>
-		{
-			volumeText.text = "º¼·ý:" + (value * 100f).ToString("F2");
-		});
+
+		SetKeyCode(KeyOptionType.Qkey, KeyCode.Q);
+		SetKeyCode(KeyOptionType.Ekey, KeyCode.E);
+		SetKeyCode(KeyOptionType.Skill1, KeyCode.Z);
+		SetKeyCode(KeyOptionType.Skill2, KeyCode.X);
+		SetKeyCode(KeyOptionType.LevelUp, KeyCode.F);
+		SetKeyCode(KeyOptionType.ReShop, KeyCode.D);
+		SetKeyCode(KeyOptionType.Synerge_North, KeyCode.Alpha1);
+		SetKeyCode(KeyOptionType.Synerge_East, KeyCode.Alpha2);
+		SetKeyCode(KeyOptionType.Synerge_South, KeyCode.Alpha3);
+		SetKeyCode(KeyOptionType.Synerge_West, KeyCode.Alpha4);
+		SetKeyCode(KeyOptionType.ActiveShop, KeyCode.Space);
 	}
 	
 

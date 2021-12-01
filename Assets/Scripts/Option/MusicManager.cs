@@ -171,11 +171,11 @@ public class MusicManager : Singleton<MusicManager>
 
 		current_BGM = E_BGMType.MAINBGM;
 
-		M_Option.UpdateVolume.AddListener((value) =>
-		{
-			optionVolume = value;
-			m_Audio.volume = excel_volume_list[current_BGM] * optionVolume;
-		});
+		//M_Option.UpdateVolume.AddListener((value) =>
+		//{
+		//	optionVolume = value;
+		//	m_Audio.volume = excel_volume_list[current_BGM] * optionVolume;
+		//});
 
 		m_Audio.clip = SoundData.GetAudio(MainBGM);
 		m_Co_FadeVolume = StartCoroutine(Co_FadeVolume(excel_volume_list[current_BGM] * optionVolume));

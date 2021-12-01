@@ -39,45 +39,42 @@ public enum KeyOptionType
 }
 public class Option : MonoBehaviour
 {
-    //¿É¼Ç¹öÆ°
-    public List<Button> buttons;
-    //¿É¼Ç±×·ì
+    //ì˜µì…˜ë²„íŠ¼
+    [SerializeField] List<Button> buttons;
+    //ì˜µì…˜ê·¸ë£¹
     public List<GameObject> options;
-    //¹æÇâÀüÈ¯ Å°¼¼ÆÃ
+    //ë°©í–¥ì „í™˜ í‚¤ì„¸íŒ…
     public List<Button> KeySetting;
     public List<Text> texts;
     protected List<KeyCode> keyCode;
     protected OptionManager M_Option => OptionManager.Instance;
+
+    [SerializeField] Slider backVolume;
+    [SerializeField] Text volumeText;
 
     Button m_current_button;
 
     KeyOptionType keyOptionType = KeyOptionType.None;
     bool RecordInput = false;
 
+    public Slider.SliderEvent UpdateVolume
+    {
+        get => backVolume.onValueChanged;
+    }
     private void Awake()
     {
-        //color = origincolor = buttons[1].colors;
-        ////¹öÆ° Å¬¸¯(È°¼ºÈ­)½Ã »ö º¯°æ
-        //color.normalColor = new Color(132f, 132f, 132f, 71f) / 255f;
-        //buttons[0].colors = color;
-
         m_current_button = buttons[0];
         __OnSelectButton(0);
 
         options[(int)OptionType.SoundButton].gameObject.SetActive(false);
         options[(int)OptionType.VideoButton].gameObject.SetActive(false);
 
-        M_Option.SetKeyCode(KeyOptionType.Qkey, KeyCode.Q);
-        M_Option.SetKeyCode(KeyOptionType.Ekey, KeyCode.E);
-        M_Option.SetKeyCode(KeyOptionType.Skill1, KeyCode.Z);
-        M_Option.SetKeyCode(KeyOptionType.Skill2, KeyCode.X);
-        M_Option.SetKeyCode(KeyOptionType.LevelUp, KeyCode.F);
-        M_Option.SetKeyCode(KeyOptionType.ReShop, KeyCode.D);
-        M_Option.SetKeyCode(KeyOptionType.Synerge_North, KeyCode.Alpha1);
-        M_Option.SetKeyCode(KeyOptionType.Synerge_East, KeyCode.Alpha2);
-        M_Option.SetKeyCode(KeyOptionType.Synerge_South, KeyCode.Alpha3);
-        M_Option.SetKeyCode(KeyOptionType.Synerge_West, KeyCode.Alpha4);
-        M_Option.SetKeyCode(KeyOptionType.ActiveShop, KeyCode.Space);
+        backVolume.value = 1f;
+        volumeText.text = "ë³¼ë¥¨:" + ((int)(backVolume.value * 100f)).ToString();
+        backVolume.onValueChanged.AddListener((value) =>
+        {
+            volumeText.text = "ë³¼ë¥¨:" + (value * 100f).ToString("F2");
+        });
     }
 
     public void SettingView(int type)
@@ -168,10 +165,6 @@ public class Option : MonoBehaviour
         keyOptionType = (KeyOptionType)type;
     }
 
-    public void ConnectSkill()
-    {
-
-    }
     public void __OnSelectButton(int index)
     {
         m_current_button.targetGraphic.color = m_current_button.colors.normalColor;
