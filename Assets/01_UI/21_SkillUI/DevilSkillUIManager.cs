@@ -29,7 +29,6 @@ public class DevilSkillUIManager : Singleton<DevilSkillUIManager>
 
 	private void Start()
 	{
-
 		#region 스킬01설정
 		m_Skill01Key = M_Option.GetKeyCode(KeyOptionType.Skill1);
 

@@ -170,6 +170,11 @@ public class DevilManager : Singleton<DevilManager>
 					// 스킬01
 					M_DevilSkillUI.OnSkill01ButtonClickedEvent.AddListener(() =>
 					{
+						if (ActiveSkillRange)
+						{
+							ActiveSkillRange = false;
+						}
+
 						m_Devil.IsCastingSkill02 = false;
 
 						if (Skill01_ChargeCount > 0)
@@ -188,35 +193,37 @@ public class DevilManager : Singleton<DevilManager>
 					// 스킬01
 					M_DevilSkillUI.OnSkill01ButtonClickedEvent.AddListener(() =>
 					{
+						if (ActiveSkillRange)
+						{
+							ActiveSkillRange = false;
+						}
+
 						if (Skill01_ChargeCount > 0)
 						{
+							m_Devil.IsCastingSkill01 = !m_Devil.IsCastingSkill01;
 							m_Devil.IsCastingSkill02 = false;
-
-							if (Skill01_ChargeCount > 0)
-							{
-								m_Devil.IsCastingSkill01 = !m_Devil.IsCastingSkill01;
-							}
-							else
-							{
-								m_Devil.IsCastingSkill01 = false;
-							}
+						}
+						else
+						{
+							m_Devil.IsCastingSkill01 = false;
 						}
 					});
 					// 스킬02
 					M_DevilSkillUI.OnSkill02ButtonClickedEvent.AddListener(() =>
 					{
+						if (ActiveSkillRange)
+						{
+							ActiveSkillRange = false;
+						}
+
 						if (Skill02_ChargeCount > 0)
 						{
 							m_Devil.IsCastingSkill01 = false;
-
-							if (Skill02_ChargeCount > 0)
-							{
-								m_Devil.IsCastingSkill02 = !m_Devil.IsCastingSkill02;
-							}
-							else
-							{
-								m_Devil.IsCastingSkill02 = false;
-							}
+							m_Devil.IsCastingSkill02 = !m_Devil.IsCastingSkill02;
+						}
+						else
+						{
+							m_Devil.IsCastingSkill02 = false;
 						}
 					});
 				}

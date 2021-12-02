@@ -51,12 +51,4 @@ public class GameOverUIController : MonoBehaviour
 
 		Time.timeScale = 0f;
 	}
-
-	public void __OnToMainButtonClicked()
-	{
-		// TODO...
-		// TODO : call all finalize first
-
-		// Debug.Log("---------------------------GAME END---------------------------");
-	}
 }
