@@ -12,19 +12,19 @@ public class SpawnManager : Singleton<SpawnManager>
 	#endregion
 
 	#region 외부 함수
-	public void Start_BattleStage(in List<StageEnemy_TableExcel> stageEnemyData)
+	public void Start_BattleStage(in List<StageEnemy_TableExcel> stageEnemyData, bool isBoss)
 	{
 		for (int i = 0; i < stageEnemyData.Count; i++)
 		{
 			E_Direction dir = (E_Direction)stageEnemyData[i].SponPosition - 1;
 
-			StartCoroutine(Spawn(dir, stageEnemyData[i], i == stageEnemyData.Count - 1));
+			StartCoroutine(Spawn(dir, stageEnemyData[i], i == stageEnemyData.Count - 1, isBoss));
 		}
 	}
 	#endregion
 
 	#region 코루틴
-	IEnumerator Spawn(E_Direction dir, SpawnData data, bool isLast)
+	IEnumerator Spawn(E_Direction dir, SpawnData data, bool isLast, bool isBoss)
 	{
 		if (data.AppearSpeed > 0)
 			yield return new WaitForSeconds(data.AppearSpeed);
@@ -43,7 +43,7 @@ public class SpawnManager : Singleton<SpawnManager>
 		enemy = M_Enemy.SpawnEnemy(dir, code);
 		enemy.gameObject.SetActive(true);
 
-		if (isLast)
+		if (isLast && !isBoss)
 			StageInfoManager.Instance.ChangeSkipButtonActive(true);
 	}
 	#endregion

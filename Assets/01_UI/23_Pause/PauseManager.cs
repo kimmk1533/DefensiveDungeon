@@ -89,6 +89,8 @@ public class PauseManager : Singleton<PauseManager>
 		Time.timeScale = 1f;
 
 		MusicManager.Instance.FadeVolume(0f);
+		UserInfoManager.Instance.ResetGold();
+		UserInfoManager.Instance.ResetLevel();
 
 		SceneManager.LoadScene("MainStartScene", LoadSceneMode.Additive);
 		GameObject.DestroyImmediate(m_Managers);

@@ -56,7 +56,7 @@ public class Stage_EnemyManager : Singleton<Stage_EnemyManager>
 		{
 			List<StageEnemy_TableExcel> stageEnemy = m_StageEnemyInfo_Excel[m_Now_StageData.stage_num - 1];
 
-			M_Spawn.Start_BattleStage(in stageEnemy);
+			M_Spawn.Start_BattleStage(in stageEnemy, args.stage_type == 3);
 		}
 	}
 
