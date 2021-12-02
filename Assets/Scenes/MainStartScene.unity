@@ -1692,7 +1692,7 @@ GameObject:
   - component: {fileID: 187642884}
   - component: {fileID: 187642883}
   m_Layer: 5
-  m_Name: GameQuitButton
+  m_Name: ExitButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2853,7 +2853,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Game Options
+  m_text: 'Option
 
 '
   m_isRightToLeft: 0
@@ -5971,7 +5971,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Game Quit
+  m_text: Exit
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 41b2df8877401fa4db7523b9a129dd05, type: 2}
   m_sharedMaterial: {fileID: -6440278141908128399, guid: 41b2df8877401fa4db7523b9a129dd05, type: 2}
@@ -9158,9 +9158,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Game Start
-
-'
+  m_text: Game Start
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 41b2df8877401fa4db7523b9a129dd05, type: 2}
   m_sharedMaterial: {fileID: -6440278141908128399, guid: 41b2df8877401fa4db7523b9a129dd05, type: 2}
@@ -11881,7 +11879,7 @@ GameObject:
   - component: {fileID: 1750508809}
   - component: {fileID: 1750508808}
   m_Layer: 5
-  m_Name: GameOptionsButton
+  m_Name: OptionButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
