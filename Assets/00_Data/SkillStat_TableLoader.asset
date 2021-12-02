@@ -89,7 +89,7 @@ MonoBehaviour:
     Code: 310006
     Max_Charge: 1
     CoolTime: 0
-    Dmg_Percent: 1
+    Dmg_Percent: 0.1
     Dmg_Fix: 0
     Range: 6
     Speed: 10
@@ -103,7 +103,7 @@ MonoBehaviour:
     Code: 310007
     Max_Charge: 1
     CoolTime: 0
-    Dmg_Percent: 2
+    Dmg_Percent: 10
     Dmg_Fix: 0
     Range: 6
     Speed: 10
@@ -1925,10 +1925,10 @@ MonoBehaviour:
     CoolTime: 0
     Dmg_Percent: 1
     Dmg_Fix: 0
-    Range: 8
+    Range: 10
     Speed: 10
     Target_num: 1
     Size: 0.5
-    Life_Time: 1
+    Life_Time: 3
     Buff_CC: 0
     LoadCode: 0
