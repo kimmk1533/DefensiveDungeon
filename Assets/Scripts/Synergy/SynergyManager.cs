@@ -123,9 +123,6 @@ public class SynergyManager : Singleton<SynergyManager>
 				// 타워 수가 필요 수 이상이면
 				if (synergy.MemReq <= TowerCount)
 				{
-					if (synergy.EffectType1 == 0)
-						continue;
-
 					// 시너지 관리 리스트에 추가
 					m_Synergys[dir].Add(synergy);
 
